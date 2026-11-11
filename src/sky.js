@@ -158,8 +158,27 @@
       <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp)"/>`;
     for (let a = 10; a < aMax; a += 10) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22"/><text x="${W - 4}" y="${Y(a) - 3}" font-size="${10 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".7">${a}°</text>`;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.2"/><text x="6" y="${y5 - 5}" font-size="${11 * F}" fill="${col('--sky-label')}" font-weight="600">5°</text>`;
-    const objs = core.skyObjects(t, obs).filter(o => o.alt > -0.5 && (o.kind === 'planet' ? o.mag < 2.5 : o.mag < 1.0) && fDark > 0.2);
-    for (const o of objs) { const rr = Math.max(1.3, Math.min(4, 3.2 - o.mag * 0.8)); s += `<circle cx="${X(o.az)}" cy="${Y(o.alt)}" r="${rr}" fill="${col('--sky-star')}"/>` + (o.kind === 'planet' ? `<text x="${X(o.az) + rr + 3}" y="${Y(o.alt) + 4}" font-size="${10 * F}" fill="${col('--sky-label')}" opacity=".85">${objName(o.id, L)}</text>` : ''); }
+    // Parlak gök cisimleri: gezegenler (kadir < 2,5) ve parlak yıldızlar (kadir < 1,6). İsimler parlaklık sırasıyla,
+    // birbirini ve Güneş/Ay etiketlerini örtmeyecek yere konur; yer bulunamayan cismin yalnız noktası çizilir.
+    const objs = core.skyObjects(t, obs).filter(o => o.alt > -0.5 && (o.kind === 'planet' ? o.mag < 2.5 : o.mag < 1.6) && fDark > 0.2)
+      .sort((a, b) => (a.kind === 'planet' ? a.mag - 3 : a.mag) - (b.kind === 'planet' ? b.mag - 3 : b.mag));
+    const fs = 11 * F, taken = [];
+    const sxP = X(now.sun.az), syP = Y(now.sun.alt), mxP = X(now.moon.az), myP = Y(now.moon.alt);
+    taken.push([sxP - 34 * F, Math.min(H - 4, syP + 20) - fs, 68 * F, fs + 4], [sxP - 9, syP - 9, 18, 18]);   // Güneş ve etiketi
+    taken.push([mxP - 34 * F, myP - 15 - fs, 68 * F, fs + 4], [mxP - 11, myP - 11, 22, 22]);                  // Ay ve etiketi
+    taken.push([0, y5 - 5 - fs, 30 * F, fs + 2], [W - 34 * F, 0, 34 * F, H]);                                  // 5° ve irtifâ yazıları
+    const hit = (b) => b[0] < 0 || b[0] + b[2] > W || b[1] < 0 || b[1] + b[3] > y0 - 1 || taken.some(q => b[0] < q[0] + q[2] && b[0] + b[2] > q[0] && b[1] < q[1] + q[3] && b[1] + b[3] > q[1]);
+    for (const o of objs) {
+      const x = X(o.az), y = Y(o.alt), rr = Math.max(1.3, Math.min(4, 3.2 - o.mag * 0.8)), pl = o.kind === 'planet';
+      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr}" fill="${col(pl ? '--accent' : '--sky-star')}"/>`;
+      taken.push([x - rr - 1, y - rr - 1, 2 * rr + 2, 2 * rr + 2]);
+      const name = objName(o.id, L), w = name.length * fs * 0.56, h = fs + 2;
+      const cand = [[x + rr + 3, y - h / 2, 'start'], [x - rr - 3 - w, y - h / 2, 'start'], [x - w / 2, y - rr - 3 - h, 'start'], [x - w / 2, y + rr + 3, 'start']];
+      const c = cand.find(([bx, by]) => !hit([bx, by, w, h]));
+      if (!c) continue;
+      taken.push([c[0], c[1], w, h]);
+      s += `<text x="${c[0].toFixed(1)}" y="${(c[1] + h - 3).toFixed(1)}" font-size="${(pl ? fs : fs * 0.92).toFixed(1)}" fill="${col('--sky-label')}"${pl ? ' font-weight="600"' : ' opacity=".85"'}>${name}</text>`;
+    }
     s += `<rect x="0" y="${y0}" width="${W}" height="${H - y0}" fill="${col('--ground')}" opacity=".92"/>`;
     // güneş
     const sx = X(now.sun.az), sy = Y(now.sun.alt);

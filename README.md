@@ -29,12 +29,20 @@ Programın içinden de **⬇ HTML'yi indir** düğmesiyle o anda kullandığın�
 
 <p align="center"><img src="docs/img/saha-mobil.png" alt="Saha sekmesi (telefon)" width="300"></p>
 
-## Resmî sürüm
+## Bu araç hakkında
 
-Mâh-ı Nev'in resmî sürümü yalnızca **[github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev)** adresinden dağıtılır. Bunun sebebi, programın fıkhî kararlarının Tam İlmihâl'e bağlı olması ve başkalarınca değiştirilmemesi gerekmesidir.
+Mâh-ı Nev, Tam İlmihâl Se'âdet-i Ebediyye kitabındaki bilgiler esas alınarak hazırlanmış bir rasad yardımcısıdır. Hilâl rasadının planlanmasını ve sahada yapılmasını kolaylaştırmak için yapılmıştır.
 
-- Her HTML dosyasında lisans bilgisi ve bu adres bulunur.
-- Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse ekranın üstünde **"resmî olmayan kopya"** uyarısı çıkar; aynı ibare baskı çıktılarına ve rü'yet kayıtlarına da yazılır.
+Bir fıkıh kaynağı değildir; kaynağın yerini tutmaz. Esas ve kesin bilgi fıkıhtır: Bu programda kitaba ve fıkha uymayan bir bilgi bulunursa, o bilgi geçersizdir. Fıkhî hükümler için kitabın kendisine başvurunuz.
+
+- **Kitabı okuyun veya indirin (Hakîkat Kitâbevi):** [kitabın sayfası](https://www.hakikatkitabevi.net/book.php?bookCode=001) · [PDF](https://www.hakikatkitabevi.net/downloads/001.pdf)
+- Programdaki sayfa numaraları kitabın **Ocak 2026 baskısına** göredir; başka baskılarda birkaç sayfa farklı olabilir.
+
+## Yayın adresi
+
+Programın özgün dosyası yalnızca [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev) adresinde yayımlanır. Her HTML dosyasında lisans bilgisi ve bu adres bulunur.
+
+Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse ekranın üstünde **"değiştirilmiş kopya"** uyarısı çıkar. Aynı ibare baskı çıktılarına ve rü'yet kayıtlarına da yazılır.
 
 ## Ne yapar?
 
@@ -131,6 +139,8 @@ Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir: [THIRD_PARTY_
 - **Use online:** <https://bemiroglu.github.io/MahiNev/>
 - **Download:** [`dist/mahinev.html`](dist/mahinev.html), or use the **Download HTML** button inside the program.
 
-The official version is distributed only at [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev). The program checks its own integrity and marks modified copies as *unofficial*.
+It is an aid, not a source of fiqh, and it does not replace the book: anything in it that does not agree with the book and with fiqh is void. For rulings, consult the book itself ([Hakîkat Kitâbevi](https://www.hakikatkitabevi.net/book.php?bookCode=001)). Page numbers refer to the January 2026 printing.
+
+The original file is published only at [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev). The program checks its own integrity and marks altered files as a *modified copy*.
 
 Licensed under [CC BY-NC-ND 4.0](LICENSE): non-commercial sharing, unmodified, with attribution. Embedded third-party components keep their own licences.

@@ -14,6 +14,27 @@
   - Kutuya fark yazılırsa (+3, −5, +5:30, UTC+2) o farka uyan sabit dilim seçilir.
   - Liste iki gruptan oluşur: yaz saatini izleyen bölgesel dilimler ve sabit farklar. Her dilimin yanında farkı yazar.
   - Elle girilen konum seçili dilimden çok uzaksa fark tûlden hesaplanır.
+- **Kaynak önceliği:**
+  - Sayfanın altında ve Rehber'in başında "Bu araç hakkında" notu var: program bir fıkıh kaynağı değildir, kitaba uymayan her bilgi geçersizdir.
+  - Kitabın Hakîkat Kitâbevi'ndeki sayfasına ve PDF'ine bağlantı verildi.
+  - Sayfa numaralarının kitabın Ocak 2026 baskısına göre olduğu belirtiliyor.
+  - "Resmî sürüm" ifadeleri kaldırıldı; yerlerine "yayın adresi" ve "değiştirilmiş kopya" kullanılıyor.
+- **Durum bandı:** Üstteki bant, seçili gün ve saatte rü'yetin durumunu renkle ve kısa bir ibareyle gösterir.
+  - Yeşil: hilâl aranabilir veya bu akşam mümkün.
+  - Kırmızı: kesin red veya 5°'nin altı.
+  - Gri: ay başı akşamı değil veya pencere geçti.
+- **Hava tahmini:** İbareler yalnız havayı anlatıyor ("Hava: batı ufku açık görünüyor"). Hilâlin görülemeyeceği akşamlarda bu ayrıca yazılıyor.
+- **Göz güvenliği uyarısı:** Yalnız rü'yetin mümkün olduğu akşamlarda görünür. Kapatılabilir; Ayarlar'dan yeniden açılır.
+- **Ufuk görselleri:**
+  - 360° ufukta parlak yıldızlar ve gezegenler, isimleri birbirini örtmeyecek biçimde yazılır.
+  - Ufuk kartında bir zaman çubuğu var (±10 dakika düğmeleriyle); kaydırınca bütün sayfa o ana göre güncellenir.
+- **Aylık rü'yet şeridi:**
+  - Günler hesâbî kamerî aya göre gruplanır; her kutuda kamerî gün numarası yazar ve ay başının belirsiz olduğu gün "1?" ile işaretlenir.
+  - Kutunun üzerine gelince, gündüzün ve gurûbdan sonraki hicrî tarih görünür.
+- **Açıklamalar ("?" notları):**
+  - Ayarlar'da açıklama düzeyi seçilir: kısa (varsayılan) veya ayrıntılı.
+  - Her notun altında "Ayrıntılı açıklama" açılabilir.
+  - Yeni notlar eklendi: rasad gecesi, şahitlik, çıplak göz şartı, gurûb ve temkin.
 - Saat dilimi hesaplarında biçimleyiciler önbelleğe alındı; arayüz daha hızlı tepki veriyor.
 - Belgeler sürüm geçmişi ve düzeltme notları içermeyecek biçimde sadeleştirildi. Gelecek işler için [docs/yol-haritasi.md](docs/yol-haritasi.md) eklendi.
 

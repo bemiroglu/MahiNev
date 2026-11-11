@@ -144,7 +144,7 @@ Program temkini kitabın usulüyle (o yerin en yüksek noktasına göre inhitât
 **Diğer vakit açıları** (şafak kuralı ve ileride namaz vakitleri için):
 
 - **Fecr-i sâdık:** dört mezhepte −19°. Avrupalıların −18°'si kabul edilmez (s. 176).
-- **Yatsı:** İmâm-ı a'zam'a göre −19°, İmâmeyn ve diğer üç mezhebe göre −17° (s. 176).
+- **Yatsı:** İmâm-ı a'zam'a göre −19°, İmâmeyn ve diğer üç mezhebe göre −17° (s. 178).
 - **Şafak:** kızıllığın kaybolması −17°, beyazlığın kaybolması −19° (s. 176–178).
 - **Mer'î vakit:** riyâdî vakit + 8 dk 20 sn (s. 176).
 
@@ -603,9 +603,9 @@ Yarım küre yazılmazsa arz Kuzey, tûl Doğu kabul edilir. Tûl yanlış alana
 
 **Ad ve dağıtım.**
 
-- Programın adı: "Mâh-ı Nev — Hilâl Rasad Yardımcısı". Resmî depo: github.com/bemiroglu/MahiNev.
+- Programın adı: "Mâh-ı Nev — Hilâl Rasad Yardımcısı". Yayın deposu: github.com/bemiroglu/MahiNev.
 - Lisans: CC BY-NC-ND 4.0. Değiştirilmiş kopyalar dağıtılamaz.
-- Program açılışta kendi bütünlüğünü denetler; değiştirilmiş kopyada "resmî olmayan kopya" uyarısı çıkar.
+- Program açılışta kendi bütünlüğünü denetler; değiştirilmiş dosyada "değiştirilmiş kopya" uyarısı çıkar.
 
 **Hesap, rasad ve hüküm.**
 

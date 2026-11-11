@@ -12,7 +12,7 @@ Saha sekmesindeki "Rü'yet kaydı ve tutanak" formu her gözlem için bir JSON k
 | `observation.sky` | `clear` açık, `partly` parçalı, `cloud` bulutlu (hilâl bulut arasından), `haze` puslu. Açık ve bulutlu hava farkı fıkhen önemlidir (s. 315). |
 | `observation.evening` | Kaydın ait olduğu akşam. Gurûbdan sonra yapılan kayıt o güne, gün doğumundan önceki kayıt bir önceki güne aittir. |
 | `computed` | Program tarafından eklenir: ictimâ, gurûb, şer'î gurûb, kitabın penceresi, beynûnet, gözlem anında hilâlin irtifâı, sınıf, Kâdîhân, değerlendirme. **Hüküm değildir.** |
-| `app` | Programın adı ve sürümü; `source` resmî adres, `official` bütünlük denetiminin sonucu, `engine` astronomi çekirdeği, `rules` kural kümesi (ör. `TI-360/1`), `models` modern ölçütlerin tanımı. |
+| `app` | Programın adı ve sürümü; `source` yayın adresi, `official` bütünlük denetiminin sonucu (dosya özgün mü), `engine` astronomi çekirdeği, `rules` kural kümesi (ör. `TI-360/1`), `models` modern ölçütlerin tanımı. |
 | `photo` | Fotoğrafın SHA-256 özeti ve küçük bir önizlemesi. Asıl dosya cihazda kalır; programdaki "Fotoğrafı doğrula" düğmesi, seçilen dosyanın özetinin bir kayıtla eşleşip eşleşmediğini gösterir. Depolama yetersizse önizleme saklanmaz (`thumbDropped: true`); bu durumda kayıt önizlemesiz içerikle yeniden mühürlenir. |
 | `signer`, `sig` | Cihaz imzası. Biçim ECDSA P-256 / SHA-256, imza IEEE P1363 (r‖s) olarak base64 ile kodlanır. İmzalanan veri `hash` metnidir. |
 | `hash` | `hash` ve `sig` hariç kaydın kanonik JSON'unun SHA-256 özeti. |

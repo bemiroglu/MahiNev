@@ -3,7 +3,8 @@
 <!--
   Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0-deneme.1
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
-  Resmî sürüm / Official version: https://github.com/bemiroglu/MahiNev
+  Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
+  Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
   Değiştirilmiş kopyalar dağıtılamaz. Modified copies may not be distributed.
   Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir (THIRD_PARTY_NOTICES.md).
 -->
@@ -209,7 +210,13 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .obs { border-left: 4px solid var(--muted); padding: 8px 12px; border-radius: 6px; background: var(--surface-2); margin: 12px 0 0; }
 .obs.ok { border-color: var(--ok); } .obs.no { border-color: var(--bad); } .obs.wait { border-color: var(--warn); }
 .obs p { margin: 2px 0; }
-.strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 4px; }
+.strip { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-start; }
+.strip .sgrp { flex: 1 1 auto; min-width: 0; }
+.strip .sgh { font-size: .82rem; margin: 0 0 4px 2px; border-bottom: 2px solid var(--line); padding-bottom: 2px; }
+.strip .sgd { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 4px; }
+.strip .sgrp:first-child .sgh { border-bottom-style: dashed; }
+.strip button .hd { font: 500 .66rem/1 var(--font-mono); color: var(--muted); margin-top: 2px; }
+.strip button.amb .hd { color: var(--accent); font-weight: 700; }
 .strip button { border: 1px solid var(--line); background: var(--surface-2); border-radius: 6px; padding: 12px 2px 4px; cursor: pointer; min-height: 60px; display: flex; flex-direction: column; align-items: center; gap: 1px; font: 500 .78rem/1.1 var(--font-body); position: relative; }
 .strip button .d { font: 600 .95rem/1 var(--font-mono); }
 .strip button .sw { width: 70%; height: 6px; border-radius: 3px; background: var(--c-notborn); opacity: .35; }
@@ -220,6 +227,8 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .mapmsg { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; max-width: 80%; text-align: center; }
 .safety { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 8px 12px; border-radius: 6px; font-size: .86rem; margin: 0 0 14px; }
 .safety::before { content: "⚠ "; }
+.safety { position: relative; padding-right: 34px; }
+.safety .x { position: absolute; top: 4px; right: 6px; border: 0; background: none; font-size: 1.2rem; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 6px; }
 #view-saha .safety { margin: 8px 0 0; font-size: .82rem; }
 .safety .short { display: none; }
 @media (max-width: 700px) { .safety .long { display: none; } .safety .short { display: inline; } }
@@ -291,6 +300,9 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
 .netstat { font-size: .85rem; background: var(--surface-2); border-radius: 8px; padding: 6px 10px; margin: 8px 0; }
 .lic { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
 footer#footer a { color: inherit; }
+footer#footer .src { font-weight: 500; }
+.linkbtn { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; }
+.card.about { border-left: 3px solid var(--line); }
 .ver { font: 500 .72rem/1 var(--font-mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; }
 dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 .setgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px 22px; }
@@ -339,6 +351,29 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
 [hidden] { display: none !important; }
 @media (max-width: 560px) { .field-top { grid-template-columns: 1fr; } .clock { font-size: 2.3rem; } .bigwhere { font-size: 1.1rem; } .best .big { font-size: 1.7rem; } .facts { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* an çubuğu: seçili gün ve saatte rü’yet durumu */
+#mbar { border-left: 6px solid transparent; transition: background-color .3s, border-color .3s; }
+#mbar.st-ok { border-left-color: var(--ok); background: color-mix(in srgb, var(--ok) 16%, var(--surface)); }
+#mbar.st-soon { border-left-color: var(--ok); background: color-mix(in srgb, var(--ok) 7%, var(--surface)); }
+#mbar.st-past { border-left-color: var(--muted); }
+#mbar.st-bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+#mbar.st-none { border-left-color: var(--line); }
+.mbstate { font-size: .8rem; font-weight: 600; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.st-ok .mbstate { color: var(--ok); } .st-soon .mbstate { color: var(--ok); } .st-bad .mbstate { color: var(--bad); } .st-past .mbstate, .st-none .mbstate { color: var(--muted); font-weight: 500; }
+@media (max-width: 700px) { .mbstate { white-space: normal; flex-basis: 100%; order: 3; padding: 0; } }
+.skytime { display: flex; align-items: center; gap: 8px; margin: 8px 0 4px; } .skytime input { flex: 1 1 auto; min-width: 0; } .skytime .tv { font: 600 .95rem var(--font-mono); min-width: 5.5em; text-align: right; } .skytime .btn { padding: 4px 8px; }
+@media (max-width: 700px) { #sky { height: 306px; } }
+/* planlama kipinde de bant rengi seçili an için rü’yet durumunu gösterir; planlama işareti kip etiketinde kalır */
+body.planning #mbar[class*="st-"] { color: var(--ink); border-top-color: var(--line); border-right-color: var(--line); border-bottom-color: var(--line); }
+body.planning #mbar.st-ok { background: color-mix(in srgb, var(--ok) 16%, var(--surface)); }
+body.planning #mbar.st-soon { background: color-mix(in srgb, var(--ok) 7%, var(--surface)); }
+body.planning #mbar.st-past, body.planning #mbar.st-none { background: var(--surface); }
+body.planning #mbar.st-bad { background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+body.planning #mbar[class*="st-"] .mode { background: var(--accent); color: var(--accent-ink); }
+body.planning #mbar[class*="st-"] .hj, body.planning #mbar[class*="st-"] .hj b { color: var(--ink); }
+body.planning #mbar[class*="st-"] .chip { color: var(--ink); border-color: var(--line); }
+body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.tmore { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; } .tmore summary { cursor: pointer; font-weight: 600; color: var(--accent); } .tlong { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 6px; }
 </style>
 </head>
 <body>
@@ -363,6 +398,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
   <div class="mbar" id="mbar" role="status" aria-live="off">
     <span class="mode" id="mbMode"></span>
     <div class="when"><span class="d" id="mbDate"></span><span class="tm" id="mbTime"></span><span class="hj" id="mbHijri"></span></div>
+    <span class="mbstate" id="mbState"></span>
     <div class="chips" id="mbChips"></div>
     <div class="acts"><div class="seg" role="group" id="mbLive"><button type="button" id="mbPlay"></button><button type="button" id="mbFreeze"></button></div><button class="btn" type="button" id="mbNow"></button><button class="btn" type="button" id="mbPrint"></button></div>
   </div>
@@ -414,7 +450,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
           <div id="moment"></div>
         </section>
         <section class="card" id="wxCard"><h2 id="hWx"></h2><div id="wxBody"></div></section>
-        <section class="card" id="skyCard"><div class="cardhead"><h2 id="hSky"></h2><div class="btns"><button class="btn" type="button" id="openSM"></button></div></div><div id="sky"></div><div id="guides"></div>
+        <section class="card" id="skyCard"><div class="cardhead"><h2 id="hSky"></h2><div class="btns"><button class="btn" type="button" id="openSM"></button></div></div><div id="sky"></div><div class="skytime"><button class="btn" type="button" id="skyMinus" aria-label="−10 min">−10′</button><input type="range" id="skyT" min="0" max="1620" step="1"><button class="btn" type="button" id="skyPlus" aria-label="+10 min">+10′</button><span class="tv" id="skyTVal"></span></div><div id="guides"></div>
           <p class="where" id="skyWhere"></p><div class="readout" id="skyRead"></div><p class="cap" id="skyNote"></p></section>
         <section class="card" id="stripCard"><h2 id="hStrip"></h2><div class="strip" id="strip"></div><p class="cap" id="stripNote"></p></section>
         <div class="grid2">
@@ -505,6 +541,8 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
       <div>
         <h3 id="hHelp"></h3>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
+        <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
+        <label class="chk"><input type="checkbox" id="optSafety"><span id="lOptSafety"></span></label>
         <p class="cap" id="explainNote"></p>
       </div>
       <div class="net">
@@ -1725,10 +1763,17 @@ window.HR_CANON_EN = [
     ]
   };
 
-  function topicHtml(L, id) {
+  // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
+  function topicHtml(L, id, mode) {
     const t = TOPICS[L][id]; if (!t) return '';
     const fk = L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)', bl = L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation';
-    return `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
+    let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
+    const lg = G.HRGuide.LONG && G.HRGuide.LONG[L] && G.HRGuide.LONG[L][id];
+    if (lg && mode && mode !== 'short') {
+      const body = `<p class="lab">${L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail'}</p><p>${esc(lg[0])}</p><p class="lab">${L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail'}</p><p>${esc(lg[1])}</p>`;
+      h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
+    }
+    return h;
   }
   function planHtml(L) {
     return PLAN[L].map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
@@ -1754,8 +1799,9 @@ window.HR_CANON_EN = [
   function sourcesHtml(L) {
     const tr = L === 'tr';
     return '<ul>' + [
-      tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
-         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (2026 edition): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
+      tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
+         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
+      tr ? 'Kitabı okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : 'Read or download the book: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).',
       tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibn Abidin, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
       '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
       'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
@@ -1769,11 +1815,11 @@ window.HR_CANON_EN = [
     const note = L === 'tr' ? '' : '<p class="small">English rendering of the Turkish canonical text. The Turkish text is authoritative.</p>';
     return note + canon.map(p => `<p>${esc(p)}</p>`).join('');
   }
-  function render(L, t) {
+  function render(L, t, mode) {
     const ids = Object.keys(TOPICS[L]);
     return `<div class="guide-grid">
       <section class="card prose"><h2>${t.gPlan}</h2>${planHtml(L)}</section>
-      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(TOPICS[L][id][0])}</summary>${topicHtml(L, id).replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
+      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(TOPICS[L][id][0])}</summary>${topicHtml(L, id, mode || 'more').replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
       <section class="card prose"><h2>${t.helpRules}</h2>${rulesHtml(L)}</section>
       <section class="card prose"><h2>${t.helpCanon}</h2>${canonHtml(L)}</section>
       <section class="card prose"><h2>${t.helpSources}</h2>${sourcesHtml(L)}</section>
@@ -2116,7 +2162,7 @@ window.HR_CANON_EN = [
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* metinleri: Mâh-ı Nev adı, lisans ve resmî sürüm bildirimi, HTML indirme, önceki/sonraki rasad */
+/* metinleri: Mâh-ı Nev adı, lisans ve yayın bildirimi, HTML indirme, önceki/sonraki rasad */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.7.0';
@@ -2127,12 +2173,12 @@ window.HR_CANON_EN = [
     dlHtml: 'HTML’yi indir', dlHtmlTip: 'Programın bu sürümünü tek bir HTML dosyası olarak indirin; internetsiz çalışır.',
     dlDone: 'İndirme başladı.', dlFail: 'Bu ortamda indirme yapılamadı.',
     upPrev: 'Önceki hilâl rasadı', upPrevGo: 'O geceyi aç', upNextNote: 'Bu akşamın arama penceresi geçti; bir sonraki ay başı rasadı gösteriliyor.',
-    licTitle: 'Lisans ve resmî sürüm',
+    licTitle: 'Bu araç, kaynak ve lisans',
     licText: 'Ticarî olmayan kullanım için, değiştirilmeden ve kaynak gösterilerek paylaşılabilir. Değiştirilmiş kopyalar dağıtılamaz.',
-    licOfficial: 'Resmî sürüm yalnız şu adresten dağıtılır:',
+    licOfficial: 'Programın özgün dosyası yalnız şu adreste yayımlanır:',
     licThird: 'Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir',
-    tamper: 'Bu kopya resmî Mâh-ı Nev sürümüyle eşleşmiyor; değiştirilmiş olabilir. Hesap sonuçlarına güvenmeden önce resmî sürümü indirin:',
-    tamperShort: 'resmî olmayan kopya',
+    tamper: 'Bu kopya, yayımlanan özgün dosyayla eşleşmiyor; değiştirilmiş olabilir. Hesaplara güvenmeden önce özgün dosyayı indirin:',
+    tamperShort: 'değiştirilmiş kopya',
     printFooter: 'Bu çıktı takvim değildir. Kamerî ay başı, hilâlin çıplak gözle görülmesiyle (rü’yet) kesinleşir; burada verilenler hesâbî imkândır (Tam İlmihâl, s. 315, 360).'
   });
   Object.assign(G.HRI18N.T.en, {
@@ -2142,12 +2188,12 @@ window.HR_CANON_EN = [
     dlHtml: 'Download HTML', dlHtmlTip: 'Download this version of the program as a single HTML file; it works offline.',
     dlDone: 'Download started.', dlFail: 'Downloading is not possible in this environment.',
     upPrev: 'Previous crescent watch', upPrevGo: 'Open that night', upNextNote: 'This evening’s search window has passed; the next month-start watch is shown.',
-    licTitle: 'Licence and official version',
+    licTitle: 'This tool, its source and licence',
     licText: 'May be shared for non-commercial use, unmodified and with attribution. Modified copies may not be distributed.',
-    licOfficial: 'The official version is distributed only at:',
+    licOfficial: 'The original file of the program is published only at:',
     licThird: 'Embedded third-party components come with their own licences',
-    tamper: 'This copy does not match the official Mâh-ı Nev release and may have been modified. Download the official version before relying on its results:',
-    tamperShort: 'unofficial copy',
+    tamper: 'This copy does not match the published original file and may have been modified. Download the original before relying on its results:',
+    tamperShort: 'modified copy',
     printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Tam İlmihâl, pp. 315, 360).'
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -2257,6 +2303,26 @@ window.HR_CANON_EN = [
     tzStdNote: (z, o) => `${z}: UTC${o}; bu dilimde yaz saati uygulanmıyor.`,
     tzOffErr: 'Saat farkı anlaşılamadı. Örnek: +3, -5, +5:30 (−12 ile +14 arası).',
     tzAuto: o => `Konum seçili saat diliminden çok uzak; saat farkı tûlden hesaplandı: UTC${o}. Bölgenin resmî saati farklıysa “UTC farkı” kutusundan veya listeden düzeltin.`,
+    stripHesabi: '· hesâbî', stripDay: 'Gündüz', stripEve: 'Gurûbdan sonra', stripHesabiLong: 'Hicrî tarihler hesâbîdir; ay başı rü’yetle kesinleşir (s. 360).',
+    detailLvl: 'Açıklamalar (“?” notları)', detailShort: 'Kısa (varsayılan)', detailLong: 'Ayrıntılı',
+    skyTTip: 'Saati kaydırın: bütün sayfa (Plan, Harita, durum bandı) bu ana göre güncellenir.',
+    // Bant durumu
+    bandNone: 'Bu tarihte gurûb yok', bandMid: 'Ay başı akşamı değil', bandReject: 'Bu akşam rü’yet mümkün değil (kesin red, s. 360)',
+    bandBelow5: 'Bu akşam görülemez: hilâl 5°’nin altında (s. 360)', bandTonight: w => `Bu akşam rü’yet mümkün · arama ${w}`,
+    bandNow: w => `Şu an hilâl aranabilir · ${w}`, bandSel: w => `Seçili anda hilâl aranabilir · ${w}`, bandPast: w => `Bu akşamın arama penceresi geçti (${w})`,
+    // Göz güvenliği
+    safetyHide: 'Uyarıyı gizle', safetyHidden: 'Göz güvenliği uyarısı gizlendi; Ayarlar’dan yeniden açabilirsiniz.', optSafety: 'Göz güvenliği uyarısını göster',
+    // Hava ifadeleri: yalnız havayı anlatır, rü’yete dair hüküm içermez
+    wxLevel: { good: 'Hava: batı ufku açık görünüyor', fair: 'Hava: parçalı; batıda bulut veya pus olabilir', poor: 'Hava: kapalı veya yağışlı görünüyor' },
+    wxNoSight: 'Hesaba göre bu akşam hilâl görülemez; hava tahmini yalnız bilgi içindir.',
+    // Kaynak önceliği ve yayın
+    tzAuto: o => `Konum seçili saat diliminden çok uzak; saat farkı tûlden hesaplandı: UTC${o}. Bölgede kullanılan saat farklıysa “UTC farkı” kutusundan veya listeden düzeltin.`,
+    aboutTitle: 'Bu araç hakkında',
+    aboutText: 'Mâh-ı Nev, Tam İlmihâl Se’âdet-i Ebediyye kitabındaki bilgiler esas alınarak hazırlanmış bir rasad yardımcısıdır. Hilâl rasadının planlanmasını ve sahada yapılmasını kolaylaştırmak için yapılmıştır. Bir fıkıh kaynağı değildir; kaynağın yerini tutmaz. Esas ve kesin bilgi fıkıhtır: Bu programda kitaba ve fıkha uymayan bir bilgi bulunursa, o bilgi geçersizdir. Fıkhî hükümler için kitabın kendisine başvurunuz.',
+    editionNote: 'Programdaki sayfa numaraları Tam İlmihâl Se’âdet-i Ebediyye’nin Ocak 2026 baskısına göredir; başka baskılarda birkaç sayfa farklı olabilir.',
+    bookLinks: 'Kitabı okuyun veya indirin (Hakîkat Kitâbevi):', bookPage: 'kitabın sayfası', bookPdf: 'PDF',
+    srcLine: 'Kaynak: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
+    pageEdition: 'sayfa no.: Ocak 2026 baskısı',
     jpgGo: 'JPG resmi olarak kaydet', jpgShort: 'JPG', jpgMaking: 'JPG hazırlanıyor…',
     jpgDone: n => n > 1 ? `${n} sayfa JPG olarak hazırlandı (ZIP).` : 'Sayfa JPG olarak hazırlandı.',
     jpgFail: 'Bu tarayıcıda JPG üretilemedi. “Yazdır / PDF” ile PDF olarak kaydedebilirsiniz.',
@@ -2282,6 +2348,22 @@ window.HR_CANON_EN = [
     tzStdNote: (z, o) => `${z}: UTC${o}; no daylight saving in this zone.`,
     tzOffErr: 'Offset not understood. Examples: +3, -5, +5:30 (between −12 and +14).',
     tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the official time differs, correct it with the “UTC offset” box or the list.`,
+    tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the clock time used there differs, correct it with the “UTC offset” box or the list.`,
+    stripHesabi: '· computed', stripDay: 'Daytime', stripEve: 'After sunset', stripHesabiLong: 'Hijri dates are computed; the month is established by sighting (p. 360).',
+    detailLvl: 'Explanations (“?” notes)', detailShort: 'Short (default)', detailLong: 'Detailed',
+    skyTTip: 'Slide the time: the whole page (Plan, Map, status band) follows this moment.',
+    bandNone: 'No sunset on this date', bandMid: 'Not a month-start evening', bandReject: 'No sighting possible this evening (definite rejection, p. 360)',
+    bandBelow5: 'Not visible this evening: crescent below 5° (p. 360)', bandTonight: w => `Sighting possible this evening · search ${w}`,
+    bandNow: w => `Search for the crescent now · ${w}`, bandSel: w => `Crescent searchable at the selected moment · ${w}`, bandPast: w => `This evening’s search window has passed (${w})`,
+    safetyHide: 'Hide warning', safetyHidden: 'Eye-safety warning hidden; you can turn it back on in Settings.', optSafety: 'Show the eye-safety warning',
+    wxLevel: { good: 'Weather: western horizon looks clear', fair: 'Weather: partly cloudy; cloud or haze possible in the west', poor: 'Weather: overcast or wet' },
+    wxNoSight: 'By calculation the crescent cannot be seen this evening; the forecast is for information only.',
+    aboutTitle: 'About this tool',
+    aboutText: 'Mâh-ı Nev is an observation aid prepared on the basis of the book Tam İlmihâl Se’âdet-i Ebediyye. It was made to help plan crescent observations and carry them out in the field. It is not a source of fiqh and does not replace the source. Fiqh is the basis and the decisive knowledge: anything in this program that does not agree with the book and with fiqh is void. For rulings, consult the book itself.',
+    editionNote: 'Page numbers in the program refer to the January 2026 printing of Tam İlmihâl Se’âdet-i Ebediyye; other printings may differ by a few pages.',
+    bookLinks: 'Read or download the book (Hakîkat Kitâbevi):', bookPage: 'book page', bookPdf: 'PDF',
+    srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
+    pageEdition: 'page nos.: January 2026 printing',
     jpgGo: 'Save as JPG image', jpgShort: 'JPG', jpgMaking: 'Preparing JPG…',
     jpgDone: n => n > 1 ? `${n} pages prepared as JPG (ZIP).` : 'Page prepared as JPG.',
     jpgFail: 'JPG could not be produced in this browser. Use “Print / PDF” to save a PDF.',
@@ -2290,6 +2372,96 @@ window.HR_CANON_EN = [
     onlineNote: 'All astronomical calculations work without internet or location.',
     privacyNote: 'Privacy: Mâh-ı Nev never connects to the internet unless you turn a connection on. Your location, records, name, contact details and photo previews are kept only in this browser and are never sent to a server. The connections you can enable are listed above: the forecast sends an approximate location to open-meteo.com; web fonts connect to Google’s servers; automatic location uses no internet. The GitHub and licence links open only when you click them. The program contains no ads, counters or tracking code.'
   });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+/* Ayrıntılı açıklamalar: “?” notlarının uzun hâli. Kısa not her zaman görünür; ayrıntı, Ayarlar’da “Ayrıntılı” seçilirse
+   ya da notun altındaki düğmeyle açılır. Fıkhî kısım yalnız Tam İlmihâl’e (ve kitabın naklettiği eserlere) dayanır;
+   sayfa numaraları kitabın Ocak 2026 baskısına göredir. Bilimsel kısım programın ne yaptığını anlatır, hüküm vermez. */
+(function (G) {
+  'use strict';
+  const T = G.HRGuide && G.HRGuide.TOPICS; if (!T) return;
+  // Yeni konu: rasad gecesi ve en elverişli akşam
+  T.tr.rasad = ['Rasad gecesi ve en elverişli akşam',
+    'Şa’bânın 29. günü akşam hilâli aramak vâcib-i kifâyedir; görülmezse ay otuza tamamlanır (s. 314–315). Semâda Ramezân hilâlini aramak bir ibâdettir. Hesap, ayın başladığı vakti değil, hilâlin görülebileceği geceyi anlamak içindir (s. 360).',
+    'Rasad gecesi (A): bulunduğunuz yerde hilâlin görülmesinin mümkün olduğu ilk akşam (gurûbda beynûnet ≥ 8° ve hilâl ufkun 5° üstünde). En elverişli akşam (B): beynûnetin 18°’ye ulaştığı ilk akşam. İkisi de hesâbî imkândır; hilâlin görüldüğünü bildirmez.'];
+  T.en.rasad = ['Watch night and most favourable evening',
+    'Searching for the crescent on the evening of the 29th of Sha’ban is a communal obligation (vâcib-i kifâye); if it is not seen, the month is completed to thirty days (pp. 314–315). Searching the sky for the Ramadan crescent is an act of worship. Calculation is for knowing the night on which the crescent can be seen, not the moment the month begins (p. 360).',
+    'Watch night (A): the first evening at your location on which the crescent can possibly be seen (elongation ≥ 8° at sunset and the crescent 5° above the horizon). Most favourable evening (B): the first evening on which the elongation reaches 18°. Both are computed possibility; neither says that the crescent was seen.'];
+
+  // Ayrıntılı metinler: [fıkhî ayrıntı, bilimsel ayrıntı]
+  const LONG = {
+    tr: {
+      hesap: [
+        'Kitap iki şeyi birbirinden ayırır: hilâlin doğması ve hilâlin görülmesi. Hilâlin doğması bir hesap işidir; hesâbın bildirdiği kesin doğrudur. Hilâlin görülmesi (rü’yet-i hilâl) ise çıplak gözle olur ve vaktinin hesâbı yapılamaz. Hilâl doğduğu gece görülebileceği gibi o gece görülemeyip ikinci gece de görülebilir. İbni Âbidîn, Ramezânın birinci gününü anlamakta takvimlere güvenilmemesini, oruca hilâlin doğduğu gece değil görüldüğü gece başlanmasını bildirir. Ramezâna ve bayrama takvim ile, hesap ile başlamanın câiz olmadığı Fetâvâ-ı Hindiyye’de de yazılıdır. İmâm-ı Sübkî: hesapla hilâlin bir gece sonra doğacağı bildirilmişken o gece gördüğünü söyleyen olsa hesâba inanılır, çünkü hesapla anlaşılan kat’îdir (s. 314–315, 360).',
+        'Program iki ayrı şey hesaplar. Birincisi kesin olandır: ictimâ anı, gurûb, ayın konumu, beynûnet. Bunlar dakika ve yay dakikası hassasiyetindedir. İkincisi imkândır: kitabın eşiklerine (8°, 18°, 5°) göre o akşam hilâlin görülmesinin mümkün olup olmadığı. Programın hiçbir sonucu “ay başladı” demez; ay başı ancak rü’yetle ve şahitlik şartlarıyla sabit olur.'],
+      hicri: [
+        'Ezânî gün iki şer’î gurûb arasıdır (s. 188); kamerî gün bu yüzden akşam başlar. Kitap, hilâli görmekle Ramezânın başlamasının hesapla anlaşılandan bir gün sonra olabileceğini, fakat bir gün önce olamayacağını bildirir (s. 360). Programdaki “n (veya n−1)” ve “1 | 29/30” gösterimleri bu hükmün karşılığıdır: hesâbî en erken günden önce ay başlayamaz; rü’yet bir gün sonraya kalabilir. Ramezânda bir yerde görülen hilâl her yeri bağladığı için dünya geneli, kurban ve namaz vakitleri mahallî olduğu için bulunduğunuz yer ayrıca gösterilir (s. 315).',
+        'Hicrî gün, her ayın hesâbî en erken gününden sayılır. Program, kamerî günü şer’î gurûbda değiştirir; gurûbdan sonra seçili an bir sonraki kamerî güne aittir. Ay adları ve yıl, ictimâya göre aritmetik takvimden alınır. Muharrem’de yeni yıl ancak hilâl görülünce kesinleşeceği için iki yıl birlikte yazılır. Bütün bu tarihler hesâbîdir; rü’yetle kesinleşir.'],
+      kuresel: [
+        'Şa’bânın otuzuncu gecesi bir şehirde hilâl görülünce bütün dünyada oruca başlamak lâzımdır (s. 315). Redd-ül-muhtâr’a göre (Kitâb-us-savm) zâhir rivayette ihtilâf-ı metâli’ muteber değildir; batıdakilerin görmesiyle doğudakilere de hüküm lâzım olur. Bunun şartı rü’yetin gerektirici bir surette sabit olmasıdır: iki şahit, hâkimin hükmüne şahitlik veya haberin yayılması. “Falan yerde görmüşler” diye aktarmak yetmez. Hac, kurban ve namaz vakitleri böyle değildir; bunlar mahallîdir (Redd-ül-muhtâr, Kitâb-us-savm).',
+        'Aynı takvim gününde gurûb batıda daha geç olur; bu arada ay güneşten uzaklaşmaya devam eder. Bu yüzden hilâl genellikle önce batıdaki yerlerde görülebilir hâle gelir. Program dünya geneli için en erken akşamı, aynı günün en geç gurûbunun bulunduğu tarih çizgisinin hemen doğusunda, kutup daireleri arasında arar; bu, bütün dünya taramasıyla aynı günü verir.'],
+      sahitlik: [
+        'Bulutlu havada Ramezân hilâlini bir âdil müslimânın “gördüm” demesi yeter; açık havada birçok kimsenin haber vermesiyle sabit olur. Bayram için iki âdil gerekir; bulutlu havada Şevvâl için iki erkek veya bir erkek ile iki kadın şahit olur. Kâdî bulunmayan yerde de böyledir. Şehir dışında veya yüksek yerde görenin yalnız başına haberi kabul edilebilir. Takvime göre başlanan yerlerde bayramdan sonra iki gün kazâ orucu lâzım olur (s. 315–316).',
+        'Programın rü’yet kaydı, gözlemcinin beyanını ve o anın şartlarını belgeler: zaman, yer, gök durumu, gören kişi sayısı, fotoğraf özeti. Kayıt bir şahitlik değildir; şahitliğin yerine geçmez. İsim yazılmayan kayıt “isimsiz beyan” olarak işaretlenir. Hesaba göre imkânsız bir akşam için yapılan beyan, kitabın hükmüyle kabul edilmez (İmâm-ı Sübkî, s. 360).'],
+      besderece: [
+        'Kitap, 57′ ihtilâf-ı manzar sebebiyle hilâlin ufka 5° yaklaşınca görülemeyeceğini bildirir (s. 360). Bu yüzden gözlem penceresi gurûbdan başlar ve hilâl ufka 5° yaklaşınca biter. Gurûb anında hilâl 5°’nin altındaysa o akşam görülemez.',
+        'Program “görünen irtifâ”yı hesaplar: ayın paralaksı (yaklaşık 1°) ve atmosferik kırılma dahildir. Pencerenin başlangıcı zâhirî gurûbdur (güneşin üst kenarının görünen ufuktan kaybolduğu an). Pencerenin sonu, hilâlin görünen irtifâının 5°’ye indiği andır. Ufuk yakınında kırılma hava sıcaklığı ve basıncıyla değişir; bu yüzden pencere sınırları gerçekte birkaç dakika oynayabilir.'],
+      beynunet: [
+        'Beynûnet 8°’den azken hilâl hiçbir zamanda, hiçbir yerde görülemez. Beynûnet 18° olunca hilâl güneş batarken batı ufkunda görünür; o anda güneşin battığı boylamda ve batısında görülebilir. 18° Osmanlı âlimlerinin kabulüdür (s. 360). Program bu iki eşiği sınıflarının temeli yapar: 8°’nin altı kesin red, 8°–18° arası “görülmesi mümkün; dikkatli rasad gerekir”, 18° ve üstü “hesâba göre görülebilir”.',
+        'Beynûnet, dünyanın merkezinden bakınca ay ile güneş arasındaki açıdır (uzanım). Ay güneşten günde ortalama 12,2° uzaklaşır. Modern gözlemler de çıplak gözle görülen en küçük uzanımı 7–8° civarında bulur; bu bilgi yalnız ek bilgidir, sınıflar kitabın eşiklerine göredir.'],
+      ciplak: [
+        'Rü’yet, gökte yeni ayı görmektir. Rasad ve rü’yet-i hilâlin çıplak gözle yapılması şarttır; aletle yapılan gözlem muteber değildir (Rasad Hakkında Zarûrî Malûmat). Hicrî kamerî ay başları, yeni ayın hilâlinin çıplak gözle rasad yapılarak görülmesiyle kesinleşir.',
+        'Dürbün, hilâlin yerini bulmaya yardım edebilir; fakat dürbünle bulunan hilâl ancak çıplak gözle de görülürse rü’yet olur. Programın kayıt formunda “önce dürbünle bulup sonra çıplak gözle gördüm” ayrı bir seçenektir. “Yalnız dürbünle” ve “yalnız fotoğrafla” tespitler yardımcı bilgidir. Güneş batmadan dürbünü batıya çevirmek gözde kalıcı hasar yapar.'],
+      enerken: [
+        'Hilâli görmekle Ramezânın başlaması, hesapla anlaşılandan bir gün sonra olabilir; fakat bir gün önce olamaz (s. 360). Zilhiccenin dokuzuncu günü Arefe de hesapla anlaşılan gün veya bir gün sonra olur; bir gün önce Arafât’a çıkanların haccı sahîh olmaz (s. 344, 360).',
+        'Program, beynûnetin 8°’yi ve hilâlin görünen irtifâının 5°’yi geçtiği ilk akşamı arar. Hesâbî en erken gün, o akşamdan sonraki gündür. Ramezân için dünya geneli, kurban için bulunduğunuz yer, hac için Mekke esas alınır.'],
+      safak: [
+        'Kâdîhân’a göre hilâl şafaktan sonra batarsa ikinci gecenin, şafaktan önce batarsa birinci gecenin hilâlidir (s. 316). Yatsı vakti için kitap iki kavli bildirir: İmâm-ı a’zam’a göre beyazlığın kaybolması (güneş −19°), İmâmeyn’e ve diğer üç mezhebe göre kırmızılığın kaybolması (−17°) (s. 178). Kitap, yatsıyı İmâm-ı a’zam’ın kavline göre kılmanın ihtiyâtlı olduğunu bildirir (s. 194). Program bu yüzden −19°’yi esas alır, −17°’yi sonucuyla birlikte gösterir.',
+        'Şafak vakitleri kitabın usulüyle hesaplanır: önce güneş merkezinin hakîkî ufka göre −19° (veya −17°) irtifâa indiği hakîkî vakit bulunur, sonra buna temkin eklenerek şer’î vakit elde edilir (s. 197). İki kavil farklı sonuç verirse program bunu açıkça yazar.'],
+      gurub: [
+        'Kitap üç gurûb tanımlar (s. 186): hakîkî gurûb (güneş merkezinin hakîkî irtifâı sıfır), zâhirî gurûb (üst kenarın gözlemcinin görünen ufkundan kaybolduğu an) ve şer’î gurûb (üst kenarın şer’î ufka göre irtifâı sıfır; hakîkî gurûb + temkin). Gurûbu görebilen için zâhirî gurûb, göremeyen için şer’î gurûb mu’teberdir (s. 181, 186, 317). Temkin, hakîkî vakit ile şer’î vakit arasındaki farktır; ihtiyat zamanı değildir. Bir şehirde tek temkin vardır (s. 176, 186, 316).',
+        'Temkin; ufkun alçalması (inhitât), kırılma ve güneşin yarıçapından paralaks çıkarılarak hesaplanır. İstanbul için kitap 21 Mart / 23 Eylül’de 7 dk 52 sn bulur ve 2 dakika ihtiyatla vasatî 10 dakika kabul eder (s. 185–186). Program temkini, şehrin en yüksek yerine göre her tarih için kitabın usulüyle hesaplar; bu yükseklik girilmezse temkin yüksekliksiz hesaplanır.'],
+      rasad: [
+        'Kitap, takvimlerde bildirilen geceden önceki gecede “hilâli gördük” demenin yanlış olduğunu bildirir (s. 360). Şa’bânın 29. akşamı hilâl aranır; görülmezse ay otuza tamamlanır.',
+        'Kartlar, bulunduğunuz yer için sıradaki ve önceki ay başı rasad gecelerini gösterir. Bu akşamın arama penceresi geçince kart bir sonraki aya geçer. “Bu geceyi planla” düğmesi o akşamı açar; bütün ekranlar o akşama göre güncellenir.']
+    },
+    en: {
+      hesap: [
+        'The book distinguishes two things: the birth of the crescent and its sighting. The birth is a matter of calculation, and what calculation states is certain. The sighting (rü’yet-i hilâl) is by the naked eye, and its time cannot be calculated: the crescent may be seen on the night of its birth, or not until the second night. Ibn Abidin states that calendars must not be relied on for the first day of Ramadan and that fasting begins on the night the crescent is seen, not the night it is born. Fatawa-i Hindiyya also states that beginning Ramadan or the feast by calendar or calculation is not permissible. Imam Subki: if someone says he saw the crescent on a night before calculation says it is born, the calculation is believed, because what is known by calculation is certain (pp. 314–315, 360).',
+        'The program computes two different things. First, what is certain: the conjunction, sunset, the Moon’s position, the elongation, to the minute and arc-minute. Second, possibility: whether, by the book’s thresholds (8°, 18°, 5°), the crescent can possibly be seen that evening. No result of the program says “the month has begun”; the month is established only by sighting and the conditions of testimony.'],
+      hicri: [
+        'The ezânî day runs between two legal sunsets (p. 188), so the lunar day begins in the evening. The book states that beginning Ramadan by sighting may be one day later than what calculation shows, but never one day earlier (p. 360). The program’s “n (or n−1)” and “1 | 29/30” correspond to this ruling: the month cannot begin before the computed earliest day, and sighting may come one day later. Because a crescent seen anywhere binds everyone in Ramadan, the worldwide date is shown; because sacrifice and prayer times are local, your own location is shown as well (p. 315).',
+        'The Hijri day is counted from the computed earliest day of each month. The program changes the lunar day at the legal sunset; after sunset the selected moment belongs to the next lunar day. Month names and the year come from the arithmetic calendar for the conjunction; in Muharram both years are written because the new year is certain only when the crescent is seen. All these dates are computed and become certain by sighting.'],
+      kuresel: [
+        'When the crescent is seen in one city on the 30th night of Sha’ban, fasting becomes necessary everywhere in the world (p. 315). According to Radd al-Muhtar (Kitab al-Sawm), differing horizons are not considered in the apparent narration; a sighting in the west binds those in the east, provided it is established in a binding way: two witnesses, testimony to a judge’s ruling, or widespread news. Merely reporting “they saw it somewhere” is not enough. Hajj, sacrifice and prayer times are not like this; they are local (Radd al-Muhtar, Kitab al-Sawm).',
+        'On the same calendar day, sunset comes later in the west while the Moon keeps moving away from the Sun, so the crescent usually becomes visible first in western places. The program searches for the worldwide earliest evening just east of the date line, between the polar circles, where the latest sunset of a calendar day falls; this gives the same day as a whole-world scan.'],
+      sahitlik: [
+        'In cloudy weather, one upright Muslim saying “I saw it” suffices for the Ramadan crescent; in clear weather it is established by the reports of many. Two upright witnesses are needed for the feast; in cloudy weather two men, or one man and two women, testify for Shawwal. It is the same where there is no judge. The report of a single person who saw it outside the city or from a high place may be accepted. Where the month was begun by calendar, two days of make-up fasting are needed after the feast (pp. 315–316).',
+        'The program’s sighting record documents the observer’s statement and the conditions of the moment: time, place, sky, number of people who saw it, photo digest. The record is not testimony and does not replace it. A record without a name is marked “anonymous statement”. A claim made for an evening on which sighting is impossible by calculation is not accepted, by the book’s ruling (Imam Subki, p. 360).'],
+      besderece: [
+        'The book states that because of the 57′ parallax the crescent cannot be seen once it comes within 5° of the horizon (p. 360). The observation window therefore begins at sunset and ends when the crescent comes down to 5°. If the crescent is already below 5° at sunset, it cannot be seen that evening.',
+        'The program computes the apparent altitude, including the Moon’s parallax (about 1°) and atmospheric refraction. The window begins at the visible sunset (the Sun’s upper limb disappearing below the visible horizon) and ends when the crescent’s apparent altitude falls to 5°. Refraction near the horizon varies with temperature and pressure, so the window’s limits may shift by a few minutes in reality.'],
+      beynunet: [
+        'When the elongation is less than 8°, the crescent cannot be seen at any time or place. At 18° the crescent appears on the western horizon at sunset, at the longitude where the Sun is setting and west of it. 18° is the accepted value of Ottoman scholars (p. 360). The program builds its classes on these two thresholds: below 8° definite rejection, 8°–18° “possible; careful observation needed”, 18° and above “visible by calculation”.',
+        'Elongation is the angle between the Moon and the Sun seen from the centre of the Earth. The Moon moves away from the Sun by about 12.2° a day on average. Modern observations also put the smallest naked-eye elongation at around 7–8°; this is additional information only, the classes follow the book’s thresholds.'],
+      ciplak: [
+        'Sighting means seeing the new Moon in the sky. Observation and sighting of the crescent must be done with the naked eye; observation with instruments is not valid (Rasad Hakkında Zarûrî Malûmat). The lunar months begin when the new crescent is seen with the naked eye through observation.',
+        'Binoculars may help to locate the crescent, but a crescent found with binoculars counts as a sighting only if it is then seen with the naked eye. The record form has a separate option for “found with binoculars, then seen with the naked eye”. Detections “only with binoculars” or “only by photograph” are supporting information. Pointing binoculars west before sunset can permanently damage the eye.'],
+      enerken: [
+        'Beginning Ramadan by sighting may be one day later than what calculation shows, but not one day earlier (p. 360). The 9th of Dhu al-Hijja, the day of Arafa, is likewise the calculated day or one day later; the Hajj of those who stand at Arafat one day earlier is not valid (pp. 344, 360).',
+        'The program looks for the first evening on which the elongation exceeds 8° and the crescent’s apparent altitude exceeds 5°. The computed earliest day is the day after that evening. Ramadan uses the worldwide date, the sacrifice your location, and Hajj Makkah.'],
+      safak: [
+        'According to Qadikhan, if the crescent sets after twilight it is the crescent of the second night; if before, of the first night (p. 316). For the night prayer the book gives two views: per Imam A’zam, the disappearance of the whiteness (Sun at −19°); per the Imameyn and the other three schools, the disappearance of the redness (−17°) (p. 178). The book states that it is more cautious to pray according to Imam A’zam’s view (p. 194). The program therefore uses −19° and shows −17° together with its result.',
+        'Twilight times are computed with the book’s method: first the true time at which the Sun’s centre reaches −19° (or −17°) relative to the true horizon, then the temkin is added to obtain the legal time (p. 197). If the two views give different results, the program says so plainly.'],
+      gurub: [
+        'The book defines three sunsets (p. 186): true sunset (the true altitude of the Sun’s centre is zero), visible sunset (the upper limb disappears from the observer’s visible horizon) and legal sunset (the upper limb’s altitude relative to the legal horizon is zero; true sunset + temkin). For one who can see the sunset the visible sunset counts; for one who cannot, the legal sunset (pp. 181, 186, 317). Temkin is the difference between the true and the legal time; it is not a precautionary margin. A city has a single temkin (pp. 176, 186, 316).',
+        'Temkin is computed from the dip of the horizon, refraction and the Sun’s radius minus parallax. For Istanbul the book finds 7 min 52 s on 21 March / 23 September and adopts an average of 10 minutes with a 2-minute margin (pp. 185–186). The program computes the temkin for every date with the book’s method from the city’s highest point; if that height is not entered, the temkin is computed without it.'],
+      rasad: [
+        'The book states that saying “we saw the crescent” on the night before the one given by calendars is wrong (p. 360). The crescent is sought on the evening of the 29th of Sha’ban; if it is not seen, the month is completed to thirty days.',
+        'The cards show the next and the previous month-start watch nights for your location. Once this evening’s search window has passed, the card moves to the next month. “Plan this night” opens that evening, and every screen follows it.']
+    }
+  };
+  G.HRGuide.LONG = LONG;
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Yıldız ve takımyıldız verisi: d3-celestial 0.7.35 (Olaf Frohn, BSD-3-Clause) — Hipparcos tabanlı, J2000.
@@ -5002,8 +5174,27 @@ var qrcode = function() {
       <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp)"/>`;
     for (let a = 10; a < aMax; a += 10) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22"/><text x="${W - 4}" y="${Y(a) - 3}" font-size="${10 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".7">${a}°</text>`;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.2"/><text x="6" y="${y5 - 5}" font-size="${11 * F}" fill="${col('--sky-label')}" font-weight="600">5°</text>`;
-    const objs = core.skyObjects(t, obs).filter(o => o.alt > -0.5 && (o.kind === 'planet' ? o.mag < 2.5 : o.mag < 1.0) && fDark > 0.2);
-    for (const o of objs) { const rr = Math.max(1.3, Math.min(4, 3.2 - o.mag * 0.8)); s += `<circle cx="${X(o.az)}" cy="${Y(o.alt)}" r="${rr}" fill="${col('--sky-star')}"/>` + (o.kind === 'planet' ? `<text x="${X(o.az) + rr + 3}" y="${Y(o.alt) + 4}" font-size="${10 * F}" fill="${col('--sky-label')}" opacity=".85">${objName(o.id, L)}</text>` : ''); }
+    // Parlak gök cisimleri: gezegenler (kadir < 2,5) ve parlak yıldızlar (kadir < 1,6). İsimler parlaklık sırasıyla,
+    // birbirini ve Güneş/Ay etiketlerini örtmeyecek yere konur; yer bulunamayan cismin yalnız noktası çizilir.
+    const objs = core.skyObjects(t, obs).filter(o => o.alt > -0.5 && (o.kind === 'planet' ? o.mag < 2.5 : o.mag < 1.6) && fDark > 0.2)
+      .sort((a, b) => (a.kind === 'planet' ? a.mag - 3 : a.mag) - (b.kind === 'planet' ? b.mag - 3 : b.mag));
+    const fs = 11 * F, taken = [];
+    const sxP = X(now.sun.az), syP = Y(now.sun.alt), mxP = X(now.moon.az), myP = Y(now.moon.alt);
+    taken.push([sxP - 34 * F, Math.min(H - 4, syP + 20) - fs, 68 * F, fs + 4], [sxP - 9, syP - 9, 18, 18]);   // Güneş ve etiketi
+    taken.push([mxP - 34 * F, myP - 15 - fs, 68 * F, fs + 4], [mxP - 11, myP - 11, 22, 22]);                  // Ay ve etiketi
+    taken.push([0, y5 - 5 - fs, 30 * F, fs + 2], [W - 34 * F, 0, 34 * F, H]);                                  // 5° ve irtifâ yazıları
+    const hit = (b) => b[0] < 0 || b[0] + b[2] > W || b[1] < 0 || b[1] + b[3] > y0 - 1 || taken.some(q => b[0] < q[0] + q[2] && b[0] + b[2] > q[0] && b[1] < q[1] + q[3] && b[1] + b[3] > q[1]);
+    for (const o of objs) {
+      const x = X(o.az), y = Y(o.alt), rr = Math.max(1.3, Math.min(4, 3.2 - o.mag * 0.8)), pl = o.kind === 'planet';
+      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr}" fill="${col(pl ? '--accent' : '--sky-star')}"/>`;
+      taken.push([x - rr - 1, y - rr - 1, 2 * rr + 2, 2 * rr + 2]);
+      const name = objName(o.id, L), w = name.length * fs * 0.56, h = fs + 2;
+      const cand = [[x + rr + 3, y - h / 2, 'start'], [x - rr - 3 - w, y - h / 2, 'start'], [x - w / 2, y - rr - 3 - h, 'start'], [x - w / 2, y + rr + 3, 'start']];
+      const c = cand.find(([bx, by]) => !hit([bx, by, w, h]));
+      if (!c) continue;
+      taken.push([c[0], c[1], w, h]);
+      s += `<text x="${c[0].toFixed(1)}" y="${(c[1] + h - 3).toFixed(1)}" font-size="${(pl ? fs : fs * 0.92).toFixed(1)}" fill="${col('--sky-label')}"${pl ? ' font-weight="600"' : ' opacity=".85"'}>${name}</text>`;
+    }
     s += `<rect x="0" y="${y0}" width="${W}" height="${H - y0}" fill="${col('--ground')}" opacity=".92"/>`;
     // güneş
     const sx = X(now.sun.az), sy = Y(now.sun.alt);
@@ -5387,10 +5578,10 @@ var qrcode = function() {
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  // ---- Resmî sürüm bildirimi ve bütünlük denetimi (build.py ile eş) ----
+  // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD9660d9aa409b74d2';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD54e59e6a496392a8';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -5426,7 +5617,7 @@ var qrcode = function() {
   const TB_MAX = 1620; // 00:00 → ertesi gün 03:00
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
     mapLayer: 'seadet', mapRes: 3, mapAge: true, mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
-    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
+    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
@@ -5482,6 +5673,7 @@ var qrcode = function() {
     set('hDetail', st.lang === 'tr' ? 'Gurûb ve hilâl' : 'Sunset and crescent');
     $('hMonth').innerHTML = esc(t.month) + ' ' + q('enerken'); set('miniHow', t.miniHow);
     set('hExtra', t.extra); set('extraNote', t.extraNote); set('hTests', t.testsTitle); set('testsIntro', t.testsIntro); $('footer').innerHTML = noticeHtml(); paintTamper();
+    $('aboutOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('aboutCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
     $('hMap').innerHTML = esc(t.mapTitle) + ' ' + q('kuresel'); set('lMDate', t.mapEvening); set('lMLayer', t.mapLayer); set('lMRes', t.mapRes); set('lMAge', t.mapAge); set('lMBorders', t.mapBorders); set('lM18', t.map18);
     set('lMMode', t.mapMode); set('lMLand', t.landOnly); set('lMTime', t.mapTime); set('mNow', t.nowBtn);
     $('mMode').innerHTML = [['evening', t.mmEvening], ['instant', t.mmInstant]].map(([v, l]) => `<option value="${v}"${st.mapMode === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
@@ -5511,7 +5703,9 @@ var qrcode = function() {
     set('lTzOff', t.tzOff); $('tzOff').title = t.tzOffTip;
     set('hLic', t.licTitle); $('licBody').innerHTML = licHtml();
     // göz güvenliği, gizlilik, kayıt araçları
-    $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span>`; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
+    $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span><button type="button" class="x" id="safetyX" aria-label="${esc(t.safetyHide)}" title="${esc(t.safetyHide)}">×</button>`;
+    $('safetyX').onclick = () => { st.safetyOff = true; save(); $('optSafety').checked = false; paintSafety(); toast(t.safetyHidden, 6000); };
+    set('lOptSafety', t.optSafety); $('optSafety').checked = !st.safetyOff; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
     set('fCompassNote', t.compassNote);
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
     $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
@@ -5529,17 +5723,20 @@ var qrcode = function() {
     $('recRes').innerHTML = opts(t.recRes, $('recRes').value || 'naked'); $('recSky').innerHTML = opts(t.recSkyOpts, $('recSky').value || 'clear'); $('recPlace').innerHTML = opts(t.recPlaceOpts, $('recPlace').value || 'open');
     $('recName').value = st.recName || ''; $('recContact').value = st.recContact || '';
     $('netsBody').innerHTML = `<ul class="guides"><li><a href="https://www.astronomycenter.net/icop.html?l=en" target="_blank" rel="noopener">ICOP — Islamic Crescents’ Observation Project</a> (International Astronomical Center)</li><li><a href="https://www.moonsighting.org.uk" target="_blank" rel="noopener">ICOUK — moonsighting.org.uk</a></li><li><a href="https://www.moonsighting.com" target="_blank" rel="noopener">moonsighting.com</a></li></ul><p class="cap">${esc(t.recNetsNote)}</p>`;
+    set('lDetail', t.detailLvl); $('detailLvl').innerHTML = [['short', t.detailShort], ['long', t.detailLong]].map(([v, l]) => `<option value="${v}"${st.detail === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('hHelp', st.lang === 'tr' ? 'Rehberlik' : 'Guidance'); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
+    { const addQ = (id, topic) => { const el = $(id); if (el && !el.querySelector('.q')) el.insertAdjacentHTML('beforeend', ' ' + q(topic)); };
+      addQ('hUp', 'rasad'); addQ('hStrip', 'hicri'); addQ('hRec', 'sahitlik'); addQ('lRecRes', 'ciplak'); addQ('lHMax', 'gurub'); }
       const el = $(id); if (!el) return;
       const card = el.closest('section, .status'); if (!card) return;
       let h = card.querySelector(':scope > .hint, :scope .cardhead + .hint');
       if (!h) { h = document.createElement('p'); h.className = 'hint'; const anchor = id === 'fBig' ? el : (el.closest('.cardhead') || el); anchor.insertAdjacentElement(id === 'fBig' ? 'beforebegin' : 'afterend', h); }
       h.textContent = 'ⓘ ' + t.hints[k];
     });
-    $('guideBody').innerHTML = G.HRGuide.render(st.lang, t) + `<section class="card"><h2>${esc(st.lang === 'tr' ? 'Hesap ve gözlem hassasiyeti' : 'Calculation and observation accuracy')}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
+    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(st.lang === 'tr' ? 'Hesap ve gözlem hassasiyeti' : 'Calculation and observation accuracy')}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
     $('checkBody').innerHTML = G.HRGuide.planHtml(st.lang);
     applyTheme();
   }
@@ -5640,6 +5837,10 @@ var qrcode = function() {
       save(); renderBigMap();
     }));
     $('mTime').addEventListener('input', () => setTmin(+$('mTime').value));
+    // Ufuk kartındaki zaman çubuğu: bütün sayfanın seçili ânını değiştirir
+    let skyRaf = 0; $('skyT').addEventListener('input', () => { const v = +$('skyT').value; cancelAnimationFrame(skyRaf); skyRaf = requestAnimationFrame(() => setTmin(v)); });
+    $('skyMinus').onclick = () => setTmin((st.tmin || 0) - 10); $('skyPlus').onclick = () => setTmin((st.tmin || 0) + 10);
+    $('skyT').title = t.skyTTip;
     $('mHPrev').onclick = () => stepHours(-1); $('mHNext').onclick = () => stepHours(1);
     $('mPlay').onclick = () => playing ? stopPlay() : startPlay();
     $('mNow').onclick = goNow;
@@ -5667,6 +5868,8 @@ var qrcode = function() {
     $('fFont').onclick = () => { st.fontSize = st.fontSize >= 1.3 ? 1 : st.fontSize >= 1.15 ? 1.3 : 1.15; save(); fillStatic(); repaintAll(); };
     $('optWx').onchange = e => { st.wx = e.target.checked; save(); paintNet(); renderWx(true); };
     $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); paintNet(); if (st.autoLoc) autoLocate(true); };
+    $('detailLvl').onchange = e => { st.detail = e.target.value; save(); fillStatic(); };
+    $('optSafety').onchange = e => { st.safetyOff = !e.target.checked; save(); paintSafety(); };
     $('optFonts').onchange = e => { st.webFonts = e.target.checked; save(); applyFonts(); paintNet(); };
     $('openSM').onclick = () => openSM(selT()); $('fSM').onclick = () => openSM(A.MakeTime(new Date()));
     $('fLoc').onclick = () => autoLocate(true, true);
@@ -5681,7 +5884,7 @@ var qrcode = function() {
     computeDay(); renderTime(); if (view === 'harita') renderBigMap(); if (view === 'saha') fieldTick(true);
   }
   function openTopic(id) {
-    $('dlgBody').innerHTML = G.HRGuide.topicHtml(st.lang, id);
+    $('dlgBody').innerHTML = G.HRGuide.topicHtml(st.lang, id, st.detail === 'long' ? 'long' : 'more') + `<p class="small" style="margin-top:10px">${esc(t.editionNote)}</p>`;
     const d = $('dlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
   }
   function closeDlg() { const d = $('dlg'); try { d.close(); } catch (e) { d.removeAttribute('open'); } }
@@ -5739,6 +5942,9 @@ var qrcode = function() {
     if (st.webFonts) on.push('fonts.googleapis.com · fonts.gstatic.com');
     el.textContent = on.length ? t.netOn(on.join(' · ')) : t.netNone;
   }
+  // Göz güvenliği uyarısı yalnız rü’yetin mümkün olduğu akşamlarda gösterilir; kullanıcı kapatabilir (Ayarlar’dan geri açılır)
+  const sightPossible = r => !!(r && r.ok && r.cls && ['possible', 'visible'].includes(r.cls.code));
+  function paintSafety() { const el = $('safety'); if (el) el.hidden = !!st.safetyOff || !sightPossible(R); }
   function showHMaxNote() { const n = $('hMaxNote'); if (!n) return; n.hidden = !!(st.hMax && st.hMax > 0); n.textContent = t.hMaxUnset; }
   function locObj() { return { lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, hMax: st.hMax, tz: st.tz }; }
   const evCache = new Map();
@@ -5747,7 +5953,7 @@ var qrcode = function() {
   function update() {
     if (!isFinite(st.lat) || !isFinite(st.lon)) return;
     LOC = locObj(); showHMaxNote(); showTzOff();
-    R = eveningCached(LOC, st.date);
+    R = eveningCached(LOC, st.date); paintSafety();
     tzCheck();
     if (!R.ok) {
       const noonAlt = C.at(C.solarNoon(st.date, LOC.lon), LOC).sun.alt, polarNight = noonAlt < 0;
@@ -5949,6 +6155,7 @@ var qrcode = function() {
     ['gurub', 'best', 'win'].forEach(k => $('j' + { gurub: 'Gurub', best: 'Best', win: 'Win' }[k]).setAttribute('aria-pressed', String(st.anchor === k)));
     renderTrack(); renderMoment(at); renderSky(at); renderBar();
     $('mTime').value = String(st.tmin || 0); $('mTimeVal').textContent = hhmm(at) + (nextDay ? ' (+1)' : '');
+    $('skyT').max = String(TB_MAX); $('skyT').value = String(st.tmin || 0); $('skyTVal').textContent = hhmm(at) + (nextDay ? ' (+1)' : '');
   }
   const ymdParts = ymd => { const [y, m, d] = ymd.split('-').map(Number); return [y, m - 1, d]; };
   const localYmd = at => todayYmdAt(st.tz, at.date);
@@ -6086,15 +6293,24 @@ var qrcode = function() {
     const today = todayYmd(st.tz);
     const wd = new Intl.DateTimeFormat(locale(), { timeZone: 'UTC', weekday: 'short' });
     const mon = new Intl.DateTimeFormat(locale(), { timeZone: 'UTC', month: 'short' });
-    $('strip').innerHTML = res.map(({ ymd, r, mo }, k) => {
+    // Günler, yerel hesâbî kamerî aya göre gruplanır; her grubun başında ayın adı yazar. Ay başının belirsiz olduğu gün “1?” ile işaretlenir.
+    const items = res.map(x => { let h = null, hn = null, hg = null; try { h = hijriOf(x.ymd, true); hn = hijriOf(addDays(x.ymd, 1), true); hg = hijriOf(x.ymd); } catch (e) { /* */ } return Object.assign({ h, hn, hg }, x); });
+    const groups = [];
+    for (const it of items) { const key = it.h ? `${it.h.month.y}-${it.h.month.m}` : '?'; if (!groups.length || groups[groups.length - 1].key !== key) groups.push({ key, month: it.h && it.h.month, list: [] }); groups[groups.length - 1].list.push(it); }
+    let k = 0;
+    $('strip').innerHTML = groups.map(g => `<div class="sgrp"><div class="sgh">${g.month ? `<b>${esc(monthName(g.month.m))} ${g.month.y}</b> <span class="small">${esc(t.stripHesabi)}</span>` : ''}</div><div class="sgd">` + g.list.map(({ ymd, r, mo, h, hn, hg }) => {
       const code = r.ok ? r.cls.code : 'none';
       const col = CLS_COLOR[code];
       const tag = nights && nights.a && nights.a.ymd === ymd ? (nights.b && nights.b.ymd === ymd ? 'A·B' : 'A') : nights && nights.b && nights.b.ymd === ymd ? 'B' : '';
       const mtag = mo && mo.code === 'possible' ? (st.lang === 'tr' ? 's' : 'm') : '';
-      const d = civil(ymd), dn = d.getUTCDate();
-      const ttl = `${fmtCivil(d)} — ${r.ok ? clsText(r)[0] : t.lgNoSun}`;
-      return `<button type="button" data-ymd="${ymd}" title="${esc(ttl)}"${ymd === st.date ? ' aria-current="date"' : ''} class="${ymd === today ? 'today' : ''}">${tag ? `<span class="tag">${tag}</span>` : ''}${mtag ? `<span class="mtag">${mtag}</span>` : ''}<span class="small">${esc(dn === 1 || k === 0 ? mon.format(d) : wd.format(d))}</span><span class="d">${dn}</span><span class="sw" style="${col ? `background:var(${col});opacity:1` : ''}"></span></button>`;
-    }).join('');
+      const d = civil(ymd), dn = d.getUTCDate(), first = k++ === 0;
+      const amb = h && h.dayTxt.startsWith('1 |');
+      const hd = h ? (amb ? '1?' : h.dayTxt.split(' | ')[0]) : '';
+      const ttl = [`${fmtCivil(d)} — ${r.ok ? clsText(r)[0] : t.lgNoSun}`,
+        h ? `${t.stripDay}: ${h.plain}` : '', hn ? `${t.stripEve}: ${hn.plain}` : '',
+        hg && h && hg.plain !== h.plain ? `${t.hjGlobal} (${t.stripDay.toLowerCase()}): ${hg.plain}` : '', t.stripHesabiLong].filter(Boolean).join('\n');
+      return `<button type="button" data-ymd="${ymd}" title="${esc(ttl)}"${ymd === st.date ? ' aria-current="date"' : ''} class="${ymd === today ? 'today' : ''}${amb ? ' amb' : ''}">${tag ? `<span class="tag">${tag}</span>` : ''}${mtag ? `<span class="mtag">${mtag}</span>` : ''}<span class="small">${esc(dn === 1 || first ? mon.format(d) : wd.format(d))}</span><span class="d">${dn}</span><span class="sw" style="${col ? `background:var(${col});opacity:1` : ''}"></span><span class="hd">${esc(hd)}</span></button>`;
+    }).join('') + '</div></div>').join('');
     $('strip').querySelectorAll('[data-ymd]').forEach(b => b.onclick = () => setDate(b.dataset.ymd, { anchor: 'auto' }));
   }
 
@@ -6285,7 +6501,7 @@ var qrcode = function() {
     const city = CITIES.find(c => c.id === st.city);
     // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
-    $('fSafety').hidden = !sunUp; if (sunUp) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = !compassOn;
+    const fShow = sunUp && !st.safetyOff && sightPossible(eveningCached(loc, todayYmd(st.tz))); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = !compassOn;
     $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
@@ -6558,6 +6774,25 @@ var qrcode = function() {
     $('mbLive').hidden = !live || field;
     $('mbPlay').setAttribute('aria-pressed', String(live && !frozen)); $('mbFreeze').setAttribute('aria-pressed', String(frozen));
     $('mbPrint').hidden = !['plan', 'harita', 'saha'].includes(view);
+    paintBandState(at, live && !frozen);
+  }
+  // Seçili gün ve saatte rü’yet durumu: bant rengi ve kısa ibare (kitabın sınıfları ve arama penceresi esas)
+  function bandState(at, live) {
+    const e = recEveningOf(at), r = e.r;
+    if (!r || !r.ok || !r.cls) return { k: 'none', txt: t.bandNone };
+    const c = r.cls.code;
+    if (c === 'midMonth') return { k: 'none', txt: t.bandMid };
+    if (r.cls.reject) return { k: 'bad', txt: t.bandReject };
+    if (c === 'below5') return { k: 'bad', txt: t.bandBelow5 };
+    const win = r.windowEnd ? `${hhmm(r.gurub)}–${hhmm(r.windowEnd)}` : '';
+    if (e.day) return { k: 'soon', txt: t.bandTonight(win) };
+    if (r.windowEnd && at.ut >= r.gurub.ut && at.ut <= r.windowEnd.ut) return { k: 'ok', txt: (live ? t.bandNow : t.bandSel)(win) };
+    return at.ut < r.gurub.ut ? { k: 'soon', txt: t.bandTonight(win) } : { k: 'past', txt: t.bandPast(win) };
+  }
+  function paintBandState(at, live) {
+    let s = { k: 'none', txt: '' }; try { s = bandState(at, live); } catch (e) { /* */ }
+    const b = $('mbar'); ['ok', 'soon', 'past', 'bad', 'none'].forEach(k => b.classList.toggle('st-' + k, s.k === k));
+    $('mbState').textContent = s.txt;
   }
   // Yaklaşan rü’yet (canlı kipte): rasad gecesi ve en elverişli akşam
   let upKey = null, upData = null;
@@ -6632,7 +6867,7 @@ var qrcode = function() {
     const ass = ON.assess(hereG, westG, aq); WX.ass = ass;
     const cls = { good: 'p-ok', fair: 'p-warn', poor: 'p-bad' }[ass.level];
     const reasons = ass.reasons.map(k => t.wxReason[k]).join(', ');
-    let h = `<p style="margin:0 0 8px"><span class="pill ${cls}">${esc(t.wxLevel[ass.level])}</span> <span class="small">${esc(t.wxFor)}: ${hhmm(R.gurub)}${reasons ? ' · ' + esc(reasons) : ''}</span> ${q('hava')}</p>`;
+    let h = (R && R.ok && R.cls && (R.cls.reject || R.cls.code === 'below5' || R.cls.code === 'midMonth') ? `<p class="small" style="margin:0 0 6px">${esc(t.wxNoSight)}</p>` : '') + `<p style="margin:0 0 8px"><span class="pill ${cls}">${esc(t.wxLevel[ass.level])}</span> <span class="small">${esc(t.wxFor)}: ${hhmm(R.gurub)}${reasons ? ' · ' + esc(reasons) : ''}</span> ${q('hava')}</p>`;
     h += `<div class="scroll"><table class="wx"><thead><tr>${t.wxHead.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>`;
     h += `<tr><th colspan="5" style="text-align:left">${esc(t.wxHere)}</th></tr>`;
     for (const k of [-1, 0, 1]) { const v = ON.pick(d.here, g + k * 3600e3); h += wxRow(v ? fmtH(v.t) : '–', v); }
@@ -6681,14 +6916,20 @@ var qrcode = function() {
   }
   const extLink = (u, s) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s)}</a>` : esc(s);
   const bare = u => String(u || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+  // Kaynak kitap: Hakîkat Kitâbevi’nin kendi sayfaları
+  const BOOK_PAGE = 'https://www.hakikatkitabevi.net/book.php?bookCode=001', BOOK_PDF = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
+  const bookLinksHtml = () => `${esc(t.bookLinks)} ${extLink(BOOK_PAGE, t.bookPage)} · ${extLink(BOOK_PDF, t.bookPdf)}`;
+  function aboutHtml() {
+    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="small">${esc(t.editionNote)}</p>`;
+  }
   function noticeHtml() {
     const n = NOTICE || {};
-    return `${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
+    return `<span class="src">${extLink(BOOK_PAGE, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
       (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>`;
   }
   function licHtml() {
     const n = NOTICE || {};
-    return `${esc(n.n || t.appFull)} · ${esc(n.c || '')}<br>${extLink(n.lu, n.l || '')}: ${esc(t.licText)}<br>${esc(t.licOfficial)} ${extLink(HOME, bare(HOME))}` +
+    return `<b>${esc(t.aboutTitle)}</b>${aboutHtml()}${esc(n.n || t.appFull)} · ${esc(n.c || '')}<br>${extLink(n.lu, n.l || '')}: ${esc(t.licText)}<br>${esc(t.licOfficial)} ${extLink(HOME, bare(HOME))}` +
       (n.p ? ` · ${extLink(n.p, bare(n.p))}` : '') + `<br>${esc(t.licThird)}: ${esc(t.footer)}`;
   }
   function paintTamper() {
@@ -6713,7 +6954,7 @@ var qrcode = function() {
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
-  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}</span></footer>`; }
+  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''} · ${esc(t.pageEdition)}</span></footer>`; }
   const locLine = () => `<strong>${esc(placeName())}</strong> · ${num(st.lat, 4)}°, ${num(st.lon, 4)}° · ${num(st.elev, 0)} m · ${esc(st.tz)}`;
   function pagePlan() {
     const r = R; if (!r) return '';
@@ -7053,12 +7294,12 @@ var qrcode = function() {
     $('recRes').value = 'noObs'; $('recSeers').value = '0'; $('recFirst').value = ''; $('recLast').value = ''; const fe3 = recFormError();
     Object.assign($('recRes'), { value: keepF.r }); $('recSeers').value = keepF.s; $('recFirst').value = keepF.f; $('recLast').value = keepF.l;
     add('kayıt formu', 'Gördüm + 0 kişi / ilk > son saat / gözlem yapılamadı', 'hata / hata / geçerli', `${fe1 ? 'hata' : 'geçerli'} / ${fe2 ? 'hata' : 'geçerli'} / ${fe3 ? 'hata' : 'geçerli'}`, '—', fe1 === t.recErrSeers && fe2 === t.recErrOrder && !fe3);
-    // yaklaşan ay başı rasadı (geçmiş geceye gitmez), resmî sürüm bildirimi ve bütünlük
+    // yaklaşan ay başı rasadı (geçmiş geceye gitmez), yayın bildirimi ve bütünlük
     const keep2 = LOC; LOC = { lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' };
     let u1 = null, u2 = null, u3 = null; try { u1 = nextRasad('2026-11-11'); u2 = nextRasad('2026-11-12'); u3 = nextRasad('2026-12-11'); } finally { LOC = keep2; }
     add('yaklaşan rasad', 'İstanbul: 11.11 / 12.11 / 11.12.2026’den itibaren ilk ay başı gecesi', '2026-11-11 / 2026-12-10 / 2027-01-09',
       `${u1.a && u1.a.ymd} / ${u2.a && u2.a.ymd} / ${u3.a && u3.a.ymd}`, '—', u1.a && u1.a.ymd === '2026-11-11' && u2.a && u2.a.ymd === '2026-12-10' && u3.a && u3.a.ymd === '2027-01-09' && (!u3.b || u3.b.ymd >= '2027-01-09'));
-    add('resmî sürüm', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · resmî`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'resmî' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
+    add('özgün dosya', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · özgün`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'özgün' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
     const ok = rows.filter(x => x.ok).length;
     $('tests').innerHTML = `<caption class="small" style="text-align:left;padding-bottom:8px">${ok} / ${rows.length} ${t.pass.toLowerCase()}</caption>
       <thead><tr><th>${t.tCase}</th><th>${t.tQty}</th><th>${t.tExp}</th><th>${t.tGot}</th><th>${t.tTol}</th><th>${t.tRes}</th></tr></thead><tbody>` +

@@ -2,7 +2,7 @@
 
 ## Depo
 
-- Resmî depo: **https://github.com/bemiroglu/MahiNev** (public).
+- Yayın deposu: **https://github.com/bemiroglu/MahiNev** (public).
 - Yayın adresi (Pages): **https://bemiroglu.github.io/MahiNev/**.
 - Lisans: CC BY-NC-ND 4.0 (`LICENSE`). Değiştirilmiş kopyalar dağıtılamaz; program kendi bütünlüğünü denetler.
 

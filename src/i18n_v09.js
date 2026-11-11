@@ -1,7 +1,7 @@
 /* Metinler: internet izinleri, JPG çıktısı, UTC saat farkı */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.9.0-deneme.1';
+  G.HR_VERSION = '0.9.0-deneme.2';
   Object.assign(G.HRI18N.T.tr, {
     // İnternet bağlantıları ve izinler
     hOnline: 'İnternet bağlantıları ve izinler',
@@ -20,6 +20,26 @@
     tzStdNote: (z, o) => `${z}: UTC${o}; bu dilimde yaz saati uygulanmıyor.`,
     tzOffErr: 'Saat farkı anlaşılamadı. Örnek: +3, -5, +5:30 (−12 ile +14 arası).',
     tzAuto: o => `Konum seçili saat diliminden çok uzak; saat farkı tûlden hesaplandı: UTC${o}. Bölgenin resmî saati farklıysa “UTC farkı” kutusundan veya listeden düzeltin.`,
+    stripHesabi: '· hesâbî', stripDay: 'Gündüz', stripEve: 'Gurûbdan sonra', stripHesabiLong: 'Hicrî tarihler hesâbîdir; ay başı rü’yetle kesinleşir (s. 360).',
+    detailLvl: 'Açıklamalar (“?” notları)', detailShort: 'Kısa (varsayılan)', detailLong: 'Ayrıntılı',
+    skyTTip: 'Saati kaydırın: bütün sayfa (Plan, Harita, durum bandı) bu ana göre güncellenir.',
+    // Bant durumu
+    bandNone: 'Bu tarihte gurûb yok', bandMid: 'Ay başı akşamı değil', bandReject: 'Bu akşam rü’yet mümkün değil (kesin red, s. 360)',
+    bandBelow5: 'Bu akşam görülemez: hilâl 5°’nin altında (s. 360)', bandTonight: w => `Bu akşam rü’yet mümkün · arama ${w}`,
+    bandNow: w => `Şu an hilâl aranabilir · ${w}`, bandSel: w => `Seçili anda hilâl aranabilir · ${w}`, bandPast: w => `Bu akşamın arama penceresi geçti (${w})`,
+    // Göz güvenliği
+    safetyHide: 'Uyarıyı gizle', safetyHidden: 'Göz güvenliği uyarısı gizlendi; Ayarlar’dan yeniden açabilirsiniz.', optSafety: 'Göz güvenliği uyarısını göster',
+    // Hava ifadeleri: yalnız havayı anlatır, rü’yete dair hüküm içermez
+    wxLevel: { good: 'Hava: batı ufku açık görünüyor', fair: 'Hava: parçalı; batıda bulut veya pus olabilir', poor: 'Hava: kapalı veya yağışlı görünüyor' },
+    wxNoSight: 'Hesaba göre bu akşam hilâl görülemez; hava tahmini yalnız bilgi içindir.',
+    // Kaynak önceliği ve yayın
+    tzAuto: o => `Konum seçili saat diliminden çok uzak; saat farkı tûlden hesaplandı: UTC${o}. Bölgede kullanılan saat farklıysa “UTC farkı” kutusundan veya listeden düzeltin.`,
+    aboutTitle: 'Bu araç hakkında',
+    aboutText: 'Mâh-ı Nev, Tam İlmihâl Se’âdet-i Ebediyye kitabındaki bilgiler esas alınarak hazırlanmış bir rasad yardımcısıdır. Hilâl rasadının planlanmasını ve sahada yapılmasını kolaylaştırmak için yapılmıştır. Bir fıkıh kaynağı değildir; kaynağın yerini tutmaz. Esas ve kesin bilgi fıkıhtır: Bu programda kitaba ve fıkha uymayan bir bilgi bulunursa, o bilgi geçersizdir. Fıkhî hükümler için kitabın kendisine başvurunuz.',
+    editionNote: 'Programdaki sayfa numaraları Tam İlmihâl Se’âdet-i Ebediyye’nin Ocak 2026 baskısına göredir; başka baskılarda birkaç sayfa farklı olabilir.',
+    bookLinks: 'Kitabı okuyun veya indirin (Hakîkat Kitâbevi):', bookPage: 'kitabın sayfası', bookPdf: 'PDF',
+    srcLine: 'Kaynak: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
+    pageEdition: 'sayfa no.: Ocak 2026 baskısı',
     jpgGo: 'JPG resmi olarak kaydet', jpgShort: 'JPG', jpgMaking: 'JPG hazırlanıyor…',
     jpgDone: n => n > 1 ? `${n} sayfa JPG olarak hazırlandı (ZIP).` : 'Sayfa JPG olarak hazırlandı.',
     jpgFail: 'Bu tarayıcıda JPG üretilemedi. “Yazdır / PDF” ile PDF olarak kaydedebilirsiniz.',
@@ -45,6 +65,22 @@
     tzStdNote: (z, o) => `${z}: UTC${o}; no daylight saving in this zone.`,
     tzOffErr: 'Offset not understood. Examples: +3, -5, +5:30 (between −12 and +14).',
     tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the official time differs, correct it with the “UTC offset” box or the list.`,
+    tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the clock time used there differs, correct it with the “UTC offset” box or the list.`,
+    stripHesabi: '· computed', stripDay: 'Daytime', stripEve: 'After sunset', stripHesabiLong: 'Hijri dates are computed; the month is established by sighting (p. 360).',
+    detailLvl: 'Explanations (“?” notes)', detailShort: 'Short (default)', detailLong: 'Detailed',
+    skyTTip: 'Slide the time: the whole page (Plan, Map, status band) follows this moment.',
+    bandNone: 'No sunset on this date', bandMid: 'Not a month-start evening', bandReject: 'No sighting possible this evening (definite rejection, p. 360)',
+    bandBelow5: 'Not visible this evening: crescent below 5° (p. 360)', bandTonight: w => `Sighting possible this evening · search ${w}`,
+    bandNow: w => `Search for the crescent now · ${w}`, bandSel: w => `Crescent searchable at the selected moment · ${w}`, bandPast: w => `This evening’s search window has passed (${w})`,
+    safetyHide: 'Hide warning', safetyHidden: 'Eye-safety warning hidden; you can turn it back on in Settings.', optSafety: 'Show the eye-safety warning',
+    wxLevel: { good: 'Weather: western horizon looks clear', fair: 'Weather: partly cloudy; cloud or haze possible in the west', poor: 'Weather: overcast or wet' },
+    wxNoSight: 'By calculation the crescent cannot be seen this evening; the forecast is for information only.',
+    aboutTitle: 'About this tool',
+    aboutText: 'Mâh-ı Nev is an observation aid prepared on the basis of the book Tam İlmihâl Se’âdet-i Ebediyye. It was made to help plan crescent observations and carry them out in the field. It is not a source of fiqh and does not replace the source. Fiqh is the basis and the decisive knowledge: anything in this program that does not agree with the book and with fiqh is void. For rulings, consult the book itself.',
+    editionNote: 'Page numbers in the program refer to the January 2026 printing of Tam İlmihâl Se’âdet-i Ebediyye; other printings may differ by a few pages.',
+    bookLinks: 'Read or download the book (Hakîkat Kitâbevi):', bookPage: 'book page', bookPdf: 'PDF',
+    srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
+    pageEdition: 'page nos.: January 2026 printing',
     jpgGo: 'Save as JPG image', jpgShort: 'JPG', jpgMaking: 'Preparing JPG…',
     jpgDone: n => n > 1 ? `${n} pages prepared as JPG (ZIP).` : 'Page prepared as JPG.',
     jpgFail: 'JPG could not be produced in this browser. Use “Print / PDF” to save a PDF.',

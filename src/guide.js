@@ -137,10 +137,17 @@
     ]
   };
 
-  function topicHtml(L, id) {
+  // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
+  function topicHtml(L, id, mode) {
     const t = TOPICS[L][id]; if (!t) return '';
     const fk = L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)', bl = L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation';
-    return `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
+    let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
+    const lg = G.HRGuide.LONG && G.HRGuide.LONG[L] && G.HRGuide.LONG[L][id];
+    if (lg && mode && mode !== 'short') {
+      const body = `<p class="lab">${L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail'}</p><p>${esc(lg[0])}</p><p class="lab">${L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail'}</p><p>${esc(lg[1])}</p>`;
+      h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
+    }
+    return h;
   }
   function planHtml(L) {
     return PLAN[L].map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
@@ -166,8 +173,9 @@
   function sourcesHtml(L) {
     const tr = L === 'tr';
     return '<ul>' + [
-      tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
-         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (2026 edition): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
+      tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
+         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
+      tr ? 'Kitabı okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : 'Read or download the book: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).',
       tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibn Abidin, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
       '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
       'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
@@ -181,11 +189,11 @@
     const note = L === 'tr' ? '' : '<p class="small">English rendering of the Turkish canonical text. The Turkish text is authoritative.</p>';
     return note + canon.map(p => `<p>${esc(p)}</p>`).join('');
   }
-  function render(L, t) {
+  function render(L, t, mode) {
     const ids = Object.keys(TOPICS[L]);
     return `<div class="guide-grid">
       <section class="card prose"><h2>${t.gPlan}</h2>${planHtml(L)}</section>
-      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(TOPICS[L][id][0])}</summary>${topicHtml(L, id).replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
+      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(TOPICS[L][id][0])}</summary>${topicHtml(L, id, mode || 'more').replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
       <section class="card prose"><h2>${t.helpRules}</h2>${rulesHtml(L)}</section>
       <section class="card prose"><h2>${t.helpCanon}</h2>${canonHtml(L)}</section>
       <section class="card prose"><h2>${t.helpSources}</h2>${sourcesHtml(L)}</section>

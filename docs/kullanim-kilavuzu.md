@@ -122,11 +122,12 @@ Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir. claude.a
 - **Karanlık eşiği:** gurûb, −3° veya −6°. Yalnızca aranabilir aralığı değiştirir; kitabın sınıflarını değiştirmez.
 - **Hava tahmini ve otomatik konum.**
 
-## Lisans, resmî sürüm ve indirme
+## Kaynak, lisans ve indirme
 
-- Sayfanın altında ve **Ayarlar → Lisans ve resmî sürüm** bölümünde telif, lisans (CC BY-NC-ND 4.0) ve resmî adres (github.com/bemiroglu/MahiNev) yazar.
+- Sayfanın altında ve **Ayarlar → Bu araç, kaynak ve lisans** bölümünde kaynak kitap bağlantıları, telif, lisans (CC BY-NC-ND 4.0) ve yayın adresi (github.com/bemiroglu/MahiNev) yazar.
 - **⬇ HTML'yi indir** düğmesi, kullandığınız sürümü tek dosya olarak indirir. Bu dosyayı internetsiz kullanabilir ve değiştirmeden paylaşabilirsiniz.
-- Ekranın üstünde kırmızı **"resmî olmayan kopya"** uyarısı görürseniz, dosya değiştirilmiş olabilir. Hesap sonuçlarına güvenmeden önce resmî sürümü indirin.
+- Ekranın üstünde kırmızı **"değiştirilmiş kopya"** uyarısı görürseniz, dosya değiştirilmiş olabilir. Hesap sonuçlarına güvenmeden önce özgün dosyayı yayın adresinden indirin.
+- Programın bir fıkıh kaynağı olmadığını, kitaba uymayan her bilginin geçersiz olduğunu unutmayın. Kitabın bağlantıları sayfanın altında ve Rehber sekmesinin başındadır. Sayfa numaraları kitabın Ocak 2026 baskısına göredir.
 
 ## Rü'yet kaydı: sonuç türleri, denetimler ve yedekleme
 
@@ -174,7 +175,7 @@ Konum kartında saat dilimi listesinin yanında **UTC farkı** kutusu vardır.
   - **bölgesel dilimler** (Europe/Istanbul gibi): yaz saatini izler;
   - **sabit farklar** (UTC+3 gibi): yaz saati uygulanmaz.
 - Kutunun altındaki not, dilimde yaz saati olup olmadığını ve seçili tarihteki farkı söyler.
-- Arz ve tûlü elle girdiğinizde konum seçili dilimden çok uzaksa, fark tûlden hesaplanır. Bölgenin resmî saati farklıysa düzeltin.
+- Arz ve tûlü elle girdiğinizde konum seçili dilimden çok uzaksa, fark tûlden hesaplanır. Bölgede kullanılan saat farklıysa düzeltin.
 
 ## JPG çıktısı
 

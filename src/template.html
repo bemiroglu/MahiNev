@@ -3,7 +3,8 @@
 <!--
   Mâh-ı Nev — Hilâl Rasad Yardımcısı v@@VERSION@@
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
-  Resmî sürüm / Official version: https://github.com/bemiroglu/MahiNev
+  Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
+  Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
   Değiştirilmiş kopyalar dağıtılamaz. Modified copies may not be distributed.
   Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir (THIRD_PARTY_NOTICES.md).
 -->
@@ -209,7 +210,13 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .obs { border-left: 4px solid var(--muted); padding: 8px 12px; border-radius: 6px; background: var(--surface-2); margin: 12px 0 0; }
 .obs.ok { border-color: var(--ok); } .obs.no { border-color: var(--bad); } .obs.wait { border-color: var(--warn); }
 .obs p { margin: 2px 0; }
-.strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 4px; }
+.strip { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-start; }
+.strip .sgrp { flex: 1 1 auto; min-width: 0; }
+.strip .sgh { font-size: .82rem; margin: 0 0 4px 2px; border-bottom: 2px solid var(--line); padding-bottom: 2px; }
+.strip .sgd { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 4px; }
+.strip .sgrp:first-child .sgh { border-bottom-style: dashed; }
+.strip button .hd { font: 500 .66rem/1 var(--font-mono); color: var(--muted); margin-top: 2px; }
+.strip button.amb .hd { color: var(--accent); font-weight: 700; }
 .strip button { border: 1px solid var(--line); background: var(--surface-2); border-radius: 6px; padding: 12px 2px 4px; cursor: pointer; min-height: 60px; display: flex; flex-direction: column; align-items: center; gap: 1px; font: 500 .78rem/1.1 var(--font-body); position: relative; }
 .strip button .d { font: 600 .95rem/1 var(--font-mono); }
 .strip button .sw { width: 70%; height: 6px; border-radius: 3px; background: var(--c-notborn); opacity: .35; }
@@ -220,6 +227,8 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .mapmsg { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; max-width: 80%; text-align: center; }
 .safety { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 8px 12px; border-radius: 6px; font-size: .86rem; margin: 0 0 14px; }
 .safety::before { content: "⚠ "; }
+.safety { position: relative; padding-right: 34px; }
+.safety .x { position: absolute; top: 4px; right: 6px; border: 0; background: none; font-size: 1.2rem; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 6px; }
 #view-saha .safety { margin: 8px 0 0; font-size: .82rem; }
 .safety .short { display: none; }
 @media (max-width: 700px) { .safety .long { display: none; } .safety .short { display: inline; } }
@@ -291,6 +300,9 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
 .netstat { font-size: .85rem; background: var(--surface-2); border-radius: 8px; padding: 6px 10px; margin: 8px 0; }
 .lic { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
 footer#footer a { color: inherit; }
+footer#footer .src { font-weight: 500; }
+.linkbtn { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; }
+.card.about { border-left: 3px solid var(--line); }
 .ver { font: 500 .72rem/1 var(--font-mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; }
 dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 .setgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px 22px; }
@@ -339,6 +351,29 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
 [hidden] { display: none !important; }
 @media (max-width: 560px) { .field-top { grid-template-columns: 1fr; } .clock { font-size: 2.3rem; } .bigwhere { font-size: 1.1rem; } .best .big { font-size: 1.7rem; } .facts { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* an çubuğu: seçili gün ve saatte rü’yet durumu */
+#mbar { border-left: 6px solid transparent; transition: background-color .3s, border-color .3s; }
+#mbar.st-ok { border-left-color: var(--ok); background: color-mix(in srgb, var(--ok) 16%, var(--surface)); }
+#mbar.st-soon { border-left-color: var(--ok); background: color-mix(in srgb, var(--ok) 7%, var(--surface)); }
+#mbar.st-past { border-left-color: var(--muted); }
+#mbar.st-bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+#mbar.st-none { border-left-color: var(--line); }
+.mbstate { font-size: .8rem; font-weight: 600; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.st-ok .mbstate { color: var(--ok); } .st-soon .mbstate { color: var(--ok); } .st-bad .mbstate { color: var(--bad); } .st-past .mbstate, .st-none .mbstate { color: var(--muted); font-weight: 500; }
+@media (max-width: 700px) { .mbstate { white-space: normal; flex-basis: 100%; order: 3; padding: 0; } }
+.skytime { display: flex; align-items: center; gap: 8px; margin: 8px 0 4px; } .skytime input { flex: 1 1 auto; min-width: 0; } .skytime .tv { font: 600 .95rem var(--font-mono); min-width: 5.5em; text-align: right; } .skytime .btn { padding: 4px 8px; }
+@media (max-width: 700px) { #sky { height: 306px; } }
+/* planlama kipinde de bant rengi seçili an için rü’yet durumunu gösterir; planlama işareti kip etiketinde kalır */
+body.planning #mbar[class*="st-"] { color: var(--ink); border-top-color: var(--line); border-right-color: var(--line); border-bottom-color: var(--line); }
+body.planning #mbar.st-ok { background: color-mix(in srgb, var(--ok) 16%, var(--surface)); }
+body.planning #mbar.st-soon { background: color-mix(in srgb, var(--ok) 7%, var(--surface)); }
+body.planning #mbar.st-past, body.planning #mbar.st-none { background: var(--surface); }
+body.planning #mbar.st-bad { background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+body.planning #mbar[class*="st-"] .mode { background: var(--accent); color: var(--accent-ink); }
+body.planning #mbar[class*="st-"] .hj, body.planning #mbar[class*="st-"] .hj b { color: var(--ink); }
+body.planning #mbar[class*="st-"] .chip { color: var(--ink); border-color: var(--line); }
+body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.tmore { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; } .tmore summary { cursor: pointer; font-weight: 600; color: var(--accent); } .tlong { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 6px; }
 </style>
 </head>
 <body>
@@ -363,6 +398,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
   <div class="mbar" id="mbar" role="status" aria-live="off">
     <span class="mode" id="mbMode"></span>
     <div class="when"><span class="d" id="mbDate"></span><span class="tm" id="mbTime"></span><span class="hj" id="mbHijri"></span></div>
+    <span class="mbstate" id="mbState"></span>
     <div class="chips" id="mbChips"></div>
     <div class="acts"><div class="seg" role="group" id="mbLive"><button type="button" id="mbPlay"></button><button type="button" id="mbFreeze"></button></div><button class="btn" type="button" id="mbNow"></button><button class="btn" type="button" id="mbPrint"></button></div>
   </div>
@@ -414,7 +450,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
           <div id="moment"></div>
         </section>
         <section class="card" id="wxCard"><h2 id="hWx"></h2><div id="wxBody"></div></section>
-        <section class="card" id="skyCard"><div class="cardhead"><h2 id="hSky"></h2><div class="btns"><button class="btn" type="button" id="openSM"></button></div></div><div id="sky"></div><div id="guides"></div>
+        <section class="card" id="skyCard"><div class="cardhead"><h2 id="hSky"></h2><div class="btns"><button class="btn" type="button" id="openSM"></button></div></div><div id="sky"></div><div class="skytime"><button class="btn" type="button" id="skyMinus" aria-label="−10 min">−10′</button><input type="range" id="skyT" min="0" max="1620" step="1"><button class="btn" type="button" id="skyPlus" aria-label="+10 min">+10′</button><span class="tv" id="skyTVal"></span></div><div id="guides"></div>
           <p class="where" id="skyWhere"></p><div class="readout" id="skyRead"></div><p class="cap" id="skyNote"></p></section>
         <section class="card" id="stripCard"><h2 id="hStrip"></h2><div class="strip" id="strip"></div><p class="cap" id="stripNote"></p></section>
         <div class="grid2">
@@ -505,6 +541,8 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
       <div>
         <h3 id="hHelp"></h3>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
+        <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
+        <label class="chk"><input type="checkbox" id="optSafety"><span id="lOptSafety"></span></label>
         <p class="cap" id="explainNote"></p>
       </div>
       <div class="net">

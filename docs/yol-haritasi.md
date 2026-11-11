@@ -41,3 +41,27 @@ Aynı hesap, üç farklı yoğunlukta sunulacak. Kullanımı güçleştirmemek i
 - Gökyüzü, Saha ve Ufuk görsellerinde yön kısaltmalarının yanında derece değerleri yazar.
 - Sürüm geçmişi ve önceki hataların düzeltildiği bilgisi program metinlerinde ve belgelerde tutulmaz. Değişiklik günlüğü 0.8.0 ilk genel yayınıyla başlar.
 - Saat farkı, kullanıcının seçebileceği bir UTC farkı kutusuyla gösterilir ve değiştirilir; saat dilimi listesiyle eşlenir.
+- Bütün ufuk görselinde parlak gök cisimleri isimleriyle, birbirini örtmeden gösterilir. Ufuk kartında bütün sayfanın saatini değiştiren bir zaman çubuğu bulunur.
+- Üstteki durum bandının rengi, seçili gün ve saatte rü'yetin durumunu gösterir: mümkünse belirtici, mümkün değilse uyarıcı renk.
+- Hava tahmini ibareleri rü'yet mümkünmüş gibi anlaşılmamalıdır.
+- Göz güvenliği uyarısı yalnız rü'yetin mümkün olduğu zamanlarda görünür ve kapatılabilir.
+- "?" notlarının sayısı artırılır. Ayarlar'dan kısa (varsayılan) veya ayrıntılı açıklama seçilir.
+- Aylık şeritte günler kamerî aya göre gruplanır; üzerine gelince muhtemel hicrî tarih görünür.
+- Programın hiçbir yerinde teknik bilgi veya yazarın düşüncesi kaynak kitabın önüne geçmez ve öyle anlaşılacak biçimde sunulmaz.
+  - "Resmî" ifadesi kullanılmaz.
+  - Kullanıcı, programı temel kaynağın yerine koymamalıdır. Kitaba (Hakîkat Kitâbevi) uygun bir yerden bağlantı verilir.
+  - Sayfa numaralarının Ocak 2026 baskısına göre olduğu belirtilir.
+
+## Tartışılacak: sade arayüz
+
+Ekranın dolmaması ve bilginin sırasıyla verilmesi için öneriler (karar bekliyor):
+
+1. **Plan sekmesinde üç katman.** Önce "Bu akşam" özeti: durum bandı, rasad gecesi, arama penceresi, bakılacak yön. Sonra açılır "Ayrıntılar": hesap tablosu, Kâdîhân, modern ölçütler. En sonda "Araçlar": hava, harita, şerit, kayıt.
+2. **Kart başlığına dokununca katlanma.** Kullanıcı az kullandığı kartları katlar; seçim hatırlanır.
+3. **Tek "Nasıl kullanılır?" akışı.** Yeni kullanıcı için 4 adımlık kısa tur; sonra kapanır.
+4. **Üç kullanıcı düzeyi.** Başlangıç, deneyimli ve uzman düzeyleri (yukarıda); düzey, hangi kartların açık başlayacağını belirler.
+5. **Masaüstünde iki sütun, telefonda tek akış.** Telefonda sıra: durum bandı → bu akşam → saha.
+
+## Tartışılacak: hicrî tarih gösteriminde Işık usulü
+
+Kitap, şahitle sabit olmayan yerlerde Zilhiccenin birinci gününün Işık usulüyle hesaplanmasını bildirir (s. 326). Program ana gösterimde astronomik hesabı kullanıyor, Işık usulünü yanında gösteriyor (karar D3). Yeni hassasiyet ilkesi ışığında bu sıralamanın yeniden değerlendirilmesi önerilir: Zilhicce için ana gösterimde kitabın usulü, astronomik hesap ek bilgi olabilir.
