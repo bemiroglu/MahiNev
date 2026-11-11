@@ -281,6 +281,11 @@
     $('mPlay').onclick = () => playing ? stopPlay() : startPlay();
     $('mNow').onclick = goNow;
     document.addEventListener('click', e => { const b = e.target.closest('[data-topic]'); if (b) openTopic(b.dataset.topic); });
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-ex]'); if (b) { openExplain(b.dataset.ex); return; }
+      const p = e.target.closest('[data-explan]'); if (p) { closeExplain(); setDate(p.dataset.explan, { anchor: 'auto' }); if (view !== 'plan') location.hash = '#plan'; }
+    });
+    $('exClose').onclick = closeExplain;
     $('dlgClose').onclick = () => closeDlg();
     $('fNight').onclick = () => { st.theme = st.theme === 'night' ? 'auto' : 'night'; save(); fillStatic(); repaintAll(); };
     $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass;
@@ -533,7 +538,7 @@
     const late = !mid && r.best && r.windowEnd && r.best.ut > r.windowEnd.ut;
     const best = !mid && r.best ? `<span class="mono">${hhmm(r.best)}</span>${late ? ` <span class="small">${esc(t.stAfterWin)}</span>` : ''}` : `<span>${t.none}</span>`;
     $('statusBody').innerHTML = `<p class="hint">ⓘ ${esc(t.hints.status)}</p>` + head + `<h2>${esc(title)} ${q(CLS_TOPIC[r.cls.code])}</h2><p class="sub">${esc(sub)}</p>
-      <div class="meta"><span class="small">${t.claim}:</span><span class="pill ${ccls}">${esc(claim)}</span>${q('hesap')}</div>
+      <div class="meta"><span class="small">${t.claim}:</span><span class="pill ${ccls}">${esc(claim)}</span>${q('hesap')}${exBtn(st.date)}</div>
       <p class="st-row"><b>${esc(t.stWindow)}</b>${win} ${q('besderece')}</p>
       <p class="st-row"><b>${esc(t.stBest)}</b>${best} ${q('modern')}</p>${mid ? '' : kadihanHtml(r)}`;
   }
@@ -1002,7 +1007,7 @@
       .filter(x => x[1]).map(([l, at]) => `<div><b>${esc(l)} · ${hhmm(at)}</b><span>${cdTxt(at, now)}</span></div>`).join('');
     if (full) {
       const [title, sub2] = clsText(FR), [claim, ccls] = claimOf(FR);
-      $('fStatus').innerHTML = `<div class="status s-${CLS_STYLE[FR.cls.code]}" style="margin-top:10px"><div class="bar"></div><div><p class="small" style="margin:0">${esc(t.fTonight)}</p><h2>${esc(title)} ${q(CLS_TOPIC[FR.cls.code])}</h2><p class="sub">${esc(sub2)}</p><span class="pill ${ccls}">${esc(claim)}</span>${FR.cls.code !== 'midMonth' ? kadihanHtml(FR, true) : ''}</div></div>`;
+      $('fStatus').innerHTML = `<div class="status s-${CLS_STYLE[FR.cls.code]}" style="margin-top:10px"><div class="bar"></div><div><p class="small" style="margin:0">${esc(t.fTonight)}</p><h2>${esc(title)} ${q(CLS_TOPIC[FR.cls.code])}</h2><p class="sub">${esc(sub2)}</p><span class="pill ${ccls}">${esc(claim)}</span>${exBtn(FR.ymd || today)}${FR.cls.code !== 'midMonth' ? kadihanHtml(FR, true) : ''}</div></div>`;
       let mo = null; try { mo = C.morning(loc, today); } catch (e) { mo = null; }
       $('fMorning').textContent = mo && mo.code !== 'none' ? `${t.fMorning} ${hhmm(mo.sunrise)}: ${t.morningCode[mo.code]} ${t.morningNote}` : '';
       const hj = hijriAt(now); $('fHijri').innerHTML = hj ? (hj.local ? hj.html2 : hj.html) : '';
@@ -1326,11 +1331,34 @@
       upData = { a: nx.a, b: nx.b, prev, today, passedTonight: passed && !!prev && prev.ymd === today }; paintUp(upData);
     }, 30);
   }
+  // ---- “Bu akşam ne demek?” açıklama penceresi ----
+  const exBtn = (ymd, short) => `<button class="btn exbtn" type="button" data-ex="${ymd}" title="${esc(G.HRExplain.S[st.lang].btn)}">ⓘ ${esc(G.HRExplain.S[st.lang][short ? 'btnShort' : 'btn'])}</button>`;
+  function exCtx() {
+    return { C, CAL, A, loc: LOC || locObj(), records, esc, q, fmtCivil, fmtDT, civil, ymdOf, addDays, monthName, placeName, hijriOf, nextRasad,
+      earliest, evening: y => eveningCached(LOC || locObj(), y), clsText, claimOf, clsTopic: r => CLS_TOPIC[r.cls.code] || 'hesap',
+      clsColor: r => `var(${CLS_COLOR[r && r.ok ? r.cls.code : 'notBorn'] || '--c-notborn'})`, long: st.detail === 'long' };
+  }
+  let exYmd = null, exSeq = 0;
+  function paintExplain() {
+    const X = exCtx(), my = ++exSeq;
+    let d0 = G.HRExplain.data(X, exYmd, null);
+    const key = `${d0.hm.y}-${d0.hm.m}`, base = st.exBase && st.exBase[key];
+    const d = base ? G.HRExplain.data(X, exYmd, base) : d0;
+    $('exBody').innerHTML = G.HRExplain.html(X, d, st.lang);
+    const sel = $('exBase'); if (sel) sel.onchange = () => { st.exBase = Object.assign({}, st.exBase, { [key]: sel.value }); save(); paintExplain(); };
+    const w = $('exWorld'); if (w) setTimeout(() => { if (my !== exSeq) return; try { w.innerHTML = G.HRExplain.worldHtml(X, d, st.lang); } catch (e) { w.textContent = t.none; } }, 30);
+  }
+  function openExplain(ymd) {
+    exYmd = ymd; $('hEx').textContent = G.HRExplain.S[st.lang].title; $('exClose').textContent = t.close;
+    paintExplain();
+    const dl = $('exDlg'); try { if (!dl.open) dl.showModal(); } catch (e) { dl.setAttribute('open', ''); }
+  }
+  function closeExplain() { const dl = $('exDlg'); try { dl.close(); } catch (e) { dl.removeAttribute('open'); } }
   function paintUp(d) {
     const box = (lbl, x) => {
       if (!x) return `<div><b>${esc(lbl)}</b><strong>${t.none}</strong></div>`;
       const r = x.r, days = Math.round((civil(x.ymd) - civil(d.today)) / 86400000), h = CAL.monthForConjunction(r.ictimaPrev.date);
-      return `<div class="${r.cls.code === 'visible' ? 'ok' : 'warn'}"><b>${esc(lbl)}</b><strong>${esc(fmtCivil(civil(x.ymd)))}</strong><span class="small">${esc(t.upIn(days))} · ${esc(t.upMonth(monthName(h.m) + ' ' + h.y))}</span><br><span class="small">${esc(clsText(r)[0])} · ${esc(t.upWin)} ${hhmm(r.gurub)}–${hhmm(r.windowEnd || r.moonset)} · ${t.beyn.split(' ')[0]} ${degf(r.beynunet, 1)}</span><br><button class="btn primary" type="button" data-up="${x.ymd}">${esc(t.upPlan)}</button></div>`;
+      return `<div class="${r.cls.code === 'visible' ? 'ok' : 'warn'}"><b>${esc(lbl)}</b><strong>${esc(fmtCivil(civil(x.ymd)))}</strong><span class="small">${esc(t.upIn(days))} · ${esc(t.upMonth(monthName(h.m) + ' ' + h.y))}</span><br><span class="small">${esc(clsText(r)[0])} · ${esc(t.upWin)} ${hhmm(r.gurub)}–${hhmm(r.windowEnd || r.moonset)} · ${t.beyn.split(' ')[0]} ${degf(r.beynunet, 1)}</span><br><button class="btn primary" type="button" data-up="${x.ymd}">${esc(t.upPlan)}</button>${lbl === t.upA ? exBtn(x.ymd, true) : ''}</div>`;
     };
     const hj = hijriAt(A.MakeTime(new Date()));
     let h = (hj ? `<div><b>${esc(t.upToday)}</b><strong>${hj.local ? hj.html2 : hj.html}</strong><span class="small">${esc(t.hjShort)} ${esc(t.hjBook)}</span></div>` : '') + box(t.upA, d.a);
@@ -1761,6 +1789,11 @@
     const i37 = C.evening({ lat: 41.0082, lon: 28.9784, elev: 0, hObs: 0, tz: 'Europe/Istanbul' }, '2016-04-07');
     add('Receb 1437 (rasad, 2016)', 'Dünya geneli en erken gün; rü’yetle başlama 9 Nisan', '2016-04-08 (9 Nisan ≥ bu gün)', ymdOf(e37.first), '—', ymdOf(e37.first) === '2016-04-08' && '2016-04-09' >= ymdOf(e37.first));
     add('Receb 1437 (rasad, 2016)', 'İstanbul 7 Nisan akşamı', 'kesin red (beynûnet < 8°)', i37.ok ? i37.cls.code + ' · ' + i37.beynunet.toFixed(1) + '°' : '—', '—', i37.ok && i37.beynunet < 8);
+    // Açıklama penceresi: senaryolar (Receb 1437; Cemâziyelâhır 1448, önceki ay 12 Ekim'de başlamışsa)
+    const XE = exCtx(), x37 = G.HRExplain.data(XE, '2016-04-07', null), r37 = x37.rows.find(x => x.ymd === '2016-04-07'), r38 = x37.rows.find(x => x.ymd === '2016-04-08');
+    add('Açıklama', 'Receb 1437: 7 Nisan akşamı görülürse / 8 Nisan akşamı görülürse', '2016-04-08 / 2016-04-09', `${r37 && r37.firstDay} / ${r38 && r38.firstDay}`, '—', r37 && r37.firstDay === '2016-04-08' && r37.world === 'first' && r38 && r38.firstDay === '2016-04-09');
+    const xk = G.HRExplain.data(XE, '2026-11-09', '2026-10-12');
+    add('Açıklama', 'Cemâziyelâhır 1448, önceki ay 12 Ekim: rasad akşamı / görülürse / otuza tamamlanırsa', '2026-11-09 / 2026-11-10 / 2026-11-11', `${xk.X29} / ${xk.F29} / ${xk.F30}`, '—', xk.X29 === '2026-11-09' && xk.F29 === '2026-11-10' && xk.F30 === '2026-11-11' && xk.Fmin === '2026-11-10');
     const fe = C.firstEvening(41.0, 29.0, c26);
     add('Harita', 'İlk görünürlük, İstanbul', '10 Aralık akşamı (k = 1)', fe ? 'k = ' + fe.k : '—', '—', fe && fe.k === 1);
     const ce = C.cell(41.0, 29.0, Date.UTC(2026, 10, 12), A.SearchMoonPhase(0, TT('2026-11-05T00:00Z'), 10), false);

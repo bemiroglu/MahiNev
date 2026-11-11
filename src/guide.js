@@ -140,11 +140,12 @@
   // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
   function topicHtml(L, id, mode) {
     const t = TOPICS[L][id]; if (!t) return '';
-    const fk = L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)', bl = L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation';
+    const lb = t[3] || [];   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
+    const fk = lb[0] || (L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)'), bl = lb[1] || (L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation');
     let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
     const lg = G.HRGuide.LONG && G.HRGuide.LONG[L] && G.HRGuide.LONG[L][id];
     if (lg && mode && mode !== 'short') {
-      const body = `<p class="lab">${L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail'}</p><p>${esc(lg[0])}</p><p class="lab">${L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail'}</p><p>${esc(lg[1])}</p>`;
+      const body = `<p class="lab">${lb[2] || (L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail')}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || (L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail')}</p><p>${esc(lg[1])}</p>`;
       h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
     }
     return h;

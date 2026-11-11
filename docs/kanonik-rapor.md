@@ -355,6 +355,9 @@ Ekranda her zaman Tam İlmihâl'e dayanan sınıflandırma görünür. Modern mo
 | Madde 88, kalan 0 | "Kitapta tanımsız" notu ve Uluğ Beğ cetvelinin sonucu |
 | Mahallî hükmün kaynağı | Redd-ül-muhtâr, Kitâb-us-savm, ihtilâf-ı metâli' Tembih'i |
 | Redd-ül-muhtâr atıf biçimi | Eser, bölüm ve mesele adıyla; sayfa numarası verilmez |
+| Açıklama penceresi (D5) | "Bu akşam ne demek?" penceresi seçili akşam ve yer için hesâbî imkânı, ay başı senaryolarını, alt sınırı (s. 360) ve otuza tamamlamayı (s. 314–315) kitabın sayfalarıyla açıklar. Normalde kapalıdır; düğmeyle açılır |
+| Otuza tamamlamada önceki ayın başı (D6) | Esas hesâbî en erken gündür (önceki ay Zilhicce ise Işık usulü). Kullanıcının o ay için çıplak gözle "gördüm" kaydı varsa kayıt esas alınır ve bu açıkça yazılır; kayıt şahitlik değildir. Kullanıcı "bir gün sonra" veya kendi bildiği sabit başlangıcı seçebilir; seçim yalnız açıklamayı etkiler |
+| Naklî deliller (D7) | Rehber'de ayrı konu. Kaynak Kongre tebliğidir; kitabın hükümleri sayfalarıyla yanında verilir. Açıklamalarda bu konuya gönderme yapılır |
 
 Bütün tasarım ve kod bu rapora dayanır. Değişiklik ancak yeni bir karar kaydıyla yapılır.
 
@@ -601,17 +604,17 @@ Kaynak: Bölüm 1'deki tebliğ. Tebliğin 2-d kısmı büyük ölçüde Tam İlm
 
 | Bilgi | Tebliğ | Programdaki yeri |
 |---|---|---|
-| Bakara 189; "Ayı görünce oruc tutunuz…" ve "Şa'bânı otuza tamamlayın" hadîsleri (Buhârî, Müslim, Nesâî, Dârimî, Muvatta, Müsned) | s. 3 | Rehber: Naklî deliller (öneri) |
-| Mecelle md. 14: "Mevrid-i nassda ictihâda mesağ yoktur"; icmâ' kaydı (*Tebyîn-ül-hakâık*, *İ'ânet-ut-tâlibîn*) | s. 3 | Rehber: Naklî deliller (öneri) |
-| İbni Âbidîn, kıble bahsi (c. 1 s. 289): hilâl hesabın bildirdiği gece doğar, o gece görülmeyip ertesi gece görülebilir; oruca görüldüğü gece başlanır | s. 3–4 | Açıklama paneli (öneri) |
-| *Mecmû'a-i Zühdiyye*: Şevvâl hilâlini yalnız gören iftar edemez | s. 4 | Şevvâl rü'yet kaydı notu (öneri) |
-| Elmalılı Hamdi ve Fatin Gökmen (*Sebîl-ür-reşâd* c. 22): şer' rü'yete bağlamıştır; hesaba aykırı şahitlikte iki şahitle yetinilmemesi daha meşrûdur | s. 4–5 | Kesin red açıklaması (öneri) |
-| Prof. Hamit Dilgan (İTÜ, 17.6.1963): görülme imkânı ile bilfiil görülme ayrı tutulmalıdır | s. 5 | Rehber: Hesap ne söyler (öneri) |
-| Kazâ: Şa'bân rü'yetle başlamış ve 29. gece bayram hilâli görülmüşse bir gün, başlamamışsa iki gün (*Hindiyye*, *Kâdîhân*) | s. 7 | Ramazân/Şevvâl bilgi notu (öneri) |
+| Bakara 189; "Ayı görünce oruc tutunuz…" ve "Şa'bânı otuza tamamlayın" hadîsleri (Buhârî, Müslim, Nesâî, Dârimî, Muvatta, Müsned) | s. 3 | Rehber: Naklî deliller |
+| Mecelle md. 14: "Mevrid-i nassda ictihâda mesağ yoktur"; icmâ' kaydı (*Tebyîn-ül-hakâık*, *İ'ânet-ut-tâlibîn*) | s. 3 | Rehber: Naklî deliller |
+| İbni Âbidîn, kıble bahsi (c. 1 s. 289): hilâl hesabın bildirdiği gece doğar, o gece görülmeyip ertesi gece görülebilir; oruca görüldüğü gece başlanır | s. 3–4 | Açıklama penceresi, Rehber: Naklî deliller |
+| *Mecmû'a-i Zühdiyye*: Şevvâl hilâlini yalnız gören iftar edemez | s. 4 | Açıklama penceresi (Şevvâl) |
+| Elmalılı Hamdi ve Fatin Gökmen (*Sebîl-ür-reşâd* c. 22): şer' rü'yete bağlamıştır; hesaba aykırı şahitlikte iki şahitle yetinilmemesi daha meşrûdur | s. 4–5 | Rehber: Naklî deliller |
+| Prof. Hamit Dilgan (İTÜ, 17.6.1963): görülme imkânı ile bilfiil görülme ayrı tutulmalıdır | s. 5 | Rehber: Naklî deliller; açıklama penceresi |
+| Kazâ: Şa'bân rü'yetle başlamış ve 29. gece bayram hilâli görülmüşse bir gün, başlamamışsa iki gün (*Hindiyye*, *Kâdîhân*) | s. 7 | Açıklama penceresi (Şevvâl) |
 | Görenin kâdîya haber vermesi vâcibdir; kâdî/vâlî olmayan yerde âdil birinin haberiyle duyanlar oruca başlar (*Redd-ül-muhtâr*) | s. 7 | Rü'yet kaydı: bildirim alanı (öneri) |
-| USNO: çıplak gözle en erken güvenilir rü'yet ictimâdan 15,5 saat, teleskopla 12,1 saat sonra; görünürlüğü etkileyen etkenler | s. 8, 10–11 | Uzun açıklamalar, ek bilgi (öneri) |
+| USNO: çıplak gözle en erken güvenilir rü'yet ictimâdan 15,5 saat, teleskopla 12,1 saat sonra; görünürlüğü etkileyen etkenler | s. 8, 10–11 | Rehber: Naklî deliller (ayrıntı) |
 | İbrânî takviminde ay başlarının rü'yet ve şahitle tespiti; rasıd adı, yeri ve saatiyle kayıt | s. 8–9 | — |
-| **Receb 1437:** 7 Nisan 2016 akşamı hiçbir yerde görülmedi, 8 Nisan'da görüldü; ay 9 Nisan'da başladı (takvimlerde 8 Nisan) | s. 9 | Doğrulama testi (eklendi) |
+| **Receb 1437:** 7 Nisan 2016 akşamı hiçbir yerde görülmedi, 8 Nisan'da görüldü; ay 9 Nisan'da başladı (takvimlerde 8 Nisan) | s. 9 | Doğrulama testi; açıklama penceresi örneği |
 
 **Receb 1437 hesabı (program).** İctimâ 7.4.2016 11:24 UT. 7 Nisan akşamı İstanbul'da beynûnet 4,0° (kesin red); Mekke 3,6°, New York 7,7°; yalnız Meksika–Hawaii hattında 8,6°–10,8° (mümkün). Dünya geneli en erken gün 8 Nisan; rü'yetle başlama 9 Nisan. "Bir gün sonra olabilir, önce olamaz" hükmünün (s. 360) uygulamadaki karşılığıdır.
 

@@ -388,6 +388,23 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 .card .foldsum { display: none; font-size: .85rem; color: var(--muted); margin: 2px 0 0; }
 .card.folded .foldsum { display: block; }
 .card.folded { padding-bottom: 12px; }
+
+/* açıklama penceresi */
+.exdlg { max-width: min(760px, 96vw); }
+.exdlg h3 { font: 600 1rem var(--font-display); margin: 14px 0 4px; }
+.exdlg .exhead { margin: 0 0 6px; }
+.exlist { margin: 4px 0 8px; padding-left: 1.2em; } .exlist li { margin: 3px 0; }
+.extab { overflow-x: auto; margin: 6px 0 4px; }
+.extab table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+.extab th, .extab td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.extab td:first-child { white-space: nowrap; }
+.extab th { font-size: .78rem; color: var(--muted); font-weight: 600; }
+.extab tr.now td { background: var(--surface-2); }
+.extab .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.extab .lnk { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+.exbasis select { max-width: 100%; }
+.btn.exbtn { margin-left: 8px; padding: 3px 10px; font-size: .85rem; }
+@media print { #exDlg { display: none; } }
 </style>
 </head>
 <body>
@@ -588,6 +605,10 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <div class="btns"><button class="btn primary" type="button" id="vfGo"></button></div>
     <div id="vfOut" role="status" style="margin-top:10px"></div>
     <p class="cap" id="vfNote"></p>
+  </dialog>
+  <dialog id="exDlg" aria-labelledby="hEx" class="setdlg exdlg">
+    <div class="cardhead"><h2 id="hEx" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="exClose"></button></div>
+    <div id="exBody"></div>
   </dialog>
   <dialog id="prDlg" aria-labelledby="hPr" class="setdlg">
     <div class="cardhead"><h2 id="hPr" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="prClose"></button></div>

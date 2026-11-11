@@ -42,6 +42,15 @@ async def main():
                             who = await pg.evaluate("""() => { const W = innerWidth; let best = null; document.querySelectorAll('body *').forEach(e => { const b = e.getBoundingClientRect(); if (b.width > 0 && b.right > W + 2 && getComputedStyle(e).position !== 'static' || (b.width > W)) { let p = e.parentElement, scr = false; while (p) { const o = getComputedStyle(p).overflowX; if (o === 'auto' || o === 'scroll' || o === 'hidden') { scr = true; break; } p = p.parentElement; } if (!scr && b.right > W + 2 && (!best || b.right > best[3])) best = [e.tagName, e.id, String(e.className).slice(0,40), Math.round(b.right), (e.innerText || '').slice(0, 60)]; } }); return best; }""")
                             issues.append(f'{vp} {lang} {name} {tab}: yatay taşma {ov}px {who}')
                         if bad: issues.append(f'{vp} {lang} {name} {tab}: şüpheli metin «{bad}»')
+                    # açıklama penceresi (seçili akşam)
+                    await pg.evaluate("location.hash = '#plan'"); await pg.wait_for_timeout(500)
+                    if await pg.query_selector('#statusBody [data-ex]'):
+                        await pg.click('#statusBody [data-ex]'); await pg.wait_for_timeout(2500)
+                        bad = await pg.evaluate("""() => { const tx = document.getElementById('exBody').innerText; const m = tx.match(/.{0,30}(undefined|NaN|\\[object Object\\]|Invalid Date|null).{0,30}/); return m ? m[0] : null; }""")
+                        wide = await pg.evaluate("(() => { const d = document.getElementById('exDlg'); return d.scrollWidth - d.clientWidth; })()")
+                        if bad: issues.append(f'{vp} {lang} {name} açıklama: şüpheli metin «{bad}»')
+                        if wide > 2: issues.append(f'{vp} {lang} {name} açıklama: yatay taşma {wide}px')
+                        await pg.keyboard.press('Escape'); await pg.wait_for_timeout(200)
                 await pg.evaluate("location.hash = '#plan'")
                 for dlg in ['openSet', 'mbPrint', 'openSM']:
                     try:

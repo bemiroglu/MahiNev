@@ -63,6 +63,18 @@ Sayfada bir şeye dokunduğunuzda okuduğunuz kart yerinde kalır; yeni bilgiler
 - Esas alınan kapsam **dünya genelidir**, çünkü bir şehirde görülünce her yerde lâzım olur (s. 315). Zilhicce'de kapsam yereldir (Mekke ve bulunulan yer).
 - Bulunduğunuz yerin yerel hesabı farklıysa **"Burada"** satırı ayrıca gösterilir.
 
+## "Bu akşam ne demek?" açıklama penceresi
+
+Plan sekmesindeki değerlendirme kartında, Saha sekmesinde ve "Yaklaşan ay başı rasadı" kartında **ⓘ Bu akşam ne demek?** düğmesi bulunur. Pencere, seçili akşam ve yer için şunları kitabın sayfalarıyla açıklar:
+
+- **Bu akşam burada:** hilâlin Tam İlmihâl'e göre sınıfı ve "gördüm" beyanının durumu.
+- **Bu akşam dünyada:** hilâlin hesâben mümkün ve görülebilir olduğu bölgeler (kaba tarama).
+- **Ay başı ne olur?** Önceki ayın 1. gününe göre 29. gün akşamı, görülürse ve görülmezse yeni ayın 1. günü, "bir gün sonra olabilir, önce olamaz" alt sınırı (s. 360). Bir tablo, ay başı akşamlarını tek tek gösterir; tarihe dokununca o akşam planlanır.
+- **Önceki ayın başı:** Otuza tamamlama önceki ayın başına bağlıdır. Program hesâbî en erken günü esas alır. O ay için çıplak gözle "gördüm" kaydınız varsa kayıt esas alınır. "Bir gün sonra" veya bildiğiniz sabit başlangıcı da seçebilirsiniz; seçim yalnız bu açıklamayı etkiler.
+- **Kapsam ve hüküm:** ayın adına göre (Ramezân, Şevvâl, Zilhicce) kitabın hükümleri. Zilhiccede önce Işık usulü, sonra ek bilgi olarak bu yerin astronomik hesabı gelir.
+
+Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili makamca verilir (s. 315–316). Deliller için Rehber'de **Naklî deliller** konusuna bakın.
+
 ## Kâdîhân kontrolü ve şafak
 
 - Kâdîhân kuralına göre hilâl şafaktan sonra batarsa ikinci gecenin, önce batarsa birinci gecenin hilâlidir (s. 316).
