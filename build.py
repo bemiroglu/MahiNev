@@ -17,7 +17,7 @@ src = R / 'src'
 
 NOTICE = {
     'n': 'Mâh-ı Nev — Hilâl Rasad Yardımcısı',
-    'c': '© 2026 bemiroglu',
+    'c': '© 2026 Bilal Emiroglu',
     'l': 'CC BY-NC-ND 4.0',
     'lu': 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
     'u': 'https://github.com/bemiroglu/MahiNev',

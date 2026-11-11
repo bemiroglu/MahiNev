@@ -88,7 +88,7 @@ python3 tests/run_tests.py       # Doğrulama sekmesindeki testler
 
 ## Lisans
 
-Mâh-ı Nev © 2026 bemiroglu. [Creative Commons Atıf-GayriTicari-Türetilemez 4.0 Uluslararası (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.tr) ile lisanslanmıştır; bkz. [LICENSE](LICENSE).
+Mâh-ı Nev © 2026 Bilal Emiroglu. [Creative Commons Atıf-GayriTicari-Türetilemez 4.0 Uluslararası (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.tr) ile lisanslanmıştır; bkz. [LICENSE](LICENSE).
 
 Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
