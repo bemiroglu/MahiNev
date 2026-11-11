@@ -264,11 +264,9 @@ Bu tablo kitabın tezini destekliyor: aynı ay için takvim usulleri birbirinden
 | 1 gün sonra | 124 ay (%33) | 5 ay |
 | 2 gün sonra | 3 ay | — |
 
-- **Işık önde kalıyor (29 ay, %8):** Işık usulü ay başını, hilâlin dünyanın hiçbir yerinde görülemeyeceği bir güne koyuyor.
-- **Işık geride kalıyor (127 ay, %34):** Fiziksel olarak mümkün bir rü'yet, Işık tarihinden bir gün önce ay başı yaptırabiliyor. Bu durumda "bir gün evvel olamaz" kuralı geçerli bir rü'yeti reddettirir.
-- **18° ölçüsüyle:** Çelişki yalnızca 5 ayda kalıyor.
+Işık usulü, ay hareketinin ortalamasına dayanan, akılda kalıcı ve zarif bir hesap kuralıdır. Gerçek ictimâyı ve atmosferi ayrıca hesaba katmadığı için bazı aylarda astronomik hesaptan bir gün ayrılabilir. Kitabın kendi ölçüsü olan 18° ile karşılaştırıldığında ayrılık çok azalır.
 
-**Karar:** Programdaki "en erken mümkün gün" sınırı efemerisle hesaplanır. Işık usulünün bulduğu gün, "Işık Usulü" etiketiyle yanında gösterilir. Yöntem notu: küresel kontrol batı ucunda (−170° boylam) beş enlemde yapıldı. Bu kaba bir taramadır; programda tam ızgara kullanılacak.
+**Karar (12 Kasım 2026):** Kitap, şahitle sabit olmayan yerlerde Zilhiccenin birinci gününün Işık usulüyle hesaplanmasını bildirdiği için (s. 326), Zilhicce'de ana gösterim Işık usulüdür. Bayramın birinci günü bu hesapla bulunan gün veya bir gün sonrasıdır. Astronomik hesap (hesâbî en erken gün) yanında ek bilgi olarak gösterilir. Diğer aylarda ay başının rü'yetle kesinleştiği, hesâbî en erken günün yalnız imkân bildirdiği gösterim korunur.
 
 ## 7. Kitaptaki örneklerin doğrulanması
 
@@ -402,7 +400,7 @@ Aşağıdaki karar soruları kodlamadan önce kapanmalıdır. Önerilen varsayı
 
 ## 10. Tam İlmihâl uyum denetimi
 
-Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır. Kitaptan ayrılan dört kabul (D1–D4) karara bağlanmıştır: D1 ve D2 kitapla uyumludur. D3 ve D4'te kullanıcı kararıyla modern hesap ana bilgi olarak kalır; kitabın hükmü yanında gösterilir.
+Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır. Kitaptan ayrılan dört kabul (D1–D4) karara bağlanmıştır: D1, D2 ve D3 kitapla uyumludur. D4'te kullanıcı kararıyla Yallop'un en iyi anı ana panelde kalır; kitabın penceresi yanında gösterilir.
 
 **Uyumlu kabuller**
 
@@ -443,10 +441,10 @@ Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır.
 | --- | --- | --- | --- |
 | D1 | s. 360: beynûnet 8°'den azken hilâl "hiçbir zemânda, hiçbiryerde görülemez"; Sübkî: hesaba göre doğmadan görüldü denirse hesaba inanılır | Kesin red: ictimâ olmamış, ay güneşten önce batıyor veya beynûnet < 8°. 7,5° ek bilgi | Uyumlu |
 | D2 | s. 360: ufka 5° yaklaşınca görülemez | Pencere gurûbdan 5°'ye kadar; gurûbda < 5° ise o akşam görülemez | Uyumlu |
-| D3 | s. 326: şahitle sabit olmayan yerlerde bayram Işık usulüyle bulunan gün veya ertesi; önce olamaz | En erken gün en hassas efemerisle; Işık usulü "Işık Usulü" etiketiyle yanında | Kullanıcı kararı; kitabın sonucu yanında görünür |
+| D3 | s. 326: şahitle sabit olmayan yerlerde bayram Işık usulüyle bulunan gün veya ertesi; önce olamaz | Zilhicce'de ana gösterim Işık usulü (s. 326); astronomik hesap (hesâbî en erken gün) yanında ek bilgi (karar 12.11.2026) | Uyumlu |
 | D4 | s. 360: hilâl gurûbdan sonraki 45 dakika içinde görünür | Ana panelde Yallop'un anı; kitabın penceresi ek bilgi katmanında | Kullanıcı kararı; kitabın penceresi yanında görünür |
 
-**Not.** D3 ve D4 bir hükmün değil, gösterim önceliğinin tercihidir. Kitabın ilgili hükmü (s. 326, s. 360) programda her zaman yanında ve kaynağıyla görünür.
+**Not.** D4 bir hükmün değil, gösterim önceliğinin tercihidir. Kitabın ilgili hükmü (s. 326, s. 360) programda her zaman yanında ve kaynağıyla görünür.
 
 ## 11. Rü'yet arayüzü ilkeleri
 

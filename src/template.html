@@ -374,6 +374,19 @@ body.planning #mbar[class*="st-"] .hj, body.planning #mbar[class*="st-"] .hj b {
 body.planning #mbar[class*="st-"] .chip { color: var(--ink); border-color: var(--line); }
 body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .tmore { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; } .tmore summary { cursor: pointer; font-weight: 600; color: var(--accent); } .tlong { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 6px; }
+.edn { font-size: .7rem; color: var(--muted); margin: 6px 0 0; }
+.vfr { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 0 0 8px; }
+/* Sade görünüm: kartlar başlığa dokunarak katlanır; katlı kartta yalnız başlık ve kısa özet görünür */
+.card.foldable { position: relative; } .card.foldable > h2, .card.foldable > .cardhead { padding-right: 34px; }
+.foldbtn { position: absolute; top: 12px; right: 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); cursor: pointer; color: var(--muted); width: 28px; height: 28px; line-height: 1; transition: transform .2s; }
+.foldbtn::before { content: '▾'; font-size: .95rem; }
+.card.foldable > h2, .card.foldable > .cardhead h2 { cursor: pointer; }
+.card.folded .foldbtn { transform: rotate(-90deg); }
+.card.folded > :not(h2):not(.cardhead):not(.foldsum):not(.foldbtn) { display: none !important; }
+.card.folded > .cardhead .btns { display: none; }
+.card .foldsum { display: none; font-size: .85rem; color: var(--muted); margin: 2px 0 0; }
+.card.folded .foldsum { display: block; }
+.card.folded { padding-bottom: 12px; }
 </style>
 </head>
 <body>
@@ -410,7 +423,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <p class="safety" id="safety" role="note"></p>
     <div class="layout">
       <aside class="stack">
-        <section class="card" aria-labelledby="hLoc">
+        <section class="card" id="locCard" aria-labelledby="hLoc">
           <h2 id="hLoc"></h2>
           <div class="field"><label for="city" id="lCity"></label><select id="city"></select></div>
           <div class="row2">
@@ -425,7 +438,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
           <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
           <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p><p class="cap" id="hMaxNote" hidden></p>
         </section>
-        <section class="card" aria-labelledby="hDate">
+        <section class="card" id="dateCard" aria-labelledby="hDate">
           <h2 id="hDate"></h2>
           <div class="field"><label for="date" id="lDate"></label><input id="date" type="date"></div>
           <div class="btns">
@@ -454,8 +467,8 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
           <p class="where" id="skyWhere"></p><div class="readout" id="skyRead"></div><p class="cap" id="skyNote"></p></section>
         <section class="card" id="stripCard"><h2 id="hStrip"></h2><div class="strip" id="strip"></div><p class="cap" id="stripNote"></p></section>
         <div class="grid2">
-          <section class="card"><h2 id="hDetail"></h2><dl class="kv" id="detail"></dl></section>
-          <section class="card"><h2 id="hMonth"></h2><dl class="kv" id="month1"></dl><div class="minimap" id="miniMap"></div><div class="legend" id="miniLegend"></div><p class="cap" id="miniHow"></p><dl class="kv" id="month2"></dl></section>
+          <section class="card" id="detailCard"><h2 id="hDetail"></h2><dl class="kv" id="detail"></dl></section>
+          <section class="card" id="monthCard"><h2 id="hMonth"></h2><dl class="kv" id="month1"></dl><div class="minimap" id="miniMap"></div><div class="legend" id="miniLegend"></div><p class="cap" id="miniHow"></p><dl class="kv" id="month2"></dl></section>
         </div>
         <details class="card extra" id="extraBox"><summary id="hExtra"></summary><p class="note" id="extraNote"></p><dl class="kv" id="extra"></dl></details>
       </div>
@@ -516,7 +529,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
       <div class="field"><label for="recNote" id="lRecNote"></label><textarea id="recNote" rows="2"></textarea></div>
       <div class="btns recbtns"><button class="btn primary" type="button" id="recSave"></button></div>
       <p class="where" id="recEval" role="status"></p><h3 id="hRecList"></h3><div class="scroll" id="recList"></div>
-      <div class="btns rectools"><button class="btn" type="button" id="recBackup"></button><button class="btn" type="button" id="recImport"></button><button class="btn" type="button" id="recPhotoCheck"></button><input type="file" id="recImportFile" accept="application/json,.json" hidden><input type="file" id="recPhotoFile" accept="image/*" hidden></div>
+      <div class="btns rectools"><button class="btn" type="button" id="recBackup"></button><button class="btn" type="button" id="recImport"></button><button class="btn" type="button" id="recPhotoCheck"></button><button class="btn" type="button" id="recVerify"></button><input type="file" id="recImportFile" accept="application/json,.json" hidden><input type="file" id="recPhotoFile" accept="image/*" hidden></div>
       <p class="cap" id="recBackupNote"></p>
       <h3 id="hNets"></h3><div id="netsBody" class="small"></div>
     </section>
@@ -540,6 +553,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
       </div>
       <div>
         <h3 id="hHelp"></h3>
+        <div class="field"><label for="layoutSel" id="lLayout"></label><select id="layoutSel"></select></div><p class="cap" id="layoutNote"></p>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
         <label class="chk"><input type="checkbox" id="optSafety"><span id="lOptSafety"></span></label>
@@ -564,6 +578,15 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
         <button class="btn" type="button" id="dlHtml2"></button>
       </div>
     </div>
+  </dialog>
+  <dialog id="vfDlg" aria-labelledby="hVf" class="setdlg">
+    <div class="cardhead"><h2 id="hVf" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="vfClose"></button></div>
+    <p class="small" id="vfIntro"></p>
+    <div class="field"><label for="vfCode" id="lVfCode"></label><input id="vfCode" type="text" autocomplete="off" spellcheck="false"></div>
+    <div class="field"><label for="vfFile" id="lVfFile"></label><input id="vfFile" type="file" accept="application/json,.json"></div>
+    <div class="btns"><button class="btn primary" type="button" id="vfGo"></button></div>
+    <div id="vfOut" role="status" style="margin-top:10px"></div>
+    <p class="cap" id="vfNote"></p>
   </dialog>
   <dialog id="prDlg" aria-labelledby="hPr" class="setdlg">
     <div class="cardhead"><h2 id="hPr" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="prClose"></button></div>

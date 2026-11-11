@@ -64,7 +64,9 @@
         okSig = await subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, key, sig, new TextEncoder().encode(rec.hash));
       } catch (e) { okSig = false; }
     }
-    return { hash: okHash, sig: okSig };
+    // Parmak izi, kayıttaki genel anahtardan yeniden hesaplanır (anahtar ile parmak izi birbirine uymalı)
+    let okFp = false; try { okFp = !!(rec.signer && rec.signer.pub && rec.signer.fp && (await sha256(canon(rec.signer.pub))).slice(0, 16) === rec.signer.fp); } catch (e) { okFp = false; }
+    return { hash: okHash, sig: okSig && okFp, fp: okFp };
   }
   G.HRSig = { canon, sha256, ensureKey, seal, verify };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

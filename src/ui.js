@@ -46,7 +46,7 @@
   const TB_MAX = 1620; // 00:00 → ertesi gün 03:00
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
     mapLayer: 'seadet', mapRes: 3, mapAge: true, mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
-    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
+    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', layout: 'sade', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
@@ -139,6 +139,11 @@
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
     $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
     $('recImportFile').onchange = importRecords; $('recPhotoFile').onchange = checkPhoto;
+    set('recVerify', '✓ ' + t.vfBtn); set('hVf', t.vfTitle); set('vfClose', t.close); $('vfIntro').innerHTML = esc(t.vfIntro) + ' ' + q('dogrulama'); set('lVfCode', t.vfCode); set('lVfFile', t.vfFile); set('vfGo', t.vfGo); set('vfNote', t.vfNote);
+    $('vfCode').placeholder = 'HRK1|…|…  ·  SHA-256';
+    $('recVerify').onclick = () => { $('vfOut').innerHTML = ''; const d = $('vfDlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); } };
+    $('vfClose').onclick = () => { const d = $('vfDlg'); try { d.close(); } catch (e) { d.removeAttribute('open'); } };
+    $('vfGo').onclick = verifyRecordUI;
     $('hIntro').onclick = () => { document.body.classList.toggle('introOpen'); };
     $('hIntro').title = t.introToggle;
     showHMaxNote();
@@ -157,8 +162,10 @@
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
+    set('lLayout', t.layoutLbl); set('layoutNote', t.layoutNote); $('layoutSel').innerHTML = [['sade', t.layoutSade], ['tam', t.layoutTam]].map(([v, l]) => `<option value="${v}"${st.layout === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     { const addQ = (id, topic) => { const el = $(id); if (el && !el.querySelector('.q')) el.insertAdjacentHTML('beforeend', ' ' + q(topic)); };
       addQ('hUp', 'rasad'); addQ('hStrip', 'hicri'); addQ('hRec', 'sahitlik'); addQ('lRecRes', 'ciplak'); addQ('lHMax', 'gurub'); }
+    setupFold(); paintFoldSums();
       const el = $(id); if (!el) return;
       const card = el.closest('section, .status'); if (!card) return;
       let h = card.querySelector(':scope > .hint, :scope .cardhead + .hint');
@@ -297,6 +304,7 @@
     $('fFont').onclick = () => { st.fontSize = st.fontSize >= 1.3 ? 1 : st.fontSize >= 1.15 ? 1.3 : 1.15; save(); fillStatic(); repaintAll(); };
     $('optWx').onchange = e => { st.wx = e.target.checked; save(); paintNet(); renderWx(true); };
     $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); paintNet(); if (st.autoLoc) autoLocate(true); };
+    $('layoutSel').onchange = e => { st.layout = e.target.value; st.fold = foldDefault(); save(); setupFold(); paintFoldSums(); renderTime(); };
     $('detailLvl').onchange = e => { st.detail = e.target.value; save(); fillStatic(); };
     $('optSafety').onchange = e => { st.safetyOff = !e.target.checked; save(); paintSafety(); };
     $('optFonts').onchange = e => { st.webFonts = e.target.checked; save(); applyFonts(); paintNet(); };
@@ -313,7 +321,7 @@
     computeDay(); renderTime(); if (view === 'harita') renderBigMap(); if (view === 'saha') fieldTick(true);
   }
   function openTopic(id) {
-    $('dlgBody').innerHTML = G.HRGuide.topicHtml(st.lang, id, st.detail === 'long' ? 'long' : 'more') + `<p class="small" style="margin-top:10px">${esc(t.editionNote)}</p>`;
+    $('dlgBody').innerHTML = G.HRGuide.topicHtml(st.lang, id, st.detail === 'long' ? 'long' : 'more') + `<p class="edn">${esc(t.editionNote)}</p>`;
     const d = $('dlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
   }
   function closeDlg() { const d = $('dlg'); try { d.close(); } catch (e) { d.removeAttribute('open'); } }
@@ -374,6 +382,44 @@
   // Göz güvenliği uyarısı yalnız rü’yetin mümkün olduğu akşamlarda gösterilir; kullanıcı kapatabilir (Ayarlar’dan geri açılır)
   const sightPossible = r => !!(r && r.ok && r.cls && ['possible', 'visible'].includes(r.cls.code));
   function paintSafety() { const el = $('safety'); if (el) el.hidden = !!st.safetyOff || !sightPossible(R); }
+  // ---- Sade görünüm: ikincil kartlar katlı başlar; her kart başlığa dokunarak açılıp kapanır, seçim hatırlanır ----
+  const FOLDABLE = ['locCard', 'dateCard', 'upCard', 'tbCard', 'wxCard', 'skyCard', 'stripCard', 'detailCard', 'monthCard'];
+  const SADE_FOLDED = ['locCard', 'dateCard', 'tbCard', 'wxCard', 'stripCard', 'detailCard', 'monthCard'];
+  const foldDefault = () => Object.fromEntries(FOLDABLE.map(id => [id, st.layout === 'sade' && SADE_FOLDED.includes(id)]));
+  function setupFold() {
+    if (!st.fold) st.fold = foldDefault();
+    for (const id of FOLDABLE) {
+      const c = $(id); if (!c) continue;
+      c.classList.add('foldable');
+      const h = c.querySelector(':scope > h2, :scope > .cardhead h2');
+      if (!c.querySelector(':scope > .foldbtn')) { c.insertAdjacentHTML('afterbegin', `<button type="button" class="foldbtn" aria-expanded="true"></button>`); c.querySelector(':scope > .foldbtn').onclick = e => { e.stopPropagation(); toggleFold(id); }; }
+      const fb = c.querySelector(':scope > .foldbtn'); fb.setAttribute('aria-label', t.foldToggle); fb.title = t.foldToggle;
+      if (!c.querySelector(':scope > .foldsum')) { const f = document.createElement('p'); f.className = 'foldsum'; (c.querySelector(':scope > .cardhead') || h).insertAdjacentElement('afterend', f); }
+      if (!c.dataset.foldBound) { c.dataset.foldBound = '1'; (h || c).addEventListener('click', e => { if (e.target.closest('button.q, .btns a, .btns button:not(.foldbtn)')) return; toggleFold(id); }); }
+      applyFold(id);
+    }
+  }
+  function applyFold(id, open) {
+    const c = $(id); if (!c) return;
+    if (open != null) st.fold[id] = !open;
+    const folded = !!st.fold[id];
+    c.classList.toggle('folded', folded);
+    const b = c.querySelector('.foldbtn'); if (b) b.setAttribute('aria-expanded', String(!folded));
+  }
+  function toggleFold(id) { st.fold[id] = !st.fold[id]; applyFold(id); save(); if (!st.fold[id]) { if (id === 'skyCard') renderTime(); if (id === 'monthCard') renderMini(); } paintFoldSums(); }
+  function paintFoldSums() {
+    const S = (id, txt) => { const c = $(id); const f = c && c.querySelector(':scope > .foldsum'); if (f) f.textContent = txt || ''; };
+    const city = CITIES.find(c => c.id === st.city);
+    S('locCard', `${city ? city[st.lang] : `${num(st.lat, 3)}, ${num(st.lon, 3)}`} · UTC${fmtOff(offAt(st.tz, st.date))} — ${t.foldOpen}`);
+    S('dateCard', fmtCivil(civil(st.date)));
+    S('tbCard', `${hhmm(selT())} — ${t.foldOpen}`);
+    S('wxCard', st.wx ? (WX.ass ? t.wxLevel[WX.ass.level] : t.wxLoading) : t.netNone);
+    S('upCard', upData && upData.a ? `${t.upA || ''} ${fmtCivil(civil(upData.a.ymd))}` : '');
+    S('skyCard', t.foldOpen);
+    S('stripCard', t.foldOpen);
+    S('detailCard', R && R.ok ? clsText(R)[0] : '');
+    S('monthCard', MONTH ? `${monthName(MONTH.hmn.m)} ${MONTH.hmn.y}` : '');
+  }
   function showHMaxNote() { const n = $('hMaxNote'); if (!n) return; n.hidden = !!(st.hMax && st.hMax > 0); n.textContent = t.hMaxUnset; }
   function locObj() { return { lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, hMax: st.hMax, tz: st.tz }; }
   const evCache = new Map();
@@ -381,7 +427,7 @@
 
   function update() {
     if (!isFinite(st.lat) || !isFinite(st.lon)) return;
-    LOC = locObj(); showHMaxNote(); showTzOff();
+    LOC = locObj(); showHMaxNote(); showTzOff(); if (st.fold) setTimeout(paintFoldSums, 0);
     R = eveningCached(LOC, st.date); paintSafety();
     tzCheck();
     if (!R.ok) {
@@ -751,9 +797,11 @@
   // Kapsam: dünya geneli (Ramazân dâhil, s. 315) — Zilhicce’de yerel; local=true her ay için yalnız bu yer
   function lunarDay(dCivil, local) {
     let best = null; let c = C.nextNewMoonAfter(A.MakeTime(new Date(dCivil.getTime() - 40 * 86400000)));
-    for (let i = 0; i < 3 && c; i++) { const hm2 = CAL.monthForConjunction(c.date), e = earliest(c, local ? [[st.lat, st.lon]] : scopePlaces(hm2.m)); if (e && e.first.getTime() <= dCivil.getTime()) best = { e, hm: hm2 }; c = C.nextNewMoonAfter(c.AddDays(1)); }
+    for (let i = 0; i < 3 && c; i++) { const hm2 = CAL.monthForConjunction(c.date); let e = earliest(c, local ? [[st.lat, st.lon]] : scopePlaces(hm2.m));
+      if (hm2.m === 12) { const ik = CAL.methods(hm2.y, 12).isik; if (ik) e = Object.assign({}, e || {}, { first: ik, isik: true }); }  // Zilhicce: kitabın usulü (s. 326)
+      if (e && e.first.getTime() <= dCivil.getTime()) best = { e, hm: hm2 }; c = C.nextNewMoonAfter(c.AddDays(1)); }
     if (!best) return null;
-    return { n: Math.round((dCivil - best.e.first) / 86400000) + 1, hm: best.hm };
+    return { n: Math.round((dCivil - best.e.first) / 86400000) + 1, hm: best.hm, isik: !!best.e.isik };
   }
   let MONTH = null;
   function renderMonth(r, loc) {
@@ -769,8 +817,14 @@
     renderMini();
     const ref = isHajj ? eL : eG;
     let b = '';
+    if (isHajj && meth.isik) {   // şahitle sabit olmayan yerlerde ana gösterim kitabın usulü; astronomik hesap yanında (s. 326)
+      const kb = new Date(meth.isik.getTime() + 9 * 86400000);
+      b += kv(t.zhIsik + ' ' + q('isik'), `<strong>${esc(fmtCivil(meth.isik))}</strong>`, t.zhIsikSub, 'txt');
+      b += kv(t.zhKurban, `<strong>${esc(fmtCivil(kb))}</strong>`, t.zhKurbanSub, 'txt');
+      b += kv(t.zhAstro, eL ? esc(fmtCivil(eL.first)) : t.none, t.zhAstroSub, 'txt');
+    }
     if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), st.lang === 'tr' ? 'veya ertesi gün (s. 360)' : 'or the next day (p. 360)', 'txt'); }
-    b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
+    if (!isHajj) b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
     const hj = hijriOf(st.date);
     if (hj) b += kv(t.lunarDay + ' ' + q('hicri'), `<span class="lunar">${esc(hj.dayTxt)}</span><small>${esc(hj.monthTxt)}</small>`, t.lunarDayNote, 'txt');
     $('month2').innerHTML = b;
@@ -1074,7 +1128,7 @@
     }
     if (!stored) {
       $('recEval').innerHTML = `<span class="pill p-bad">${esc(t.recStoreFail)}</span>`;
-      saveFile(`ruyet-kaydi-${sealed.observation.evening}-${String(sealed.id).slice(0, 8)}.json`, JSON.stringify(sealed, null, 2), 'application/json');
+      saveFile(recBase(sealed, 'record') + '.json', JSON.stringify(sealed, null, 2), 'application/json');
       return;
     }
     records.unshift(sealed);
@@ -1104,7 +1158,7 @@
   // ---- yedekleme, geri yükleme, fotoğraf doğrulama ----
   function backupRecords() {
     const data = { schema: 'mahinev-kayit-yedegi/1', created: new Date().toISOString(), app: { name: 'Mâh-ı Nev', version: G.HR_VERSION }, records };
-    saveFile(`mahinev-kayitlar-${todayYmd(st.tz)}.json`, JSON.stringify(data, null, 2), 'application/json');
+    saveFile(fileBase('backup', { ymd: todayYmd(st.tz), hhmm: hhmmTz(new Date(), st.tz), place: '' }) + '.json', JSON.stringify(data, null, 2), 'application/json');
   }
   async function importRecords(ev) {
     const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
@@ -1122,6 +1176,37 @@
     const x = h && records.find(r => r.photo && r.photo.sha256 === h);
     const msg = x ? t.recPhotoMatch(`${fmtCivil(civil(x.observation.evening))} · ${x.observer.name || '—'}`) : t.recPhotoNone;
     $('recEval').innerHTML = `<span class="pill ${x ? 'p-ok' : 'p-warn'}">${esc(msg)}</span><br><span class="hash">SHA-256 ${esc(h || '—')}</span>`; toast(msg);
+  }
+  // ---- Kayıt doğrulama: kâğıttaki kod (QR metni veya SHA-256) + kaydın dijital kopyası (JSON) ----
+  function parseRecCode(s) {
+    const x = String(s || '').trim().replace(/\s+/g, ''); let m = x.match(/^HRK1\|([^|]+)\|([0-9a-fA-F]{64})$/);
+    if (m) return { id: m[1], hash: m[2].toLowerCase() }; if (/^[0-9a-fA-F]{64}$/.test(x)) return { id: null, hash: x.toLowerCase() };
+    return x ? { bad: true } : null;
+  }
+  async function verifyRecordUI() {
+    const out = $('vfOut'), code = parseRecCode($('vfCode').value);
+    if (code && code.bad) { out.innerHTML = `<span class="pill p-bad">${esc(t.vfBadCode)}</span>`; return; }
+    let list = null, src = 'file';
+    const f = $('vfFile').files && $('vfFile').files[0];
+    if (f) { try { const j = JSON.parse(await f.text()); list = Array.isArray(j) ? j : j && Array.isArray(j.records) ? j.records : [j]; } catch (e) { out.innerHTML = `<span class="pill p-bad">${esc(t.recImportBad)}</span>`; return; } }
+    else { list = records; src = 'local'; }
+    let cand = list.filter(x => x && x.hash);
+    if (code) cand = cand.filter(x => x.hash === code.hash || (code.id && x.id === code.id));
+    else if (src === 'local') { out.innerHTML = `<span class="pill p-warn">${esc(t.vfNeed)}</span>`; return; }
+    if (!cand.length) { out.innerHTML = `<span class="pill p-bad">${esc(src === 'local' ? t.vfNotHere : t.vfNoMatch)}</span>`; return; }
+    const rows = [];
+    for (const x of cand.slice(0, 20)) {
+      let v = { hash: false, sig: false, fp: false }; try { v = await G.HRSig.verify(x); } catch (e) { /* */ }
+      const codeOk = !code || (x.hash === code.hash && (!code.id || code.id === x.id));
+      const ok = v.hash && codeOk && (!x.sig || v.sig);
+      const o = x.observation || {}, pl = x.place || {};
+      rows.push(`<div class="vfr"><span class="pill ${ok ? 'p-ok' : 'p-bad'}">${esc(ok ? t.vfOk : t.vfFail)}</span>
+        <dl class="kv">${kv(t.recAt, esc(new Intl.DateTimeFormat(locale(), { timeZone: pl.tz || st.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at))) + ' · ' + esc(pl.name || ''), esc(t.recRes[o.result] || ''), 'txt')}
+        ${kv(t.recHash, esc(v.hash ? t.vfHashOk : t.vfHashBad), `<span class="hash">${esc(x.hash)}</span>`, 'txt')}
+        ${kv(t.recSig, x.sig ? esc(!v.hash ? t.vfSigNA : v.sig ? t.vfSigOk : t.vfSigBad) : esc(t.recNoSig), x.signer ? `<span class="hash">${esc(x.signer.fp)}</span>` : '', 'txt')}
+        ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}</dl></div>`);
+    }
+    out.innerHTML = rows.join('');
   }
   // Kayıt listesinde her kaydın özeti ve imzası yeniden doğrulanır
   async function verifyBadges() {
@@ -1149,7 +1234,7 @@
     verifyBadges();
     L.querySelectorAll('[data-tut]').forEach(b => b.onclick = () => printPages(['tut'], records[+b.dataset.tut]));
     L.querySelectorAll('[data-tutjpg]').forEach(b => b.onclick = () => exportJpg(['tut'], records[+b.dataset.tutjpg]));
-    L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(`ruyet-kaydi-${x.observation.evening}-${x.id.slice(0, 8)}.json`, JSON.stringify(x, null, 2), 'application/json'); });
+    L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(recBase(x, 'record') + '.json', JSON.stringify(x, null, 2), 'application/json'); });
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
   }
 
@@ -1198,7 +1283,7 @@
     if (WX.ass) chips.push(`<span class="chip" title="${esc(t.wxTitle)}">${{ good: '☀', fair: '⛅', poor: '☁' }[WX.ass.level]} ${esc(t.wxLevel[WX.ass.level])}</span>`);
     $('mbChips').innerHTML = chips.join('');
     // konum çipi Konum kartına götürür (dar ekranda kart aşağıda kaldığı için)
-    $('mbLoc').onclick = () => { if (view !== 'plan') location.hash = '#plan'; setTimeout(() => { const c = $('hLoc'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); try { $('city').focus({ preventScroll: true }); } catch (e) { /* */ } } }, 60); };
+    $('mbLoc').onclick = () => { if (view !== 'plan') location.hash = '#plan'; if (st.fold && st.fold.locCard) { applyFold('locCard', true); save(); } setTimeout(() => { const c = $('hLoc'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); try { $('city').focus({ preventScroll: true }); } catch (e) { /* */ } } }, 60); };
     $('mbNow').hidden = live;
     $('mbLive').hidden = !live || field;
     $('mbPlay').setAttribute('aria-pressed', String(live && !frozen)); $('mbFreeze').setAttribute('aria-pressed', String(frozen));
@@ -1328,7 +1413,7 @@
   }
   // ---- Baskı / PDF ----
   async function getDownloads() { try { return G.claude && G.claude.use ? await G.claude.use('downloads') : null; } catch (e) { return null; } }
-  const selfName = () => `mahinev-v${G.HR_VERSION}.html`;
+  const selfName = () => `MahiNev_v${G.HR_VERSION}.html`;
   const selfHtml = () => G.HR_SRC || ('<!DOCTYPE html>\n' + document.documentElement.outerHTML);
   async function saveSelf() {
     const dl = await getDownloads(); if (!dl) { toast(t.dlFail); return; }
@@ -1349,7 +1434,7 @@
   const BOOK_PAGE = 'https://www.hakikatkitabevi.net/book.php?bookCode=001', BOOK_PDF = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
   const bookLinksHtml = () => `${esc(t.bookLinks)} ${extLink(BOOK_PAGE, t.bookPage)} · ${extLink(BOOK_PDF, t.bookPdf)}`;
   function aboutHtml() {
-    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="small">${esc(t.editionNote)}</p>`;
+    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>`;
   }
   function noticeHtml() {
     const n = NOTICE || {};
@@ -1383,7 +1468,7 @@
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
-  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''} · ${esc(t.pageEdition)}</span></footer>`; }
+  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}<span class="edn"> · ${esc(t.pageEdition)}</span></span></footer>`; }
   const locLine = () => `<strong>${esc(placeName())}</strong> · ${num(st.lat, 4)}°, ${num(st.lon, 4)}° · ${num(st.elev, 0)} m · ${esc(st.tz)}`;
   function pagePlan() {
     const r = R; if (!r) return '';
@@ -1465,7 +1550,7 @@
         <tr><th>${esc(t.recContact)}</th><td colspan="3">${v(ob.contact, 90)}</td></tr>
         ${[1, 2, 3].map(i => `<tr><th>${esc(t.tutWitness)} ${i}</th><td colspan="3"><span class="blank" style="min-width:120mm"></span></td></tr>`).join('')}</table>
       <div class="fiqh"><h3>${esc(t.tutFiqh)}</h3><p>${esc(t.tutFiqhTxt)}</p></div>
-      <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p></div></div>
+      <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p>${blank ? '' : `<p class="vfline">${esc(t.vfPrint)}</p>`}</div></div>
       ${pgFoot(blank ? '' : `${t.tutRecId} ${x.id.slice(0, 8)}`)}</section>`;
   }
   const PRINT_CSS = `@page { size: A4; margin: 0; } @page land { size: A4 landscape; margin: 0; }
@@ -1481,7 +1566,7 @@
     .pbox.s-ok { border-left-color: var(--ok); } .pbox.s-warn { border-left-color: var(--warn); } .pbox.s-bad { border-left-color: var(--bad); } .pbox.s-info { border-left-color: var(--info); }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; } .tcols { grid-template-columns: 1.05fr 1fr; }
     table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
-    .pfig { height: 70mm; } .pfig svg { width: 100%; height: 100%; display: block; }
+    .pfig { height: 68mm; } .pfig svg { width: 100%; height: 100%; display: block; }
     .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; }
     .pmap img { width: 100%; max-height: 140mm; object-fit: contain; display: block; }
     ol.pl { margin: 0; padding-left: 5mm; font-size: 8.6pt; } ol.pl li { margin: .6mm 0; } .guides { font-size: 8.6pt; margin: 0; }
@@ -1493,12 +1578,35 @@
     table.sig { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.sig th { text-align: left; font-weight: 600; color: #444; padding: 1.6mm 2mm .8mm 0; white-space: nowrap; } table.sig td { padding: 1.6mm 0 .8mm; }
     .fiqh { border: .6pt solid #c9b27a; background: #fbf6e8; border-radius: 2mm; padding: 2mm 3mm; } .fiqh p { margin: 0; font-size: 8.3pt; line-height: 1.45; }
     .integ { display: flex; gap: 4mm; align-items: center; } .qr svg { width: 26mm; height: 26mm; display: block; } .hash { font: 500 7.6pt var(--font-mono); word-break: break-all; margin: .5mm 0; color: #333; }
+    .vfline { font-size: 7pt; color: #555; margin: .8mm 0 0; } .edn { font-size: 6.5pt; color: #777; }
     .pph { margin: 2mm 0 0; } .pph img { max-width: 100%; max-height: 26mm; display: block; border-radius: 1mm; } .pph figcaption { margin-top: .6mm; }
     .cap { font-size: 8pt; color: #444; margin: 0; } .small { font-size: 8pt; color: #555; } .legend { font-size: 8pt; }
     button, .q { display: none !important; }`;
+  // ---- Dosya adları: MahiNev_YYYY-AA-GG_SSDD_Yer_tür — tarih önde olduğu için klasörde sıralanır, “MahiNev” ile ayırt edilir ----
+  const TRMAP = { 'ı': 'i', 'İ': 'I', 'ş': 's', 'Ş': 'S', 'ğ': 'g', 'Ğ': 'G', 'ü': 'u', 'Ü': 'U', 'ö': 'o', 'Ö': 'O', 'ç': 'c', 'Ç': 'C', 'â': 'a', 'Â': 'A', 'î': 'i', 'û': 'u' };
+  const slug = s => String(s || '').replace(/[ıİşŞğĞüÜöÖçÇâÂîû]/g, c => TRMAP[c]).normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
+  function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
+  const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : ''; };
+  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
+    en: { plan: 'watch-plan', sky: 'sky-chart', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
+  function fileBase(kind, o = {}) {
+    const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
+    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.tr)[kind] || kind, o.suffix].filter(Boolean).join('_');
+  }
+  // Kayda ait dosya adı: gözlemin akşamı, yerel saati ve yeri
+  function recBase(x, kind) {
+    const pl = x.place || {}; return fileBase(kind, { ymd: x.observation.evening, hhmm: hhmmTz(new Date(x.observation.at), pl.tz || st.tz), place: placeSlug(pl.name, pl.lat, pl.lon), suffix: kind === 'record' ? String(x.id).slice(0, 8) : '' });
+  }
+  const printAt = kinds => SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
+  function pagesBase(kinds, rec) {
+    if (kinds.length === 1 && kinds[0] === 'tut') { const x = rec || records.find(r => r.schema); if (x) return recBase(x, 'tut'); }
+    return fileBase(kinds.length === 1 ? kinds[0] : 'pages', { hhmm: kinds.every(k => k === 'blank' || k === 'month') ? '' : hhmmTz(printAt(kinds).date, st.tz) });
+  }
   // A4 sayfalarının tek HTML belgesi (yazdırma ve JPG çıktısı aynı belgeyi kullanır)
   async function buildPrint(kinds, rec) {
-    const at = SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
+    const at = printAt(kinds);
     const parts = [];
     for (const k of kinds) {
       if (k === 'plan') parts.push(pagePlan());
@@ -1509,17 +1617,17 @@
       else if (k === 'blank') parts.push(pageTut(null));
     }
     const css = Array.from(document.querySelectorAll('style')).map(x => x.textContent).join('\n');
-    const html = `<!DOCTYPE html><html lang="${st.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(kinds.map(k => (t.prOpts[k] || '')).join(' + '))}</title><style>${css}\n${PRINT_CSS}</style></head><body class="th-light">${parts.join('')}</body></html>`;
+    const html = `<!DOCTYPE html><html lang="${st.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(pagesBase(kinds, rec))}</title><style>${css}\n${PRINT_CSS}</style></head><body class="th-light">${parts.join('')}</body></html>`;
     return html;
   }
   async function printPages(kinds, rec) {
     toast(t.printing);
     const html = await buildPrint(kinds, rec);
-    const fname = `mahinev-${kinds.join('-')}-${st.date}.html`;
+    const fname = pagesBase(kinds, rec) + '.html';
     G.HR_LAST_PRINT = html;
     if (!ON.sandboxed) {
       const f = document.createElement('iframe'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
-      f.onload = () => { setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast(t.printNA); } setTimeout(() => f.remove(), 60000); }, 400); };
+      f.onload = () => { setTimeout(() => { const t0 = document.title; try { document.title = pagesBase(kinds, rec); f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast(t.printNA); } setTimeout(() => { document.title = t0; }, 1500); setTimeout(() => f.remove(), 60000); }, 400); };
       f.srcdoc = html; document.body.appendChild(f);
       return;
     }
@@ -1572,13 +1680,13 @@
       const pages = Array.from(d.querySelectorAll('.a4')), names = [];
       const files = [];
       for (let i = 0; i < pages.length; i++) {
-        const k = kinds[i] || 'sayfa'; let nm = `mahinev-${k}-${st.date}.jpg`; if (names.includes(nm)) nm = nm.replace('.jpg', `-${i + 1}.jpg`); names.push(nm);
+        const k = kinds[i] || 'pages'; let nm = (k === 'tut' ? pagesBase(['tut'], rec) : pagesBase([k])) + '.jpg'; if (names.includes(nm)) nm = nm.replace('.jpg', `_${i + 1}.jpg`); names.push(nm);
         files.push({ name: nm, data: await pageToJpeg(pages[i], css) });
       }
       G.HR_LAST_JPG = files.map(x => ({ name: x.name, size: x.data.length, head: Array.from(x.data.slice(0, 3)) }));
       let ok;
       if (files.length === 1) ok = await saveFile(files[0].name, new Blob([files[0].data], { type: 'image/jpeg' }), 'image/jpeg');
-      else ok = await saveFile(`mahinev-sayfalar-${st.date}.zip`, makeZip(files), 'application/zip');
+      else ok = await saveFile(pagesBase(kinds, rec) + '.zip', makeZip(files), 'application/zip');
       if (ok) toast(t.jpgDone(files.length));
     } catch (e) { toast(t.jpgFail, 8000); }
     finally { f.remove(); }

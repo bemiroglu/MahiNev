@@ -35,6 +35,18 @@
   - Ayarlar'da açıklama düzeyi seçilir: kısa (varsayılan) veya ayrıntılı.
   - Her notun altında "Ayrıntılı açıklama" açılabilir.
   - Yeni notlar eklendi: rasad gecesi, şahitlik, çıplak göz şartı, gurûb ve temkin.
+- **Zilhicce:** Şahitle sabit olmayan yerler için ana gösterim kitabın usulüdür (Işık usulü, s. 326).
+  - Zilhiccenin 1. günü ve kurban bayramının 1. günü bu usulle verilir; bayram bu gün veya bir gün sonrasıdır.
+  - Astronomik hesap yanında ek bilgi olarak gösterilir.
+  - Zilhiccede kamerî gün de bu usulle bulunan birinci günden sayılır.
+- **Dosya adları:** PDF, JPG, ZIP ve JSON dosyaları `MahiNev_YYYY-AA-GG_SSDD_Yer_tür` biçiminde adlandırılır, örneğin `MahiNev_2026-12-10_1745_Istanbul_tutanak.jpg`. Tarih önde olduğu için dosyalar klasörde sıralanır.
+- **Kayıt doğrulama:** Saha sekmesindeki "Kayıt doğrula" penceresi tutanaktaki kodu (QR metni veya SHA-256) gözlemcinin JSON kaydıyla karşılaştırır.
+  - Özet, imza ve parmak izi uyumu denetlenir.
+  - Tutanakta küçük bir doğrulama satırı yer alır.
+  - `tools/verify_record.py` dosyasına `--kod` seçeneği eklendi.
+- **Sade görünüm:** İkincil kartlar katlı başlar; başlığa dokunarak açılır. Seçim hatırlanır. Ayarlar → Görünüm'den "Tam" görünüme dönülebilir.
+- Işık usulü açıklaması, usulün değerini teslim eden daha yumuşak bir ifadeyle yazıldı.
+- Baskı bilgisi (Ocak 2026) daha küçük harfle ve daha kısa yazılıyor.
 - Saat dilimi hesaplarında biçimleyiciler önbelleğe alındı; arayüz daha hızlı tepki veriyor.
 - Belgeler sürüm geçmişi ve düzeltme notları içermeyecek biçimde sadeleştirildi. Gelecek işler için [docs/yol-haritasi.md](docs/yol-haritasi.md) eklendi.
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0-deneme.2
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0-deneme.3
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -374,6 +374,19 @@ body.planning #mbar[class*="st-"] .hj, body.planning #mbar[class*="st-"] .hj b {
 body.planning #mbar[class*="st-"] .chip { color: var(--ink); border-color: var(--line); }
 body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .tmore { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; } .tmore summary { cursor: pointer; font-weight: 600; color: var(--accent); } .tlong { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 6px; }
+.edn { font-size: .7rem; color: var(--muted); margin: 6px 0 0; }
+.vfr { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 0 0 8px; }
+/* Sade görünüm: kartlar başlığa dokunarak katlanır; katlı kartta yalnız başlık ve kısa özet görünür */
+.card.foldable { position: relative; } .card.foldable > h2, .card.foldable > .cardhead { padding-right: 34px; }
+.foldbtn { position: absolute; top: 12px; right: 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); cursor: pointer; color: var(--muted); width: 28px; height: 28px; line-height: 1; transition: transform .2s; }
+.foldbtn::before { content: '▾'; font-size: .95rem; }
+.card.foldable > h2, .card.foldable > .cardhead h2 { cursor: pointer; }
+.card.folded .foldbtn { transform: rotate(-90deg); }
+.card.folded > :not(h2):not(.cardhead):not(.foldsum):not(.foldbtn) { display: none !important; }
+.card.folded > .cardhead .btns { display: none; }
+.card .foldsum { display: none; font-size: .85rem; color: var(--muted); margin: 2px 0 0; }
+.card.folded .foldsum { display: block; }
+.card.folded { padding-bottom: 12px; }
 </style>
 </head>
 <body>
@@ -410,7 +423,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <p class="safety" id="safety" role="note"></p>
     <div class="layout">
       <aside class="stack">
-        <section class="card" aria-labelledby="hLoc">
+        <section class="card" id="locCard" aria-labelledby="hLoc">
           <h2 id="hLoc"></h2>
           <div class="field"><label for="city" id="lCity"></label><select id="city"></select></div>
           <div class="row2">
@@ -425,7 +438,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
           <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
           <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p><p class="cap" id="hMaxNote" hidden></p>
         </section>
-        <section class="card" aria-labelledby="hDate">
+        <section class="card" id="dateCard" aria-labelledby="hDate">
           <h2 id="hDate"></h2>
           <div class="field"><label for="date" id="lDate"></label><input id="date" type="date"></div>
           <div class="btns">
@@ -454,8 +467,8 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
           <p class="where" id="skyWhere"></p><div class="readout" id="skyRead"></div><p class="cap" id="skyNote"></p></section>
         <section class="card" id="stripCard"><h2 id="hStrip"></h2><div class="strip" id="strip"></div><p class="cap" id="stripNote"></p></section>
         <div class="grid2">
-          <section class="card"><h2 id="hDetail"></h2><dl class="kv" id="detail"></dl></section>
-          <section class="card"><h2 id="hMonth"></h2><dl class="kv" id="month1"></dl><div class="minimap" id="miniMap"></div><div class="legend" id="miniLegend"></div><p class="cap" id="miniHow"></p><dl class="kv" id="month2"></dl></section>
+          <section class="card" id="detailCard"><h2 id="hDetail"></h2><dl class="kv" id="detail"></dl></section>
+          <section class="card" id="monthCard"><h2 id="hMonth"></h2><dl class="kv" id="month1"></dl><div class="minimap" id="miniMap"></div><div class="legend" id="miniLegend"></div><p class="cap" id="miniHow"></p><dl class="kv" id="month2"></dl></section>
         </div>
         <details class="card extra" id="extraBox"><summary id="hExtra"></summary><p class="note" id="extraNote"></p><dl class="kv" id="extra"></dl></details>
       </div>
@@ -516,7 +529,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
       <div class="field"><label for="recNote" id="lRecNote"></label><textarea id="recNote" rows="2"></textarea></div>
       <div class="btns recbtns"><button class="btn primary" type="button" id="recSave"></button></div>
       <p class="where" id="recEval" role="status"></p><h3 id="hRecList"></h3><div class="scroll" id="recList"></div>
-      <div class="btns rectools"><button class="btn" type="button" id="recBackup"></button><button class="btn" type="button" id="recImport"></button><button class="btn" type="button" id="recPhotoCheck"></button><input type="file" id="recImportFile" accept="application/json,.json" hidden><input type="file" id="recPhotoFile" accept="image/*" hidden></div>
+      <div class="btns rectools"><button class="btn" type="button" id="recBackup"></button><button class="btn" type="button" id="recImport"></button><button class="btn" type="button" id="recPhotoCheck"></button><button class="btn" type="button" id="recVerify"></button><input type="file" id="recImportFile" accept="application/json,.json" hidden><input type="file" id="recPhotoFile" accept="image/*" hidden></div>
       <p class="cap" id="recBackupNote"></p>
       <h3 id="hNets"></h3><div id="netsBody" class="small"></div>
     </section>
@@ -540,6 +553,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
       </div>
       <div>
         <h3 id="hHelp"></h3>
+        <div class="field"><label for="layoutSel" id="lLayout"></label><select id="layoutSel"></select></div><p class="cap" id="layoutNote"></p>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
         <label class="chk"><input type="checkbox" id="optSafety"><span id="lOptSafety"></span></label>
@@ -564,6 +578,15 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
         <button class="btn" type="button" id="dlHtml2"></button>
       </div>
     </div>
+  </dialog>
+  <dialog id="vfDlg" aria-labelledby="hVf" class="setdlg">
+    <div class="cardhead"><h2 id="hVf" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="vfClose"></button></div>
+    <p class="small" id="vfIntro"></p>
+    <div class="field"><label for="vfCode" id="lVfCode"></label><input id="vfCode" type="text" autocomplete="off" spellcheck="false"></div>
+    <div class="field"><label for="vfFile" id="lVfFile"></label><input id="vfFile" type="file" accept="application/json,.json"></div>
+    <div class="btns"><button class="btn primary" type="button" id="vfGo"></button></div>
+    <div id="vfOut" role="status" style="margin-top:10px"></div>
+    <p class="cap" id="vfNote"></p>
   </dialog>
   <dialog id="prDlg" aria-labelledby="hPr" class="setdlg">
     <div class="cardhead"><h2 id="hPr" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="prClose"></button></div>
@@ -1663,7 +1686,7 @@ window.HR_CANON_EN = [
         'Program, beynûnet ≥ 8° ve görünen irtifâ ≥ 5° şartının ilk sağlandığı akşamı arar; en erken gün o akşamın ertesi günüdür. Bir tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olduğundan, dünya geneli en erken akşam çoğunlukla Pasifik’te bulunur.'],
       isik: ['Işık Usulü ve takvim usulleri',
         'Işık Usulü bir arabî ayın ilk gününü hesapla bulur. Şahitle sabit olmayan yerlerde kurban bayramı bu hesapla bulunan gün veya ertesidir (s. 326, 359). Uluğ Beğ ve Kindî cetvelleri de takvim usulleridir (s. 361–362).',
-        'Bu usuller ortalama ay hareketine dayanan aritmetik kurallardır; gerçek ictimâyı ve atmosferi hesaba katmazlar. 1430–1460 yılları arasında Işık Usulü, ayların yaklaşık %8’inde ay başını hilâlin fiziken görülemeyeceği bir güne koyuyor.'],
+        'Bu usuller, ay hareketinin ortalamasına dayanan, akılda kalıcı ve zarif hesap kurallarıdır. Gerçek ictimâyı ve atmosferi ayrıca hesaba katmadıkları için bazı aylarda astronomik hesaptan bir gün ayrılabilirler.'],
       modern: ['Modern modeller (Yallop, Odeh)',
         'Ek bilgidir; hüküm vermez. Yalnızca en iyi gözlem anı (gurûb + 4/9 × fark) ana panelde gösterilir.',
         'Yallop (1997) ve Odeh (2004), yüzlerce kayıtlı gözlemden çıkarılmış ölçütlerdir. İkisi de ay ile güneş arasındaki irtifâ farkını (ARCV) hilâlin kalınlığıyla (W) karşılaştırır. Sınıflar "çıplak gözle kolayca görülür"den "teleskopla da görülemez"e kadar uzanır.']
@@ -1701,7 +1724,7 @@ window.HR_CANON_EN = [
         'The program looks for the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°; the earliest day is the day after it. A date’s latest sunset is just east of the date line, so the worldwide earliest evening is usually in the Pacific.'],
       isik: ['Işık method and calendar methods',
         'The Işık method calculates the first day of an Arabic month. Where it is not established by witnesses, Eid al-Adha is the day so found or the next (pp. 326, 359). The Ulugh Beg and Kindî tables are calendar methods too (pp. 361–362).',
-        'These are arithmetic rules based on the mean lunar motion; they ignore the actual conjunction and the atmosphere. For 1430–1460 AH the Işık method puts the month start on a day of physically impossible visibility in about 8% of months.'],
+        'These are elegant, memorable rules based on the Moon’s mean motion. Since they do not separately account for the actual conjunction and the atmosphere, in some months they may differ by a day from the astronomical calculation.'],
       modern: ['Modern models (Yallop, Odeh)',
         'Additional information only; no ruling. Only the best observation time (sunset + 4/9 × lag) is shown on the main panel.',
         'Yallop (1997) and Odeh (2004) are criteria fitted to hundreds of recorded observations. Both compare the altitude difference between Moon and Sun (ARCV) with the crescent width (W). Classes range from "easily visible to the naked eye" to "not visible even with a telescope".']
@@ -2284,7 +2307,7 @@ window.HR_CANON_EN = [
 /* Metinler: internet izinleri, JPG çıktısı, UTC saat farkı */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.9.0-deneme.2';
+  G.HR_VERSION = '0.9.0-deneme.3';
   Object.assign(G.HRI18N.T.tr, {
     // İnternet bağlantıları ve izinler
     hOnline: 'İnternet bağlantıları ve izinler',
@@ -2319,10 +2342,25 @@ window.HR_CANON_EN = [
     tzAuto: o => `Konum seçili saat diliminden çok uzak; saat farkı tûlden hesaplandı: UTC${o}. Bölgede kullanılan saat farklıysa “UTC farkı” kutusundan veya listeden düzeltin.`,
     aboutTitle: 'Bu araç hakkında',
     aboutText: 'Mâh-ı Nev, Tam İlmihâl Se’âdet-i Ebediyye kitabındaki bilgiler esas alınarak hazırlanmış bir rasad yardımcısıdır. Hilâl rasadının planlanmasını ve sahada yapılmasını kolaylaştırmak için yapılmıştır. Bir fıkıh kaynağı değildir; kaynağın yerini tutmaz. Esas ve kesin bilgi fıkıhtır: Bu programda kitaba ve fıkha uymayan bir bilgi bulunursa, o bilgi geçersizdir. Fıkhî hükümler için kitabın kendisine başvurunuz.',
-    editionNote: 'Programdaki sayfa numaraları Tam İlmihâl Se’âdet-i Ebediyye’nin Ocak 2026 baskısına göredir; başka baskılarda birkaç sayfa farklı olabilir.',
+    editionNote: 'Sayfa numaraları: Tam İlmihâl, Ocak 2026 baskısı.',
     bookLinks: 'Kitabı okuyun veya indirin (Hakîkat Kitâbevi):', bookPage: 'kitabın sayfası', bookPdf: 'PDF',
     srcLine: 'Kaynak: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
-    pageEdition: 'sayfa no.: Ocak 2026 baskısı',
+    pageEdition: 'Sayfa no.: Ocak 2026 baskısı',
+    zhIsik: 'Zilhiccenin 1. günü (Işık usulü)', zhIsikSub: 'Şahitle sabit olmayan yerlerde esas budur (s. 326).',
+    zhKurban: 'Kurban bayramının 1. günü', zhKurbanSub: 'Bu hesapla bulunan gün veya bir gün sonrası; önce olamaz (s. 326).',
+    zhAstro: 'Astronomik hesap (ek bilgi)', zhAstroSub: 'Hesâbî en erken gün, bulunduğunuz yer.',
+    layoutLbl: 'Görünüm', layoutSade: 'Sade (önerilen): ikincil kartlar katlı başlar', layoutTam: 'Tam: bütün kartlar açık',
+    layoutNote: 'Her kart başlığına dokunarak açılır veya kapanır; seçiminiz hatırlanır. “Tam” görünüme her zaman dönebilirsiniz.',
+    foldToggle: 'Kartı aç / kapat', foldOpen: 'açmak için dokunun',
+    vfBtn: 'Kayıt doğrula', vfTitle: 'Kayıt doğrulama',
+    vfIntro: 'Tutanaktaki kod, kaydın dijital kopyasının (JSON) parmak izidir. Kâğıttaki kodu yazın veya QR’dan okunan metni yapıştırın; gözlemciden gelen JSON kaydını seçin.',
+    vfCode: 'Kâğıttaki kod (QR metni veya SHA-256 özeti)', vfFile: 'Kayıt dosyası (JSON); seçilmezse bu cihazdaki kayıtlarda aranır', vfGo: 'Doğrula',
+    vfNote: 'Doğrulama internetsiz yapılır. Bilgisayarda: python3 tools/verify_record.py kayit.json --kod "HRK1|…"',
+    vfBadCode: 'Kod anlaşılamadı: “HRK1|kayıt-no|özet” ya da 64 haneli özet olmalı.', vfNeed: 'Kâğıttaki kodu yazın ya da bir JSON kaydı seçin.',
+    vfNotHere: 'Bu kodun ait olduğu kayıt bu cihazda yok. Gözlemciden JSON kaydını isteyip seçin.', vfNoMatch: 'Seçilen dosyada bu koda ait kayıt yok.',
+    vfOk: 'Doğrulandı: kayıt değiştirilmemiş', vfFail: 'Doğrulanamadı', vfHashOk: 'eşleşiyor', vfHashBad: 'EŞLEŞMİYOR: kayıt değiştirilmiş',
+    vfSigOk: 'geçerli (bu parmak izli cihazda imzalanmış)', vfSigBad: 'GEÇERSİZ', vfCodeRow: 'Kâğıttaki kod', vfCodeOk: 'bu kayda ait', vfCodeBad: 'BU KAYDA AİT DEĞİL', vfCodeChanged: 'kodu taşıyor, fakat içeriği SONRADAN DEĞİŞTİRİLMİŞ', vfSigNA: 'içerik değiştiği için imza bu içeriği doğrulamaz',
+    vfPrint: 'Doğrulama: Mâh-ı Nev › Saha › Kayıt doğrula — JSON kaydı ve bu kod ile.',
     jpgGo: 'JPG resmi olarak kaydet', jpgShort: 'JPG', jpgMaking: 'JPG hazırlanıyor…',
     jpgDone: n => n > 1 ? `${n} sayfa JPG olarak hazırlandı (ZIP).` : 'Sayfa JPG olarak hazırlandı.',
     jpgFail: 'Bu tarayıcıda JPG üretilemedi. “Yazdır / PDF” ile PDF olarak kaydedebilirsiniz.',
@@ -2360,10 +2398,25 @@ window.HR_CANON_EN = [
     wxNoSight: 'By calculation the crescent cannot be seen this evening; the forecast is for information only.',
     aboutTitle: 'About this tool',
     aboutText: 'Mâh-ı Nev is an observation aid prepared on the basis of the book Tam İlmihâl Se’âdet-i Ebediyye. It was made to help plan crescent observations and carry them out in the field. It is not a source of fiqh and does not replace the source. Fiqh is the basis and the decisive knowledge: anything in this program that does not agree with the book and with fiqh is void. For rulings, consult the book itself.',
-    editionNote: 'Page numbers in the program refer to the January 2026 printing of Tam İlmihâl Se’âdet-i Ebediyye; other printings may differ by a few pages.',
+    editionNote: 'Page numbers: Tam İlmihâl, January 2026 printing.',
     bookLinks: 'Read or download the book (Hakîkat Kitâbevi):', bookPage: 'book page', bookPdf: 'PDF',
     srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
-    pageEdition: 'page nos.: January 2026 printing',
+    pageEdition: 'Page nos.: January 2026 printing',
+    zhIsik: 'First day of Dhu al-Hijja (Işık method)', zhIsikSub: 'This is the basis where it is not established by witnesses (p. 326).',
+    zhKurban: 'First day of Eid al-Adha', zhKurbanSub: 'The day found by this calculation or one day later; not earlier (p. 326).',
+    zhAstro: 'Astronomical calculation (additional)', zhAstroSub: 'Computed earliest day, your location.',
+    layoutLbl: 'Layout', layoutSade: 'Simple (recommended): secondary cards start folded', layoutTam: 'Full: all cards open',
+    layoutNote: 'Tap a card’s title to open or close it; your choice is remembered. You can always return to the “Full” layout.',
+    foldToggle: 'Open / close card', foldOpen: 'tap to open',
+    vfBtn: 'Verify a record', vfTitle: 'Record verification',
+    vfIntro: 'The code on the report is the fingerprint of the record’s digital copy (JSON). Type the code from the paper or paste the text read from the QR, and select the JSON record received from the observer.',
+    vfCode: 'Code on the paper (QR text or SHA-256 digest)', vfFile: 'Record file (JSON); if none, this device’s records are searched', vfGo: 'Verify',
+    vfNote: 'Verification works offline. On a computer: python3 tools/verify_record.py record.json --kod "HRK1|…"',
+    vfBadCode: 'Code not understood: it must be “HRK1|record-no|digest” or a 64-character digest.', vfNeed: 'Type the code from the paper or select a JSON record.',
+    vfNotHere: 'The record for this code is not on this device. Ask the observer for the JSON record and select it.', vfNoMatch: 'The selected file has no record for this code.',
+    vfOk: 'Verified: the record is unchanged', vfFail: 'Not verified', vfHashOk: 'matches', vfHashBad: 'DOES NOT MATCH: the record was changed',
+    vfSigOk: 'valid (signed on the device with this fingerprint)', vfSigBad: 'INVALID', vfCodeRow: 'Code on the paper', vfCodeOk: 'belongs to this record', vfCodeBad: 'DOES NOT BELONG TO THIS RECORD', vfCodeChanged: 'carries the code, but its content WAS CHANGED afterwards', vfSigNA: 'the content changed, so the signature does not vouch for it',
+    vfPrint: 'Verification: Mâh-ı Nev › Field › Verify a record — with the JSON record and this code.',
     jpgGo: 'Save as JPG image', jpgShort: 'JPG', jpgMaking: 'Preparing JPG…',
     jpgDone: n => n > 1 ? `${n} pages prepared as JPG (ZIP).` : 'Page prepared as JPG.',
     jpgFail: 'JPG could not be produced in this browser. Use “Print / PDF” to save a PDF.',
@@ -2388,6 +2441,12 @@ window.HR_CANON_EN = [
     'Searching for the crescent on the evening of the 29th of Sha’ban is a communal obligation (vâcib-i kifâye); if it is not seen, the month is completed to thirty days (pp. 314–315). Searching the sky for the Ramadan crescent is an act of worship. Calculation is for knowing the night on which the crescent can be seen, not the moment the month begins (p. 360).',
     'Watch night (A): the first evening at your location on which the crescent can possibly be seen (elongation ≥ 8° at sunset and the crescent 5° above the horizon). Most favourable evening (B): the first evening on which the elongation reaches 18°. Both are computed possibility; neither says that the crescent was seen.'];
 
+  T.tr.dogrulama = ['Kaydın doğrulanması',
+    'Rü’yet kaydı ve tutanak şahitlik değildir; şahitliğin değerlendirilmesi yetkili makama aittir (s. 315–316). Doğrulama yalnız kaydın sonradan değiştirilmediğini gösterir; hilâlin görüldüğünü ispat etmez.',
+    'Özet (SHA-256), kaydın içeriğinden hesaplanan 64 haneli parmak izidir; tek harf değişse bütünüyle değişir. Kâğıt tek başına doğrulanamaz: doğrulayan kişi gözlemcinin JSON kaydını alır, program özeti yeniden hesaplar ve kâğıttaki kodla karşılaştırır.'];
+  T.en.dogrulama = ['Verifying a record',
+    'A sighting record or report is not testimony; evaluating testimony belongs to the competent authority (pp. 315–316). Verification only shows that the record has not been changed afterwards; it does not prove that the crescent was seen.',
+    'The digest (SHA-256) is a 64-character fingerprint computed from the record’s content; changing a single letter changes it completely. The paper alone cannot be verified: the verifier obtains the observer’s JSON record, and the program recomputes the digest and compares it with the code on the paper.'];
   // Ayrıntılı metinler: [fıkhî ayrıntı, bilimsel ayrıntı]
   const LONG = {
     tr: {
@@ -2421,6 +2480,9 @@ window.HR_CANON_EN = [
       gurub: [
         'Kitap üç gurûb tanımlar (s. 186): hakîkî gurûb (güneş merkezinin hakîkî irtifâı sıfır), zâhirî gurûb (üst kenarın gözlemcinin görünen ufkundan kaybolduğu an) ve şer’î gurûb (üst kenarın şer’î ufka göre irtifâı sıfır; hakîkî gurûb + temkin). Gurûbu görebilen için zâhirî gurûb, göremeyen için şer’î gurûb mu’teberdir (s. 181, 186, 317). Temkin, hakîkî vakit ile şer’î vakit arasındaki farktır; ihtiyat zamanı değildir. Bir şehirde tek temkin vardır (s. 176, 186, 316).',
         'Temkin; ufkun alçalması (inhitât), kırılma ve güneşin yarıçapından paralaks çıkarılarak hesaplanır. İstanbul için kitap 21 Mart / 23 Eylül’de 7 dk 52 sn bulur ve 2 dakika ihtiyatla vasatî 10 dakika kabul eder (s. 185–186). Program temkini, şehrin en yüksek yerine göre her tarih için kitabın usulüyle hesaplar; bu yükseklik girilmezse temkin yüksekliksiz hesaplanır.'],
+      dogrulama: [
+        'Kayıtları toplayan kişi veya heyet, her gözlemciden tutanağı ve JSON kaydını birlikte ister. Hükmü, şahitlerin hâli ve beyanları üzerinden yetkili makam verir; program bu değerlendirmenin yerine geçmez.',
+        'Doğrulama üç şeye bakar. (1) Özet: JSON’daki içerikten yeniden hesaplanan özet, kayıttakiyle ve kâğıttaki kodla aynı mı? (2) İmza: kayıt, oluşturulduğu cihazdaki özel anahtarla imzalanmıştır; kayıttaki genel anahtar ve parmak izi bu imzayı doğrular. Parmak izi kişiyi değil cihazı tanıtır; tarayıcı verisi silinirse yeni anahtar oluşur. (3) QR: “HRK1|kayıt-no|özet” metni, kâğıdı dijital kayda bağlar. Doğrulama internetsiz yapılır: bu programın “Kayıt doğrula” penceresinde ya da bilgisayarda tools/verify_record.py ile.'],
       rasad: [
         'Kitap, takvimlerde bildirilen geceden önceki gecede “hilâli gördük” demenin yanlış olduğunu bildirir (s. 360). Şa’bânın 29. akşamı hilâl aranır; görülmezse ay otuza tamamlanır.',
         'Kartlar, bulunduğunuz yer için sıradaki ve önceki ay başı rasad gecelerini gösterir. Bu akşamın arama penceresi geçince kart bir sonraki aya geçer. “Bu geceyi planla” düğmesi o akşamı açar; bütün ekranlar o akşama göre güncellenir.']
@@ -2456,6 +2518,9 @@ window.HR_CANON_EN = [
       gurub: [
         'The book defines three sunsets (p. 186): true sunset (the true altitude of the Sun’s centre is zero), visible sunset (the upper limb disappears from the observer’s visible horizon) and legal sunset (the upper limb’s altitude relative to the legal horizon is zero; true sunset + temkin). For one who can see the sunset the visible sunset counts; for one who cannot, the legal sunset (pp. 181, 186, 317). Temkin is the difference between the true and the legal time; it is not a precautionary margin. A city has a single temkin (pp. 176, 186, 316).',
         'Temkin is computed from the dip of the horizon, refraction and the Sun’s radius minus parallax. For Istanbul the book finds 7 min 52 s on 21 March / 23 September and adopts an average of 10 minutes with a 2-minute margin (pp. 185–186). The program computes the temkin for every date with the book’s method from the city’s highest point; if that height is not entered, the temkin is computed without it.'],
+      dogrulama: [
+        'Whoever collects the records (a person or committee) asks each observer for both the report and the JSON record. The ruling is given by the competent authority on the basis of the witnesses and their statements; the program does not replace that evaluation.',
+        'Verification checks three things. (1) Digest: is the digest recomputed from the JSON content the same as the one in the record and on the paper? (2) Signature: the record was signed with the private key on the device where it was made; the public key and fingerprint in the record verify that signature. The fingerprint identifies the device, not the person; clearing browser data creates a new key. (3) QR: the text “HRK1|record-no|digest” ties the paper to the digital record. Verification works offline: in this program’s “Verify a record” window, or on a computer with tools/verify_record.py.'],
       rasad: [
         'The book states that saying “we saw the crescent” on the night before the one given by calendars is wrong (p. 360). The crescent is sought on the evening of the 29th of Sha’ban; if it is not seen, the month is completed to thirty days.',
         'The cards show the next and the previous month-start watch nights for your location. Once this evening’s search window has passed, the card moves to the next month. “Plan this night” opens that evening, and every screen follows it.']
@@ -4908,7 +4973,9 @@ var qrcode = function() {
         okSig = await subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, key, sig, new TextEncoder().encode(rec.hash));
       } catch (e) { okSig = false; }
     }
-    return { hash: okHash, sig: okSig };
+    // Parmak izi, kayıttaki genel anahtardan yeniden hesaplanır (anahtar ile parmak izi birbirine uymalı)
+    let okFp = false; try { okFp = !!(rec.signer && rec.signer.pub && rec.signer.fp && (await sha256(canon(rec.signer.pub))).slice(0, 16) === rec.signer.fp); } catch (e) { okFp = false; }
+    return { hash: okHash, sig: okSig && okFp, fp: okFp };
   }
   G.HRSig = { canon, sha256, ensureKey, seal, verify };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -5581,7 +5648,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDcf6f10053e53b059';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD84674d250bf91a35';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -5617,7 +5684,7 @@ var qrcode = function() {
   const TB_MAX = 1620; // 00:00 → ertesi gün 03:00
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
     mapLayer: 'seadet', mapRes: 3, mapAge: true, mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
-    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
+    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', layout: 'sade', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
@@ -5710,6 +5777,11 @@ var qrcode = function() {
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
     $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
     $('recImportFile').onchange = importRecords; $('recPhotoFile').onchange = checkPhoto;
+    set('recVerify', '✓ ' + t.vfBtn); set('hVf', t.vfTitle); set('vfClose', t.close); $('vfIntro').innerHTML = esc(t.vfIntro) + ' ' + q('dogrulama'); set('lVfCode', t.vfCode); set('lVfFile', t.vfFile); set('vfGo', t.vfGo); set('vfNote', t.vfNote);
+    $('vfCode').placeholder = 'HRK1|…|…  ·  SHA-256';
+    $('recVerify').onclick = () => { $('vfOut').innerHTML = ''; const d = $('vfDlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); } };
+    $('vfClose').onclick = () => { const d = $('vfDlg'); try { d.close(); } catch (e) { d.removeAttribute('open'); } };
+    $('vfGo').onclick = verifyRecordUI;
     $('hIntro').onclick = () => { document.body.classList.toggle('introOpen'); };
     $('hIntro').title = t.introToggle;
     showHMaxNote();
@@ -5728,8 +5800,10 @@ var qrcode = function() {
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
+    set('lLayout', t.layoutLbl); set('layoutNote', t.layoutNote); $('layoutSel').innerHTML = [['sade', t.layoutSade], ['tam', t.layoutTam]].map(([v, l]) => `<option value="${v}"${st.layout === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     { const addQ = (id, topic) => { const el = $(id); if (el && !el.querySelector('.q')) el.insertAdjacentHTML('beforeend', ' ' + q(topic)); };
       addQ('hUp', 'rasad'); addQ('hStrip', 'hicri'); addQ('hRec', 'sahitlik'); addQ('lRecRes', 'ciplak'); addQ('lHMax', 'gurub'); }
+    setupFold(); paintFoldSums();
       const el = $(id); if (!el) return;
       const card = el.closest('section, .status'); if (!card) return;
       let h = card.querySelector(':scope > .hint, :scope .cardhead + .hint');
@@ -5868,6 +5942,7 @@ var qrcode = function() {
     $('fFont').onclick = () => { st.fontSize = st.fontSize >= 1.3 ? 1 : st.fontSize >= 1.15 ? 1.3 : 1.15; save(); fillStatic(); repaintAll(); };
     $('optWx').onchange = e => { st.wx = e.target.checked; save(); paintNet(); renderWx(true); };
     $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); paintNet(); if (st.autoLoc) autoLocate(true); };
+    $('layoutSel').onchange = e => { st.layout = e.target.value; st.fold = foldDefault(); save(); setupFold(); paintFoldSums(); renderTime(); };
     $('detailLvl').onchange = e => { st.detail = e.target.value; save(); fillStatic(); };
     $('optSafety').onchange = e => { st.safetyOff = !e.target.checked; save(); paintSafety(); };
     $('optFonts').onchange = e => { st.webFonts = e.target.checked; save(); applyFonts(); paintNet(); };
@@ -5884,7 +5959,7 @@ var qrcode = function() {
     computeDay(); renderTime(); if (view === 'harita') renderBigMap(); if (view === 'saha') fieldTick(true);
   }
   function openTopic(id) {
-    $('dlgBody').innerHTML = G.HRGuide.topicHtml(st.lang, id, st.detail === 'long' ? 'long' : 'more') + `<p class="small" style="margin-top:10px">${esc(t.editionNote)}</p>`;
+    $('dlgBody').innerHTML = G.HRGuide.topicHtml(st.lang, id, st.detail === 'long' ? 'long' : 'more') + `<p class="edn">${esc(t.editionNote)}</p>`;
     const d = $('dlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
   }
   function closeDlg() { const d = $('dlg'); try { d.close(); } catch (e) { d.removeAttribute('open'); } }
@@ -5945,6 +6020,44 @@ var qrcode = function() {
   // Göz güvenliği uyarısı yalnız rü’yetin mümkün olduğu akşamlarda gösterilir; kullanıcı kapatabilir (Ayarlar’dan geri açılır)
   const sightPossible = r => !!(r && r.ok && r.cls && ['possible', 'visible'].includes(r.cls.code));
   function paintSafety() { const el = $('safety'); if (el) el.hidden = !!st.safetyOff || !sightPossible(R); }
+  // ---- Sade görünüm: ikincil kartlar katlı başlar; her kart başlığa dokunarak açılıp kapanır, seçim hatırlanır ----
+  const FOLDABLE = ['locCard', 'dateCard', 'upCard', 'tbCard', 'wxCard', 'skyCard', 'stripCard', 'detailCard', 'monthCard'];
+  const SADE_FOLDED = ['locCard', 'dateCard', 'tbCard', 'wxCard', 'stripCard', 'detailCard', 'monthCard'];
+  const foldDefault = () => Object.fromEntries(FOLDABLE.map(id => [id, st.layout === 'sade' && SADE_FOLDED.includes(id)]));
+  function setupFold() {
+    if (!st.fold) st.fold = foldDefault();
+    for (const id of FOLDABLE) {
+      const c = $(id); if (!c) continue;
+      c.classList.add('foldable');
+      const h = c.querySelector(':scope > h2, :scope > .cardhead h2');
+      if (!c.querySelector(':scope > .foldbtn')) { c.insertAdjacentHTML('afterbegin', `<button type="button" class="foldbtn" aria-expanded="true"></button>`); c.querySelector(':scope > .foldbtn').onclick = e => { e.stopPropagation(); toggleFold(id); }; }
+      const fb = c.querySelector(':scope > .foldbtn'); fb.setAttribute('aria-label', t.foldToggle); fb.title = t.foldToggle;
+      if (!c.querySelector(':scope > .foldsum')) { const f = document.createElement('p'); f.className = 'foldsum'; (c.querySelector(':scope > .cardhead') || h).insertAdjacentElement('afterend', f); }
+      if (!c.dataset.foldBound) { c.dataset.foldBound = '1'; (h || c).addEventListener('click', e => { if (e.target.closest('button.q, .btns a, .btns button:not(.foldbtn)')) return; toggleFold(id); }); }
+      applyFold(id);
+    }
+  }
+  function applyFold(id, open) {
+    const c = $(id); if (!c) return;
+    if (open != null) st.fold[id] = !open;
+    const folded = !!st.fold[id];
+    c.classList.toggle('folded', folded);
+    const b = c.querySelector('.foldbtn'); if (b) b.setAttribute('aria-expanded', String(!folded));
+  }
+  function toggleFold(id) { st.fold[id] = !st.fold[id]; applyFold(id); save(); if (!st.fold[id]) { if (id === 'skyCard') renderTime(); if (id === 'monthCard') renderMini(); } paintFoldSums(); }
+  function paintFoldSums() {
+    const S = (id, txt) => { const c = $(id); const f = c && c.querySelector(':scope > .foldsum'); if (f) f.textContent = txt || ''; };
+    const city = CITIES.find(c => c.id === st.city);
+    S('locCard', `${city ? city[st.lang] : `${num(st.lat, 3)}, ${num(st.lon, 3)}`} · UTC${fmtOff(offAt(st.tz, st.date))} — ${t.foldOpen}`);
+    S('dateCard', fmtCivil(civil(st.date)));
+    S('tbCard', `${hhmm(selT())} — ${t.foldOpen}`);
+    S('wxCard', st.wx ? (WX.ass ? t.wxLevel[WX.ass.level] : t.wxLoading) : t.netNone);
+    S('upCard', upData && upData.a ? `${t.upA || ''} ${fmtCivil(civil(upData.a.ymd))}` : '');
+    S('skyCard', t.foldOpen);
+    S('stripCard', t.foldOpen);
+    S('detailCard', R && R.ok ? clsText(R)[0] : '');
+    S('monthCard', MONTH ? `${monthName(MONTH.hmn.m)} ${MONTH.hmn.y}` : '');
+  }
   function showHMaxNote() { const n = $('hMaxNote'); if (!n) return; n.hidden = !!(st.hMax && st.hMax > 0); n.textContent = t.hMaxUnset; }
   function locObj() { return { lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, hMax: st.hMax, tz: st.tz }; }
   const evCache = new Map();
@@ -5952,7 +6065,7 @@ var qrcode = function() {
 
   function update() {
     if (!isFinite(st.lat) || !isFinite(st.lon)) return;
-    LOC = locObj(); showHMaxNote(); showTzOff();
+    LOC = locObj(); showHMaxNote(); showTzOff(); if (st.fold) setTimeout(paintFoldSums, 0);
     R = eveningCached(LOC, st.date); paintSafety();
     tzCheck();
     if (!R.ok) {
@@ -6322,9 +6435,11 @@ var qrcode = function() {
   // Kapsam: dünya geneli (Ramazân dâhil, s. 315) — Zilhicce’de yerel; local=true her ay için yalnız bu yer
   function lunarDay(dCivil, local) {
     let best = null; let c = C.nextNewMoonAfter(A.MakeTime(new Date(dCivil.getTime() - 40 * 86400000)));
-    for (let i = 0; i < 3 && c; i++) { const hm2 = CAL.monthForConjunction(c.date), e = earliest(c, local ? [[st.lat, st.lon]] : scopePlaces(hm2.m)); if (e && e.first.getTime() <= dCivil.getTime()) best = { e, hm: hm2 }; c = C.nextNewMoonAfter(c.AddDays(1)); }
+    for (let i = 0; i < 3 && c; i++) { const hm2 = CAL.monthForConjunction(c.date); let e = earliest(c, local ? [[st.lat, st.lon]] : scopePlaces(hm2.m));
+      if (hm2.m === 12) { const ik = CAL.methods(hm2.y, 12).isik; if (ik) e = Object.assign({}, e || {}, { first: ik, isik: true }); }  // Zilhicce: kitabın usulü (s. 326)
+      if (e && e.first.getTime() <= dCivil.getTime()) best = { e, hm: hm2 }; c = C.nextNewMoonAfter(c.AddDays(1)); }
     if (!best) return null;
-    return { n: Math.round((dCivil - best.e.first) / 86400000) + 1, hm: best.hm };
+    return { n: Math.round((dCivil - best.e.first) / 86400000) + 1, hm: best.hm, isik: !!best.e.isik };
   }
   let MONTH = null;
   function renderMonth(r, loc) {
@@ -6340,8 +6455,14 @@ var qrcode = function() {
     renderMini();
     const ref = isHajj ? eL : eG;
     let b = '';
+    if (isHajj && meth.isik) {   // şahitle sabit olmayan yerlerde ana gösterim kitabın usulü; astronomik hesap yanında (s. 326)
+      const kb = new Date(meth.isik.getTime() + 9 * 86400000);
+      b += kv(t.zhIsik + ' ' + q('isik'), `<strong>${esc(fmtCivil(meth.isik))}</strong>`, t.zhIsikSub, 'txt');
+      b += kv(t.zhKurban, `<strong>${esc(fmtCivil(kb))}</strong>`, t.zhKurbanSub, 'txt');
+      b += kv(t.zhAstro, eL ? esc(fmtCivil(eL.first)) : t.none, t.zhAstroSub, 'txt');
+    }
     if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), st.lang === 'tr' ? 'veya ertesi gün (s. 360)' : 'or the next day (p. 360)', 'txt'); }
-    b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
+    if (!isHajj) b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
     const hj = hijriOf(st.date);
     if (hj) b += kv(t.lunarDay + ' ' + q('hicri'), `<span class="lunar">${esc(hj.dayTxt)}</span><small>${esc(hj.monthTxt)}</small>`, t.lunarDayNote, 'txt');
     $('month2').innerHTML = b;
@@ -6645,7 +6766,7 @@ var qrcode = function() {
     }
     if (!stored) {
       $('recEval').innerHTML = `<span class="pill p-bad">${esc(t.recStoreFail)}</span>`;
-      saveFile(`ruyet-kaydi-${sealed.observation.evening}-${String(sealed.id).slice(0, 8)}.json`, JSON.stringify(sealed, null, 2), 'application/json');
+      saveFile(recBase(sealed, 'record') + '.json', JSON.stringify(sealed, null, 2), 'application/json');
       return;
     }
     records.unshift(sealed);
@@ -6675,7 +6796,7 @@ var qrcode = function() {
   // ---- yedekleme, geri yükleme, fotoğraf doğrulama ----
   function backupRecords() {
     const data = { schema: 'mahinev-kayit-yedegi/1', created: new Date().toISOString(), app: { name: 'Mâh-ı Nev', version: G.HR_VERSION }, records };
-    saveFile(`mahinev-kayitlar-${todayYmd(st.tz)}.json`, JSON.stringify(data, null, 2), 'application/json');
+    saveFile(fileBase('backup', { ymd: todayYmd(st.tz), hhmm: hhmmTz(new Date(), st.tz), place: '' }) + '.json', JSON.stringify(data, null, 2), 'application/json');
   }
   async function importRecords(ev) {
     const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
@@ -6693,6 +6814,37 @@ var qrcode = function() {
     const x = h && records.find(r => r.photo && r.photo.sha256 === h);
     const msg = x ? t.recPhotoMatch(`${fmtCivil(civil(x.observation.evening))} · ${x.observer.name || '—'}`) : t.recPhotoNone;
     $('recEval').innerHTML = `<span class="pill ${x ? 'p-ok' : 'p-warn'}">${esc(msg)}</span><br><span class="hash">SHA-256 ${esc(h || '—')}</span>`; toast(msg);
+  }
+  // ---- Kayıt doğrulama: kâğıttaki kod (QR metni veya SHA-256) + kaydın dijital kopyası (JSON) ----
+  function parseRecCode(s) {
+    const x = String(s || '').trim().replace(/\s+/g, ''); let m = x.match(/^HRK1\|([^|]+)\|([0-9a-fA-F]{64})$/);
+    if (m) return { id: m[1], hash: m[2].toLowerCase() }; if (/^[0-9a-fA-F]{64}$/.test(x)) return { id: null, hash: x.toLowerCase() };
+    return x ? { bad: true } : null;
+  }
+  async function verifyRecordUI() {
+    const out = $('vfOut'), code = parseRecCode($('vfCode').value);
+    if (code && code.bad) { out.innerHTML = `<span class="pill p-bad">${esc(t.vfBadCode)}</span>`; return; }
+    let list = null, src = 'file';
+    const f = $('vfFile').files && $('vfFile').files[0];
+    if (f) { try { const j = JSON.parse(await f.text()); list = Array.isArray(j) ? j : j && Array.isArray(j.records) ? j.records : [j]; } catch (e) { out.innerHTML = `<span class="pill p-bad">${esc(t.recImportBad)}</span>`; return; } }
+    else { list = records; src = 'local'; }
+    let cand = list.filter(x => x && x.hash);
+    if (code) cand = cand.filter(x => x.hash === code.hash || (code.id && x.id === code.id));
+    else if (src === 'local') { out.innerHTML = `<span class="pill p-warn">${esc(t.vfNeed)}</span>`; return; }
+    if (!cand.length) { out.innerHTML = `<span class="pill p-bad">${esc(src === 'local' ? t.vfNotHere : t.vfNoMatch)}</span>`; return; }
+    const rows = [];
+    for (const x of cand.slice(0, 20)) {
+      let v = { hash: false, sig: false, fp: false }; try { v = await G.HRSig.verify(x); } catch (e) { /* */ }
+      const codeOk = !code || (x.hash === code.hash && (!code.id || code.id === x.id));
+      const ok = v.hash && codeOk && (!x.sig || v.sig);
+      const o = x.observation || {}, pl = x.place || {};
+      rows.push(`<div class="vfr"><span class="pill ${ok ? 'p-ok' : 'p-bad'}">${esc(ok ? t.vfOk : t.vfFail)}</span>
+        <dl class="kv">${kv(t.recAt, esc(new Intl.DateTimeFormat(locale(), { timeZone: pl.tz || st.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at))) + ' · ' + esc(pl.name || ''), esc(t.recRes[o.result] || ''), 'txt')}
+        ${kv(t.recHash, esc(v.hash ? t.vfHashOk : t.vfHashBad), `<span class="hash">${esc(x.hash)}</span>`, 'txt')}
+        ${kv(t.recSig, x.sig ? esc(!v.hash ? t.vfSigNA : v.sig ? t.vfSigOk : t.vfSigBad) : esc(t.recNoSig), x.signer ? `<span class="hash">${esc(x.signer.fp)}</span>` : '', 'txt')}
+        ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}</dl></div>`);
+    }
+    out.innerHTML = rows.join('');
   }
   // Kayıt listesinde her kaydın özeti ve imzası yeniden doğrulanır
   async function verifyBadges() {
@@ -6720,7 +6872,7 @@ var qrcode = function() {
     verifyBadges();
     L.querySelectorAll('[data-tut]').forEach(b => b.onclick = () => printPages(['tut'], records[+b.dataset.tut]));
     L.querySelectorAll('[data-tutjpg]').forEach(b => b.onclick = () => exportJpg(['tut'], records[+b.dataset.tutjpg]));
-    L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(`ruyet-kaydi-${x.observation.evening}-${x.id.slice(0, 8)}.json`, JSON.stringify(x, null, 2), 'application/json'); });
+    L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(recBase(x, 'record') + '.json', JSON.stringify(x, null, 2), 'application/json'); });
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
   }
 
@@ -6769,7 +6921,7 @@ var qrcode = function() {
     if (WX.ass) chips.push(`<span class="chip" title="${esc(t.wxTitle)}">${{ good: '☀', fair: '⛅', poor: '☁' }[WX.ass.level]} ${esc(t.wxLevel[WX.ass.level])}</span>`);
     $('mbChips').innerHTML = chips.join('');
     // konum çipi Konum kartına götürür (dar ekranda kart aşağıda kaldığı için)
-    $('mbLoc').onclick = () => { if (view !== 'plan') location.hash = '#plan'; setTimeout(() => { const c = $('hLoc'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); try { $('city').focus({ preventScroll: true }); } catch (e) { /* */ } } }, 60); };
+    $('mbLoc').onclick = () => { if (view !== 'plan') location.hash = '#plan'; if (st.fold && st.fold.locCard) { applyFold('locCard', true); save(); } setTimeout(() => { const c = $('hLoc'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); try { $('city').focus({ preventScroll: true }); } catch (e) { /* */ } } }, 60); };
     $('mbNow').hidden = live;
     $('mbLive').hidden = !live || field;
     $('mbPlay').setAttribute('aria-pressed', String(live && !frozen)); $('mbFreeze').setAttribute('aria-pressed', String(frozen));
@@ -6899,7 +7051,7 @@ var qrcode = function() {
   }
   // ---- Baskı / PDF ----
   async function getDownloads() { try { return G.claude && G.claude.use ? await G.claude.use('downloads') : null; } catch (e) { return null; } }
-  const selfName = () => `mahinev-v${G.HR_VERSION}.html`;
+  const selfName = () => `MahiNev_v${G.HR_VERSION}.html`;
   const selfHtml = () => G.HR_SRC || ('<!DOCTYPE html>\n' + document.documentElement.outerHTML);
   async function saveSelf() {
     const dl = await getDownloads(); if (!dl) { toast(t.dlFail); return; }
@@ -6920,7 +7072,7 @@ var qrcode = function() {
   const BOOK_PAGE = 'https://www.hakikatkitabevi.net/book.php?bookCode=001', BOOK_PDF = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
   const bookLinksHtml = () => `${esc(t.bookLinks)} ${extLink(BOOK_PAGE, t.bookPage)} · ${extLink(BOOK_PDF, t.bookPdf)}`;
   function aboutHtml() {
-    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="small">${esc(t.editionNote)}</p>`;
+    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>`;
   }
   function noticeHtml() {
     const n = NOTICE || {};
@@ -6954,7 +7106,7 @@ var qrcode = function() {
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
-  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''} · ${esc(t.pageEdition)}</span></footer>`; }
+  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}<span class="edn"> · ${esc(t.pageEdition)}</span></span></footer>`; }
   const locLine = () => `<strong>${esc(placeName())}</strong> · ${num(st.lat, 4)}°, ${num(st.lon, 4)}° · ${num(st.elev, 0)} m · ${esc(st.tz)}`;
   function pagePlan() {
     const r = R; if (!r) return '';
@@ -7036,7 +7188,7 @@ var qrcode = function() {
         <tr><th>${esc(t.recContact)}</th><td colspan="3">${v(ob.contact, 90)}</td></tr>
         ${[1, 2, 3].map(i => `<tr><th>${esc(t.tutWitness)} ${i}</th><td colspan="3"><span class="blank" style="min-width:120mm"></span></td></tr>`).join('')}</table>
       <div class="fiqh"><h3>${esc(t.tutFiqh)}</h3><p>${esc(t.tutFiqhTxt)}</p></div>
-      <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p></div></div>
+      <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p>${blank ? '' : `<p class="vfline">${esc(t.vfPrint)}</p>`}</div></div>
       ${pgFoot(blank ? '' : `${t.tutRecId} ${x.id.slice(0, 8)}`)}</section>`;
   }
   const PRINT_CSS = `@page { size: A4; margin: 0; } @page land { size: A4 landscape; margin: 0; }
@@ -7052,7 +7204,7 @@ var qrcode = function() {
     .pbox.s-ok { border-left-color: var(--ok); } .pbox.s-warn { border-left-color: var(--warn); } .pbox.s-bad { border-left-color: var(--bad); } .pbox.s-info { border-left-color: var(--info); }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; } .tcols { grid-template-columns: 1.05fr 1fr; }
     table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
-    .pfig { height: 70mm; } .pfig svg { width: 100%; height: 100%; display: block; }
+    .pfig { height: 68mm; } .pfig svg { width: 100%; height: 100%; display: block; }
     .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; }
     .pmap img { width: 100%; max-height: 140mm; object-fit: contain; display: block; }
     ol.pl { margin: 0; padding-left: 5mm; font-size: 8.6pt; } ol.pl li { margin: .6mm 0; } .guides { font-size: 8.6pt; margin: 0; }
@@ -7064,12 +7216,35 @@ var qrcode = function() {
     table.sig { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.sig th { text-align: left; font-weight: 600; color: #444; padding: 1.6mm 2mm .8mm 0; white-space: nowrap; } table.sig td { padding: 1.6mm 0 .8mm; }
     .fiqh { border: .6pt solid #c9b27a; background: #fbf6e8; border-radius: 2mm; padding: 2mm 3mm; } .fiqh p { margin: 0; font-size: 8.3pt; line-height: 1.45; }
     .integ { display: flex; gap: 4mm; align-items: center; } .qr svg { width: 26mm; height: 26mm; display: block; } .hash { font: 500 7.6pt var(--font-mono); word-break: break-all; margin: .5mm 0; color: #333; }
+    .vfline { font-size: 7pt; color: #555; margin: .8mm 0 0; } .edn { font-size: 6.5pt; color: #777; }
     .pph { margin: 2mm 0 0; } .pph img { max-width: 100%; max-height: 26mm; display: block; border-radius: 1mm; } .pph figcaption { margin-top: .6mm; }
     .cap { font-size: 8pt; color: #444; margin: 0; } .small { font-size: 8pt; color: #555; } .legend { font-size: 8pt; }
     button, .q { display: none !important; }`;
+  // ---- Dosya adları: MahiNev_YYYY-AA-GG_SSDD_Yer_tür — tarih önde olduğu için klasörde sıralanır, “MahiNev” ile ayırt edilir ----
+  const TRMAP = { 'ı': 'i', 'İ': 'I', 'ş': 's', 'Ş': 'S', 'ğ': 'g', 'Ğ': 'G', 'ü': 'u', 'Ü': 'U', 'ö': 'o', 'Ö': 'O', 'ç': 'c', 'Ç': 'C', 'â': 'a', 'Â': 'A', 'î': 'i', 'û': 'u' };
+  const slug = s => String(s || '').replace(/[ıİşŞğĞüÜöÖçÇâÂîû]/g, c => TRMAP[c]).normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
+  function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
+  const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : ''; };
+  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
+    en: { plan: 'watch-plan', sky: 'sky-chart', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
+  function fileBase(kind, o = {}) {
+    const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
+    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.tr)[kind] || kind, o.suffix].filter(Boolean).join('_');
+  }
+  // Kayda ait dosya adı: gözlemin akşamı, yerel saati ve yeri
+  function recBase(x, kind) {
+    const pl = x.place || {}; return fileBase(kind, { ymd: x.observation.evening, hhmm: hhmmTz(new Date(x.observation.at), pl.tz || st.tz), place: placeSlug(pl.name, pl.lat, pl.lon), suffix: kind === 'record' ? String(x.id).slice(0, 8) : '' });
+  }
+  const printAt = kinds => SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
+  function pagesBase(kinds, rec) {
+    if (kinds.length === 1 && kinds[0] === 'tut') { const x = rec || records.find(r => r.schema); if (x) return recBase(x, 'tut'); }
+    return fileBase(kinds.length === 1 ? kinds[0] : 'pages', { hhmm: kinds.every(k => k === 'blank' || k === 'month') ? '' : hhmmTz(printAt(kinds).date, st.tz) });
+  }
   // A4 sayfalarının tek HTML belgesi (yazdırma ve JPG çıktısı aynı belgeyi kullanır)
   async function buildPrint(kinds, rec) {
-    const at = SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
+    const at = printAt(kinds);
     const parts = [];
     for (const k of kinds) {
       if (k === 'plan') parts.push(pagePlan());
@@ -7080,17 +7255,17 @@ var qrcode = function() {
       else if (k === 'blank') parts.push(pageTut(null));
     }
     const css = Array.from(document.querySelectorAll('style')).map(x => x.textContent).join('\n');
-    const html = `<!DOCTYPE html><html lang="${st.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(kinds.map(k => (t.prOpts[k] || '')).join(' + '))}</title><style>${css}\n${PRINT_CSS}</style></head><body class="th-light">${parts.join('')}</body></html>`;
+    const html = `<!DOCTYPE html><html lang="${st.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(pagesBase(kinds, rec))}</title><style>${css}\n${PRINT_CSS}</style></head><body class="th-light">${parts.join('')}</body></html>`;
     return html;
   }
   async function printPages(kinds, rec) {
     toast(t.printing);
     const html = await buildPrint(kinds, rec);
-    const fname = `mahinev-${kinds.join('-')}-${st.date}.html`;
+    const fname = pagesBase(kinds, rec) + '.html';
     G.HR_LAST_PRINT = html;
     if (!ON.sandboxed) {
       const f = document.createElement('iframe'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
-      f.onload = () => { setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast(t.printNA); } setTimeout(() => f.remove(), 60000); }, 400); };
+      f.onload = () => { setTimeout(() => { const t0 = document.title; try { document.title = pagesBase(kinds, rec); f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast(t.printNA); } setTimeout(() => { document.title = t0; }, 1500); setTimeout(() => f.remove(), 60000); }, 400); };
       f.srcdoc = html; document.body.appendChild(f);
       return;
     }
@@ -7143,13 +7318,13 @@ var qrcode = function() {
       const pages = Array.from(d.querySelectorAll('.a4')), names = [];
       const files = [];
       for (let i = 0; i < pages.length; i++) {
-        const k = kinds[i] || 'sayfa'; let nm = `mahinev-${k}-${st.date}.jpg`; if (names.includes(nm)) nm = nm.replace('.jpg', `-${i + 1}.jpg`); names.push(nm);
+        const k = kinds[i] || 'pages'; let nm = (k === 'tut' ? pagesBase(['tut'], rec) : pagesBase([k])) + '.jpg'; if (names.includes(nm)) nm = nm.replace('.jpg', `_${i + 1}.jpg`); names.push(nm);
         files.push({ name: nm, data: await pageToJpeg(pages[i], css) });
       }
       G.HR_LAST_JPG = files.map(x => ({ name: x.name, size: x.data.length, head: Array.from(x.data.slice(0, 3)) }));
       let ok;
       if (files.length === 1) ok = await saveFile(files[0].name, new Blob([files[0].data], { type: 'image/jpeg' }), 'image/jpeg');
-      else ok = await saveFile(`mahinev-sayfalar-${st.date}.zip`, makeZip(files), 'application/zip');
+      else ok = await saveFile(pagesBase(kinds, rec) + '.zip', makeZip(files), 'application/zip');
       if (ok) toast(t.jpgDone(files.length));
     } catch (e) { toast(t.jpgFail, 8000); }
     finally { f.remove(); }

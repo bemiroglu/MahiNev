@@ -183,3 +183,31 @@ Konum kartında saat dilimi listesinin yanında **UTC farkı** kutusu vardır.
 
 - Her sayfa yaklaşık 240 dpi'lık bir JPEG olur. Birden çok sayfa seçerseniz sayfalar bir ZIP dosyası içinde iner.
 - Gökyüzü haritası penceresinde ve rü'yet tutanağında da **JPG** düğmesi vardır.
+
+## Sade görünüm
+
+**Ayarlar → Görünüm** iki seçenek sunar:
+
+- **Sade (önerilen):** Bu akşamın özeti, yaklaşan rasad ve ufuk açık başlar; diğer kartlar katlı durur. Katlı kartta başlık ve kısa bir özet görünür.
+- **Tam:** Bütün kartlar açık başlar.
+
+Her kart başlığına veya sağ üstteki düğmeye dokunarak açılır ya da kapanır; seçiminiz hatırlanır.
+
+## Dosya adları
+
+Program dosyaları `MahiNev_YYYY-AA-GG_SSDD_Yer_tür` biçiminde adlandırır:
+
+- `MahiNev_2026-12-10_1745_Istanbul_tutanak.jpg`
+- `MahiNev_2026-12-10_1745_Istanbul_ruyet-kaydi_43569d93.json`
+
+Tarih önde olduğu için dosyalar klasörde sıralanır. Yazdır penceresinde PDF olarak kaydederken de aynı ad önerilir.
+
+## Kayıt doğrulama
+
+**Saha → Kayıt doğrula** penceresine tutanaktaki kodu yazın veya QR'dan okunan metni yapıştırın. Gözlemcinin JSON kaydını seçin. Program şunları gösterir:
+
+- kaydın değiştirilip değiştirilmediğini;
+- imzanın geçerli olup olmadığını;
+- kâğıttaki kodun bu kayda ait olup olmadığını.
+
+Ayrıntı: [kayit-semasi.md](kayit-semasi.md).

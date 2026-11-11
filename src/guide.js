@@ -37,7 +37,7 @@
         'Program, beynûnet ≥ 8° ve görünen irtifâ ≥ 5° şartının ilk sağlandığı akşamı arar; en erken gün o akşamın ertesi günüdür. Bir tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olduğundan, dünya geneli en erken akşam çoğunlukla Pasifik’te bulunur.'],
       isik: ['Işık Usulü ve takvim usulleri',
         'Işık Usulü bir arabî ayın ilk gününü hesapla bulur. Şahitle sabit olmayan yerlerde kurban bayramı bu hesapla bulunan gün veya ertesidir (s. 326, 359). Uluğ Beğ ve Kindî cetvelleri de takvim usulleridir (s. 361–362).',
-        'Bu usuller ortalama ay hareketine dayanan aritmetik kurallardır; gerçek ictimâyı ve atmosferi hesaba katmazlar. 1430–1460 yılları arasında Işık Usulü, ayların yaklaşık %8’inde ay başını hilâlin fiziken görülemeyeceği bir güne koyuyor.'],
+        'Bu usuller, ay hareketinin ortalamasına dayanan, akılda kalıcı ve zarif hesap kurallarıdır. Gerçek ictimâyı ve atmosferi ayrıca hesaba katmadıkları için bazı aylarda astronomik hesaptan bir gün ayrılabilirler.'],
       modern: ['Modern modeller (Yallop, Odeh)',
         'Ek bilgidir; hüküm vermez. Yalnızca en iyi gözlem anı (gurûb + 4/9 × fark) ana panelde gösterilir.',
         'Yallop (1997) ve Odeh (2004), yüzlerce kayıtlı gözlemden çıkarılmış ölçütlerdir. İkisi de ay ile güneş arasındaki irtifâ farkını (ARCV) hilâlin kalınlığıyla (W) karşılaştırır. Sınıflar "çıplak gözle kolayca görülür"den "teleskopla da görülemez"e kadar uzanır.']
@@ -75,7 +75,7 @@
         'The program looks for the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°; the earliest day is the day after it. A date’s latest sunset is just east of the date line, so the worldwide earliest evening is usually in the Pacific.'],
       isik: ['Işık method and calendar methods',
         'The Işık method calculates the first day of an Arabic month. Where it is not established by witnesses, Eid al-Adha is the day so found or the next (pp. 326, 359). The Ulugh Beg and Kindî tables are calendar methods too (pp. 361–362).',
-        'These are arithmetic rules based on the mean lunar motion; they ignore the actual conjunction and the atmosphere. For 1430–1460 AH the Işık method puts the month start on a day of physically impossible visibility in about 8% of months.'],
+        'These are elegant, memorable rules based on the Moon’s mean motion. Since they do not separately account for the actual conjunction and the atmosphere, in some months they may differ by a day from the astronomical calculation.'],
       modern: ['Modern models (Yallop, Odeh)',
         'Additional information only; no ruling. Only the best observation time (sunset + 4/9 × lag) is shown on the main panel.',
         'Yallop (1997) and Odeh (2004) are criteria fitted to hundreds of recorded observations. Both compare the altitude difference between Moon and Sun (ARCV) with the crescent width (W). Classes range from "easily visible to the naked eye" to "not visible even with a telescope".']

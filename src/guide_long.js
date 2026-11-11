@@ -12,6 +12,12 @@
     'Searching for the crescent on the evening of the 29th of Sha’ban is a communal obligation (vâcib-i kifâye); if it is not seen, the month is completed to thirty days (pp. 314–315). Searching the sky for the Ramadan crescent is an act of worship. Calculation is for knowing the night on which the crescent can be seen, not the moment the month begins (p. 360).',
     'Watch night (A): the first evening at your location on which the crescent can possibly be seen (elongation ≥ 8° at sunset and the crescent 5° above the horizon). Most favourable evening (B): the first evening on which the elongation reaches 18°. Both are computed possibility; neither says that the crescent was seen.'];
 
+  T.tr.dogrulama = ['Kaydın doğrulanması',
+    'Rü’yet kaydı ve tutanak şahitlik değildir; şahitliğin değerlendirilmesi yetkili makama aittir (s. 315–316). Doğrulama yalnız kaydın sonradan değiştirilmediğini gösterir; hilâlin görüldüğünü ispat etmez.',
+    'Özet (SHA-256), kaydın içeriğinden hesaplanan 64 haneli parmak izidir; tek harf değişse bütünüyle değişir. Kâğıt tek başına doğrulanamaz: doğrulayan kişi gözlemcinin JSON kaydını alır, program özeti yeniden hesaplar ve kâğıttaki kodla karşılaştırır.'];
+  T.en.dogrulama = ['Verifying a record',
+    'A sighting record or report is not testimony; evaluating testimony belongs to the competent authority (pp. 315–316). Verification only shows that the record has not been changed afterwards; it does not prove that the crescent was seen.',
+    'The digest (SHA-256) is a 64-character fingerprint computed from the record’s content; changing a single letter changes it completely. The paper alone cannot be verified: the verifier obtains the observer’s JSON record, and the program recomputes the digest and compares it with the code on the paper.'];
   // Ayrıntılı metinler: [fıkhî ayrıntı, bilimsel ayrıntı]
   const LONG = {
     tr: {
@@ -45,6 +51,9 @@
       gurub: [
         'Kitap üç gurûb tanımlar (s. 186): hakîkî gurûb (güneş merkezinin hakîkî irtifâı sıfır), zâhirî gurûb (üst kenarın gözlemcinin görünen ufkundan kaybolduğu an) ve şer’î gurûb (üst kenarın şer’î ufka göre irtifâı sıfır; hakîkî gurûb + temkin). Gurûbu görebilen için zâhirî gurûb, göremeyen için şer’î gurûb mu’teberdir (s. 181, 186, 317). Temkin, hakîkî vakit ile şer’î vakit arasındaki farktır; ihtiyat zamanı değildir. Bir şehirde tek temkin vardır (s. 176, 186, 316).',
         'Temkin; ufkun alçalması (inhitât), kırılma ve güneşin yarıçapından paralaks çıkarılarak hesaplanır. İstanbul için kitap 21 Mart / 23 Eylül’de 7 dk 52 sn bulur ve 2 dakika ihtiyatla vasatî 10 dakika kabul eder (s. 185–186). Program temkini, şehrin en yüksek yerine göre her tarih için kitabın usulüyle hesaplar; bu yükseklik girilmezse temkin yüksekliksiz hesaplanır.'],
+      dogrulama: [
+        'Kayıtları toplayan kişi veya heyet, her gözlemciden tutanağı ve JSON kaydını birlikte ister. Hükmü, şahitlerin hâli ve beyanları üzerinden yetkili makam verir; program bu değerlendirmenin yerine geçmez.',
+        'Doğrulama üç şeye bakar. (1) Özet: JSON’daki içerikten yeniden hesaplanan özet, kayıttakiyle ve kâğıttaki kodla aynı mı? (2) İmza: kayıt, oluşturulduğu cihazdaki özel anahtarla imzalanmıştır; kayıttaki genel anahtar ve parmak izi bu imzayı doğrular. Parmak izi kişiyi değil cihazı tanıtır; tarayıcı verisi silinirse yeni anahtar oluşur. (3) QR: “HRK1|kayıt-no|özet” metni, kâğıdı dijital kayda bağlar. Doğrulama internetsiz yapılır: bu programın “Kayıt doğrula” penceresinde ya da bilgisayarda tools/verify_record.py ile.'],
       rasad: [
         'Kitap, takvimlerde bildirilen geceden önceki gecede “hilâli gördük” demenin yanlış olduğunu bildirir (s. 360). Şa’bânın 29. akşamı hilâl aranır; görülmezse ay otuza tamamlanır.',
         'Kartlar, bulunduğunuz yer için sıradaki ve önceki ay başı rasad gecelerini gösterir. Bu akşamın arama penceresi geçince kart bir sonraki aya geçer. “Bu geceyi planla” düğmesi o akşamı açar; bütün ekranlar o akşama göre güncellenir.']
@@ -80,6 +89,9 @@
       gurub: [
         'The book defines three sunsets (p. 186): true sunset (the true altitude of the Sun’s centre is zero), visible sunset (the upper limb disappears from the observer’s visible horizon) and legal sunset (the upper limb’s altitude relative to the legal horizon is zero; true sunset + temkin). For one who can see the sunset the visible sunset counts; for one who cannot, the legal sunset (pp. 181, 186, 317). Temkin is the difference between the true and the legal time; it is not a precautionary margin. A city has a single temkin (pp. 176, 186, 316).',
         'Temkin is computed from the dip of the horizon, refraction and the Sun’s radius minus parallax. For Istanbul the book finds 7 min 52 s on 21 March / 23 September and adopts an average of 10 minutes with a 2-minute margin (pp. 185–186). The program computes the temkin for every date with the book’s method from the city’s highest point; if that height is not entered, the temkin is computed without it.'],
+      dogrulama: [
+        'Whoever collects the records (a person or committee) asks each observer for both the report and the JSON record. The ruling is given by the competent authority on the basis of the witnesses and their statements; the program does not replace that evaluation.',
+        'Verification checks three things. (1) Digest: is the digest recomputed from the JSON content the same as the one in the record and on the paper? (2) Signature: the record was signed with the private key on the device where it was made; the public key and fingerprint in the record verify that signature. The fingerprint identifies the device, not the person; clearing browser data creates a new key. (3) QR: the text “HRK1|record-no|digest” ties the paper to the digital record. Verification works offline: in this program’s “Verify a record” window, or on a computer with tools/verify_record.py.'],
       rasad: [
         'The book states that saying “we saw the crescent” on the night before the one given by calendars is wrong (p. 360). The crescent is sought on the evening of the 29th of Sha’ban; if it is not seen, the month is completed to thirty days.',
         'The cards show the next and the previous month-start watch nights for your location. Once this evening’s search window has passed, the card moves to the next month. “Plan this night” opens that evening, and every screen follows it.']

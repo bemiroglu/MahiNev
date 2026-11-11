@@ -50,3 +50,14 @@ Tutanaktaki QR kodu `HRK1|<kayıt-no>|<sha256>` metnini taşır. Basılı tutana
 - **Tüm kayıtları yedekle** düğmesi `mahinev-kayit-yedegi/1` biçiminde bir dosya üretir: `{ schema, created, app, records: [...] }`.
 - **Yedekten geri yükle** bu dosyayı, tek bir kaydı veya kayıt dizisini kabul eder; `id` aynı olan kayıtları ikinci kez eklemez.
 - Kayıt listesinde her kaydın özeti ve imzası açılışta yeniden doğrulanır.
+
+## Doğrulama: kim, nerede, nasıl
+
+- **Kâğıt neyi taşır:** Tutanakta SHA-256 özeti, imza anahtarının parmak izi ve QR kodu (`HRK1|kayıt-no|özet`) bulunur. Bunlar kâğıdı kaydın dijital kopyasına (JSON) bağlar. Kâğıt tek başına doğrulanamaz.
+- **Kim doğrular:** Kayıtları toplayan kişi veya heyet. Gözlemciden tutanağı ve JSON kaydını birlikte ister.
+- **Nerede:** Mâh-ı Nev'de **Saha → Kayıt doğrula** penceresinde (internetsiz) ya da bilgisayarda `python3 tools/verify_record.py kayit.json --kod "HRK1|…"` ile.
+- **Neye bakılır:**
+  1. Özet, JSON içeriğinden yeniden hesaplanır; kayıttaki ve kâğıttaki kodla aynı olmalıdır. Aynıysa kayıt sonradan değiştirilmemiştir.
+  2. Parmak izi, kayıttaki genel anahtardan yeniden hesaplanır ve kayıttakiyle karşılaştırılır.
+  3. İmza bu anahtarla doğrulanır; geçerliyse kayıt, o parmak izli cihazda oluşturulmuştur.
+- **Sınırları:** Parmak izi kişiyi değil cihazı tanıtır. Doğrulama, hilâlin görüldüğünü ispat etmez; şahitliğin değerlendirilmesi yetkili makama aittir.
