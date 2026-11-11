@@ -86,7 +86,7 @@ Arâyüzde kitabın terimi esastır; modern Türkçe karşılığı parantez iç
 
 ## 4. Astronomik kriterler: kitap → bilim → program
 
-Kitabın eşikleri korunur; kitabın süreye çevirdiği açılar artık süreyle değil, her an doğrudan hesaplanır. Bunun sebebi şu: kitap uzanımın ictimâ anında sıfır olduğunu varsayar. Oysa 2000–2030 arasındaki 384 ictimâda bu açı 0,1° ile 5,0° arasında (ortalama 3,2°) çıktı; sebebi ay yörüngesinin ekliptikle yaptığı ≈5°'lik açıdır. Aşağıdaki modern değerler bu çalışmada Astronomy Engine kütüphanesiyle hesaplandı.
+Kitabın eşikleri korunur; kitabın süreye çevirdiği açılar süreyle değil, her an doğrudan hesaplanır. Bunun sebebi şu: kitap uzanımın ictimâ anında sıfır olduğunu varsayar. Oysa 2000–2030 arasındaki 384 ictimâda bu açı 0,1° ile 5,0° arasında (ortalama 3,2°) çıktı; sebebi ay yörüngesinin ekliptikle yaptığı ≈5°'lik açıdır. Aşağıdaki modern değerler bu çalışmada Astronomy Engine kütüphanesiyle hesaplandı.
 
 | Konu | Kitap (sayfa) | Bilimsel karşılığı | Programda kullanım |
 | --- | --- | --- | --- |
@@ -302,7 +302,7 @@ Kitaptaki iki sayısal örnek hassas efemerisle yeniden hesaplandı. Kayseri 198
 | Hilâlin batışı | 20:55 | Geometrik ay batışı 21:04. 20:40'ta irtifâ 3,9°, 20:55'te 1,4°; hilâl ufuk pusunda kaybolmuş |
 | Zilhicce'nin ilk günü | Salı (Arefe Çarşamba) | Hesap bu sonucu destekliyor |
 
-**Düzeltme (uyum denetimi).** Önceki sürümde bu kayıttan "hilâl 5°'nin altında da izlenmiş" sonucu çıkarılmıştı; bu yanlıştır. Gazete hilâlin 20:20'de görüldüğünü ve 20:55'te battığını bildirir; 5°'nin altında izlendiğini söylemez. Görüldüğü anda hilâlin irtifâı 7,6°'ydi. Bu, kitabın "ufka 5° yaklaşınca görülemez" notuyla uyumludur.
+**Uyum notu.** Gazete hilâlin 20:20'de görüldüğünü ve 20:55'te battığını bildirir; 5°'nin altında izlendiğini söylemez. Görüldüğü anda hilâlin irtifâı 7,6°'ydi. Bu, kitabın "ufka 5° yaklaşınca görülemez" notuyla uyumludur.
 
 ## 8. Programa yansıyan kurallar
 
@@ -389,7 +389,7 @@ Aşağıdaki karar soruları kodlamadan önce kapanmalıdır. Önerilen varsayı
 | Kâdîhân şafak kuralı | Esas −19°. −17° açıklamasıyla ek bilgi (Bölüm 5) |
 | Çıplak göz şartının kaynağı | Yardım metninde "Rasad Hakkında Zarûrî Malûmat" gösterilir |
 | Receb 1980 örneği | Hassas hesapla sunulur, kitabın ifadesi yanında verilir |
-| Kindî cetveli | Cemâzil-âhır, sütun 6 → 6 olarak düzeltildi |
+| Kindî cetveli | Cemâzil-âhır, sütun 6: kitapta 7 basılmış; 6 alınır (baskı hatası) |
 | Madde 88, kalan 0 | "Kitapta tanımsız" notu ve Uluğ Beğ cetvelinin sonucu |
 | Mahallî hükmün kaynağı | Redd-ül-muhtâr, Kitâb-us-savm, ihtilâf-ı metâli' Tembih'i |
 | Redd-ül-muhtâr atıf biçimi | Eser, bölüm ve mesele adıyla; sayfa numarası verilmez |
@@ -398,17 +398,11 @@ Aşağıdaki karar soruları kodlamadan önce kapanmalıdır. Önerilen varsayı
 
 **Rapor kanonik olarak kapatıldı (10 Kasım 2026).** Açık karar kalmadı. Bundan sonraki bütün tasarım ve kod bu rapora dayanır. Değişiklik ancak yeni bir karar kaydıyla yapılır.
 
-**Sonraki adımlar**
+**Sonraki adımlar:** [docs/yol-haritasi.md](yol-haritasi.md).
 
-1. Yukarıdaki soruların cevaplanması ve bu raporun "kanonik" olarak onaylanması.
-2. v0.1: Astronomi çekirdeği ve tek konum için detay paneli. Receb 1980, Kayseri 1987 ve Jamry ekranlarıyla otomatik doğrulama.
-3. v0.2: Aylık çift takvim, hücre durumları ve TR/EN dil seçimi.
-4. v0.3: Dünya rü'yet haritası ve 18° gurûb boylamı çizgisi.
-5. v0.4: Yıllık görünüm, takvim karşılaştırma paneli, rü'yet defteri ve ek bilgi katmanları.
+## 10. Tam İlmihâl uyum denetimi
 
-## 10. Se'âdet-i Ebediyye uyum denetimi
-
-Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırıldı. Sonuç: 21 kabul uyumlu, 5 hata düzeltildi. Kitaptan ayrılan dört kabul (D1–D4) karara bağlandı: D1 ve D2 kitaba uyumlu hale getirildi. D3 ve D4'te kullanıcı kararıyla modern hesap ana bilgi olarak kalıyor; kitabın hükmü yanında gösteriliyor.
+Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır. Kitaptan ayrılan dört kabul (D1–D4) karara bağlanmıştır: D1 ve D2 kitapla uyumludur. D3 ve D4'te kullanıcı kararıyla modern hesap ana bilgi olarak kalır; kitabın hükmü yanında gösterilir.
 
 **Uyumlu kabuller**
 
@@ -436,13 +430,12 @@ Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırıldı. Sonu�
 | Aritmetik usuller ve kitaptaki örnekleri; Kindî cetveli düzeltmesi | s. 358–362 |
 | Mahallî hüküm Se'âdet-i Ebediyye'de yoktur; kaynağı Redd-ül-muhtâr'dır | Redd-ül-muhtâr, Kitâb-us-savm |
 
-**Düzeltilen hatalar**
+**Uygulama notları**
 
-1. **Kayseri 1987 yorumu:** Kayıttan "hilâl 5°'nin altında izlenmiş" sonucu çıkarılmıştı. Gazete bunu söylemiyor; düzeltildi (Bölüm 7).
-2. **Zilhicce görünümü:** Zilhicce tamamıyla Mekke merkezli gösterilmişti. Artık hac için Mekke, kurban için kullanıcının yeri esas (Bölüm 8).
-3. **Redd-ül-muhtâr atıfları:** PDF sayfa numaraları kaldırıldı.
-4. **Terim:** "Üfk-ı hissî / sathî" eşitlemesi kitaptaki ayırıma göre düzeltildi (s. 175).
-5. **Kaynağı kitap olmayan açıklama:** Işık usulündeki 4,367 sayısının açıklaması "bizim tespitimiz" diye etiketlendi.
+1. **Zilhicce:** Hac için Mekke, kurban için kullanıcının yeri esastır (Bölüm 8).
+2. **Redd-ül-muhtâr atıfları:** Eser, bölüm ve mesele adıyla yapılır; PDF sayfa numarası kullanılmaz.
+3. **Terim:** "Üfk-ı hissî" ile "üfk-ı sathî" kitaptaki ayırıma göre kullanılır (s. 175).
+4. **Kitapta olmayan açıklama:** Işık usulündeki 4,367 sayısının açıklaması "bizim tespitimiz" diye etiketlenir.
 
 **Kitaptan ayrılan kabuller ve kararlar**
 
@@ -455,7 +448,7 @@ Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırıldı. Sonu�
 
 **Not.** D3 ve D4 bir hükmün değil, gösterim önceliğinin tercihidir. Kitabın ilgili hükmü (s. 326, s. 360) programda her zaman yanında ve kaynağıyla görünür.
 
-## 11. Rü'yet arayüzü ilkeleri (kanonik karar, 11 Kasım 2026)
+## 11. Rü'yet arayüzü ilkeleri
 
 Arayüzün tek işi, kullanıcının hilâli en hızlı ve doğru şekilde aramasını sağlamaktır. İki kullanım bağlamı esastır: masada rü'yet planı ve açık alanda, mobil cihazla, karanlıkta rasad. Bölüm 8'deki gösterim hiyerarşisi aynen geçerlidir: ana görünümde kitabın sınıfları vardır; modern modeller ek bilgidir; takvimler karşılaştırmadır.
 
@@ -471,7 +464,7 @@ Arayüzün tek işi, kullanıcının hilâli en hızlı ve doğru şekilde arama
 | 8 | Açıklamalar talep üzerine | Her terim ve hükmün yanında bir "?" düğmesi bulunur. Bu düğme iki ayrı açıklama açar: Fıkhî esas (Se'âdet-i Ebediyye, Redd-ül-muhtâr) ve Bilimsel açıklama. Varsayılan olarak kapalıdır |
 | 9 | Hiyerarşi | Kitabın sınıfları her ekranda ana bilgidir. Modern modeller ve takvim usulleri ayrı etiketle, ikinci planda kalır |
 
-## 12. Zaman modeli ve gözlem yardımcıları (karar, 11 Kasım 2026)
+## 12. Zaman modeli ve gözlem yardımcıları
 
 Arayüz iki zamanı birbirinden ayırır: **akşam değerlendirmesi** ve **seçili an**. Akşam değerlendirmesi hükme esastır; yalnızca bir tarihin gurûbunda yapılır ve kitabın sınıfları buradan gelir. Seçili an ise gözleme yardımdır; herhangi bir tarih ve saatte güneş ile ayın konumunu ve aramaya değip değmeyeceğini gösterir, hüküm vermez.
 
@@ -486,18 +479,7 @@ Arayüz iki zamanı birbirinden ayırır: **akşam değerlendirmesi** ve **seçi
 | Anlık harita | Seçili anda gece-gündüz sınırı, alacakaranlık kuşakları, güneş ve ayın tam tepede olduğu noktalar, ayın ufkun üstünde olduğu bölge ve şu an hilâl aranabilecek bölge gösterilir. Bir oynat düğmesiyle akşam boyunca izlenir |
 | Sabah hilâli | İctimâdan önceki sabahlarda doğu ufkundaki son hilâlin görülebilirliği bilgi olarak gösterilir (Redd-ül-muhtâr, Remlî meselesi). Hüküm vermez |
 
-**v0.3'te giderilen hatalar:**
-
-1. "Şimdi" düğmesi tarihi bugüne ve saati şu ana alır.
-2. Akşam araması saat diliminden değil, konumun güneş öğlesinden başlar; uyuşmayan saat dilimi için uyarı verilir.
-3. Haritada tıklanan noktanın tarihi doğudaki yerlerde artık kaymıyor.
-4. Ay ortasında harita "ay başı gecesi değil" der ve en yakın rasad gecesine yönlendirir.
-5. Akşam sınıfı ve gözlem gecesi aynı değerlendirme fonksiyonunu kullanır.
-6. Rü'yet kaydında kayıt zamanı girilir; ait olduğu akşam bu zamandan otomatik bulunur (gurûbdan sonra o gün, gün doğumundan önce bir önceki gün, arada gündüz).
-7. Ay ortası akşamlarında ufuk çizimi yerine panorama açılır.
-8. "İlk görünürlük" katmanında ileri-geri düğmeleri ictimâdan ictimâya geçer.
-
-**v0.3'te kanonik kabul edilen arayüz kararları:**
+**Arayüz kararları:**
 
 1. Karanlık eşiği (kullanıcı seçimi): "Hilâli aramaya başlarken güneş ne kadar alçalmış olmalı?" — gurûb anı (varsayılan), −3° veya −6°. Eşik, güneş merkezinin havasız (geometrik) irtifâına göredir; gurûb = −0°50′. Bu seçim yalnızca "aranabilir aralık" gösterimini (zaman çubuğu, seçili an kartı, anlık harita, saha modu) anında değiştirir; kitabın sınıflarını ve kesin red hükmünü değiştirmez. Kitap aramaya başlamak için ayrıca bir derece vermez (s. 360).
 2. Aranabilirlik (bir an için): güneş eşiğin altında, beynûnet ≥ 8°, hilâlin görünen irtifâı ≥ 5°, ictimâdan sonraki ilk 96 saat.
@@ -508,7 +490,7 @@ Arayüz iki zamanı birbirinden ayırır: **akşam değerlendirmesi** ve **seçi
 7. Harita: sınıflar piksel düzeyinde, ızgara değerlerinin ara değerinden (bilinear) bulunur; sınıf sınırları ince çizgiyle; yaş çizgileri sıklaştırılmış ızgaradan; isteğe bağlı "yalnızca karalar". Anlık kip: gece-gündüz sınırı, alacakaranlık gölgesi, ayın ufku, şu an aranabilir bölge, güneşin ve ayın tepede olduğu noktalar, oynatma.
 8. Aylık rü'yet şeridi: her akşamın gurûb sınıfı, A/B işaretleri ve sabah hilâli işareti; dokununca o gün seçilir.
 
-## 13. v0.4: sürekli an çubuğu, hicrî tarih, çevrimiçi katman, gökyüzü haritası, baskı
+## 13. An çubuğu, hicrî tarih, çevrimiçi katman, gökyüzü haritası, baskı
 
 **Hicrî tarih mantığı (kanonik):**
 
@@ -526,7 +508,7 @@ Arayüz iki zamanı birbirinden ayırır: **akşam değerlendirmesi** ve **seçi
 
 **Baskı / PDF:** Plan, Harita, Saha ve gökyüzü haritası için açık temada baskı sayfası üretilir. Sayfada konum, an, hicrî tarih, durum, çizimler, hava ve tablolar yer alır; altına "takvim değildir" notu düşülür. Bağımsız dosyada tarayıcının yazdırma penceresi açılır ("PDF olarak kaydet"). claude.ai içinde sayfa HTML dosyası olarak indirilir.
 
-## 14. v0.5: şehâdetin belgelenmesi, zaman kipleri, sade arayüz, GitHub
+## 14. Şehâdetin belgelenmesi, zaman kipleri, sade arayüz
 
 **Şehâdet ve haber (kanonik çerçeve):** Program hüküm vermez, haber ve belge üretir. Dayandığı hükümler şunlardır:
 
@@ -577,7 +559,7 @@ Saha sekmesi her zaman "şimdi"dir.
 
 **GitHub:** Kaynaklar, belgeler, kayıt şeması, Python doğrulayıcısı, testler ve rü'yet raporu issue formu depo düzeninde hazırlandı. Kod için MIT lisansı önerildi; onay proje sahibine aittir.
 
-## 15. v0.6: şafak iki kavli, "Tam İlmihâl" adı, rehberlik ilkesi, konum girişi
+## 15. Şafak iki kavli, "Tam İlmihâl" adı, rehberlik ilkesi, konum girişi
 
 **Şafak hakkında Tam İlmihâl ne diyor?**
 
@@ -590,7 +572,7 @@ Saha sekmesi her zaman "şimdi"dir.
 - **s. 197, hesap usulü:** Önce güneş merkezinin hakîkî ufka göre irtifâından hakîkî vakit bulunur; buna temkin eklenerek şer'î vakit elde edilir (İstanbul için yaklaşık 10 dakika).
 - **s. 316:** Kâdîhân kuralı. Kitap bu kural için hangi şafağın kastedildiğini ayrıca söylemez.
 
-**Karar:** Kâdîhân kontrolünde, kitabın ihtiyâtlı saydığı İmâm-ı a'zam kavli (−19°) esastır. İmâmeyn kavli (−17°) alternatif olarak sonucuyla birlikte gösterilir; iki kavil farklı sonuç verirse açıkça yazılır. Şafak vakitleri s. 197 usulüyle (hakîkî vakit + temkin) hesaplanır. Önceki sürümlerde temkin eklenmiyordu ve İmâmeyn için s. 176 anılıyordu; ikisi de düzeltildi (doğru sayfa: s. 178).
+**Karar:** Kâdîhân kontrolünde, kitabın ihtiyâtlı saydığı İmâm-ı a'zam kavli (−19°) esastır. İmâmeyn kavli (−17°) alternatif olarak sonucuyla birlikte gösterilir; iki kavil farklı sonuç verirse açıkça yazılır. Şafak vakitleri s. 197 usulüyle (hakîkî vakit + temkin) hesaplanır. İmâmeyn kavlinin dayanağı s. 178’dir.
 
 **Adlandırma:** Arayüzde kaynak "kitap" yerine "Tam İlmihâl" adıyla anılır.
 
@@ -615,32 +597,41 @@ Yarım küre yazılmazsa arz Kuzey, tûl Doğu kabul edilir. Tûl yanlış alana
 
 **Kutup bölgeleri:** Kutup gecesi ile güneşin batmadığı günler ayrılır. Kitabın s. 315'teki notu hatırlatılır: yirmidört saatten uzun günlerde oruç için gündüzü böyle uzun olmayan bir şehrin zamanına uyulur.
 
-## 16. v0.7–v0.8: Mâh-ı Nev adı ve bağımsız inceleme raporu sonrası kararlar (11 Kasım 2026)
+## 16. Kapsam, doğruluk, kayıt ve dağıtım ilkeleri
 
-**Ad ve dağıtım (v0.7):**
+Ölçü Tam İlmihâl'dir. Aşağıdaki ilkeler, programın bağımsız bilimsel, fıkhî ve teknik incelemesinde tartışılarak kabul edilmiştir.
 
-- Program "Mâh-ı Nev — Hilâl Rasad Yardımcısı" adını aldı. Resmî depo: github.com/bemiroglu/MahiNev.
-- Lisans CC BY-NC-ND 4.0'dır; değiştirilmiş kopyalar dağıtılamaz.
-- Program açılışta kendi bütünlüğünü denetler. Değiştirilmiş kopyada "resmî olmayan kopya" uyarısı çıkar.
+**Ad ve dağıtım.**
 
-**Bağımsız inceleme raporu (v0.6.0 üzerine) — bulgular ve kararlar.** Ölçü yine Tam İlmihâl'dir. Rapordaki her öneri bu ölçüyle tartıldı.
+- Programın adı: "Mâh-ı Nev — Hilâl Rasad Yardımcısı". Resmî depo: github.com/bemiroglu/MahiNev.
+- Lisans: CC BY-NC-ND 4.0. Değiştirilmiş kopyalar dağıtılamaz.
+- Program açılışta kendi bütünlüğünü denetler; değiştirilmiş kopyada "resmî olmayan kopya" uyarısı çıkar.
 
-| Bulgu | Karar | Dayanak |
+**Hesap, rasad ve hüküm.**
+
+| Konu | İlke | Dayanak |
 |---|---|---|
-| Yaz saati geçiş günlerinde yerel saat → UTC dönüşümü 1 saat kayıyor | **Düzeltildi.** Saat farkı aranan ânın kendisinde alınır; Berlin, New York ve Londra geçişleri test edildi | Kayıt zamanı hesapları etkiler |
-| Yallop'ta hilâl genişliği toposentrik açıyla hesaplanıyor | **Düzeltildi.** Yallop: jeosentrik ARCL ve ARCV; Odeh: toposentrik. İstanbul 10.12.2026 için q = 0,1149 (raporun bağımsız hesabıyla aynı) | Yallop 1997, NAO TN 69 §2–3. Yalnız ek bilgi; kitabın hükmünü etkilemez |
-| Depolama dolunca önizleme mühürden sonra siliniyor; kaydın başarısızlığı sessiz geçebiliyor | **Düzeltildi.** Önce içerik kesinleşir, sonra mühür vurulur. Başarısızlıkta açık hata verilir ve kayıt dosya olarak indirilir. 200 kayıt sınırı kaldırıldı; yedekleme, geri yükleme ve fotoğraf doğrulama eklendi | Kayıt bütünlüğü |
-| Göz güvenliği uyarısı yok | **Eklendi.** Uyarı Plan sekmesinde her zaman, Saha sekmesinde Güneş ufkun üstündeyken görünür | Rü'yet zaten çıplak gözle olur; optik cihaz yalnız yardımcıdır (Rasad Hakkında Zarûrî Malûmat) |
-| Hesâbî hicrî gün, rü'yetle sabit tarih sanılabilir | **Yapı korundu, açıklama güçlendirildi.** "Hesâbî" etiketinin yanına kitabın hükmü yazılır: "Hilâli görmekle Ramezânın başlaması, hesâbla anlaşılandan bir gün sonra olabilir. Fekat bir gün önce olamaz" (s. 360). "n (veya n−1)" gösterimi bu hükmün karşılığıdır | s. 360 (Sübkî bahsi). Not: s. 326'daki "Bayramın birinci günü bu hesâb ile bulunan gündür…" cümlesi Işık usulü hesabına aittir; bu yüzden astronomik gösterim için ona atıf yapılmaz |
-| Kesin red otomatik fıkhî karar gibi görünüyor | **Hüküm korundu, ifade düzeltildi.** Kesin red programın değil, kitabın hükmüdür: "hesâba inanılır, çünki hesâbla anlaşılan kat'îdir" (İmâm-ı Sübkî, s. 360). Metin artık bunu kitaba dayandırır ve beyanı değerlendirmenin yetkili makama ait olduğunu söyler | s. 315–316, 360 |
-| "Dünya geneli" taraması yalnız Pasifik kuşağında | **Doğrulandı, kapsam yazıldı.** Aynı takvim gününün en geç gurûbu tarih çizgisinin hemen doğusundadır. 14 ayda bütün dünya ızgarasıyla aynı gün bulundu (`tools/kuresel_dogrulama.py`). Enlem kutup dairelerine (±66°) genişletildi; kapsam Ay kartında yazılır | Hanefî'de ihtilâf-ı metâli' muteber değildir (s. 315) |
-| Gözlem sonucu türleri yetersiz | **"Şüpheli" ve "gözlem yapılamadı" eklendi.** Olumsuz kayıt, ayın otuza tamamlandığını ilan etmez; "gözlem yapılamadı" kaydı hilâlin bulunmadığını göstermez | s. 314–315: tamamlama, aramanın sonucudur; tek kişinin beyanı değildir |
-| Form tutarsızlıkları | **Eklendi.** Görme beyanında gören kişi en az 1 olmalı; ilk görme saati son görme saatinden sonra olamaz; ileri tarihli kayıt uyarı verir. İsimsiz beyan "şahitlik tutanağı yerine geçmez" diye işaretlenir | s. 315–316 (şahitlik şartları) |
-| Şehrin en yüksek yeri 0 m iken anlamı belirsiz | **Not eklendi.** "Girilmedi (0 m alındı); şer'î gurûb ve temkin bu yükseklik olmadan hesaplandı" | s. 176, 186 |
-| Pusula hakiki kerteriz değil | **Not eklendi.** Pusula yaklaşık yön verir; manyetik sapma düzeltilmez, gemide ve çelik yapı yanında yanıltır | — |
-| Hesap hassasiyeti ≠ gözlem hassasiyeti | **Rehber'e eklendi.** Ufuk yakınında kırılma değişkendir; batış saatleri gerçekte 1–2 dakika farklı olabilir | — |
-| Sürüm izlenebilirliği | **Eklendi.** Her kayıt; astronomi çekirdeğini, kural kümesini (`TI-360/1`) ve modern model tanımlarını taşır. Kural kümesi baskılara da yazılır | — |
-| Otomatik konum varsayılanı | **Korundu.** Konum cihazdan çıkmaz ve tarayıcı izin ister. Ayarlar'a gizlilik açıklaması eklendi | Kullanıcı kararı (v0.4) |
-| Gemi kipi; üç kullanıcı düzeyli arayüz | **Sonraki sürüme bırakıldı** | P1/P2 |
+| Hicrî tarih | Hesâbî gösterilir ve "rü'yetle kesinleşir" notu taşır. Yanında kitabın hükmü yazar: "Hilâli görmekle Ramezânın başlaması, hesâbla anlaşılandan bir gün sonra olabilir. Fekat bir gün önce olamaz." "n (veya n−1)" gösterimi bu hükmün karşılığıdır | s. 360 (Sübkî bahsi). s. 326'daki "Bayramın birinci günü bu hesâb ile bulunan gündür…" cümlesi Işık usulü hesabına aittir; astronomik gösterim için ona atıf yapılmaz |
+| Kesin red | Kitabın hükmüdür: "hesâba inanılır, çünki hesâbla anlaşılan kat'îdir" (İmâm-ı Sübkî). Metin hükmü kitaba dayandırır; beyanı değerlendirmenin yetkili makama ait olduğunu söyler | s. 315–316, 360 |
+| Dünya geneli | Aynı takvim gününün en geç gurûbu tarih çizgisinin hemen doğusundadır. Arama orada, kutup daireleri arasında (±66°) yapılır; bütün dünya ızgarasıyla aynı günü verdiği `tools/kuresel_dogrulama.py` ile sınanır. Kapsam Ay kartında yazılır | Hanefî'de ihtilâf-ı metâli' muteber değildir (s. 315) |
+| Olumsuz kayıtlar | "Göremedim" ve "gözlem yapılamadı" ayrı tutulur. Hiçbiri tek başına ayın otuza tamamlandığını ilan etmez | s. 314–315 |
+| Şahitlik bilgileri | Görme beyanında gören kişi en az 1 olmalıdır; ilk görme saati son görme saatinden sonra olamaz. İsimsiz beyan "şahitlik tutanağı yerine geçmez" diye işaretlenir | s. 315–316 |
+| Şehrin en yüksek yeri | Girilmediğinde bu açıkça yazılır: şer'î gurûb ve temkin bu yükseklik olmadan hesaplanır | s. 176, 186 |
 
-**Dış bağlantı:** Yazı tipleri artık Google'dan yüklenmiyor. Program, kullanıcı hava tahminini açmadıkça dışarıya hiç bağlanmaz.
+**Doğruluk.**
+
+- Yerel saat → UTC dönüşümü, saat farkını aranan ânın kendisinde alır; yaz saati geçişleri test edilir.
+- Yallop (1997): ARCL ve ARCV jeosentrik, W' = SD' (1 − cos ARCL). Odeh (2004): toposentrik. Doğrulama örneği: İstanbul, 10.12.2026 için q = 0,1149.
+- Hesap hassasiyeti ile gözlem hassasiyeti ayrıdır: ufuk yakınında kırılma değişkendir; batış saatleri gerçekte 1–2 dakika farklı olabilir. Pusula yaklaşık yön verir.
+
+**Kayıt bütünlüğü.**
+
+- Mühür (SHA-256 özeti ve cihaz imzası), saklanacak son içeriğe vurulur.
+- Kayıt saklanamazsa açık hata verilir ve kayıt dosya olarak indirilir.
+- Kayıtlar yedeklenip geri yüklenebilir; özgün fotoğraf, özetiyle kayda bağlanabilir.
+- Her kayıt; astronomi çekirdeğini, kural kümesini (`TI-360/1`) ve modern model tanımlarını taşır.
+
+**Güvenlik ve gizlilik.**
+
+- Göz güvenliği uyarısı Plan sekmesinde her zaman, Saha sekmesinde Güneş ufkun üstündeyken görünür.
+- Program, kullanıcı açmadıkça internete bağlanmaz. Hava tahmini ve internet yazı tipleri Ayarlar → *İnternet bağlantıları ve izinler* bölümünden açılır. Otomatik konum internet kullanmaz; konum cihazdan çıkmaz.

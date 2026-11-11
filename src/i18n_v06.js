@@ -1,4 +1,4 @@
-/* v0.6 metinleri: Tam İlmihâl adlandırması, şafak iki kavli, rehberlik ipuçları, konum girişi, saha şeridi */
+/* metinleri: Tam İlmihâl adlandırması, şafak iki kavli, rehberlik ipuçları, konum girişi, saha şeridi */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.6.0';

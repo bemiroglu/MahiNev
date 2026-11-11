@@ -63,7 +63,7 @@
       testsTitle: 'Doğrulama vakaları', testsIntro: 'Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Tam İlmihâl’deki örnekler, Jamry ekranı ve bağımsız Python hesabıdır.',
       tCase: 'Vaka', tQty: 'Büyüklük', tExp: 'Beklenen', tGot: 'Hesaplanan', tTol: 'Tolerans', tRes: 'Sonuç', pass: 'Geçti', fail: 'Kaldı',
       helpRules: 'Programın kuralları', helpCanon: 'Kanonik kural metni', helpSources: 'Kaynaklar', helpTerms: 'Terimler',
-      footer: 'v0.1 · hesap çekirdeği ve detay paneli · Astronomy Engine 2.1.19 (MIT)'
+      footer: ''
     },
     en: {
       appTitle: 'Crescent Sighting Assistant',
@@ -122,7 +122,7 @@
       testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Tam İlmihâl, the Jamry screenshot and an independent Python calculation.',
       tCase: 'Case', tQty: 'Quantity', tExp: 'Expected', tGot: 'Computed', tTol: 'Tolerance', tRes: 'Result', pass: 'Pass', fail: 'Fail',
       helpRules: 'Program rules', helpCanon: 'Canonical rule text', helpSources: 'Sources', helpTerms: 'Terms',
-      footer: 'v0.1 · calculation core and detail panel · Astronomy Engine 2.1.19 (MIT)'
+      footer: ''
     }
   };
   G.HRI18N = { T, MONTHS };

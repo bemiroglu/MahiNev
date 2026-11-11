@@ -1,4 +1,4 @@
-/* v0.2 arayüz metinleri */
+/* arayüz metinleri */
 (function (G) {
   'use strict';
   Object.assign(G.HRI18N.T.tr, {
@@ -34,7 +34,7 @@
     recNote: 'Kayıtlar yalnızca bu tarayıcıda saklanır.',
     gPlan: 'Gözlem planı ve teknikleri', gTopics: 'Fıkhî ve bilimsel açıklamalar',
     checklist: 'Sahada kontrol listesi', now: 'Şimdi',
-    footer: 'v0.2 · dünya haritası, ufuk çizimi, saha modu ve rehber · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
   Object.assign(G.HRI18N.T.en, {
     tabPlan: 'Plan', tabMap: 'Map', tabField: 'Field', tabGuide: 'Guide',
@@ -69,6 +69,6 @@
     recNote: 'Records are kept only in this browser.',
     gPlan: 'Observation plan and techniques', gTopics: 'Legal and scientific explanations',
     checklist: 'Field checklist', now: 'Now',
-    footer: 'v0.2 · world map, horizon, field mode and guide · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

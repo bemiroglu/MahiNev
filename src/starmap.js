@@ -1,4 +1,4 @@
-/* Gökyüzü haritası (v0.4): seçili an için bütün gök; stereografik izdüşüm, merkez başucu (zenit), kenar ufuk.
+/* Gökyüzü haritası: seçili an için bütün gök; stereografik izdüşüm, merkez başucu (zenit), kenar ufuk.
  * Bakış yönü alta gelir (varsayılan batı: hilâl rasadında yüzü batıya dönük gözlemci haritayı başının üstünde tutar gibi).
  * Yıldızlar ve takımyıldız çizgileri: d3-celestial (BSD-3-Clause). Gezegenler, Ay ve Güneş: Astronomy Engine. */
 (function (G) {
@@ -88,7 +88,7 @@
     // ufuk çemberi, yönler, güneşin yönü
     s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${col('--ink')}" stroke-opacity=".5" stroke-width="1.5"/>`;
     const card = tr ? ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'] : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    for (let i = 0; i < 8; i++) { const az = i * 45, a = rad(az - face), x = cx + (R + 16) * Math.sin(a), y = cy + (R + 16) * Math.cos(a); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" font-size="${((i % 2 ? 11 : 14) * F).toFixed(1)}" font-weight="700" text-anchor="middle" fill="${col('--ink')}" class="nohalo">${card[i]}</text>`; }
+    for (let i = 0; i < 8; i++) { const az = i * 45, a = rad(az - face), x = cx + (R + 16) * Math.sin(a), y = cy + (R + 16) * Math.cos(a); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" font-size="${((i % 2 ? 11 : 14) * F).toFixed(1)}" font-weight="700" text-anchor="middle" fill="${col('--ink')}" class="nohalo">${card[i]}<tspan font-size="0.7em" font-weight="500" dx="2" opacity=".75">${az}°</tspan></text>`; }
     if (now.sun.alt <= -0.8 && now.sun.alt > -24) { const a = rad(now.sun.az - face), x1 = cx + R * Math.sin(a), y1 = cy + R * Math.cos(a), x2 = cx + (R - 12) * Math.sin(a), y2 = cy + (R - 12) * Math.cos(a); s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${acc}" stroke-width="3"/><text x="${x2 - 14 * Math.sin(a)}" y="${y2 - 14 * Math.cos(a) + 4}" font-size="${(11 * F).toFixed(1)}" text-anchor="middle" fill="${lab}">☀ ${now.sun.alt.toFixed(0)}°</text>`; }
     s += '</svg>';
     return { svg: s, read: { lim, planets: objs.map(o => ({ name: G.HRSky.objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag })) } };

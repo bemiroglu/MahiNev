@@ -1,4 +1,4 @@
-/* Konum girişi çözümleyici (v0.6): kullanıcının yazdığı enlem/boylamı (arz/tûl) hoşgörüyle anlar ve standartlaştırır.
+/* Konum girişi çözümleyici: kullanıcının yazdığı enlem/boylamı (arz/tûl) hoşgörüyle anlar ve standartlaştırır.
  * Kabul edilenler (örnekler):
  *   41.0082 · 41,0082 · +41.0082 · -33,87 · 41.0082N · N41.0082 · 41,0082 K · K 41 00 29,5
  *   41°00'29.5"N · 41° 0′ 29,5″ Kuzey · 41 0.49 K (derece + ondalık dakika) · 28°58'42"D · 28.9784 E · 73,98 B / W

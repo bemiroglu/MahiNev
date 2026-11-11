@@ -1,4 +1,4 @@
-# Mâh-ı Nev — Kullanım kılavuzu (v0.8)
+# Mâh-ı Nev — Kullanım kılavuzu
 
 ## Başlarken
 
@@ -128,7 +128,7 @@ Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir. claude.a
 - **⬇ HTML'yi indir** düğmesi, kullandığınız sürümü tek dosya olarak indirir. Bu dosyayı internetsiz kullanabilir ve değiştirmeden paylaşabilirsiniz.
 - Ekranın üstünde kırmızı **"resmî olmayan kopya"** uyarısı görürseniz, dosya değiştirilmiş olabilir. Hesap sonuçlarına güvenmeden önce resmî sürümü indirin.
 
-## Rü'yet kaydı (v0.8)
+## Rü'yet kaydı: sonuç türleri, denetimler ve yedekleme
 
 - **Sonuç türleri:**
   - **çıplak gözle gördüm**;
@@ -152,3 +152,33 @@ Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir. claude.a
 - **Göz güvenliği:** Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın.
 - **Pusula:** Yaklaşık yön verir. Gemide veya çelik yapı yanında yönü yardımcı yıldızlarla teyit edin.
 - **Batış saatleri:** Ufuk yakınında kırılma değişkendir. Saatler gerçekte 1–2 dakika, deniz üstünde daha fazla farklı olabilir.
+
+## İnternet bağlantıları ve izinler
+
+**Ayarlar → İnternet bağlantıları ve izinler** bölümünde üç seçenek vardır. Hepsi başlangıçta kapalıdır.
+
+- **Hava ve görüş tahmini:** Yaklaşık konum open-meteo.com'a gönderilir.
+- **Yazı tiplerini internetten yükle:** Tarayıcı Google'ın yazı tipi sunucularına bağlanır. Kapalıyken cihazın kendi yazı tipleri kullanılır.
+- **Konumu otomatik al:** İnternet kullanmaz. Tarayıcı ilk seferde izin ister; konum cihazdan çıkmaz.
+
+Bölümün altında o anda açık olan bağlantılar ve gizlilik açıklaması yazar.
+
+## Saat dilimi ve UTC farkı
+
+Konum kartında saat dilimi listesinin yanında **UTC farkı** kutusu vardır.
+
+- Kutu, seçili dilimin seçili tarihteki farkını gösterir: `+3`, `−5`, `+5:30` gibi.
+- **Farkı yazarsanız**, o farka uyan sabit dilim seçilir ve bütün saatler buna göre hesaplanır. Kabul edilen yazımlar: `+3`, `3`, `UTC+3`, `-5`, `−3:30`, `+5,5`, `+0545`.
+- **Listeden dilim seçerseniz**, kutu o dilimin farkını gösterir.
+- Listede iki grup vardır:
+  - **bölgesel dilimler** (Europe/Istanbul gibi): yaz saatini izler;
+  - **sabit farklar** (UTC+3 gibi): yaz saati uygulanmaz.
+- Kutunun altındaki not, dilimde yaz saati olup olmadığını ve seçili tarihteki farkı söyler.
+- Arz ve tûlü elle girdiğinizde konum seçili dilimden çok uzaksa, fark tûlden hesaplanır. Bölgenin resmî saati farklıysa düzeltin.
+
+## JPG çıktısı
+
+**Yazdır / PDF** penceresindeki **JPG resmi olarak kaydet** düğmesi, seçtiğiniz A4 sayfalarını resim olarak indirir.
+
+- Her sayfa yaklaşık 240 dpi'lık bir JPEG olur. Birden çok sayfa seçerseniz sayfalar bir ZIP dosyası içinde iner.
+- Gökyüzü haritası penceresinde ve rü'yet tutanağında da **JPG** düğmesi vardır.

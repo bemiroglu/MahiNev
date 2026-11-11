@@ -1,4 +1,4 @@
-/* v0.3 arayüz metinleri ve "karanlık eşiği" açıklaması */
+/* arayüz metinleri ve "karanlık eşiği" açıklaması */
 (function (G) {
   'use strict';
   Object.assign(G.HRI18N.T.tr, {
@@ -34,7 +34,7 @@
     recAt: 'Kayıt zamanı', recEvening: d => `Ait olduğu akşam: ${d}`, recDayLbl: 'gündüz (gurûbdan önce)',
     fSearch: 'Şu an aranabilir mi?', fMorning: 'Sabah',
     bestAfterWin: (a, b) => `Bu akşam Yallop’un en iyi anı, hilâl 5°’nin altına indikten sonradır. Tam İlmihâl’e göre hilâl ${a}–${b} arasında aranır (s. 360); zaman çubuğu bu aralıkla açılır.`,
-    footer: 'v0.3 · zaman çubuğu, anlık harita, aylık şerit, tercihler · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
   Object.assign(G.HRI18N.T.en, {
     timeBar: 'Selected moment: any hour of the day', live: 'Live', nowBtn: 'Now',
@@ -69,7 +69,7 @@
     recAt: 'Time of record', recEvening: d => `Belongs to the evening of ${d}`, recDayLbl: 'daytime (before sunset)',
     fSearch: 'Searchable now?', fMorning: 'Morning',
     bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (p. 360); the time bar opens on that interval.`,
-    footer: 'v0.3 · time bar, live map, monthly strip, preferences · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
   const T = G.HRGuide && G.HRGuide.TOPICS;
   if (T) {

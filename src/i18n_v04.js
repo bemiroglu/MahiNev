@@ -1,4 +1,4 @@
-/* v0.4 arayüz metinleri: an çubuğu, hicrî tarih, çevrimiçi katman, gökyüzü haritası, baskı */
+/* arayüz metinleri: an çubuğu, hicrî tarih, çevrimiçi katman, gökyüzü haritası, baskı */
 (function (G) {
   'use strict';
   Object.assign(G.HRI18N.T.tr, {
@@ -33,7 +33,7 @@
     printTitle: { plan: 'Rü’yet planı', sky: 'Gökyüzü haritası', map: 'Dünya rü’yet haritası', field: 'Saha özeti' },
     printFooter: 'Bu çıktı takvim değildir. Kamerî ay başı, hilâlin çıplak gözle görülmesiyle (rü’yet) kesinleşir; burada verilenler hesâbî imkândır (Se’âdet-i Ebediyye s. 315, 360).',
     printGen: 'Hazırlanma', locAutoDone: 'Konum otomatik alındı.', locSandbox: 'claude.ai içinde konum kapalı; dosyayı tarayıcıda açın.', myPlace: 'Konumum',
-    footer: 'v0.4 · an çubuğu, hicrî tarih, hava ve görüş, gökyüzü haritası, baskı · Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · Open-Meteo'
+    footer: ''
   });
   Object.assign(G.HRI18N.T.en, {
     modeLive: 'Now', modePlan: 'Sighting plan', backNow: 'Back to now', printBtn: 'Print / PDF',
@@ -67,7 +67,7 @@
     printTitle: { plan: 'Sighting plan', sky: 'Sky chart', map: 'World sighting map', field: 'Field summary' },
     printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Se’âdet-i Ebediyye pp. 315, 360).',
     printGen: 'Prepared', locAutoDone: 'Location taken automatically.', locSandbox: 'Location is off inside claude.ai; open the file in a browser.', myPlace: 'My location',
-    footer: 'v0.4 · moment bar, Hijri date, weather and visibility, sky chart, printing · Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · Open-Meteo'
+    footer: ''
   });
   const T = G.HRGuide && G.HRGuide.TOPICS;
   if (T) {

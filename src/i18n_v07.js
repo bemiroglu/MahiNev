@@ -1,4 +1,4 @@
-/* v0.7 metinleri: Mâh-ı Nev adı, lisans ve resmî sürüm bildirimi, HTML indirme, önceki/sonraki rasad */
+/* metinleri: Mâh-ı Nev adı, lisans ve resmî sürüm bildirimi, HTML indirme, önceki/sonraki rasad */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.7.0';

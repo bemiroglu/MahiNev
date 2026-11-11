@@ -1,4 +1,4 @@
-/* Çevrimiçi katman (v0.4) — isteğe bağlıdır; program bunsuz tam çalışır.
+/* Çevrimiçi katman — isteğe bağlıdır; program bunsuz tam çalışır.
  * Ortam: bağımsız dosya (tarayıcıda açılmış) ↔ korumalı çerçeve (claude.ai içinde: dış bağlantı, konum ve yazdırma kapalı).
  * Hava: Open-Meteo (anahtarsız, açık veri). İki nokta istenir: gözlemci ve ayın/güneşin battığı yönde ~25 km ötesi
  * (5° yükseklikteki görüş hattı 2 km bulut tabanını ≈ 23 km ötede keser; batı ufkundaki bulut çoğu zaman oradadır). */

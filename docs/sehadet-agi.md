@@ -1,6 +1,6 @@
 # Rü'yet şehâdetinin belgelenmesi ve gözlem ağı — tasarım belgesi
 
-*Durum: öneri (v0.5). Programın içindeki kayıt ve tutanak kısmı uygulanmıştır; ağ kısmı tasarım aşamasındadır.*
+*Durum: öneri. Programın içindeki kayıt ve tutanak kısmı uygulanmıştır; ağ kısmı tasarım aşamasındadır.*
 
 ## 1. Amaç
 
@@ -29,7 +29,7 @@ Tasarımın her adımı aşağıdaki hükümlere bağlıdır. Sayfa numaraları 
 | Haber başka beldede yayılır ve tahakkuk ederse o beldeye de lâzım olur. Yayılma, birkaç ayrı cemaatin gelip haber vermesidir; kimin söylediği bilinmeyen haber muteber değildir. | Aynı bahis (Hulvânî, Rahmetî) | Ağ **anonim haber kabul etmez**. Bir beldeden gelen kayıtlar bağımsız kaynak sayısıyla birlikte gösterilir. |
 | Bir şehirde hilâl görülünce bütün dünyada oruca başlamak lâzım olur. | s. 315 | Ağ dünya geneli kapsamlıdır; yerel gözlem kayıtları da korunur. |
 
-## 3. Bugün programda olanlar (v0.5)
+## 3. Bugün programda olanlar
 
 ### 3.1 Rü'yet kaydı (`hilal-ruyet-kaydi/1`)
 

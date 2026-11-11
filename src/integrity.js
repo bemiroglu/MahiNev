@@ -1,4 +1,4 @@
-/* Rü’yet kaydının bütünlüğü (v0.5): kanonik JSON, SHA-256 özeti ve isteğe bağlı ECDSA P-256 imzası (WebCrypto).
+/* Rü’yet kaydının bütünlüğü: kanonik JSON, SHA-256 özeti ve isteğe bağlı ECDSA P-256 imzası (WebCrypto).
  * İmza anahtarı bu tarayıcıda IndexedDB’de, dışarı alınamaz (non-extractable) olarak saklanır; açık anahtar ve parmak izi kayda yazılır.
  * Amaç: kaydın sonradan değiştirilmediğini ve aynı cihazdan/gözlemciden geldiğini gösterebilmek. Kimlik doğrulaması değildir. */
 (function (G) {

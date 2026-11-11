@@ -62,20 +62,20 @@ Mâh-ı Nev'in resmî sürümü yalnızca **[github.com/bemiroglu/MahiNev](https
 - **Rü'yet kaydı ve tutanak:**
   - Kayıt; gözlem şartlarını, fotoğrafı, SHA-256 bütünlük özetini ve cihaz imzasını (ECDSA) içerir.
   - Tutanak A4 olarak, imza satırları ve QR kodu ile basılır.
-- **Odaklı A4 çıktılar:** rasad planı, gökyüzü haritası, aylık çizelge, dünya haritası ve tutanak; her biri tek sayfaya sığar.
-- **Gizlilik:** Kayıtlar, isimler ve konum yalnız tarayıcınızda durur. Program, siz hava tahminini açmadıkça dışarıya hiç bağlanmaz.
+- **Odaklı A4 çıktılar:** rasad planı, gökyüzü haritası, aylık çizelge, dünya haritası ve tutanak; her biri tek sayfaya sığar. Sayfalar PDF ya da JPG olarak kaydedilir.
+- **Gizlilik:** Kayıtlar, isimler ve konum yalnız tarayıcınızda durur. Program, siz açmadıkça internete hiç bağlanmaz. Hava tahmini ve internet yazı tipleri Ayarlar'dan açılır.
 - **Göz güvenliği:** Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın. Hilâl çıplak gözle aranır.
 - **Ek bilgiler:**
   - Modern ölçütler (Yallop, Odeh, Danjon) yalnızca ek bilgi olarak verilir.
   - Aritmetik takvim usulleri yalnızca takvim bilgisi olarak gösterilir.
-- **İsteğe bağlı çevrimiçi katman:** otomatik konum ile hava ve görüş tahmini (Open-Meteo). Hava tahmini başlangıçta kapalıdır.
+- **İsteğe bağlı çevrimiçi katman:** hava ve görüş tahmini (Open-Meteo) ve internet yazı tipleri; ikisi de başlangıçta kapalıdır. Otomatik konum cihaz izniyle çalışır ve internet kullanmaz.
 
 ## Doğrulama
 
 - **Program içinde:** Doğrulama sekmesinde 52 test bulunur. Bunlar kitaptaki örnekleri (Receb 1400, s. 360), şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
 - **Uçtan uca tarama:** `tests/ui_tarama.py` şunları dener: 2 ekran boyutu, 2 dil, 5 tema, bütün sekmeler, diyaloglar ve 9 uç konum (kutup gecesi, tarih çizgisi, yaz saati, Mekke). Tarama hata, taşma ve dış istek arar.
 - **Küresel kapsam:** `tools/kuresel_dogrulama.py`
-- **Bağımsız inceleme:** v0.6.0 üzerine yapılan bilimsel, fıkhî ve teknik inceleme raporunun bulguları ve verilen kararlar [docs/kanonik-rapor.md §16](docs/kanonik-rapor.md)'dadır.
+- **Bağımsız inceleme:** Programın bağımsız bilimsel, fıkhî ve teknik incelemesinde kabul edilen ilkeler [docs/kanonik-rapor.md §16](docs/kanonik-rapor.md)'dadır.
 
 Program bir gözlem **planlama ve kayıt** yardımcısıdır. Bağımsız bir efemeris referansı veya fıkhî karar sistemi değildir.
 
@@ -98,6 +98,7 @@ Belgeler:
 - [docs/kullanim-kilavuzu.md](docs/kullanim-kilavuzu.md): kullanım kılavuzu.
 - [docs/kayit-semasi.md](docs/kayit-semasi.md) ve [docs/sehadet-agi.md](docs/sehadet-agi.md): rü'yet kaydı ve şehâdet ağı.
 - [docs/mimari.md](docs/mimari.md) ve [docs/github-otomasyon.md](docs/github-otomasyon.md): mimari ve yayın.
+- [docs/yol-haritasi.md](docs/yol-haritasi.md): planlanan işler (gemi kipi, üç kullanıcı düzeyi).
 
 ## Geri bildirim
 

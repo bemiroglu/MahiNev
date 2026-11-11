@@ -198,7 +198,6 @@ details.topic { border-bottom: 1px solid var(--line); padding: 8px 0; } details.
 dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); max-width: min(640px, 92vw); padding: 18px 20px; }
 dialog::backdrop { background: rgba(0,0,0,.55); }
 footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
-/* v0.3 */
 .tb { margin-top: 4px; }
 .tb svg { display: block; width: 100%; height: auto; }
 .tb input[type=range] { width: 100%; accent-color: var(--accent); min-height: 34px; margin: 2px 0 0; }
@@ -229,7 +228,6 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .radio { display: flex; flex-direction: column; gap: 4px; }
 .radio label { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; min-height: 28px; cursor: pointer; }
 .radio input { margin-top: 4px; accent-color: var(--accent); }
-/* v0.4 */
 svg.sky text:not(.nohalo) { paint-order: stroke; stroke: var(--sky-halo); stroke-width: 3.2px; stroke-linejoin: round; }
 .mbar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 7px 12px; border-radius: 0 0 10px 10px; background: var(--surface); border: 1px solid var(--line); border-top: 0; }
 .mbar .mode { font: 700 .74rem/1 var(--font-body); letter-spacing: .07em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); white-space: nowrap; }
@@ -284,9 +282,13 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
   .pano-scroll.west svg { min-width: 640px; height: auto; }
   body.v-saha .mbar .when .hj, body.v-saha .mbar .chips { display: none; } body.v-saha .mbar .when { order: 0; flex-basis: auto; }
 }
-/* v0.5 */
 .tamper { background: #9f2a22; color: #fff; border-radius: 10px; padding: 10px 14px; margin: 8px 0; font-weight: 600; }
 .tamper a { color: #fff; text-decoration: underline; }
+.tzrow { display: grid; grid-template-columns: minmax(0, 1fr) 5.2em; gap: 8px; }
+.tzrow input { text-align: center; font-family: var(--font-mono); }
+.net { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
+.net .netsub { margin: -2px 0 8px 26px; }
+.netstat { font-size: .85rem; background: var(--surface-2); border-radius: 8px; padding: 6px 10px; margin: 8px 0; }
 .lic { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
 footer#footer a { color: inherit; }
 .ver { font: 500 .72rem/1 var(--font-mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; }
@@ -318,10 +320,9 @@ dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 #fTrack svg { display: block; width: 100%; height: auto; }
 .recgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 14px; }
 .hash { font: 500 .78rem var(--font-mono); word-break: break-all; color: var(--muted); }
-/* v0.6 */
 .hint { font-size: .86rem; color: var(--muted); background: var(--surface-2); border-left: 3px solid var(--info); border-radius: 6px; padding: 6px 10px; margin: -4px 0 12px; line-height: 1.45; }
 body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCard { display: none !important; }
-/* v0.8: dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
+/* dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
 #hIntro { cursor: pointer; }
 @media (max-width: 700px) {
   body:not(.introOpen) #introCard ol, body:not(.introOpen) #introCard .btns { display: none; }
@@ -384,7 +385,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
           <div class="field"><label for="elev" id="lElev"></label><input id="elev" type="text" inputmode="decimal" autocomplete="off"></div>
           <div class="field"><label for="hObs" id="lHObs"></label><input id="hObs" type="text" inputmode="decimal" autocomplete="off"></div>
           <div class="field"><label for="hMax" id="lHMax"></label><input id="hMax" type="text" inputmode="decimal" autocomplete="off"></div>
-          <div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div>
+          <div class="tzrow"><div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div><div class="field"><label for="tzOff" id="lTzOff"></label><input id="tzOff" type="text" inputmode="text" autocomplete="off" spellcheck="false"></div></div><p class="cap" id="tzNote"></p>
           <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
           <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p><p class="cap" id="hMaxNote" hidden></p>
         </section>
@@ -502,19 +503,27 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
         <p class="cap" id="darkHelp"></p>
       </div>
       <div>
-        <h3 id="hOnline"></h3>
-        <label class="chk"><input type="checkbox" id="optWx"><span id="lOptWx"></span></label>
-        <label class="chk"><input type="checkbox" id="optAutoLoc"><span id="lOptAutoLoc"></span></label>
         <h3 id="hHelp"></h3>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <p class="cap" id="explainNote"></p>
+      </div>
+      <div class="net">
+        <h3 id="hOnline"></h3>
+        <p class="cap" id="netIntro"></p>
+        <label class="chk"><input type="checkbox" id="optWx"><span id="lOptWx"></span></label>
+        <p class="cap netsub" id="netWx"></p>
+        <label class="chk"><input type="checkbox" id="optFonts"><span id="lOptFonts"></span></label>
+        <p class="cap netsub" id="netFonts"></p>
+        <label class="chk"><input type="checkbox" id="optAutoLoc"><span id="lOptAutoLoc"></span></label>
+        <p class="cap netsub" id="netLoc"></p>
+        <p class="netstat" id="netStat" role="status"></p>
         <p class="cap" id="onlineNote"></p>
+        <p class="cap" id="privacyNote"></p>
       </div>
       <div class="lic">
         <h3 id="hLic"></h3>
         <p class="cap" id="licBody"></p>
         <button class="btn" type="button" id="dlHtml2"></button>
-        <p class="cap" id="privacyNote"></p>
       </div>
     </div>
   </dialog>
@@ -522,11 +531,11 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
     <div class="cardhead"><h2 id="hPr" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="prClose"></button></div>
     <p class="small" id="prIntro"></p>
     <div class="radio" id="prOpts"></div>
-    <div class="btns" style="margin-top:12px"><button class="btn primary" type="button" id="prGo"></button></div>
+    <div class="btns" style="margin-top:12px"><button class="btn primary" type="button" id="prGo"></button><button class="btn" type="button" id="prJpg"></button></div>
     <p class="cap" id="prNote"></p>
   </dialog>
   <dialog id="smDlg" class="full" aria-labelledby="smTitle">
-    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smClose"></button></div></div>
+    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smJpg"></button><button class="btn" type="button" id="smClose"></button></div></div>
     <p class="small" id="smWhen" style="margin:0"></p>
     <div class="smctl"><label for="smFace" id="lSmFace"></label><select id="smFace" class="compact"></select>
       <label class="chk"><input type="checkbox" id="smLines" checked><span id="lSmLines"></span></label>

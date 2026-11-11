@@ -1,4 +1,4 @@
-/* v0.8 metinleri: bağımsız inceleme raporu sonrası düzeltmeler — göz güvenliği, kayıt bütünlüğü ve yedekleme,
+/* metinleri: bağımsız inceleme raporu sonrası düzeltmeler — göz güvenliği, kayıt bütünlüğü ve yedekleme,
    gözlem sonucu türleri, form denetimleri, hesap/rasad/hüküm ayrımı, kapsam ve izlenebilirlik notları */
 (function (G) {
   'use strict';
@@ -9,7 +9,7 @@
     safety: 'Göz güvenliği: Güneş tamamen batmadan dürbün, teleskop, kamera vizörü veya telefon yakınlaştırmasıyla batı ufkuna bakmayın. Güneş ışığı optik cihazla bakıldığında gözde kalıcı hasar yapar. Önce Güneş’in battığından emin olun; hilâli çıplak gözle arayın.',
     safetyShort: 'Güneş batmadan dürbünle batıya bakmayın.',
     safetyMobile: 'Göz güvenliği: Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın; gözde kalıcı hasar yapar. Hilâli çıplak gözle arayın.',
-    // Gözlem sonuçları (v0.8: “gözlem yapılamadı” ve “şüpheli” eklendi)
+    // Gözlem sonuçları
     recRes: { naked: 'Çıplak gözle gördüm', aidedNaked: 'Önce dürbünle bulup sonra çıplak gözle gördüm', aided: 'Yalnız dürbün/teleskopla gördüm', photo: 'Yalnız fotoğrafla tespit edildi', doubt: 'Şüpheli: gördüğüm cismin hilâl olduğundan emin değilim', not: 'Dikkatle aradım, göremedim', noObs: 'Gözlem yapılamadı (bulut, ufuk engeli vb.)' },
     evDoubt: 'Şüpheli gözlem rü’yet beyanı sayılmaz; yalnız bilgi olarak saklanır.',
     evNotSaw: 'Kaydedildi: açık arama yapıldı, hilâl görülemedi. Bu kayıt tek başına ayın otuza tamamlandığını göstermez.',

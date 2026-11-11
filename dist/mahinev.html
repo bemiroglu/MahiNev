@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.8.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0-deneme.1
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Resmî sürüm / Official version: https://github.com/bemiroglu/MahiNev
   Değiştirilmiş kopyalar dağıtılamaz. Modified copies may not be distributed.
@@ -198,7 +198,6 @@ details.topic { border-bottom: 1px solid var(--line); padding: 8px 0; } details.
 dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); max-width: min(640px, 92vw); padding: 18px 20px; }
 dialog::backdrop { background: rgba(0,0,0,.55); }
 footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
-/* v0.3 */
 .tb { margin-top: 4px; }
 .tb svg { display: block; width: 100%; height: auto; }
 .tb input[type=range] { width: 100%; accent-color: var(--accent); min-height: 34px; margin: 2px 0 0; }
@@ -229,7 +228,6 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .radio { display: flex; flex-direction: column; gap: 4px; }
 .radio label { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; min-height: 28px; cursor: pointer; }
 .radio input { margin-top: 4px; accent-color: var(--accent); }
-/* v0.4 */
 svg.sky text:not(.nohalo) { paint-order: stroke; stroke: var(--sky-halo); stroke-width: 3.2px; stroke-linejoin: round; }
 .mbar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 7px 12px; border-radius: 0 0 10px 10px; background: var(--surface); border: 1px solid var(--line); border-top: 0; }
 .mbar .mode { font: 700 .74rem/1 var(--font-body); letter-spacing: .07em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); white-space: nowrap; }
@@ -284,9 +282,13 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
   .pano-scroll.west svg { min-width: 640px; height: auto; }
   body.v-saha .mbar .when .hj, body.v-saha .mbar .chips { display: none; } body.v-saha .mbar .when { order: 0; flex-basis: auto; }
 }
-/* v0.5 */
 .tamper { background: #9f2a22; color: #fff; border-radius: 10px; padding: 10px 14px; margin: 8px 0; font-weight: 600; }
 .tamper a { color: #fff; text-decoration: underline; }
+.tzrow { display: grid; grid-template-columns: minmax(0, 1fr) 5.2em; gap: 8px; }
+.tzrow input { text-align: center; font-family: var(--font-mono); }
+.net { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
+.net .netsub { margin: -2px 0 8px 26px; }
+.netstat { font-size: .85rem; background: var(--surface-2); border-radius: 8px; padding: 6px 10px; margin: 8px 0; }
 .lic { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
 footer#footer a { color: inherit; }
 .ver { font: 500 .72rem/1 var(--font-mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; }
@@ -318,10 +320,9 @@ dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 #fTrack svg { display: block; width: 100%; height: auto; }
 .recgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 14px; }
 .hash { font: 500 .78rem var(--font-mono); word-break: break-all; color: var(--muted); }
-/* v0.6 */
 .hint { font-size: .86rem; color: var(--muted); background: var(--surface-2); border-left: 3px solid var(--info); border-radius: 6px; padding: 6px 10px; margin: -4px 0 12px; line-height: 1.45; }
 body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCard { display: none !important; }
-/* v0.8: dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
+/* dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
 #hIntro { cursor: pointer; }
 @media (max-width: 700px) {
   body:not(.introOpen) #introCard ol, body:not(.introOpen) #introCard .btns { display: none; }
@@ -384,7 +385,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
           <div class="field"><label for="elev" id="lElev"></label><input id="elev" type="text" inputmode="decimal" autocomplete="off"></div>
           <div class="field"><label for="hObs" id="lHObs"></label><input id="hObs" type="text" inputmode="decimal" autocomplete="off"></div>
           <div class="field"><label for="hMax" id="lHMax"></label><input id="hMax" type="text" inputmode="decimal" autocomplete="off"></div>
-          <div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div>
+          <div class="tzrow"><div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div><div class="field"><label for="tzOff" id="lTzOff"></label><input id="tzOff" type="text" inputmode="text" autocomplete="off" spellcheck="false"></div></div><p class="cap" id="tzNote"></p>
           <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
           <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p><p class="cap" id="hMaxNote" hidden></p>
         </section>
@@ -502,19 +503,27 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
         <p class="cap" id="darkHelp"></p>
       </div>
       <div>
-        <h3 id="hOnline"></h3>
-        <label class="chk"><input type="checkbox" id="optWx"><span id="lOptWx"></span></label>
-        <label class="chk"><input type="checkbox" id="optAutoLoc"><span id="lOptAutoLoc"></span></label>
         <h3 id="hHelp"></h3>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <p class="cap" id="explainNote"></p>
+      </div>
+      <div class="net">
+        <h3 id="hOnline"></h3>
+        <p class="cap" id="netIntro"></p>
+        <label class="chk"><input type="checkbox" id="optWx"><span id="lOptWx"></span></label>
+        <p class="cap netsub" id="netWx"></p>
+        <label class="chk"><input type="checkbox" id="optFonts"><span id="lOptFonts"></span></label>
+        <p class="cap netsub" id="netFonts"></p>
+        <label class="chk"><input type="checkbox" id="optAutoLoc"><span id="lOptAutoLoc"></span></label>
+        <p class="cap netsub" id="netLoc"></p>
+        <p class="netstat" id="netStat" role="status"></p>
         <p class="cap" id="onlineNote"></p>
+        <p class="cap" id="privacyNote"></p>
       </div>
       <div class="lic">
         <h3 id="hLic"></h3>
         <p class="cap" id="licBody"></p>
         <button class="btn" type="button" id="dlHtml2"></button>
-        <p class="cap" id="privacyNote"></p>
       </div>
     </div>
   </dialog>
@@ -522,11 +531,11 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
     <div class="cardhead"><h2 id="hPr" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="prClose"></button></div>
     <p class="small" id="prIntro"></p>
     <div class="radio" id="prOpts"></div>
-    <div class="btns" style="margin-top:12px"><button class="btn primary" type="button" id="prGo"></button></div>
+    <div class="btns" style="margin-top:12px"><button class="btn primary" type="button" id="prGo"></button><button class="btn" type="button" id="prJpg"></button></div>
     <p class="cap" id="prNote"></p>
   </dialog>
   <dialog id="smDlg" class="full" aria-labelledby="smTitle">
-    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smClose"></button></div></div>
+    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smJpg"></button><button class="btn" type="button" id="smClose"></button></div></div>
     <p class="small" id="smWhen" style="margin:0"></p>
     <div class="smctl"><label for="smFace" id="lSmFace"></label><select id="smFace" class="compact"></select>
       <label class="chk"><input type="checkbox" id="smLines" checked><span id="lSmLines"></span></label>
@@ -800,7 +809,7 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
 </script>
 <script>
 window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-/* Hilâl Rü'yet Yardımcısı — hesap çekirdeği (v0.1)
+/* Mâh-ı Nev — hesap çekirdeği
  * Kanonik dayanak: Se'âdet-i Ebediyye (Hakîkat Kitâbevi), s. 175–186, 314–316, 326, 344, 358–362.
  * Astronomik motor: Astronomy Engine (Don Cross, MIT).
  * Bütün açılar derece, bütün anlar AstroTime (UT). */
@@ -909,8 +918,10 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   }
 
   // Yerel tarih (YYYY-MM-DD, IANA tz) → o günün yerel öğlesi (AstroTime)
+  const TZF = new Map();   // saat dilimi biçimleyicileri önbelleği (hız)
   function tzOffsetMin(tz, date) {
-    const f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    let f = TZF.get(tz);
+    if (!f) { f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); TZF.set(tz, f); }
     const p = {}; for (const x of f.formatToParts(date)) p[x.type] = x.value;
     const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second);
     return Math.round((asUTC - Math.floor(date.getTime() / 1000) * 1000) / 60000);
@@ -920,7 +931,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     const [y, m, d] = ymd.split('-').map(Number);
     return T(new Date(Date.UTC(y, m - 1, d) + (12 - lon / 15) * 3600000));
   }
-  // Yerel duvar saati (YYYY-MM-DD + gece yarısından dakika, IANA tz) → UTC ms (v0.8: yaz saati geçişlerinde doğru).
+  // Yerel duvar saati (YYYY-MM-DD + gece yarısından dakika, IANA tz) → UTC ms; yaz saati geçişlerinde de doğrudur.
   // Günün öncesindeki ve sonrasındaki saat farkı aday alınır; aranan ânda gerçekten geçerli olan seçilir. İleri alınan saatte
   // olmayan bir saat geçişten sonraki karşılığına, geri alınan saatte iki kez yaşanan bir saat ilk yaşanışına çevrilir.
   function localToUT(ymd, minutes, tz) {
@@ -986,7 +997,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       r.best = tb;
       const ms = topo('Moon', tb, obs), su = topo('Sun', tb, obs);
       // Yallop (1997, NAO TN 69 §2–3): ARCL ve ARCV jeosentrik (havasız); W' = SD' (1 − cos ARCL), SD' toposentrik yarıçap.
-      // Odeh (2004): ARCL, ARCV ve W toposentrik (havasız). v0.8: iki model kendi tanımıyla ayrı hesaplanıyor.
+      // Odeh (2004): ARCL, ARCV ve W toposentrik (havasız). iki model kendi tanımıyla ayrı hesaplanıyor.
       const arclTopo = sep(su.ra, su.dec, ms.ra, ms.dec), arclGeo = beynunet(tb);
       const sdMoonArcmin = deg(Math.asin(MOON_R_KM / (ms.distAU * AU_KM))) * 60;
       const Wy = sdMoonArcmin * (1 - Math.cos(rad(arclGeo))), W = sdMoonArcmin * (1 - Math.cos(rad(arclTopo)));
@@ -1063,7 +1074,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   function earliestDay(conj, places, onProgress) {
     // Bir yerel tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olur; aynı enlemde o tarih için en elverişli akşam oradadır.
     // Bu yüzden küresel arama bu boylam kuşağında, kutup daireleri arasında (±66°) yapılır. tools/kuresel_dogrulama.py,
-    // bütün dünya ızgarasıyla aynı günün bulunduğunu doğrular (v0.8).
+    // bütün dünya ızgarasıyla aynı günün bulunduğunu doğrular.
     const grid = places || (() => { const g = []; for (let la = -66; la <= 66; la += 3) for (let lo = -177.5; lo <= -140; lo += 5) g.push([la, lo]); return g; })();
     const cd = conj.date;
     const base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
@@ -1399,7 +1410,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       testsTitle: 'Doğrulama vakaları', testsIntro: 'Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Tam İlmihâl’deki örnekler, Jamry ekranı ve bağımsız Python hesabıdır.',
       tCase: 'Vaka', tQty: 'Büyüklük', tExp: 'Beklenen', tGot: 'Hesaplanan', tTol: 'Tolerans', tRes: 'Sonuç', pass: 'Geçti', fail: 'Kaldı',
       helpRules: 'Programın kuralları', helpCanon: 'Kanonik kural metni', helpSources: 'Kaynaklar', helpTerms: 'Terimler',
-      footer: 'v0.1 · hesap çekirdeği ve detay paneli · Astronomy Engine 2.1.19 (MIT)'
+      footer: ''
     },
     en: {
       appTitle: 'Crescent Sighting Assistant',
@@ -1458,13 +1469,13 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Tam İlmihâl, the Jamry screenshot and an independent Python calculation.',
       tCase: 'Case', tQty: 'Quantity', tExp: 'Expected', tGot: 'Computed', tTol: 'Tolerance', tRes: 'Result', pass: 'Pass', fail: 'Fail',
       helpRules: 'Program rules', helpCanon: 'Canonical rule text', helpSources: 'Sources', helpTerms: 'Terms',
-      footer: 'v0.1 · calculation core and detail panel · Astronomy Engine 2.1.19 (MIT)'
+      footer: ''
     }
   };
   G.HRI18N = { T, MONTHS };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.2 arayüz metinleri */
+/* arayüz metinleri */
 (function (G) {
   'use strict';
   Object.assign(G.HRI18N.T.tr, {
@@ -1500,7 +1511,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     recNote: 'Kayıtlar yalnızca bu tarayıcıda saklanır.',
     gPlan: 'Gözlem planı ve teknikleri', gTopics: 'Fıkhî ve bilimsel açıklamalar',
     checklist: 'Sahada kontrol listesi', now: 'Şimdi',
-    footer: 'v0.2 · dünya haritası, ufuk çizimi, saha modu ve rehber · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
   Object.assign(G.HRI18N.T.en, {
     tabPlan: 'Plan', tabMap: 'Map', tabField: 'Field', tabGuide: 'Guide',
@@ -1535,7 +1546,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     recNote: 'Records are kept only in this browser.',
     gPlan: 'Observation plan and techniques', gTopics: 'Legal and scientific explanations',
     checklist: 'Field checklist', now: 'Now',
-    footer: 'v0.2 · world map, horizon, field mode and guide · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
@@ -1771,7 +1782,7 @@ window.HR_CANON_EN = [
   G.HRGuide = { TOPICS, render, topicHtml, planHtml };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.3 arayüz metinleri ve "karanlık eşiği" açıklaması */
+/* arayüz metinleri ve "karanlık eşiği" açıklaması */
 (function (G) {
   'use strict';
   Object.assign(G.HRI18N.T.tr, {
@@ -1807,7 +1818,7 @@ window.HR_CANON_EN = [
     recAt: 'Kayıt zamanı', recEvening: d => `Ait olduğu akşam: ${d}`, recDayLbl: 'gündüz (gurûbdan önce)',
     fSearch: 'Şu an aranabilir mi?', fMorning: 'Sabah',
     bestAfterWin: (a, b) => `Bu akşam Yallop’un en iyi anı, hilâl 5°’nin altına indikten sonradır. Tam İlmihâl’e göre hilâl ${a}–${b} arasında aranır (s. 360); zaman çubuğu bu aralıkla açılır.`,
-    footer: 'v0.3 · zaman çubuğu, anlık harita, aylık şerit, tercihler · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
   Object.assign(G.HRI18N.T.en, {
     timeBar: 'Selected moment: any hour of the day', live: 'Live', nowBtn: 'Now',
@@ -1842,7 +1853,7 @@ window.HR_CANON_EN = [
     recAt: 'Time of record', recEvening: d => `Belongs to the evening of ${d}`, recDayLbl: 'daytime (before sunset)',
     fSearch: 'Searchable now?', fMorning: 'Morning',
     bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (p. 360); the time bar opens on that interval.`,
-    footer: 'v0.3 · time bar, live map, monthly strip, preferences · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+    footer: ''
   });
   const T = G.HRGuide && G.HRGuide.TOPICS;
   if (T) {
@@ -1855,7 +1866,7 @@ window.HR_CANON_EN = [
   }
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.4 arayüz metinleri: an çubuğu, hicrî tarih, çevrimiçi katman, gökyüzü haritası, baskı */
+/* arayüz metinleri: an çubuğu, hicrî tarih, çevrimiçi katman, gökyüzü haritası, baskı */
 (function (G) {
   'use strict';
   Object.assign(G.HRI18N.T.tr, {
@@ -1890,7 +1901,7 @@ window.HR_CANON_EN = [
     printTitle: { plan: 'Rü’yet planı', sky: 'Gökyüzü haritası', map: 'Dünya rü’yet haritası', field: 'Saha özeti' },
     printFooter: 'Bu çıktı takvim değildir. Kamerî ay başı, hilâlin çıplak gözle görülmesiyle (rü’yet) kesinleşir; burada verilenler hesâbî imkândır (Se’âdet-i Ebediyye s. 315, 360).',
     printGen: 'Hazırlanma', locAutoDone: 'Konum otomatik alındı.', locSandbox: 'claude.ai içinde konum kapalı; dosyayı tarayıcıda açın.', myPlace: 'Konumum',
-    footer: 'v0.4 · an çubuğu, hicrî tarih, hava ve görüş, gökyüzü haritası, baskı · Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · Open-Meteo'
+    footer: ''
   });
   Object.assign(G.HRI18N.T.en, {
     modeLive: 'Now', modePlan: 'Sighting plan', backNow: 'Back to now', printBtn: 'Print / PDF',
@@ -1924,7 +1935,7 @@ window.HR_CANON_EN = [
     printTitle: { plan: 'Sighting plan', sky: 'Sky chart', map: 'World sighting map', field: 'Field summary' },
     printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Se’âdet-i Ebediyye pp. 315, 360).',
     printGen: 'Prepared', locAutoDone: 'Location taken automatically.', locSandbox: 'Location is off inside claude.ai; open the file in a browser.', myPlace: 'My location',
-    footer: 'v0.4 · moment bar, Hijri date, weather and visibility, sky chart, printing · Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · Open-Meteo'
+    footer: ''
   });
   const T = G.HRGuide && G.HRGuide.TOPICS;
   if (T) {
@@ -1943,7 +1954,7 @@ window.HR_CANON_EN = [
   }
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.5 metinleri: ayarlar, canlı/dondur, ay başı rasadı, saha, rü’yet kaydı ve tutanak, baskı sayfaları */
+/* metinleri: ayarlar, canlı/dondur, ay başı rasadı, saha, rü’yet kaydı ve tutanak, baskı sayfaları */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.5.0';
@@ -2025,7 +2036,7 @@ window.HR_CANON_EN = [
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.6 metinleri: Tam İlmihâl adlandırması, şafak iki kavli, rehberlik ipuçları, konum girişi, saha şeridi */
+/* metinleri: Tam İlmihâl adlandırması, şafak iki kavli, rehberlik ipuçları, konum girişi, saha şeridi */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.6.0';
@@ -2105,7 +2116,7 @@ window.HR_CANON_EN = [
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.7 metinleri: Mâh-ı Nev adı, lisans ve resmî sürüm bildirimi, HTML indirme, önceki/sonraki rasad */
+/* metinleri: Mâh-ı Nev adı, lisans ve resmî sürüm bildirimi, HTML indirme, önceki/sonraki rasad */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.7.0';
@@ -2141,7 +2152,7 @@ window.HR_CANON_EN = [
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* v0.8 metinleri: bağımsız inceleme raporu sonrası düzeltmeler — göz güvenliği, kayıt bütünlüğü ve yedekleme,
+/* metinleri: bağımsız inceleme raporu sonrası düzeltmeler — göz güvenliği, kayıt bütünlüğü ve yedekleme,
    gözlem sonucu türleri, form denetimleri, hesap/rasad/hüküm ayrımı, kapsam ve izlenebilirlik notları */
 (function (G) {
   'use strict';
@@ -2152,7 +2163,7 @@ window.HR_CANON_EN = [
     safety: 'Göz güvenliği: Güneş tamamen batmadan dürbün, teleskop, kamera vizörü veya telefon yakınlaştırmasıyla batı ufkuna bakmayın. Güneş ışığı optik cihazla bakıldığında gözde kalıcı hasar yapar. Önce Güneş’in battığından emin olun; hilâli çıplak gözle arayın.',
     safetyShort: 'Güneş batmadan dürbünle batıya bakmayın.',
     safetyMobile: 'Göz güvenliği: Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın; gözde kalıcı hasar yapar. Hilâli çıplak gözle arayın.',
-    // Gözlem sonuçları (v0.8: “gözlem yapılamadı” ve “şüpheli” eklendi)
+    // Gözlem sonuçları
     recRes: { naked: 'Çıplak gözle gördüm', aidedNaked: 'Önce dürbünle bulup sonra çıplak gözle gördüm', aided: 'Yalnız dürbün/teleskopla gördüm', photo: 'Yalnız fotoğrafla tespit edildi', doubt: 'Şüpheli: gördüğüm cismin hilâl olduğundan emin değilim', not: 'Dikkatle aradım, göremedim', noObs: 'Gözlem yapılamadı (bulut, ufuk engeli vb.)' },
     evDoubt: 'Şüpheli gözlem rü’yet beyanı sayılmaz; yalnız bilgi olarak saklanır.',
     evNotSaw: 'Kaydedildi: açık arama yapıldı, hilâl görülemedi. Bu kayıt tek başına ayın otuza tamamlandığını göstermez.',
@@ -2224,12 +2235,69 @@ window.HR_CANON_EN = [
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
+/* Metinler: internet izinleri, JPG çıktısı, UTC saat farkı */
+(function (G) {
+  'use strict';
+  G.HR_VERSION = '0.9.0-deneme.1';
+  Object.assign(G.HRI18N.T.tr, {
+    // İnternet bağlantıları ve izinler
+    hOnline: 'İnternet bağlantıları ve izinler',
+    netIntro: 'Bütün astronomik hesaplar internetsiz çalışır. İnternet bağlantıları (hava tahmini, yazı tipleri) başlangıçta kapalıdır; yalnız siz açarsanız kullanılır. Otomatik konum internet kullanmaz; tarayıcının konum izniyle çalışır.',
+    optWx: 'Hava ve görüş tahmini (Open-Meteo)',
+    netWx: 'Açıkken yaklaşık konum (≈1 km) open-meteo.com’a gönderilir; konum otomatik alındığında zemin rakımı da buradan sorulur.',
+    optFonts: 'Yazı tiplerini internetten yükle (Google Fonts)',
+    netFonts: 'Açıkken tarayıcınız fonts.googleapis.com ve fonts.gstatic.com’a bağlanır; IP adresiniz bu sunuculara ulaşır. Kapalıyken cihazın kendi yazı tipleri kullanılır.',
+    optAutoLoc: 'Konumu otomatik al (cihaz izniyle)',
+    netLoc: 'İnternete bağlanmaz: konumu cihazınızın konum servisi verir ve konum cihazdan çıkmaz. Tarayıcı ilk kullanımda izin ister.',
+    netNone: 'Şu anda açık internet bağlantısı yok.',
+    tzOff: 'UTC farkı', tzOffTip: 'Saat farkını yazabilirsiniz: +3, -5, +5:30, UTC+2 gibi. Yazdığınız farka uyan sabit dilim seçilir.',
+    tzRegional: 'Bölgesel saat dilimleri (yaz saatini izler)', tzFixed: 'Sabit saat farkı (yaz saati yok)',
+    tzFixedNote: o => `Sabit saat farkı UTC${o}: yaz saati uygulanmaz. Bölgenizde yaz saati varsa listeden bölgesel dilimi seçin.`,
+    tzDstNote: (z, w, s, o) => `${z}: kışın UTC${w}, yaz saatinde UTC${s}. Seçili tarihte UTC${o}.`,
+    tzStdNote: (z, o) => `${z}: UTC${o}; bu dilimde yaz saati uygulanmıyor.`,
+    tzOffErr: 'Saat farkı anlaşılamadı. Örnek: +3, -5, +5:30 (−12 ile +14 arası).',
+    tzAuto: o => `Konum seçili saat diliminden çok uzak; saat farkı tûlden hesaplandı: UTC${o}. Bölgenin resmî saati farklıysa “UTC farkı” kutusundan veya listeden düzeltin.`,
+    jpgGo: 'JPG resmi olarak kaydet', jpgShort: 'JPG', jpgMaking: 'JPG hazırlanıyor…',
+    jpgDone: n => n > 1 ? `${n} sayfa JPG olarak hazırlandı (ZIP).` : 'Sayfa JPG olarak hazırlandı.',
+    jpgFail: 'Bu tarayıcıda JPG üretilemedi. “Yazdır / PDF” ile PDF olarak kaydedebilirsiniz.',
+    jpgNote: 'JPG: her A4 sayfası ayrı bir resim olur (yaklaşık 240 dpi); birden çok sayfa seçilirse ZIP dosyası olarak iner.',
+    netOn: s => `Açık bağlantılar: ${s}`,
+    onlineNote: 'İnternet ve konum olmadan da astronomik hesapların hepsi çalışır.',
+    privacyNote: 'Gizlilik: Mâh-ı Nev, siz açmadıkça internete hiç bağlanmaz. Konumunuz, kayıtlarınız, adınız, iletişim bilginiz ve fotoğraf önizlemeleri yalnız bu tarayıcıda saklanır; hiçbir sunucuya gönderilmez. Açabileceğiniz bağlantılar yukarıdadır: hava tahmini open-meteo.com’a yaklaşık konum gönderir; internet yazı tipleri Google sunucularına bağlanır; otomatik konum internet kullanmaz. Sayfadaki GitHub ve lisans bağlantıları yalnız siz tıkladığınızda açılır. Programda reklam, sayaç veya izleme kodu yoktur.'
+  });
+  Object.assign(G.HRI18N.T.en, {
+    hOnline: 'Internet connections and permissions',
+    netIntro: 'All astronomical calculations work offline. Internet connections (forecast, fonts) are off by default and used only if you turn them on. Automatic location uses no internet; it works with the browser’s location permission.',
+    optWx: 'Weather and visibility forecast (Open-Meteo)',
+    netWx: 'When on, an approximate location (≈1 km) is sent to open-meteo.com; the ground elevation for an automatic location is also looked up there.',
+    optFonts: 'Load fonts from the internet (Google Fonts)',
+    netFonts: 'When on, your browser connects to fonts.googleapis.com and fonts.gstatic.com, which see your IP address. When off, the device’s own fonts are used.',
+    optAutoLoc: 'Take location automatically (with device permission)',
+    netLoc: 'Uses no internet: the device’s location service provides it and it never leaves the device. The browser asks for permission on first use.',
+    netNone: 'No internet connection is currently enabled.',
+    tzOff: 'UTC offset', tzOffTip: 'Type an offset: +3, -5, +5:30, UTC+2 etc. A fixed zone matching it is selected.',
+    tzRegional: 'Regional time zones (follow daylight saving)', tzFixed: 'Fixed offset (no daylight saving)',
+    tzFixedNote: o => `Fixed offset UTC${o}: no daylight saving. If your region uses daylight saving, pick the regional zone from the list.`,
+    tzDstNote: (z, w, s, o) => `${z}: UTC${w} in winter, UTC${s} in daylight saving time. UTC${o} on the selected date.`,
+    tzStdNote: (z, o) => `${z}: UTC${o}; no daylight saving in this zone.`,
+    tzOffErr: 'Offset not understood. Examples: +3, -5, +5:30 (between −12 and +14).',
+    tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the official time differs, correct it with the “UTC offset” box or the list.`,
+    jpgGo: 'Save as JPG image', jpgShort: 'JPG', jpgMaking: 'Preparing JPG…',
+    jpgDone: n => n > 1 ? `${n} pages prepared as JPG (ZIP).` : 'Page prepared as JPG.',
+    jpgFail: 'JPG could not be produced in this browser. Use “Print / PDF” to save a PDF.',
+    jpgNote: 'JPG: each A4 page becomes a separate image (about 240 dpi); several pages download as a ZIP file.',
+    netOn: s => `Enabled connections: ${s}`,
+    onlineNote: 'All astronomical calculations work without internet or location.',
+    privacyNote: 'Privacy: Mâh-ı Nev never connects to the internet unless you turn a connection on. Your location, records, name, contact details and photo previews are kept only in this browser and are never sent to a server. The connections you can enable are listed above: the forecast sends an approximate location to open-meteo.com; web fonts connect to Google’s servers; automatic location uses no internet. The GitHub and licence links open only when you click them. The program contains no ads, counters or tracking code.'
+  });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
 /* Yıldız ve takımyıldız verisi: d3-celestial 0.7.35 (Olaf Frohn, BSD-3-Clause) — Hipparcos tabanlı, J2000.
  * Copyright (c) 2015, Olaf Frohn. All rights reserved. Redistribution permitted under the BSD 3-Clause License.
  * Biçim: yıldızlar [RA×100, Dec×100, kadir×100]; çizgiler [RA×100, Dec×100, ...]; adlar {sıra: [tr, en]} */
 window.HR_STARS={"s":[49,-601,437,94,-1734,455,210,2909,207,229,5915,228,235,-4575,388,331,1518,283,366,-1893,444,458,3679,451,486,-882,356,502,-6487,423,644,-7725,282,655,-4368,393,657,-4231,240,789,-6296,436,789,-6297,453,825,6293,417,922,3372,434,924,5390,369,964,2931,434,983,3086,327,1013,5654,224,1033,-4608,459,1084,-5746,436,1090,-1799,204,1118,4828,448,1183,2427,408,1217,759,444,1228,5782,346,1245,4108,453,1418,6072,215,1419,3850,386,1430,2342,440,1465,-2936,430,1574,789,427,1652,-4672,332,1710,-5525,394,1715,-1018,346,1719,8626,424,1738,4724,426,1743,3562,207,1778,5515,434,1792,3009,451,1894,-6888,425,2101,-818,360,2145,6024,266,2209,-4332,341,2281,-4907,393,2287,1535,362,2420,4141,410,2443,-5724,45,2450,4863,359,2536,549,445,2592,5069,401,2602,-1594,349,2635,916,426,2787,-1034,374,2827,2958,342,2838,1929,388,2841,-4630,439,2860,6367,335,2866,2081,264,2899,-5161,369,2969,-6157,286,3000,-2108,399,3049,7091,449,3051,276,382,3086,7242,395,3097,4233,210,3179,2346,201,3239,3499,300,3325,885,436,3413,-5151,356,3433,3385,403,3544,-6866,408,3675,-4770,424,3704,846,430,3727,6740,446,3795,8926,197,3987,33,408,3990,-6827,412,4017,-3986,411,4083,324,347,4103,-1386,424,4105,4923,410,4124,1011,427,4128,-1857,447,4198,2925,452,4227,-3241,445,4250,2726,361,4265,3832,422,4267,5590,377,4288,3506,456,4356,5276,393,4411,-890,389,4457,-4030,288,4557,409,254,4560,-2362,408,4620,5351,291,4629,3884,332,4704,4096,209,4727,4961,405,4737,4486,379,4791,1973,435,4802,-2899,380,4988,-2176,370,4998,-4307,426,5008,2905,447,5108,4986,179,5120,903,361,5179,973,373,5227,5994,421,5248,5888,455,5264,4800,436,5272,1294,414,5323,-946,372,5345,-2163,426,5412,4819,432,5422,40,429,5427,-4027,457,5571,-3731,459,5573,4779,301,5581,-976,352,5605,-6481,384,5608,3229,384,5622,2411,372,5630,4258,377,5630,2447,430,5646,2437,387,5654,-1210,443,5658,2395,414,5671,-2325,422,5681,-7424,326,5687,2411,285,5715,-3762,430,5729,2405,362,5736,-3620,417,5738,6553,439,5759,7133,459,5853,3188,284,5857,-295,446,5946,4001,290,5951,-1351,297,5969,-6140,456,5974,3579,398,6017,1249,341,6022,-6216,448,6079,599,391,6117,2208,436,6165,5035,425,6217,4771,396,6297,-684,404,6350,-4229,385,6361,-6247,333,6372,4841,412,6382,-765,443,6388,889,427,6401,-5149,426,6412,-5930,444,6447,-3380,355,6456,5030,460,6495,1563,365,6573,1754,377,6601,-3402,397,6634,2229,421,6637,1793,430,6658,2281,428,6659,1562,448,6714,1596,384,6715,1918,353,6717,1587,340,6838,-2977,449,6850,-5504,330,6889,-3056,381,6891,1016,425,6898,1651,87,6908,-335,393,6917,4126,425,6954,1251,427,6955,-1430,386,7011,-1967,432,7014,-4186,444,7056,2296,427,7138,-325,401,7246,696,319,7265,890,435,7280,561,368,7322,-545,436,7351,6634,426,7356,244,371,7409,1351,406,7425,3317,269,7432,5375,443,7464,171,447,7549,4382,303,7562,4108,369,7585,6044,403,7610,-3548,455,7637,-2237,319,7663,4123,318,7696,-509,278,7729,-875,425,7807,-1187,445,7823,-1621,329,7831,-1294,436,7832,286,446,7863,-820,18,7917,4600,8,7940,-684,359,7954,3337,454,7989,-1318,429,8099,-781,413,8112,-240,335,8128,635,164,8157,2861,165,8171,310,459,8206,-2076,281,8270,595,420,8280,-3547,386,8300,-30,225,8305,1859,432,8318,-1782,258,8341,-6249,376,8371,949,439,8378,993,339,8385,-484,458,8386,-591,275,8405,-120,169,8423,929,409,8441,2114,297,8469,-260,377,8480,412,450,8491,-3407,265,8519,-194,174,8612,-2245,359,8619,-6574,434,8674,-1482,355,8682,-5107,385,8694,-967,207,8729,3918,451,8746,-5617,450,8774,-3577,312,8783,-2088,376,8787,3915,397,8833,2761,456,8860,2028,439,8879,741,45,8910,-1417,371,8938,-3528,436,8979,-4282,396,8988,5428,372,8988,4495,190,8993,3721,265,8998,4594,430,9001,-307,453,9060,965,412,9103,2326,416,9189,1477,442,9298,1421,445,9371,-627,399,9372,2251,331,9384,2950,432,9414,-3514,437,9491,5901,444,9508,-3006,302,9553,-3344,385,9567,-1796,198,9574,2251,287,9594,459,439,9599,-5270,-62,9704,-3258,447,9720,-703,376,9724,2021,413,9796,-2342,434,9823,733,447,9874,-5298,435,9876,-2296,454,9917,-1926,395,9943,1640,193,9944,-4320,317,9947,-1824,442,10098,2513,306,10100,1323,449,10129,-1672,-144,10132,1290,335,10197,241,448,10205,-6194,324,10246,-3251,350,10246,-5362,441,10248,-5061,294,10320,3396,360,10353,-2418,389,10355,-1204,408,10403,-1705,436,10432,5842,435,10466,-2897,150,10502,7698,455,10543,-2793,349,10576,-2383,302,10594,-1563,411,10603,2057,401,10710,-2639,183,10719,-7050,378,10778,3025,441,10797,-49,415,10814,-4676,449,10838,-4464,442,10856,-2635,442,10870,-2677,401,10921,-6796,397,10929,-3710,271,10952,1654,358,10968,-2495,437,11003,2198,350,11102,-2930,245,11143,2780,378,11179,829,289,11204,893,433,11228,3178,416,11231,-4330,325,11245,1201,455,11351,-2230,444,11365,3189,158,11398,2690,406,11434,-3497,453,11471,-2680,380,11483,522,40,11531,-955,394,11546,-7261,393,11583,2888,423,11595,-2895,394,11611,2440,357,11631,-3797,362,11633,2803,116,11702,-2594,440,11731,-4637,410,11732,-2486,334,11805,-4058,371,11816,-3886,449,11833,-4810,422,11919,-5298,346,11921,-2288,420,11956,-4924,447,12057,233,439,12090,-4000,221,12189,-2430,283,12198,-6862,435,12215,-298,436,12226,-1924,440,12238,-4734,175,12284,-3962,444,12351,-4035,442,12413,919,353,12463,-7692,405,12464,-3666,444,12516,-7748,434,12563,-5951,186,12571,4319,425,12642,-391,391,12643,-6614,377,12757,6072,335,12941,-4299,411,12941,570,414,12969,334,445,13003,-3531,397,13005,6433,459,13007,-5292,360,13015,-5976,431,13016,-4665,377,13081,340,430,13090,-3319,368,13110,-4265,405,13117,1815,394,13118,-5471,193,13151,-4604,387,13159,-1355,432,13167,2876,403,13168,-5677,450,13169,642,338,13211,584,435,13263,-2771,402,13376,-6064,384,13385,595,311,13462,1186,426,13480,4804,312,13502,-4125,445,13516,4178,396,13561,-6640,400,13591,4716,357,13604,-4710,375,13629,-7260,447,13663,3845,456,13700,-4343,223,13722,5160,446,13774,-5897,343,13782,-6232,396,13830,-6972,167,13859,231,389,13905,-5754,434,13927,-5928,221,13971,3680,382,14026,3439,314,14053,-5501,247,14116,2618,447,14190,-866,199,14229,-277,459,14231,-3595,451,14268,-4047,360,14281,-5703,316,14288,6306,365,14293,2297,432,14300,-118,454,14321,5168,317,14356,3640,454,14361,-5923,408,14362,6983,454,14371,5205,447,14421,-4936,434,14427,8133,428,14484,-6133,451,14496,-114,390,14529,989,352,14631,-6251,369,14646,2377,297,14678,-6507,292,14775,5904,378,14787,-1485,411,14792,-4655,458,14803,5406,455,14819,2601,388,14922,-5457,352,15128,-1306,460,15183,1676,348,15186,3524,449,15198,1000,439,15198,-37,448,15209,1197,136,15265,-1235,361,15343,-7004,329,15368,-4212,385,15417,2342,343,15427,-6133,339,15427,4291,345,15490,-5503,459,15499,1984,201,15523,-5604,450,15558,4150,306,15610,-7403,399,15652,-1684,383,15679,-3107,428,15697,-5874,381,15697,3671,420,15801,-6169,330,15820,931,384,15887,-7861,411,15890,-5756,445,15933,-4823,384,15983,-5560,429,16074,-6439,274,16088,-6057,458,16145,-8054,445,16169,-4942,269,16241,-1619,311,16333,3421,379,16337,-5885,378,16390,2475,430,16418,-3714,460,16494,-1830,408,16504,-4223,437,16546,5638,234,16558,2018,442,16593,6175,181,16715,-5898,393,16742,4450,300,16791,-2283,446,16815,-6032,459,16853,2052,256,16856,1543,333,16880,2310,456,16917,-365,445,16955,3153,379,16962,3309,349,16984,-1478,356,17025,-5449,390,17028,603,405,17098,1053,400,17122,-1768,406,17285,6933,382,17325,-3186,354,17395,-6302,311,17424,-82,430,17640,-6673,363,17646,653,404,17651,4778,369,17663,-6118,411,17700,2022,450,17726,1457,214,17742,-6379,430,17767,176,359,17779,-4517,447,17823,-3391,429,17846,5369,241,18076,-6331,432,18130,873,412,18172,-6461,414,18202,-5066,446,18209,-5072,258,18210,-2473,402,18253,-2262,302,18291,-5237,397,18379,-5875,279,18386,5703,332,18395,-1754,258,18439,-6796,406,18459,-7931,424,18461,-6400,406,18498,-67,389,18534,-6040,359,18665,-6310,77,18673,2827,435,18701,-5023,391,18747,-1652,294,18779,-5711,159,18802,-1620,430,18812,-7213,384,18837,6979,385,18844,4136,424,18860,-2340,265,18930,-6914,269,18943,-4854,385,19038,-4896,220,19042,-145,274,19157,-6811,304,19193,-5969,125,19328,-4894,433,19336,-4018,425,19351,5596,176,19365,-5718,403,19390,340,339,19401,3832,289,19554,1096,285,19557,-7155,361,19673,-4991,427,19749,-554,438,19750,1753,432,19797,2788,423,19807,-5992,458,19973,-2317,299,20015,-3671,275,20066,-6099,452,20098,5493,223,20100,-6454,452,20130,-1116,98,20131,5499,399,20276,-3941,390,20367,-60,338,20497,-5347,229,20642,-3304,423,20682,1746,450,20689,4931,185,20736,-3445,419,20737,1580,405,20738,-4169,341,20740,-4247,347,20786,6472,458,20796,-3299,432,20867,1840,268,20888,-4729,255,20957,-4210,383,20967,-4480,387,21041,154,423,21043,-4560,434,21096,-6037,61,21110,6438,367,21151,-4118,436,21159,-2668,325,21167,-3637,206,21322,-1027,418,21337,5179,453,21392,1918,-5,21400,-600,407,21410,4609,418,21478,-1337,452,21485,-4606,355,21508,-5639,430,21514,-3789,405,21576,-3951,441,21630,5185,404,21653,-4522,456,21655,-4538,433,21673,-8367,431,21688,7570,425,21796,3037,357,21802,3831,304,21815,-5046,444,21867,2975,447,21888,-4216,233,21947,-4943,405,21990,-6084,135,21990,-6083,-1,22018,1642,449,22029,1373,378,22048,-4739,230,22049,-3779,401,22063,-6498,318,22077,-566,387,22091,-3517,406,22125,2707,235,22131,1696,460,22156,189,373,22197,-7904,383,22257,-2796,442,22268,7416,207,22272,-1604,275,22285,1910,454,22291,-4358,432,22430,-435,447,22463,-4313,268,22479,-4210,313,22549,4039,349,22573,209,439,22602,-2528,325,22611,2695,452,22628,-4705,391,22721,-4528,407,22798,-4874,388,22806,-1979,454,22807,-5210,341,22888,3331,346,22925,-938,261,22938,-5880,407,22946,-3015,435,22963,-4788,427,22973,-6868,287,23018,7183,300,23034,-4065,322,23045,-3626,357,23067,-4469,337,23079,-3686,454,23084,-5932,448,23112,3738,431,23123,5897,329,23133,-3873,460,23196,2911,366,23323,3136,414,23367,2671,222,23370,1054,380,23379,-4117,280,23388,-1479,391,23397,-4496,455,23418,-6632,411,23426,-2814,360,23451,-4257,434,23466,-2978,366,23539,1967,451,23569,2630,381,23601,7779,429,23607,643,263,23655,1542,365,23661,735,442,23718,1814,409,23740,2607,459,23740,-343,354,23770,448,371,23774,-3363,397,23817,4245,460,23840,-2533,459,23846,-1673,413,23879,-6343,283,23911,1566,385,23922,-2921,387,23940,2688,414,23971,-2611,289,24003,-3840,342,24008,-2262,229,24047,5857,401,24109,-1137,416,24136,-1981,256,24165,-3680,422,24170,-2067,393,24185,-2087,431,24219,4493,423,24300,-1946,400,24308,-2793,458,24359,-369,273,24386,-6369,386,24458,-469,323,24494,4631,391,24496,-5016,401,24516,-2417,455,24530,-2559,290,24548,1915,374,24600,6151,273,24603,-2004,448,24635,1403,457,24640,-2345,457,24676,-1846,422,24680,-4755,446,24735,-2643,106,24756,2149,278,24773,198,382,24778,-1661,429,24785,-3470,424,24803,-2147,445,24836,-7890,386,24853,4244,420,24897,-2822,282,24909,-3526,418,24929,-1057,254,25032,3160,281,25072,3892,348,25077,-7752,423,25149,8204,421,25217,-6903,191,25245,-5904,377,25254,-3429,229,25297,-3805,300,25308,-3802,356,25350,1017,439,25365,-4236,362,25442,938,319,25466,-5599,312,25490,-5316,406,25507,3093,392,25720,6571,317,25759,-1572,243,25804,-4324,332,25866,1439,278,25876,2484,312,25876,3681,316,25884,-2660,433,26021,-1285,432,26025,-2111,439,26050,-2500,327,26092,3715,415,26132,-5553,284,26135,-5638,331,26159,-2418,416,26163,414,434,26166,-509,453,26184,-2987,428,26261,5230,279,26268,2611,441,26269,-3730,270,26277,-6068,360,26296,-4988,284,26305,8659,435,26340,-3710,162,26373,1256,208,26392,-4651,456,26414,-3864,426,26433,-4300,186,26440,-1540,354,26446,-812,458,26487,4601,382,26535,-1288,424,26548,7215,457,26562,-3903,239,26587,457,276,26643,-6472,361,26661,2772,342,26689,-2783,453,26690,-4013,299,26697,271,375,26746,-3704,319,26838,5687,373,26906,3725,386,26915,5149,224,26944,2925,370,26963,3019,441,26976,-977,332,27016,293,393,27038,2160,426,27044,131,442,27136,250,403,27145,-3042,298,27166,-5009,365,27184,956,371,27189,2876,384,27202,-2846,455,27215,-6367,433,27219,2081,437,27281,-4595,452,27344,-2106,384,27441,-3676,310,27497,3606,433,27519,7134,422,27525,-2983,272,27526,7273,355,27533,-290,323,27581,-6149,435,27592,2177,385,27604,-3438,179,27674,-4597,349,27699,-2542,282,27721,-4907,410,27880,-824,385,27923,3878,3,28076,-7143,401,28109,3961,459,28119,3761,434,28141,-2699,317,28142,2055,419,28176,1818,434,28179,-475,422,28252,3336,352,28305,-6219,422,28363,3690,422,28369,2265,457,28382,-2630,205,28383,4395,408,28424,-6723,440,28443,-2111,352,28474,3269,325,28491,1507,402,28542,-574,402,28565,-2988,260,28617,-2174,376,28635,1386,299,28656,-488,343,28660,-3706,423,28674,-2767,332,28709,-4050,457,28737,-3790,411,28744,-2102,288,28751,-3934,410,28814,6766,307,28844,3915,443,28889,7336,445,28909,3813,435,28928,5337,380,29017,6571,460,29042,-1785,392,29043,-1596,452,29066,-4446,396,29080,-4480,427,29097,-4062,396,29137,311,336,29218,2466,444,29243,5173,376,29268,2796,305,29352,738,445,29411,5022,449,29418,-2488,459,29418,-129,436,29502,1801,439,29526,1748,439,29624,4513,286,29656,1061,272,29685,1853,368,29704,7027,384,29770,887,76,29812,101,387,29837,2408,457,29882,-4187,412,29883,641,371,29908,3508,389,29924,-2717,454,29969,1949,351,29993,-3528,437,30015,-7291,397,30066,-2771,443,30070,6787,451,30218,-6618,355,30222,7771,438,30283,-82,324,30335,5657,428,30341,4674,380,30387,4771,396,30394,2781,450,30441,-1251,430,30451,-1254,358,30525,-1478,305,30556,4026,223,30597,3219,443,30641,-5674,194,30735,3037,401,30740,6299,421,30830,1130,403,30939,1460,364,30939,-4729,311,30958,-111,431,30991,1591,377,31036,4528,125,31086,1507,443,31101,-5192,451,31124,-6620,342,31132,6184,341,31134,5758,452,31142,3072,422,31152,-2527,413,31155,3397,248,31166,1612,427,31185,3649,453,31192,-950,378,31193,-503,443,31296,-2692,412,31303,2710,456,31370,-5845,367,31429,4117,394,31623,4393,372,31649,-1723,408,31665,4765,456,31678,-2501,449,31740,-1137,450,31823,3023,321,31862,1001,447,31870,3805,374,31896,525,392,31935,3939,422,31948,3490,441,31964,6259,245,31997,-5345,439,32052,1980,408,32056,-1683,428,32161,-6537,421,32167,-2241,377,32217,7056,323,32218,-2181,450,32249,2364,452,32289,-557,290,32350,4559,398,32427,-1947,451,32502,-1666,369,32537,-7739,373,32548,7131,455,32588,5878,423,32604,2874,449,32605,988,238,32613,1735,434,32616,2564,414,32624,-3303,435,32636,6112,425,32670,4931,423,32676,-1613,285,32848,-3736,300,32948,-5499,440,33095,6463,426,33145,-32,295,33153,-3954,447,33161,-1387,429,33175,2535,377,33206,-4696,173,33210,-3299,450,33250,3318,428,33255,620,352,33271,5820,339,33347,3971,450,33376,5704,418,33399,3775,414,33421,-778,417,33463,-6026,287,33526,4654,455,33541,-139,386,33589,5223,442,33613,4948,455,33683,-6497,451,33721,-2,365,33729,5842,407,33732,-4350,397,33738,4771,434,33744,-4375,412,33762,4312,452,33782,5028,376,33788,-3235,429,33884,-12,404,34013,4428,450,34016,-2704,418,34037,1083,341,34067,-4688,207,34075,3022,293,34151,-8138,413,34163,2357,397,34167,1217,420,34214,-5132,349,34240,-1359,405,34242,6620,350,34250,2460,351,34313,-3288,446,34315,-758,373,34366,-1582,327,34399,-3254,420,34441,-2962,117,34522,-5275,411,34548,4233,362,34594,2808,244,34597,382,448,34619,1521,249,34667,-2374,448,34672,-4352,428,34675,941,454,34697,7539,441,34736,-2117,368,34759,-4525,388,34814,4941,453,34858,-605,422,34897,-909,424,34929,328,370,34936,-5824,399,34948,-918,441,34971,-3253,441,35016,2374,458,35074,-2010,396,35134,2340,442,35151,-2064,438,35199,638,427,35229,1276,454,35324,-3782,438,35439,4646,381,35453,4327,429,35484,7763,321,35499,563,413,35510,4433,415,35551,178,449,35568,-1454,449,35723,-2813,459,35860,5750,451,35983,686,403,35998,-6558,449],"n":{"2":["Alpheratz","Alpheratz"],"23":["Diphda","Diphda"],"39":["Mirach","Mirach"],"49":["Achernar","Achernar"],"67":["Almach","Almach"],"68":["Hamal","Hamal"],"77":["Kutup Yıldızı","Polaris"],"99":["Algol","Algol"],"107":["Mirfak","Mirfak"],"174":["Aldebaran","Aldebaran"],"205":["Rigel","Rigel"],"206":["Capella","Capella"],"212":["Bellatrix","Bellatrix"],"213":["Elnath","Elnath"],"226":["Alnilam","Alnilam"],"232":["Alnitak","Alnitak"],"237":["Saiph","Saiph"],"245":["Betelgeuse","Betelgeuse"],"250":["Menkalinan","Menkalinan"],"265":["Mirzam","Mirzam"],"268":["Canopus","Canopus"],"277":["Alhena","Alhena"],"282":["Sirius","Sirius"],"294":["Adhara","Adhara"],"300":["Wezen","Wezen"],"321":["Castor","Castor"],"325":["Procyon","Procyon"],"332":["Pollux","Pollux"],"348":["Regor","Regor"],"355":["Avior","Avior"],"372":["Alsephina","Alsephina"],"395":["Miaplacidus","Miaplacidus"],"403":["Alphard","Alphard"],"435":["Regulus","Regulus"],"443":["Algieba","Algieba"],"470":["Dubhe","Dubhe"],"517":["Acrux","Acrux"],"521":["Gacrux","Gacrux"],"532":["Mimosa","Mimosa"],"535":["Alioth","Alioth"],"551":["Spica","Spica"],"558":["Alkaid","Alkaid"],"571":["Hadar","Hadar"],"575":["Menkent","Menkent"],"578":["Arcturus","Arcturus"],"597":["Toliman","Toliman"],"598":["Rigil Kentaurus","Rigil Kentaurus"],"611":["Kochab","Kochab"],"697":["Antares","Antares"],"712":["Atria","Atria"],"746":["Shaula","Shaula"],"747":["Rasalhague","Rasalhague"],"750":["Sargas","Sargas"],"791":["Kaus Australis","Kaus Australis"],"796":["Vega","Vega"],"808":["Nunki","Nunki"],"850":["Altair","Altair"],"874":["Peacock","Peacock"],"882":["Deneb","Deneb"],"941":["Alnair","Alnair"],"968":["Tiaki","Tiaki"],"981":["Fomalhaut","Fomalhaut"]},"l":[[3097,4233,1743,3562,983,3086,210,2909],[1430,2342,1183,2427,964,2931,983,3086,922,3372,35453,4327,34548,4233],[35453,4327,35510,4433,35439,4646],[1743,3562,1419,3850,1245,4108,1738,4724,2450,4863],[35510,4433,35651,4642],[14231,-3595,15679,-3107,16418,-3714],[22197,-7904,24509,-7870,25077,-7752,24836,-7890],[31192,-950,31316,-898,32289,-557,33145,-32,33541,-139,33721,-2,33884,-12,34315,-758,34948,-918,34736,-2117],[32289,-557,33161,-1387],[33145,-32,33421,-778],[33721,-2,33632,138],[35074,-2010,34948,-918,35544,-1782],[29656,1061,29770,887,29883,641,30283,-82,29812,101,29137,311,28635,1386,29770,887,29137,311,28656,-488],[26135,-5638,26277,-6068,25245,-5904,25466,-5599,25490,-5316,26296,-4988,26132,-5553],[4250,2726,3179,2346,2866,2081,2838,1929],[8988,4495,7917,4600,7663,4123,7425,3317,8157,2861,8993,3721,8988,4495,8988,5428,7917,4600,7549,4382,7562,4108],[20682,1746,20867,1840,21392,1918,21796,3037,21802,3831,22549,4039,22888,3331,22125,2707,21392,1918,22029,1373],[21802,3831,21410,4609,21337,5179,21630,5185,21410,4609],[6771,-4495,7014,-4186,7051,-3714,7610,-3548],[7432,5375,7585,6044,7351,6634,5759,7133,5738,6553,5227,5994],[7351,6634,9471,6932,10502,7698],[13462,1186,13117,1815,13082,2147,13167,2877],[13117,1815,12413,919],[19400,3831,18844,4136],[9567,-1796,10129,-1672,10576,-2383,10710,-2639,10543,-2793,10466,-2897,9508,-3006],[11102,-2930,10710,-2639],[10129,-1672,10403,-1705,10594,-1563,10355,-1204,10403,-1705],[11483,522,11179,829],[30441,-1251,30525,-1478,30722,-1781,31152,-2527,31296,-2692,32167,-2241,32676,-1613,32502,-1666,32056,-1683,31649,-1723,30441,-1251],[9944,-4320,9599,-5270,13830,-6972,15343,-7004,16074,-6439,15801,-6169,15427,-6133,13927,-5928,12563,-5951,11919,-5298,12238,-4734,13118,-5471,13927,-5928],[16074,-6439,16664,-6242,16714,-6195,16815,-6032,16715,-5898,16337,-5885,15801,-6169],[2860,6367,2145,6024,1418,6072,1013,5654,229,5915],[17025,-5449,18209,-5072,18701,-5023,19038,-4896,20497,-5347,20888,-4729,20740,-4247,20738,-4169,21167,-3637,21888,-4216,22479,-4210],[20738,-4169,20015,-3671],[21990,-6084,20497,-5347,21096,-6037],[18701,-5023,18291,-5237,17294,-5944],[30740,6299,31132,6184,31964,6259,32588,5878,33376,5704,33271,5820,33729,5842,34242,6620,35484,7763,32217,7056,31964,6259],[32217,7056,34242,6620],[4083,324,3897,559,3704,846,4124,1011,4493,891,4557,409,4083,324,3987,33,3484,-298,2787,-1034,2602,-1594,1090,-1799,486,-882,1715,-1018,2101,-818,2787,-1034],[12463,-7692,15887,-7861,16132,-8047,18459,-7931,17991,-7822,15887,-7861],[22938,-5880,22063,-6498,23084,-5932],[9553,-3344,8774,-3577,8491,-3407,8280,-3547],[8774,-3577,8979,-4282],[19750,1753,19797,2788,18673,2827],[28468,-3711,28660,-3706,28737,-3790,28751,-3934,28709,-4050,28578,-4210,28240,-4343,27838,-4231],[23323,3136,23196,2911,23367,2671,23569,2630,23740,2607,23940,2688,24036,2985],[18210,-2473,18253,-2262,18395,-1754,18747,-1652,18860,-2340,18253,-2262],[17417,-980,17115,-1086,16984,-1478,16494,-1830,16791,-2283,17084,-1878,17122,-1768,17619,-1835,17900,-1715],[16984,-1478,17122,-1768],[19193,-5969,18379,-5875],[18665,-6310,18779,-5711],[31823,3023,31155,3397,30556,4026,29624,4513,29243,5173,28928,5337],[31036,4528,30556,4026,29908,3508,29268,2796],[30830,1130,30939,1460,30991,1591,31166,1612,31086,1507,30939,1460],[6401,-5149,6850,-5504,8341,-6249,8619,-6574,8853,-6309,8341,-6249,7638,-5747,6850,-5504],[26838,5687,26915,5149,26261,5230,26307,5517,26838,5687,28814,6766,27519,7134,25720,6571,24600,6151,24047,5857,23123,5897,21110,6438,18837,6979,17285,6933],[27519,7134,27526,7273],[28814,6766,29704,7027],[31896,525,31862,1001,31759,1013],[7696,-509,7138,-325,6908,-335,6297,-684,5951,-1351,5654,-1210,5581,-976,5323,-946,4411,-890,4103,-1386,4128,-1857,4560,-2362,4988,-2176,5345,-2163,5671,-2325,6889,-3056,6601,-3402,6447,-3380,5736,-3620,5427,-4027,4998,-4307,4457,-4030,4017,-3986,3675,-4770,3413,-5151,2899,-5161,2443,-5724],[4802,-2899,4227,-3241,3112,-2930],[9372,2251,9574,2251,10098,2513,10778,3025,11365,3189,11633,2803,11398,2690,11003,2198,10603,2057,9943,1640,10132,1290],[11003,2198,10952,1654],[34522,-5275,34214,-5132,34067,-4688,33744,-4375,33206,-4696,34067,-4688],[33732,-4350,33390,-4135,33153,-3954,32848,-3736],[24548,1915,24756,2149,25032,3160,25072,3892,24853,4244,24494,4631,24219,4493,23817,4245],[25032,3160,25507,3093],[25072,3892,25876,3681],[26906,3725,26092,3715,25876,3681,25507,3093,25876,2484,26661,2772,26944,2925,27189,2876],[25866,1439,24756,2149],[6350,-4229,4064,-5080,3935,-5254,4017,-5455,4590,-5974,4470,-6407],[13169,642,13211,584,13081,340,12969,334,12941,570,13169,642,13385,595,13859,231,14496,-114,14190,-866,14787,-1485,15265,-1235,15652,-1684,16241,-1619,17325,-3186,17823,-3391,19973,-2317,21159,-2668,22257,-2796],[644,-7725,5681,-7424,3990,-6827,3544,-6866,2873,-6765,2969,-6157],[30939,-4729,31101,-5192,31370,-5845,32948,-5499,31997,-5345,30939,-4729],[33589,5223,33782,5028,33738,4771,33526,4654,33762,4312,34013,4428,33738,4771,33613,4948,33589,5223],[33762,4312,33347,3971,33399,3775],[15209,1197,15183,1676,15499,1984,16853,2052,17726,1457,16856,1543,15209,1197],[15499,1984,15417,2342,14819,2601,14646,2377],[15186,3524,15648,3380,16333,3421,15697,3671,15186,3524,14356,3640],[9154,-1494,8910,-1417,8674,-1482,8318,-1782,7823,-1621,7637,-2237,8206,-2076,8612,-2245,8783,-2088],[7831,-1294,7823,-1621,7989,-1318],[22602,-2528,22272,-1604,22925,-938,23388,-1479,23426,-2814,23466,-2978],[22272,-1604,23388,-1479],[23774,-3363,23494,-3441,23045,-3626,23034,-4065,22463,-4313,22048,-4739,22807,-5210,22963,-4788,23067,-4469,23379,-4117,24003,-3840,24165,-3680],[23034,-4065,23379,-4117],[9491,5901,10432,5842,11168,4921,12571,4319,13516,4178,13971,3680,14026,3439],[28119,3761,28109,3961,27923,3878,28119,3761,28363,3690,28474,3269,28252,3336,28119,3761],[9256,-7475,8297,-7634,7380,-7494,7568,-7131],[31249,-3378,31212,-4399,32019,-4081,31948,-3217,31532,-3226,31249,-3378],[11531,-955,12215,-298,10797,-49,9720,-703,9371,-627],[10797,-49,10197,241,9594,459,9823,733,10024,990],[17640,-6673,18439,-6796,18930,-6914,19157,-6811,19557,-7155,18812,-7213,18930,-6914],[24162,-4517,24680,-4755,24496,-5016,24080,-4923,24162,-4517],[21673,-8367,34151,-8138,32537,-7739,21673,-8367],[26976,-977,26697,271,26587,457,26373,1256,25442,938,24773,198,24359,-369,24458,-469,24929,-1057,25759,-1572],[25442,938,24929,-1057,24778,-1661,24676,-1846,24603,-2004,24640,-2345],[26587,457,25759,-1572,26050,-2500,26184,-2987],[9189,1477,8860,2028,9098,2014,9298,1421,9060,965,8879,741,8128,635,7372,1015],[7464,171,7356,244,7280,561,7246,696,7265,890,7372,1015,7409,1351,7614,1540,7742,1560],[7863,-820,8112,-240,8300,-30,8128,635,8378,993,8879,741,8519,-194,8694,-967],[8519,-194,8405,-120,8300,-30],[30641,-5674,31124,-6620,30218,-6618,28305,-6219,27581,-6149,27215,-6367,26643,-6472,28076,-7143,30015,-7291,31124,-6620,32161,-6537],[33250,3318,34075,3022,34594,2808,210,2909,331,1518,34619,1521,34167,1217,34037,1083,33255,620,32605,988],[34619,1521,34594,2808,34250,2460,34163,2357,33175,2535,32616,2564],[5608,3229,5853,3188,5974,3579,5946,4001,5630,4258,5573,4779,5412,4819,5108,4986,4620,5351,4267,5590,4356,5276,4727,4961,4737,4486,4704,4096,4782,3961,4629,3884,4469,3966,4492,4103,4704,4096],[6165,5035,6372,4841,6217,4771,5573,4779],[4727,4961,4105,4923,2592,5069],[657,-4231,1652,-4672,2209,-4332,2281,-4907,1710,-5525,1652,-4672,235,-4575,657,-4231],[10205,-6194,8746,-5617,8682,-5107],[1844,2458,1792,3009,1987,2726,1844,2458,1786,2103,2287,1535,2635,916,3051,276,2839,319,2536,549,2255,614,1843,758,1574,789,1217,759,35983,686,35499,563,35199,638,35009,538,34929,328,35173,126,35551,178,35660,349,35499,563],[34929,328,34597,382],[34016,-2704,34441,-2962,34399,-3254,34313,-3288,33788,-3235,33210,-3299,32624,-3303,32693,-3090,33210,-3299,34016,-2704],[9944,-4320,10929,-3710,11385,-2837,11471,-2680,11732,-2486,11921,-2288,12189,-2430,12090,-4000,12238,-4734],[11732,-2486,11702,-2594,11595,-2895,11385,-2837],[12090,-4000,13003,-3531,13090,-3319,13263,-2771],[6361,-6247,6412,-5930,5969,-6140,5605,-6481,6361,-6247],[29502,1801,29685,1853,29969,1949],[29526,1748,29685,1853],[27441,-3676,27604,-3438,27525,-2983,27699,-2542,27344,-2106],[29066,-4446,29097,-4062,28565,-2988,28141,-2699,27699,-2542],[29882,-4187,29993,-3528,29896,-2630,29418,-2488,29132,-2451,28889,-2526,28382,-2630,28141,-2699,27525,-2983,27145,-3042,27604,-3438,28565,-2988,28674,-2767,28382,-2630,28617,-2174,28744,-2102,28941,-1895,29042,-1785,29043,-1596],[28617,-2174,28443,-2111,28354,-2274,28382,-2630],[23971,-2611,24008,-2262,24136,-1981],[24008,-2262,24530,-2559,24735,-2643,24897,-2822,25254,-3429,25297,-3805,25365,-4236,25804,-4324,26433,-4300,26690,-4013,26562,-3903,26340,-3710],[1465,-2936,35723,-2813,34971,-3253,35324,-3782],[27880,-824,28179,-475,28057,-905,27730,-1457,27880,-824],[23655,1542,23539,1967,23718,1814,23911,1566,23655,1542,23370,1054,23607,643,23770,448,24359,-369],[25759,-1572,26440,-1540,26976,-977,27077,-818,27533,-290,28405,420],[15198,-37,14813,-810,15737,-274,15757,-64],[8441,2114,6898,1651,6717,1587,6495,1563,6573,1754,6715,1918,8157,2861],[6495,1563,6017,1249,5179,973,6079,599],[5179,973,5120,903,5422,40],[27281,-4595,27674,-4597,27721,-4907],[2827,2958,3239,3499,3433,3385,2827,2958],[25217,-6903,23879,-6343,22973,-6868,25217,-6903],[33463,-6026,34936,-5824,789,-6296,502,-6487,35998,-6558,33683,-6497,33463,-6026],[18386,5703,16593,6175,16546,5638,17846,5369,18386,5703,19351,5596,20098,5493,20689,4931],[17846,5369,17651,4778,16962,3309,16955,3153],[17651,4778,16742,4450,15558,4150],[16742,4450,15427,4291],[16593,6175,14288,6306,12757,6072,14775,5904,16546,5638],[16546,5638,14803,5406,14321,5168,13480,4804],[13591,4716,14321,5168],[23601,7779,24438,7576,23018,7183,22268,7416,23601,7779,25149,8204,26305,8659,3795,8926],[13118,-5471,14053,-5501,14922,-5457,16169,-4942,15368,-4212,14268,-4047,13700,-4343,12238,-4734],[17646,653,17767,176,18498,-67,19042,-145,19749,-554,20130,-1116,21400,-600,22077,-566],[19554,1096,19390,340,19042,-145],[19749,-554,20367,-60,21041,154,22156,189],[13561,-6640,12643,-6614,12198,-6862,10921,-6796,10719,-7050,12198,-6862,13561,-6640],[28905,2139,29218,2466,29837,2408,30028,2775,30394,2781]],"c":[[75,4300,"Andromeda","Andromeda"],[33750,-500,"Kova","Aquarius"],[29100,800,"Kartal","Aquila"],[4200,2200,"Koç","Aries"],[8250,3700,"Arabacı","Auriga"],[22350,3500,"Çoban","Boötes"],[8400,7200,"Zürafa","Camelopardalis"],[12825,2700,"Yengeç","Cancer"],[19200,4300,"Av Köpekleri","Canes Venatici"],[9750,-2600,"Büyük Köpek","Canis Major"],[10950,500,"Küçük Köpek","Canis Minor"],[31500,-2200,"Oğlak","Capricornus"],[14400,-6600,"Karina","Carina"],[35400,5550,"Koltuk","Cassiopeia"],[19950,-4000,"Erboğa","Centaurus"],[33750,7100,"Kral","Cepheus"],[2850,-500,"Balina","Cetus"],[23850,3200,"Kuzeytacı","Corona Borealis"],[19350,-6200,"Haç","Crux"],[30750,5000,"Kuğu","Cygnus"],[26850,6400,"Ejderha","Draco"],[5250,-1800,"Irmak","Eridanus"],[10725,2350,"İkizler","Gemini"],[25350,3500,"Herkül","Hercules"],[15000,-2200,"Suyılanı","Hydra"],[15900,1500,"Aslan","Leo"],[23100,-2600,"Terazi","Libra"],[27900,3000,"Çalgı","Lyra"],[11475,-600,"Tekboynuz","Monoceros"],[25800,300,"Yılancı","Ophiuchus"],[8400,1300,"Avcı","Orion"],[29700,-6200,"Tavus","Pavo"],[33450,1600,"Kanatlıat","Pegasus"],[6600,4500,"Kahraman","Perseus"],[1650,-4300,"Anka","Phoenix"],[1950,1500,"Balık","Pisces"],[33300,-2900,"Güneybalığı","Piscis Austrinus"],[11100,-4600,"Pupa","Puppis"],[29250,-3400,"Yay","Sagittarius"],[24900,-3800,"Akrep","Scorpius"],[5400,1500,"Boğa","Taurus"],[24000,-6750,"Güney Üçgeni","Triangulum Australe"],[16500,4800,"Büyük Ayı","Ursa Major"],[22650,6800,"Küçük Ayı","Ursa Minor"],[14325,-4600,"Yelken","Vela"],[19950,-400,"Başak","Virgo"]]};
 
-/* Çevrimiçi katman (v0.4) — isteğe bağlıdır; program bunsuz tam çalışır.
+/* Çevrimiçi katman — isteğe bağlıdır; program bunsuz tam çalışır.
  * Ortam: bağımsız dosya (tarayıcıda açılmış) ↔ korumalı çerçeve (claude.ai içinde: dış bağlantı, konum ve yazdırma kapalı).
  * Hava: Open-Meteo (anahtarsız, açık veri). İki nokta istenir: gözlemci ve ayın/güneşin battığı yönde ~25 km ötesi
  * (5° yükseklikteki görüş hattı 2 km bulut tabanını ≈ 23 km ötede keser; batı ufkundaki bulut çoğu zaman oradadır). */
@@ -4602,7 +4670,7 @@ var qrcode = function() {
     return qrcode;
 }));
 
-/* Rü’yet kaydının bütünlüğü (v0.5): kanonik JSON, SHA-256 özeti ve isteğe bağlı ECDSA P-256 imzası (WebCrypto).
+/* Rü’yet kaydının bütünlüğü: kanonik JSON, SHA-256 özeti ve isteğe bağlı ECDSA P-256 imzası (WebCrypto).
  * İmza anahtarı bu tarayıcıda IndexedDB’de, dışarı alınamaz (non-extractable) olarak saklanır; açık anahtar ve parmak izi kayda yazılır.
  * Amaç: kaydın sonradan değiştirilmediğini ve aynı cihazdan/gözlemciden geldiğini gösterebilmek. Kimlik doğrulaması değildir. */
 (function (G) {
@@ -4673,7 +4741,7 @@ var qrcode = function() {
   G.HRSig = { canon, sha256, ensureKey, seal, verify };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* Konum girişi çözümleyici (v0.6): kullanıcının yazdığı enlem/boylamı (arz/tûl) hoşgörüyle anlar ve standartlaştırır.
+/* Konum girişi çözümleyici: kullanıcının yazdığı enlem/boylamı (arz/tûl) hoşgörüyle anlar ve standartlaştırır.
  * Kabul edilenler (örnekler):
  *   41.0082 · 41,0082 · +41.0082 · -33,87 · 41.0082N · N41.0082 · 41,0082 K · K 41 00 29,5
  *   41°00'29.5"N · 41° 0′ 29,5″ Kuzey · 41 0.49 K (derece + ondalık dakika) · 28°58'42"D · 28.9784 E · 73,98 B / W
@@ -4774,7 +4842,7 @@ var qrcode = function() {
   G.HRCoord = { parse, parseNum, format, dms };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* Batı ufku çizimi (v0.2): eşit ölçekli (1° yatay = 1° dikey), zaman kaydırıcılı, sahaya uygun. */
+/* Batı ufku çizimi: eşit ölçekli (1° yatay = 1° dikey), zaman kaydırıcılı, sahaya uygun. */
 (function (G) {
   'use strict';
   const A = G.Astronomy;
@@ -4786,6 +4854,9 @@ var qrcode = function() {
   const objName = (id, L) => (NAMES[L] && NAMES[L][id]) || id;
   const CARD = { tr: ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD', 'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'], en: ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'] };
   const card = (az, L) => CARD[L][Math.round(((az % 360) + 360) % 360 / 22.5) % 16];
+  // Yön etiketinin yanında küçük derece değeri (semt; kuzeyden saat yönünde)
+  const degTxt = (az, L) => { const v = ((Math.round(az * 10) / 10 % 360) + 360) % 360; return (Number.isInteger(v) ? String(v) : (L === 'tr' ? String(v).replace('.', ',') : String(v))) + '°'; };
+  const cardDeg = (az, L) => `${card(az, L)}<tspan font-size="0.72em" font-weight="500" dx="3" opacity=".75">${degTxt(az, L)}</tspan>`;
   function col(name) { return getComputedStyle(document.body).getPropertyValue(name).trim() || '#888'; }
   function hex(c) { const m = c.match(/^#?([0-9a-f]{6})$/i); if (!m) return [128, 128, 128]; const n = parseInt(m[1], 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
   function mix(a, b, f) { const x = hex(a), y = hex(b); f = Math.max(0, Math.min(1, f)); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * f)).join(',')})`; }
@@ -4895,7 +4966,7 @@ var qrcode = function() {
       if (a % 22.5 === 0 || (a * 2) % 45 === 0) { /* noop */ }
     }
     for (let k = Math.ceil(a0 / 22.5); k * 22.5 <= a1; k++) {
-      const a = k * 22.5; s += `<text class="nohalo" x="${X(a)}" y="${H + 31}" font-size="${11 * F}" font-weight="700" text-anchor="middle" fill="${col('--ink')}">${card(a, L)}</text>`;
+      const a = k * 22.5; s += `<text class="nohalo" x="${X(a)}" y="${H + 31}" font-size="${11 * F}" font-weight="700" text-anchor="middle" fill="${col('--ink')}">${cardDeg(a, L)}</text>`;
     }
     s += '</svg>';
     // okuma paneli
@@ -4915,7 +4986,7 @@ var qrcode = function() {
     return { svg: s, read, range: [r.gurub.AddDays(-6 / 1440), end] };
   }
 
-  // 360° panorama (v0.3): seçili an batı penceresi dışında kaldığında bütün ufuk; yatayda semt 0–360°, dikeyde irtifâ −12°…+62° (ölçek eşit değildir)
+  // 360° panorama: seçili an batı penceresi dışında kaldığında bütün ufuk; yatayda semt 0–360°, dikeyde irtifâ −12°…+62° (ölçek eşit değildir)
   function panorama(loc, t, L, opt = {}) {
     const core = C(), tr = L === 'tr';
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
@@ -4946,7 +5017,7 @@ var qrcode = function() {
     s += `<g opacity="${op}" transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="10" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -10 A10 10 0 0 1 0 10 A${rx.toFixed(2)} 10 0 0 ${sweep} 0 -10Z" fill="${col('--moon')}"/></g>`;
     s += `<text x="${mx}" y="${my - 15}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${tr ? 'Ay' : 'Moon'} ${now.moon.alt.toFixed(1)}°</text>`;
     s += `<rect x="0" y="${H}" width="${W}" height="30" fill="${col('--surface-2')}"/>`;
-    for (let a = 0; a < 360; a += 45) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + 6}" stroke="${col('--muted')}"/><text class="nohalo" x="${Math.max(10, X(a))}" y="${H + 22}" font-size="${11 * F}" font-weight="700" text-anchor="middle" fill="${col('--ink')}">${card(a, L)}</text>`;
+    for (let a = 0; a < 360; a += 45) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + 6}" stroke="${col('--muted')}"/><text class="nohalo" x="${a === 0 ? 3 : X(a)}" y="${H + 22}" font-size="${11 * F}" font-weight="700" text-anchor="${a === 0 ? 'start' : 'middle'}" fill="${col('--ink')}">${cardDeg(a, L)}</text>`;
     s += '</svg>';
     const flags = [];
     if (now.moon.alt < 0) flags.push(tr ? `Ay ufkun ${Math.abs(now.moon.alt).toFixed(1)}° altında` : `Moon ${Math.abs(now.moon.alt).toFixed(1)}° below the horizon`);
@@ -4956,7 +5027,7 @@ var qrcode = function() {
   G.HRSky = { draw, panorama, objName, card, fistTxt, phase };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* Gökyüzü haritası (v0.4): seçili an için bütün gök; stereografik izdüşüm, merkez başucu (zenit), kenar ufuk.
+/* Gökyüzü haritası: seçili an için bütün gök; stereografik izdüşüm, merkez başucu (zenit), kenar ufuk.
  * Bakış yönü alta gelir (varsayılan batı: hilâl rasadında yüzü batıya dönük gözlemci haritayı başının üstünde tutar gibi).
  * Yıldızlar ve takımyıldız çizgileri: d3-celestial (BSD-3-Clause). Gezegenler, Ay ve Güneş: Astronomy Engine. */
 (function (G) {
@@ -5046,7 +5117,7 @@ var qrcode = function() {
     // ufuk çemberi, yönler, güneşin yönü
     s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${col('--ink')}" stroke-opacity=".5" stroke-width="1.5"/>`;
     const card = tr ? ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'] : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    for (let i = 0; i < 8; i++) { const az = i * 45, a = rad(az - face), x = cx + (R + 16) * Math.sin(a), y = cy + (R + 16) * Math.cos(a); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" font-size="${((i % 2 ? 11 : 14) * F).toFixed(1)}" font-weight="700" text-anchor="middle" fill="${col('--ink')}" class="nohalo">${card[i]}</text>`; }
+    for (let i = 0; i < 8; i++) { const az = i * 45, a = rad(az - face), x = cx + (R + 16) * Math.sin(a), y = cy + (R + 16) * Math.cos(a); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" font-size="${((i % 2 ? 11 : 14) * F).toFixed(1)}" font-weight="700" text-anchor="middle" fill="${col('--ink')}" class="nohalo">${card[i]}<tspan font-size="0.7em" font-weight="500" dx="2" opacity=".75">${az}°</tspan></text>`; }
     if (now.sun.alt <= -0.8 && now.sun.alt > -24) { const a = rad(now.sun.az - face), x1 = cx + R * Math.sin(a), y1 = cy + R * Math.cos(a), x2 = cx + (R - 12) * Math.sin(a), y2 = cy + (R - 12) * Math.cos(a); s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${acc}" stroke-width="3"/><text x="${x2 - 14 * Math.sin(a)}" y="${y2 - 14 * Math.cos(a) + 4}" font-size="${(11 * F).toFixed(1)}" text-anchor="middle" fill="${lab}">☀ ${now.sun.alt.toFixed(0)}°</text>`; }
     s += '</svg>';
     return { svg: s, read: { lim, planets: objs.map(o => ({ name: G.HRSky.objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag })) } };
@@ -5075,7 +5146,7 @@ var qrcode = function() {
   G.HRStarMap = { Q, draw, guides, horizonOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* Dünya haritası (v0.3). Eş-dikdörtgen izdüşüm, Canvas.
+/* Dünya haritası. Eş-dikdörtgen izdüşüm, Canvas.
  * Akşam modu: her noktanın kendi gurûbunda değerlendirme; sınıf her piksel için, ızgara değerlerinin ara değerinden bulunur.
  *   katmanlar: seadet (Tam İlmihâl’in sınıfları) · first (ilk görünürlük akşamı) · yallop · odeh (ek bilgi)
  * Anlık mod: seçili anda gece-gündüz sınırı, alacakaranlık, ☀ ve ☾ noktaları, ayın ufku, şu an aranabilir bölge. */
@@ -5180,7 +5251,7 @@ var qrcode = function() {
     el.innerHTML = '<div class="mapbox"><canvas></canvas><div class="mapprog" hidden></div><div class="mapmsg" hidden></div></div>';
     const cv = el.querySelector('canvas'), prog = el.querySelector('.mapprog'), msg = el.querySelector('.mapmsg');
     let last = null, pickCb = null, seq = 0;
-    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = '100%'; cv.style.height = 'auto'; return { w, h, d }; }  // v0.8: gizliyken ölçülen genişlik sayfayı taşırmasın
+    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = '100%'; cv.style.height = 'auto'; return { w, h, d }; }  // gizliyken ölçülen genişlik sayfayı taşırmasın
     const proj = (w, h) => ({ x: lon => (lon + 180) / 360 * w, y: lat => (LAT_TOP - lat) / (LAT_TOP - LAT_BOT) * h });
 
     async function render(p) {
@@ -5307,7 +5378,7 @@ var qrcode = function() {
   G.HRMap = { mount, LAT_TOP, LAT_BOT };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* Arayüz (v0.3): Plan · Harita · Saha · Rehber · Doğrulama
+/* Arayüz: Plan · Harita · Saha · Rehber · Doğrulama
  * Ortak zaman modeli: st.date (seçili saat dilimindeki yerel tarih) + st.tmin (o günün 00:00’ından dakika, 0–1620).
  * Tüm görünümler aynı seçili ânı kullanır; tercihler (karanlık eşiği, saat gösterimi) değişince ilgili tüm alanlar yeniden çizilir. */
 (function (G) {
@@ -5316,10 +5387,10 @@ var qrcode = function() {
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  // ---- Resmî sürüm bildirimi ve bütünlük denetimi (v0.7; build.py ile eş) ----
+  // ---- Resmî sürüm bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD385b994beea0347f';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD9660d9aa409b74d2';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -5355,19 +5426,19 @@ var qrcode = function() {
   const TB_MAX = 1620; // 00:00 → ertesi gün 03:00
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
     mapLayer: 'seadet', mapRes: 3, mapAge: true, mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
-    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
-  const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // v0.5: hava tahmini başlangıçta kapalı
+    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
+  const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
   st.date = todayYmd(st.tz); // açılışta her zaman içinde bulunulan an
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
   let records = load('hr-records') || [];
-  const REC_WARN = 150; // v0.8: sınır yok; bu sayıdan sonra yedek alma hatırlatılır
+  const REC_WARN = 150; // sınır yok; bu sayıdan sonra yedek alma hatırlatılır
 
   function load(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function save() { try { const o = Object.assign({}, st); delete o.tmin; delete o.anchor; delete o.live; delete o.frozen; delete o.locAuto; localStorage.setItem('hr-v05', JSON.stringify(o)); } catch (e) { /* depolama yok */ } }
-  // v0.8: kayıt saklama başarısı denetlenir; başarısızlık sessiz geçilmez
+  // kayıt saklama başarısı denetlenir; başarısızlık sessiz geçilmez
   function storeRecs(list) { try { localStorage.setItem('hr-records', JSON.stringify(list)); return true; } catch (e) { return false; } }
   function saveRec() { const ok = storeRecs(records); if (!ok && typeof toast === 'function') toast(t.recStoreFail, 8000); return ok; }
   function todayYmd(tz) { try { return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } }
@@ -5421,16 +5492,15 @@ var qrcode = function() {
     $('theme').innerHTML = [['auto', t.thAuto], ['light', t.thLight], ['dark', t.thDark], ['sun', t.thSun], ['night', t.thNight]].map(([v, l]) => `<option value="${v}"${st.theme === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc(c[st.lang])}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
     $('city').value = st.city;
-    const tzs = (Intl.supportedValuesOf ? Intl.supportedValuesOf('timeZone') : CITIES.map(c => c.tz)).slice();
-    if (!tzs.includes(st.tz)) tzs.unshift(st.tz); if (!tzs.includes('UTC')) tzs.unshift('UTC');
-    $('tz').innerHTML = tzs.map(z => `<option${z === st.tz ? ' selected' : ''}>${esc(z)}</option>`).join('');
+    fillTz();
     showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('date').value = st.date; $('mDate').value = st.date;
     $('mLayer').innerHTML = [['seadet', t.lySeadet], ['first', t.lyFirst], ['yallop', t.lyYallop], ['odeh', t.lyOdeh]].map(([v, l]) => `<option value="${v}"${st.mapLayer === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     $('mRes').value = String(st.mapRes); $('mAge').checked = st.mapAge; $('mBorders').checked = st.mapBorders; $('m18').checked = st.map18; $('mLand').checked = st.mapLand;
-    set('lFontSize', t.fontSize); set('hOnline', t.hOnline); set('lOptWx', t.optWx); set('lOptAutoLoc', t.optAutoLoc);
+    set('lFontSize', t.fontSize); set('hOnline', t.hOnline); set('lOptWx', t.optWx); set('lOptAutoLoc', t.optAutoLoc); set('lOptFonts', t.optFonts);
+    set('netIntro', t.netIntro); set('netWx', t.netWx); set('netFonts', t.netFonts); set('netLoc', t.netLoc); paintNet();
     $('onlineNote').innerHTML = esc(t.onlineNote) + ' ' + q('hava') + (ON.sandboxed ? `<span class="envnote" style="display:block">${esc(t.sandboxNote)} <button class="btn" type="button" id="saveSelf" style="margin-top:6px">${esc(t.saveSelf)}</button></span>` : '');
     $('fontSize').innerHTML = [1, 1.15, 1.3].map((v, i) => `<option value="${v}"${st.fontSize === v ? ' selected' : ''}>${esc(t.fsOpts[i])}</option>`).join('');
-    $('optWx').checked = !!st.wx; $('optAutoLoc').checked = !!st.autoLoc;
+    $('optWx').checked = !!st.wx; $('optAutoLoc').checked = !!st.autoLoc; $('optFonts').checked = !!st.webFonts;
     set('mbNow', '↺ ' + t.backNow); set('mbPrint', '⎙ ' + t.printBtn); set('openSM', '✦ ' + t.openSM); set('fSM', '✦ ' + t.fSM); set('fLoc', '⌖ ' + t.fLoc);
     set('hWx', t.wxTitle); set('hUp', t.upTitle); set('smTitle', t.smTitle); set('smPrint', t.printBtn); set('smClose', t.close);
     set('lSmFace', t.smFace); set('lSmLines', t.smLines); set('lSmNames', t.smNames); set('lSmCons', t.smCons); set('lSmEcl', t.smEcl); set('smNote', t.smNote);
@@ -5438,8 +5508,9 @@ var qrcode = function() {
     const ss = $('saveSelf'); if (ss) ss.onclick = saveSelf;
     $('dlHtml').innerHTML = `⬇<span class="lbl"> ${esc(t.dlHtml)}</span>`; $('dlHtml').setAttribute('aria-label', t.dlHtml); set('dlHtml2', '⬇ ' + t.dlHtml); $('dlHtml').title = t.dlHtmlTip; $('dlHtml2').title = t.dlHtmlTip;
     $('dlHtml').onclick = downloadHtml; $('dlHtml2').onclick = downloadHtml;
+    set('lTzOff', t.tzOff); $('tzOff').title = t.tzOffTip;
     set('hLic', t.licTitle); $('licBody').innerHTML = licHtml();
-    // v0.8: göz güvenliği, gizlilik, kayıt araçları
+    // göz güvenliği, gizlilik, kayıt araçları
     $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span>`; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
     set('fCompassNote', t.compassNote);
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
@@ -5451,7 +5522,7 @@ var qrcode = function() {
     set('ver', 'v' + G.HR_VERSION); $('openSet').innerHTML = `⚙<span class="lbl"> ${esc(t.settings)}</span>`; $('openSet').setAttribute('aria-label', t.settings); $('openSet').title = t.settings; set('hSet', t.settings); set('setClose', t.close); set('lLiveInt', t.liveInt);
     $('liveInt').innerHTML = [1, 10, 60].map(v => `<option value="${v}"${(st.liveInt || 10) === v ? ' selected' : ''}>${esc(t.liveInts[v])}</option>`).join('');
     set('mbPlay', '▶ ' + t.play); set('mbFreeze', '❚❚ ' + t.freeze); set('prevNight', t.prevNight);
-    set('hPr', t.prTitle); set('prClose', t.close); set('prIntro', t.prIntro); set('prGo', t.prGo); set('prNote', t.prNote);
+    set('hPr', t.prTitle); set('prClose', t.close); set('prIntro', t.prIntro); set('prGo', t.prGo); set('prNote', t.prNote + ' ' + t.jpgNote); set('prJpg', '🖼 ' + t.jpgGo); set('smJpg', '🖼 ' + t.jpgShort);
     set('hRec', t.record); set('recIntro', t.recIntro); set('lRecRes', t.recResult); set('lRecFirst', t.recFirst); set('lRecLast', t.recLast); set('lRecSky', t.recSky); set('lRecPlace', t.recPlace);
     set('lRecName', t.recName); set('lRecContact', t.recContact); set('lRecWith', t.recWith); set('lRecSeers', t.recSeers); set('lRecPhoto', t.recPhoto); set('recSave', t.recSave); set('hNets', t.recNets);
     const opts = (o, cur) => Object.keys(o).map(k => `<option value="${k}"${k === cur ? ' selected' : ''}>${esc(o[k])}</option>`).join('');
@@ -5548,7 +5619,8 @@ var qrcode = function() {
     $('langEn').onclick = () => { st.lang = 'en'; t = I.T.en; save(); fillStatic(); update(); };
     $('theme').onchange = e => { st.theme = e.target.value; save(); applyTheme(); repaintAll(); };
     $('city').onchange = e => { st.city = e.target.value; const c = CITIES.find(x => x.id === st.city); if (c) { Object.assign(st, { lat: c.lat, lon: c.lon, elev: c.elev, hMax: c.hMax, tz: c.tz }); fillStatic(); } save(); update(); };
-    ['lat', 'lon', 'elev', 'hObs', 'hMax', 'tz', 'date'].forEach(id => $(id).addEventListener('change', () => { if (!readInputs(id)) return; if (['lat', 'lon'].includes(id)) { st.city = 'custom'; $('city').value = 'custom'; st.locAuto = false; } $('mDate').value = st.date; if (id === 'date' || id === 'tz') { if (st.live) st.anchor = 'auto'; setLive(false); } save(); update(); }));
+    $('tzOff').addEventListener('change', setTzOff);
+    ['lat', 'lon', 'elev', 'hObs', 'hMax', 'tz', 'date'].forEach(id => $(id).addEventListener('change', () => { if (!readInputs(id)) return; if (['lat', 'lon'].includes(id)) { st.city = 'custom'; $('city').value = 'custom'; st.locAuto = false; tzFromLon(); } if (id === 'tz' || id === 'date') showTzOff(); $('mDate').value = st.date; if (id === 'date' || id === 'tz') { if (st.live) st.anchor = 'auto'; setLive(false); } save(); update(); }));
     const shift = k => setDate(addDays(st.date, k));
     $('prevDay').onclick = () => shift(-1); $('nextDay').onclick = () => shift(1);
     $('mPrev').onclick = () => mapShift(-1); $('mNext').onclick = () => mapShift(1);
@@ -5583,7 +5655,9 @@ var qrcode = function() {
     $('openSet').onclick = () => { try { $('setDlg').showModal(); } catch (e) { $('setDlg').setAttribute('open', ''); } };
     $('setClose').onclick = () => { try { $('setDlg').close(); } catch (e) { $('setDlg').removeAttribute('open'); } };
     $('prClose').onclick = () => { try { $('prDlg').close(); } catch (e) { $('prDlg').removeAttribute('open'); } };
-    $('prGo').onclick = () => { const ks = Array.from($('prOpts').querySelectorAll('input:checked')).map(x => x.value); $('prClose').onclick(); if (ks.length) printPages(ks); };
+    const prKinds = () => Array.from($('prOpts').querySelectorAll('input:checked')).map(x => x.value);
+    $('prGo').onclick = () => { const ks = prKinds(); $('prClose').onclick(); if (ks.length) printPages(ks); };
+    $('prJpg').onclick = () => { const ks = prKinds(); $('prClose').onclick(); if (ks.length) exportJpg(ks); };
     $('liveInt').onchange = e => { st.liveInt = +e.target.value; save(); };
     $('optExplain').onchange = e => { st.explain = e.target.checked; if (st.explain) st.introDone = false; save(); applyTheme(); };
     $('introClose').onclick = () => { st.introDone = true; save(); applyTheme(); };
@@ -5591,13 +5665,14 @@ var qrcode = function() {
     document.addEventListener('click', stabilize, true); document.addEventListener('change', stabilize, true);
     $('fontSize').onchange = e => { st.fontSize = +e.target.value; save(); applyTheme(); repaintAll(); };
     $('fFont').onclick = () => { st.fontSize = st.fontSize >= 1.3 ? 1 : st.fontSize >= 1.15 ? 1.3 : 1.15; save(); fillStatic(); repaintAll(); };
-    $('optWx').onchange = e => { st.wx = e.target.checked; save(); renderWx(true); };
-    $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); if (st.autoLoc) autoLocate(true); };
+    $('optWx').onchange = e => { st.wx = e.target.checked; save(); paintNet(); renderWx(true); };
+    $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); paintNet(); if (st.autoLoc) autoLocate(true); };
+    $('optFonts').onchange = e => { st.webFonts = e.target.checked; save(); applyFonts(); paintNet(); };
     $('openSM').onclick = () => openSM(selT()); $('fSM').onclick = () => openSM(A.MakeTime(new Date()));
     $('fLoc').onclick = () => autoLocate(true, true);
     $('smClose').onclick = () => { try { $('smDlg').close(); } catch (e) { $('smDlg').removeAttribute('open'); } };
     ['smFace', 'smLines', 'smNames', 'smCons', 'smEcl'].forEach(id => $(id).addEventListener('change', () => drawSM()));
-    $('smPrint').onclick = () => printPages(['sky']);
+    $('smPrint').onclick = () => printPages(['sky']); $('smJpg').onclick = () => exportJpg(['sky']);
     window.addEventListener('online', () => { renderBar(); renderWx(true); }); window.addEventListener('offline', () => { renderBar(); renderWx(); });
   }
   function prefsChanged() {
@@ -5649,6 +5724,21 @@ var qrcode = function() {
   const CLS_STYLE = { notBorn: 'bad', below8: 'bad', below5: 'warn', possible: 'warn', visible: 'ok', midMonth: 'info' };
   const CLS_TOPIC = { notBorn: 'ictima', below8: 'beynunet', below5: 'besderece', possible: 'beynunet', visible: 'beynunet', midMonth: 'hesap' };
   const CLS_COLOR = { visible: '--c-visible', possible: '--c-possible', below5: '--c-below5', below8: '--c-below8', notBorn: '--c-notborn' };
+  // İnternet bağlantıları: hepsi kullanıcı açmadıkça kapalıdır. Yazı tipleri (Google Fonts) isteğe bağlı yüklenir.
+  const FONT_URL = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap';
+  function applyFonts() {
+    const old = document.getElementById('webFonts');
+    if (!st.webFonts) { if (old) old.remove(); return; }
+    if (old) return;
+    const l = document.createElement('link'); l.id = 'webFonts'; l.rel = 'stylesheet'; l.href = FONT_URL; document.head.appendChild(l);
+  }
+  function paintNet() {
+    const el = $('netStat'); if (!el) return;
+    const on = [];
+    if (st.wx) on.push('open-meteo.com');
+    if (st.webFonts) on.push('fonts.googleapis.com · fonts.gstatic.com');
+    el.textContent = on.length ? t.netOn(on.join(' · ')) : t.netNone;
+  }
   function showHMaxNote() { const n = $('hMaxNote'); if (!n) return; n.hidden = !!(st.hMax && st.hMax > 0); n.textContent = t.hMaxUnset; }
   function locObj() { return { lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, hMax: st.hMax, tz: st.tz }; }
   const evCache = new Map();
@@ -5656,7 +5746,7 @@ var qrcode = function() {
 
   function update() {
     if (!isFinite(st.lat) || !isFinite(st.lon)) return;
-    LOC = locObj(); showHMaxNote();
+    LOC = locObj(); showHMaxNote(); showTzOff();
     R = eveningCached(LOC, st.date);
     tzCheck();
     if (!R.ok) {
@@ -5692,6 +5782,50 @@ var qrcode = function() {
     if (!R) return;
     if (which === 'best' && !R.best) which = 'gurub';
     setTmin(anchorMin(which), which);
+  }
+  // ---- Saat dilimi ve UTC saat farkı ----
+  // Kutu, seçili saat diliminin seçili tarihteki UTC farkını gösterir. Kutuya fark yazılırsa o farka karşılık gelen sabit dilim seçilir;
+  // listeden dilim seçilirse kutu o dilimin farkını gösterir. Bölgesel dilimler (Europe/Istanbul gibi) yaz saatini izler, sabit farklar izlemez.
+  const FRAC = { 330: 'Asia/Kolkata', 345: 'Asia/Kathmandu', 210: 'Asia/Tehran', 270: 'Asia/Kabul', 390: 'Asia/Yangon', 525: 'Australia/Eucla', 570: 'Australia/Darwin', 630: 'Australia/Lord_Howe', 765: 'Pacific/Chatham', 825: 'Pacific/Chatham', [-210]: 'America/St_Johns', [-570]: 'Pacific/Marquesas' };
+  const offAt = (tz, ymd) => { try { return C.tzOffsetMin(tz, new Date(Date.UTC(...ymd.split('-').map((v, i) => i === 1 ? v - 1 : +v)) + 12 * 3600000)); } catch (e) { return null; } };
+  function fmtOff(m) { if (m == null) return '?'; if (m === 0) return '±0'; const a = Math.abs(m), h = Math.floor(a / 60), mm = a % 60; return `${m > 0 ? '+' : '−'}${h}${mm ? ':' + String(mm).padStart(2, '0') : ''}`; }
+  function parseOff(s) {
+    let x = String(s || '').trim().replace(/[−–—]/g, '-').replace(/\s+/g, '').replace(/^(utc|gmt)/i, '').replace(',', '.');
+    if (x === '' || x === '±0' || x === '0') return x === '' ? null : 0;
+    let m = x.match(/^([+-]?)(\d{1,2})(?::?(\d{2}))$/), v = null;
+    if (m) v = (+m[2]) * 60 + (+m[3]); else if ((m = x.match(/^([+-]?)(\d{1,2}(?:\.\d+)?)$/))) v = Math.round(+m[2] * 60);
+    if (v == null) return null; if (m[1] === '-') v = -v;
+    if (v < -12 * 60 || v > 14 * 60 || ![0, 30, 45].includes(Math.abs(v) % 60)) return null;
+    return v;
+  }
+  function zoneForOff(m) { if (m === 0) return 'UTC'; if (m % 60 === 0) return `Etc/GMT${m > 0 ? '-' : '+'}${Math.abs(m / 60)}`; return FRAC[m] || null; }
+  const isFixedTz = z => z === 'UTC' || /^Etc\/GMT/.test(z);
+  function tzLabel(z, ymd) { const o = offAt(z, ymd); return isFixedTz(z) ? `UTC${o === 0 ? '' : fmtOff(o)}` : `${z.replace(/_/g, ' ')} (${fmtOff(o)})`; }
+  function fillTz() {
+    const all = (Intl.supportedValuesOf ? Intl.supportedValuesOf('timeZone') : CITIES.map(c => c.tz)).filter(z => !isFixedTz(z));
+    if (!isFixedTz(st.tz) && !all.includes(st.tz)) all.unshift(st.tz);
+    const fixed = []; for (let h = -12; h <= 14; h++) fixed.push(zoneForOff(h * 60));
+    const opt = z => `<option value="${esc(z)}"${z === st.tz ? ' selected' : ''}>${esc(tzLabel(z, st.date))}</option>`;
+    $('tz').innerHTML = `<optgroup label="${esc(t.tzRegional)}">${all.map(opt).join('')}</optgroup><optgroup label="${esc(t.tzFixed)}">${fixed.map(opt).join('')}</optgroup>`;
+    showTzOff();
+  }
+  function showTzOff() {
+    const o = offAt(st.tz, st.date); $('tzOff').value = fmtOff(o);
+    const n = $('tzNote'); if (!n) return;
+    if (isFixedTz(st.tz)) { n.textContent = t.tzFixedNote(fmtOff(o)); return; }
+    const y = st.date.slice(0, 4), jan = offAt(st.tz, `${y}-01-15`), jul = offAt(st.tz, `${y}-07-15`);
+    n.textContent = jan !== jul ? t.tzDstNote(st.tz, fmtOff(Math.min(jan, jul)), fmtOff(Math.max(jan, jul)), fmtOff(o)) : t.tzStdNote(st.tz, fmtOff(o));
+  }
+  function setTzOff() {
+    const v = parseOff($('tzOff').value);
+    if (v == null) { $('tzNote').textContent = t.tzOffErr; $('tzOff').value = fmtOff(offAt(st.tz, st.date)); return; }
+    if (v !== offAt(st.tz, st.date)) { const z = zoneForOff(v); if (!z) { $('tzNote').textContent = t.tzOffErr; return; } st.tz = z; }
+    fillTz(); if (st.live) st.anchor = 'auto'; setLive(false); save(); update();
+  }
+  // Elle girilen konum, seçili dilimin güneş saatinden 2 saatten fazla uzaksa fark tûlden hesaplanır (kullanıcı değiştirebilir)
+  function tzFromLon() {
+    const off = offAt(st.tz, st.date); if (off != null && Math.abs(off - st.lon * 4) / 60 <= 2) return false;
+    const m = Math.max(-12, Math.min(14, Math.round(st.lon / 15))) * 60; st.tz = zoneForOff(m); fillTz(); toast(t.tzAuto(fmtOff(m)), 7000); return true;
   }
   function tzCheck() {
     const off = C.tzOffsetMin(st.tz, new Date(dayStart() + 12 * 3600000));
@@ -5901,7 +6035,7 @@ var qrcode = function() {
     }
     return null;
   }
-  // Yaklaşan ay başı rasadı (v0.7): ilk gecesi (A) `fromYmd` veya sonrasında olan ilk kamerî ay; B aynı ayın ≥ fromYmd olan elverişli akşamı
+  // Yaklaşan ay başı rasadı: ilk gecesi (A) `fromYmd` veya sonrasında olan ilk kamerî ay; B aynı ayın ≥ fromYmd olan elverişli akşamı
   function nextRasad(fromYmd) {
     let c = C.lastNewMoonBefore(A.MakeTime(civil(fromYmd)));
     for (let i = 0; i < 5 && c; i++) {
@@ -6096,7 +6230,7 @@ var qrcode = function() {
       else h += kv(t.status, esc(clsText(r)[0]), '', 'txt') + kv(t.gurub, fmtUTC(r.gurub)) + kv(t.beyn, degf(r.beynunet)) + kv(t.alt, degf(r.moonAlt)) + kv(t.lag, hm(r.lagMin)) + kv(t.age, ageTxt(r.ageH));
     }
     $('pickKv').innerHTML = h;
-    $('pickUse').onclick = () => { st.lat = lat; st.lon = lon; st.city = 'custom'; save(); fillStatic(); update(); location.hash = '#plan'; };
+    $('pickUse').onclick = () => { st.lat = lat; st.lon = lon; st.city = 'custom'; tzFromLon(); save(); fillStatic(); update(); location.hash = '#plan'; };
   }
 
   // ---- Saha ----
@@ -6149,7 +6283,7 @@ var qrcode = function() {
     const today = todayYmd(st.tz);
     if (full || FRdate !== today || !FR || FRange === undefined) { FR = eveningCached(loc, today); FRdate = today; FAge = C.lastNewMoonBefore(now); FRange = eveningRange(FR, loc); }
     const city = CITIES.find(c => c.id === st.city);
-    // v0.8: Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
+    // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
     $('fSafety').hidden = !sunUp; if (sunUp) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = !compassOn;
     $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
@@ -6235,7 +6369,7 @@ var qrcode = function() {
     return { ymd: d, r, day: true };
   }
   function showRecEvening() { const e = recEveningOf(recTime()); $('recEvLbl').textContent = e.day ? t.recDayLbl : t.recEvening(fmtCivil(civil(e.ymd))); }
-  // ---- Rü’yet kaydı v2 (v0.5): ICOP benzeri alanlar + fıkhî alanlar, SHA-256 özeti, cihaz imzası ----
+  // ---- Rü’yet kaydı v2: ICOP benzeri alanlar + fıkhî alanlar, SHA-256 özeti, cihaz imzası ----
   function evaluateRecord(result, at) {
     const saw = !['not', 'noObs'].includes(result), e = recEveningOf(at), r = e.r;
     if (result === 'noObs') return { txt: t.evNoObs, cls: 'p-info', ymd: e.ymd, e };
@@ -6263,7 +6397,7 @@ var qrcode = function() {
     } catch (e) { return null; }
   }
   const isoT = at => at ? at.date.toISOString() : null;
-  // v0.8: çelişen form bilgileri kayıttan önce yakalanır
+  // çelişen form bilgileri kayıttan önce yakalanır
   function recFormError() {
     const result = $('recRes').value, seen = !['not', 'noObs'].includes(result);
     if (seen && result !== 'doubt' && (+$('recSeers').value || 0) < 1) return t.recErrSeers;
@@ -6286,7 +6420,7 @@ var qrcode = function() {
         atObs: { moonAlt: +p.moon.alt.toFixed(3), moonAz: +p.moon.az.toFixed(2), sunAlt: +p.sun.alt.toFixed(3), elong: +p.elong.toFixed(3) }, evaluation: ev.txt, evalClass: ev.cls } : null,
       photo: await photoOf($('recPhoto').files && $('recPhoto').files[0])
     };
-    // v0.8: içerik önce kesinleşir, mühür (özet + imza) son içeriğe vurulur, sonra saklamanın başarısı denetlenir.
+    // içerik önce kesinleşir, mühür (özet + imza) son içeriğe vurulur, sonra saklamanın başarısı denetlenir.
     const sealOf = async x => { try { return await G.HRSig.seal(x); } catch (e) { return x; } };
     let sealed = await sealOf(rec), stored = storeRecs([sealed, ...records]);
     if (!stored && rec.photo && rec.photo.thumb) {   // depolama dolu: önizlemesiz içerikle YENİDEN mühürle
@@ -6322,7 +6456,7 @@ var qrcode = function() {
     const dl = await getDownloads(); if (!dl) { toast(t.printNA); return false; }
     try { await dl.save({ filename: name, data }); return true; } catch (e) { toast(e && e.code === 'declined' ? t.printDeclined : t.printNA); return false; }
   }
-  // ---- v0.8: yedekleme, geri yükleme, fotoğraf doğrulama ----
+  // ---- yedekleme, geri yükleme, fotoğraf doğrulama ----
   function backupRecords() {
     const data = { schema: 'mahinev-kayit-yedegi/1', created: new Date().toISOString(), app: { name: 'Mâh-ı Nev', version: G.HR_VERSION }, records };
     saveFile(`mahinev-kayitlar-${todayYmd(st.tz)}.json`, JSON.stringify(data, null, 2), 'application/json');
@@ -6363,17 +6497,18 @@ var qrcode = function() {
       return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.place.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at)))}<br><span class="small">${esc(t.recEvening(fmtCivil(civil(o.evening), true)))}</span></td>
         <td><span class="pill ${x.computed ? x.computed.evalClass : (o.result === 'not' ? 'p-info' : 'p-warn')}">${esc(t.recRes[o.result])}</span>${x.observer.name ? `<br><span class="small">${esc(x.observer.name)}</span>` : ''}</td>
         <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
-        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
+        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
     }).join('')}</tbody></table>`;
     const L = $('recList');
     L.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { records.splice(+b.dataset.del, 1); saveRec(); renderRecords(true); });
     verifyBadges();
     L.querySelectorAll('[data-tut]').forEach(b => b.onclick = () => printPages(['tut'], records[+b.dataset.tut]));
+    L.querySelectorAll('[data-tutjpg]').forEach(b => b.onclick = () => exportJpg(['tut'], records[+b.dataset.tutjpg]));
     L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(`ruyet-kaydi-${x.observation.evening}-${x.id.slice(0, 8)}.json`, JSON.stringify(x, null, 2), 'application/json'); });
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
   }
 
-  // ==== v0.4: an çubuğu, hicrî tarih, yaklaşan rü’yet, hava, gökyüzü haritası, baskı, otomatik konum ====
+  // ==== an çubuğu, hicrî tarih, yaklaşan rü’yet, hava, gökyüzü haritası, baskı, otomatik konum ====
   function toast(msg, ms = 4200) { const e = $('toast'); e.textContent = msg; e.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => { e.hidden = true; }, ms); }
   // Hicrî gün: kamerî gün şer’î gurûbda başlar (s. 188). İlk gün ve ay sonunda iki ihtimal; Muharrem’de eski ve yeni yıl yan yana.
   function hijriOf(ymd, local) {
@@ -6417,7 +6552,7 @@ var qrcode = function() {
     else if (!ON.online()) chips.push(`<span class="chip off">${esc(t.chipOffline)}</span>`);
     if (WX.ass) chips.push(`<span class="chip" title="${esc(t.wxTitle)}">${{ good: '☀', fair: '⛅', poor: '☁' }[WX.ass.level]} ${esc(t.wxLevel[WX.ass.level])}</span>`);
     $('mbChips').innerHTML = chips.join('');
-    // v0.8: konum çipi Konum kartına götürür (dar ekranda kart aşağıda kaldığı için)
+    // konum çipi Konum kartına götürür (dar ekranda kart aşağıda kaldığı için)
     $('mbLoc').onclick = () => { if (view !== 'plan') location.hash = '#plan'; setTimeout(() => { const c = $('hLoc'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); try { $('city').focus({ preventScroll: true }); } catch (e) { /* */ } } }, 60); };
     $('mbNow').hidden = live;
     $('mbLive').hidden = !live || field;
@@ -6567,7 +6702,7 @@ var qrcode = function() {
     try { return fn(); } finally { document.body.className = prev; }
   }
   function smOptsSafe() { try { return smOpts(); } catch (e) { return {}; } }
-  // ---- Baskı / PDF (v0.5): her biri tek A4 sayfasına oturan, hedefe odaklı sayfalar ----
+  // ---- Baskı / PDF: her biri tek A4 sayfasına oturan, hedefe odaklı sayfalar ----
   function openPrint() {
     const def = view === 'harita' ? ['map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
     const has = records.some(x => x.schema);
@@ -6691,8 +6826,8 @@ var qrcode = function() {
     .pph { margin: 2mm 0 0; } .pph img { max-width: 100%; max-height: 26mm; display: block; border-radius: 1mm; } .pph figcaption { margin-top: .6mm; }
     .cap { font-size: 8pt; color: #444; margin: 0; } .small { font-size: 8pt; color: #555; } .legend { font-size: 8pt; }
     button, .q { display: none !important; }`;
-  async function printPages(kinds, rec) {
-    toast(t.printing);
+  // A4 sayfalarının tek HTML belgesi (yazdırma ve JPG çıktısı aynı belgeyi kullanır)
+  async function buildPrint(kinds, rec) {
     const at = SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
     const parts = [];
     for (const k of kinds) {
@@ -6705,6 +6840,11 @@ var qrcode = function() {
     }
     const css = Array.from(document.querySelectorAll('style')).map(x => x.textContent).join('\n');
     const html = `<!DOCTYPE html><html lang="${st.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(kinds.map(k => (t.prOpts[k] || '')).join(' + '))}</title><style>${css}\n${PRINT_CSS}</style></head><body class="th-light">${parts.join('')}</body></html>`;
+    return html;
+  }
+  async function printPages(kinds, rec) {
+    toast(t.printing);
+    const html = await buildPrint(kinds, rec);
     const fname = `mahinev-${kinds.join('-')}-${st.date}.html`;
     G.HR_LAST_PRINT = html;
     if (!ON.sandboxed) {
@@ -6714,6 +6854,64 @@ var qrcode = function() {
       return;
     }
     if (await saveFile(fname, html, 'text/html')) toast(t.printSaved);
+  }
+  // ---- JPG çıktısı: her A4 sayfası ayrı bir JPEG resmi (≈ 240 dpi); birden çok sayfa ZIP içinde ----
+  // Sayfa, SVG foreignObject içine konup tuvale çizilir; dış kaynak kullanılmaz (bütün resimler data: adresidir).
+  const CRC_T = (() => { const T = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; T[n] = c >>> 0; } return T; })();
+  const crc32 = u8 => { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC_T[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  // Sıkıştırmasız (store) ZIP: JPEG zaten sıkıştırılmıştır
+  function makeZip(files) {
+    const enc = new TextEncoder(), chunks = [], central = []; let off = 0;
+    const now = new Date(), dt = ((now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1)), dd = (((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate());
+    for (const f of files) {
+      const name = enc.encode(f.name), crc = crc32(f.data), n = f.data.length;
+      const h = new DataView(new ArrayBuffer(30)); h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true);
+      h.setUint16(10, dt, true); h.setUint16(12, dd, true); h.setUint32(14, crc, true); h.setUint32(18, n, true); h.setUint32(22, n, true); h.setUint16(26, name.length, true); h.setUint16(28, 0, true);
+      chunks.push(new Uint8Array(h.buffer), name, f.data);
+      const c = new DataView(new ArrayBuffer(46)); c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true);
+      c.setUint16(12, dt, true); c.setUint16(14, dd, true); c.setUint32(16, crc, true); c.setUint32(20, n, true); c.setUint32(24, n, true); c.setUint16(28, name.length, true); c.setUint32(42, off, true);
+      central.push(new Uint8Array(c.buffer), name); off += 30 + name.length + n;
+    }
+    const cs = central.reduce((a, x) => a + x.length, 0), e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cs, true); e.setUint32(16, off, true);
+    return new Blob([...chunks, ...central, new Uint8Array(e.buffer)], { type: 'application/zip' });
+  }
+  const xmlEsc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  async function pageToJpeg(el, css, scale = 2.5) {
+    const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+    const xhtml = new XMLSerializer().serializeToString(el);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><foreignObject x="0" y="0" width="${w}" height="${h}">` +
+      `<div xmlns="http://www.w3.org/1999/xhtml" class="th-light jpgroot" style="width:${w}px;height:${h}px;background:#fff;color:#111;font-family:var(--font-body)"><style>${xmlEsc(css)}\n.a4{margin:0 !important;box-shadow:none !important}</style>${xhtml}</div></foreignObject></svg>`;
+    const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('svg')); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+    await new Promise(r => setTimeout(r, 120));  // iç resimlerin çözülmesi için (Safari)
+    const cv = document.createElement('canvas'); cv.width = Math.round(w * scale); cv.height = Math.round(h * scale);
+    const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height); ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    const blob = await new Promise((res, rej) => { try { cv.toBlob(b => b ? res(b) : rej(new Error('blob')), 'image/jpeg', 0.9); } catch (e) { rej(e); } });
+    return new Uint8Array(await blob.arrayBuffer());
+  }
+  async function exportJpg(kinds, rec) {
+    toast(t.jpgMaking, 6000);
+    const html = await buildPrint(kinds, rec);
+    const f = document.createElement('iframe'); f.setAttribute('aria-hidden', 'true');
+    f.style.cssText = 'position:fixed;left:-12000px;top:0;width:1200px;height:1700px;border:0';
+    try {
+      await new Promise(res => { f.onload = res; f.srcdoc = html; document.body.appendChild(f); });
+      await new Promise(r => setTimeout(r, 250));
+      const d = f.contentDocument, css = Array.from(d.querySelectorAll('style')).map(x => x.textContent).join('\n');
+      const pages = Array.from(d.querySelectorAll('.a4')), names = [];
+      const files = [];
+      for (let i = 0; i < pages.length; i++) {
+        const k = kinds[i] || 'sayfa'; let nm = `mahinev-${k}-${st.date}.jpg`; if (names.includes(nm)) nm = nm.replace('.jpg', `-${i + 1}.jpg`); names.push(nm);
+        files.push({ name: nm, data: await pageToJpeg(pages[i], css) });
+      }
+      G.HR_LAST_JPG = files.map(x => ({ name: x.name, size: x.data.length, head: Array.from(x.data.slice(0, 3)) }));
+      let ok;
+      if (files.length === 1) ok = await saveFile(files[0].name, new Blob([files[0].data], { type: 'image/jpeg' }), 'image/jpeg');
+      else ok = await saveFile(`mahinev-sayfalar-${st.date}.zip`, makeZip(files), 'application/zip');
+      if (ok) toast(t.jpgDone(files.length));
+    } catch (e) { toast(t.jpgFail, 8000); }
+    finally { f.remove(); }
   }
   // ---- Otomatik konum ----
   async function autoLocate(force, explicit) {
@@ -6727,7 +6925,7 @@ var qrcode = function() {
       if (moved || st.city !== 'custom') {
         st.lat = lat; st.lon = lon; st.city = 'custom';
         if (c.altitude != null && isFinite(c.altitude)) st.elev = Math.max(0, Math.round(c.altitude));
-        else if (ON.online()) { try { const e = await ON.elevation(lat, lon); if (e != null) st.elev = Math.max(0, Math.round(e)); } catch (e) { /* */ } }
+        else if (st.wx && ON.online()) { try { const e = await ON.elevation(lat, lon); if (e != null) st.elev = Math.max(0, Math.round(e)); } catch (e) { /* */ } }
         try { st.tz = Intl.DateTimeFormat().resolvedOptions().timeZone || st.tz; } catch (e) { /* */ }
         save(); fillStatic(); update();
       } else renderBar();
@@ -6783,77 +6981,84 @@ var qrcode = function() {
     add('Harita', 'İlk görünürlük, İstanbul', '10 Aralık akşamı (k = 1)', fe ? 'k = ' + fe.k : '—', '—', fe && fe.k === 1);
     const ce = C.cell(41.0, 29.0, Date.UTC(2026, 10, 12), A.SearchMoonPhase(0, TT('2026-11-05T00:00Z'), 10), false);
     add('Harita', 'Hücre sınıfı, İstanbul 12.11.2026', 'visible', ce.code, '—', ce.code === 'visible');
-    // v0.3: saat dilimi ve konumdan bağımsız akşam (hata 2–3)
+    // saat dilimi ve konumdan bağımsız akşam (hata 2–3)
     const gj = C.evening({ lat: -6.2088, lon: 106.8456, elev: 0, hObs: 0, tz: 'Europe/London' }, '2026-12-10');
-    add('v0.3 saat dilimi', 'Cakarta, dilim Londra: 10 Ara gurûbu', '2026-12-10 ≈ 10:59 UTC', utc(gj.gurub), '±3 dk', dmin(gj.gurub, TT('2026-12-10T10:59Z')) <= 3);
+    add('saat dilimi', 'Cakarta, dilim Londra: 10 Ara gurûbu', '2026-12-10 ≈ 10:59 UTC', utc(gj.gurub), '±3 dk', dmin(gj.gurub, TT('2026-12-10T10:59Z')) <= 3);
     const gs = C.evening({ lat: -33.87, lon: 151.21, elev: 0, hObs: 0, tz: 'UTC' }, '2026-12-10');
-    add('v0.3 harita tıklaması', 'Sidney, dilim UTC: 10 Ara gurûbu', '2026-12-10 ≈ 08:58 UTC', utc(gs.gurub), '±3 dk', dmin(gs.gurub, TT('2026-12-10T08:58Z')) <= 3);
+    add('harita tıklaması', 'Sidney, dilim UTC: 10 Ara gurûbu', '2026-12-10 ≈ 08:58 UTC', utc(gs.gurub), '±3 dk', dmin(gs.gurub, TT('2026-12-10T08:58Z')) <= 3);
     const gc = C.evening({ lat: 41.8781, lon: -87.6298, elev: 0, hObs: 0, tz: 'Europe/Istanbul' }, '2026-12-10');
-    add('v0.3 saat dilimi', 'Şikago, dilim İstanbul: 10 Ara gurûbu', '2026-12-10 ≈ 22:19 UTC', utc(gc.gurub), '±3 dk', dmin(gc.gurub, TT('2026-12-10T22:19Z')) <= 3);
+    add('saat dilimi', 'Şikago, dilim İstanbul: 10 Ara gurûbu', '2026-12-10 ≈ 22:19 UTC', utc(gc.gurub), '±3 dk', dmin(gc.gurub, TT('2026-12-10T22:19Z')) <= 3);
     const on = C.observationNights(ist, '2026-11-20');
-    add('v0.3 gözlem gecesi', 'İstanbul, Receb 1448: A / B', '2026-12-10 / 2026-12-11', on ? `${on.a && on.a.ymd} / ${on.b && on.b.ymd}` : '—', '—', on && on.a && on.a.ymd === '2026-12-10' && on.b && on.b.ymd === '2026-12-11');
+    add('gözlem gecesi', 'İstanbul, Receb 1448: A / B', '2026-12-10 / 2026-12-11', on ? `${on.a && on.a.ymd} / ${on.b && on.b.ymd}` : '—', '—', on && on.a && on.a.ymd === '2026-12-10' && on.b && on.b.ymd === '2026-12-11');
     const mo7 = C.morning(ist, '2026-12-07'), mo8 = C.morning(ist, '2026-12-08');
-    add('v0.3 sabah hilâli', 'İstanbul 7 / 8 Aralık 2026', 'possible / below5', `${mo7.code} / ${mo8.code}`, '—', mo7.code === 'possible' && mo8.code === 'below5');
+    add('sabah hilâli', 'İstanbul 7 / 8 Aralık 2026', 'possible / below5', `${mo7.code} / ${mo8.code}`, '—', mo7.code === 'possible' && mo8.code === 'below5');
     const ins = C.instant(TT('2026-12-10T15:00Z'));
-    add('v0.3 anlık harita', 'Güneşin tepede olduğu nokta, 10.12.2026 15:00 UTC', '−22,9°, −46,8°', `${num(ins.subSolar.lat, 1)}°, ${num(ins.subSolar.lon, 1)}°`, '±0,3°', Math.abs(ins.subSolar.lat + 22.9) <= 0.3 && Math.abs(ins.subSolar.lon + 46.8) <= 0.3);
+    add('anlık harita', 'Güneşin tepede olduğu nokta, 10.12.2026 15:00 UTC', '−22,9°, −46,8°', `${num(ins.subSolar.lat, 1)}°, ${num(ins.subSolar.lon, 1)}°`, '±0,3°', Math.abs(ins.subSolar.lat + 22.9) <= 0.3 && Math.abs(ins.subSolar.lon + 46.8) <= 0.3);
     const jb = C.evening(ist, '2026-12-11'), pb = C.at(jb.best, ist);
     const sb = C.searchable(pb, 'gurub', jb.ageH), sb6 = C.searchable(C.at(jb.gurub.AddDays(2 / 1440), ist), 'm6', jb.ageH);
-    add('v0.3 aranabilirlik', 'İstanbul 11.12.2026: en iyi anda / gurûb+2 dk (−6° eşiği)', 'aranabilir / güneş eşiğin üstünde', `${sb.ok ? 'ok' : sb.reasons.join(',')} / ${sb6.reasons.join(',') || 'ok'}`, '—', sb.ok && sb6.reasons.includes('sun'));
+    add('aranabilirlik', 'İstanbul 11.12.2026: en iyi anda / gurûb+2 dk (−6° eşiği)', 'aranabilir / güneş eşiğin üstünde', `${sb.ok ? 'ok' : sb.reasons.join(',')} / ${sb6.reasons.join(',') || 'ok'}`, '—', sb.ok && sb6.reasons.includes('sun'));
     const altCheck = C.altFast(ins.sun.ra, ins.sun.dec, ins.gast, ins.subSolar.lat, ins.subSolar.lon);
-    add('v0.3 anlık harita', 'Tepe noktasında güneşin yüksekliği', '90°', degf(altCheck, 2), '±0,05°', Math.abs(altCheck - 90) <= 0.05);
-    // v0.4: hicrî gösterim (Muharrem’de eski ve yeni yıl), gök haritası, hava değerlendirmesi
+    add('anlık harita', 'Tepe noktasında güneşin yüksekliği', '90°', degf(altCheck, 2), '±0,05°', Math.abs(altCheck - 90) <= 0.05);
+    // hicrî gösterim (Muharrem’de eski ve yeni yıl), gök haritası, hava değerlendirmesi
     const hR = hijriOf('2026-12-10'), hR3 = hijriOf('2026-12-12');
-    add('v0.4 hicrî gün', 'Receb 1448: 10 / 12 Aralık 2026 (gündüz)', '1 Receb 1448 | 29/30 Cemâziyelâhir 1448 / 3 (veya 2)', `${hR && hR.plain} / ${hR3 && hR3.dayTxt}`, '—', hR && /^1 Receb 1448/.test(hR.plain) && /1448$/.test(hR.plain) && hR3 && hR3.dayTxt === '3 | 2');
+    add('hicrî gün', 'Receb 1448: 10 / 12 Aralık 2026 (gündüz)', '1 Receb 1448 | 29/30 Cemâziyelâhir 1448 / 3 (veya 2)', `${hR && hR.plain} / ${hR3 && hR3.dayTxt}`, '—', hR && /^1 Receb 1448/.test(hR.plain) && /1448$/.test(hR.plain) && hR3 && hR3.dayTxt === '3 | 2');
     const cM = C.nextNewMoonAfter(TT('2027-05-25T00:00Z')), hmM = CAL.monthForConjunction(cM.date), eM2 = earliest(cM, null), hM = eM2 && hijriOf(ymdOf(eM2.first));
-    add('v0.4 hicrî yıl', 'Muharrem 1449: en erken günde iki yıl birlikte', 'Muharrem 1449 | Zilhicce 1448', hM ? hM.monthTxt : '—', '—', hmM.m === 1 && hmM.y === 1449 && hM && hM.monthTxt.includes('1449') && hM.monthTxt.includes('1448'));
+    add('hicrî yıl', 'Muharrem 1449: en erken günde iki yıl birlikte', 'Muharrem 1449 | Zilhicce 1448', hM ? hM.monthTxt : '—', '—', hmM.m === 1 && hmM.y === 1449 && hM && hM.monthTxt.includes('1449') && hM.monthTxt.includes('1448'));
     const pol = G.HRStarMap.horizonOf(TT('2026-12-10T18:00Z'), new A.Observer(41.0, 29.0, 0))(37.95, 89.264);
-    add('v0.4 gök haritası', 'Kutup Yıldızı’nın irtifâı (İstanbul) ≈ enlem', '≈ 41°', degf(pol.alt, 2), '±1°', Math.abs(pol.alt - 41) <= 1);
+    add('gök haritası', 'Kutup Yıldızı’nın irtifâı (İstanbul) ≈ enlem', '≈ 41°', degf(pol.alt, 2), '±1°', Math.abs(pol.alt - 41) <= 1);
     const dp = ON.dest(41, 29, 270, 25);
-    add('v0.4 hava', 'Batı ufku noktası: 25 km batı', 'boylam ≈ 28,70°', degf(dp[1], 3), '±0,01°', Math.abs(dp[1] - (29 - 25 / (111.32 * Math.cos(41 * Math.PI / 180)))) <= 0.01);
+    add('hava', 'Batı ufku noktası: 25 km batı', 'boylam ≈ 28,70°', degf(dp[1], 3), '±0,01°', Math.abs(dp[1] - (29 - 25 / (111.32 * Math.cos(41 * Math.PI / 180)))) <= 0.01);
     const as1 = ON.assess({ cloud_cover: 12, cloud_cover_low: 5, visibility: 24000, relative_humidity_2m: 60, precipitation_probability: 5 }, null, { aerosol_optical_depth: 0.1 }), as2 = ON.assess({ cloud_cover: 90, cloud_cover_low: 60, visibility: 6000, relative_humidity_2m: 95, precipitation_probability: 70 }, null, null);
-    add('v0.4 hava', 'Değerlendirme: açık / kapalı-yağışlı', 'good / poor', `${as1.level} / ${as2.level}`, '—', as1.level === 'good' && as2.level === 'poor');
-    // v0.5: ay başı rasadı gezintisi (İstanbul), kanonik JSON
+    add('hava', 'Değerlendirme: açık / kapalı-yağışlı', 'good / poor', `${as1.level} / ${as2.level}`, '—', as1.level === 'good' && as2.level === 'poor');
+    // ay başı rasadı gezintisi (İstanbul), kanonik JSON
     const keepLOC = LOC; LOC = { lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' };
     let nN = null, nP = null; try { nN = findNight('A', '2026-11-12'); nP = prevNightOf('A', '2026-12-10'); } finally { LOC = keepLOC; }
-    add('v0.5 ay başı rasadı', 'İstanbul: 11.11.2026’den sonraki / 10.12.2026’dan önceki', '2026-12-10 / 2026-11-11', `${nN && nN.ymd} / ${nP && nP.ymd}`, '—', nN && nN.ymd === '2026-12-10' && nP && nP.ymd === '2026-11-11');
+    add('ay başı rasadı', 'İstanbul: 11.11.2026’den sonraki / 10.12.2026’dan önceki', '2026-12-10 / 2026-11-11', `${nN && nN.ymd} / ${nP && nP.ymd}`, '—', nN && nN.ymd === '2026-12-10' && nP && nP.ymd === '2026-11-11');
     const cj = G.HRSig.canon({ b: 1, a: [2, { d: 1, c: 'ş' }] });
-    add('v0.5 kayıt bütünlüğü', 'Kanonik JSON (sıralı anahtar)', '{"a":[2,{"c":"ş","d":1}],"b":1}', cj, '—', cj === '{"a":[2,{"c":"ş","d":1}],"b":1}');
-    // v0.6: şafak iki kavli (s. 178, 197) ve konum girişi çözümleyici
+    add('kayıt bütünlüğü', 'Kanonik JSON (sıralı anahtar)', '{"a":[2,{"c":"ş","d":1}],"b":1}', cj, '—', cj === '{"a":[2,{"c":"ş","d":1}],"b":1}');
+    // şafak iki kavli (s. 178, 197) ve konum girişi çözümleyici
     const sf = C.evening({ lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' }, '2026-12-10');
     const dTem = (sf.safak19.ut - sf.safak19h.ut) * 1440;
-    add('v0.6 şafak (s. 178, 197)', 'İstanbul 10.12.2026: şer’î şafak = hakîkî + temkin; −19° > −17°', `fark = temkin (${num(sf.safakTemkin, 2)} dk)`, `${num(dTem, 2)} dk · ${hhmm(sf.safak17)} < ${hhmm(sf.safak19)}`, '±0,05 dk', Math.abs(dTem - sf.safakTemkin) < 0.05 && sf.safak19.ut > sf.safak17.ut);
+    add('şafak (s. 178, 197)', 'İstanbul 10.12.2026: şer’î şafak = hakîkî + temkin; −19° > −17°', `fark = temkin (${num(sf.safakTemkin, 2)} dk)`, `${num(dTem, 2)} dk · ${hhmm(sf.safak17)} < ${hhmm(sf.safak19)}`, '±0,05 dk', Math.abs(dTem - sf.safakTemkin) < 0.05 && sf.safak19.ut > sf.safak17.ut);
     const CP = G.HRCoord.parse, near = (a, b) => Math.abs(a - b) < 1e-5;
     const cases = [['lat', '41,0082', 41.0082], ['lat', '41.0082 K', 41.0082], ['lat', 'N41.0082', 41.0082], ['lat', `41°00'29.5"N`, 41.008194], ['lat', '41 0 29,5 kuzey', 41.008194], ['lat', '33,87 G', -33.87], ['lat', '-33.87', -33.87], ['lon', '28°58′42″D', 28.978333], ['lon', '73,98 B', -73.98], ['lon', '73.98W', -73.98], ['lon', '+28,9784', 28.9784], ['lat', '41 0,49 K', 41.008167]];
     const okC = cases.filter(([k, i, v]) => { const r = CP(i, k); return r.ok && near(r.value, v); }).length;
-    add('v0.6 konum girişi', 'Tek değer biçimleri (ondalık virgül/nokta, K/N/G/S/D/E/B/W, derece-dakika-saniye, işaret)', `${cases.length} / ${cases.length}`, `${okC} / ${cases.length}`, '1e-5°', okC === cases.length);
+    add('konum girişi', 'Tek değer biçimleri (ondalık virgül/nokta, K/N/G/S/D/E/B/W, derece-dakika-saniye, işaret)', `${cases.length} / ${cases.length}`, `${okC} / ${cases.length}`, '1e-5°', okC === cases.length);
     const p1 = CP('41.0082, 28.9784', 'lat'), p2 = CP('41,0082 28,9784', 'lon'), p3 = CP('https://maps.example/@41.0082,28.9784,15z', 'lat'), p4 = CP(`41°0'29"N 28°58'42"E`, 'lon'), sw = CP('28.9784 E', 'lat');
     const pairOk = [p1, p2, p3, p4].every(r => r.ok && r.pair && near(r.pair[0], p4.pair[0] > 41.008 ? r.pair[0] : r.pair[0]) && r.pair[0] > 41 && r.pair[0] < 41.01 && r.pair[1] > 28.97 && r.pair[1] < 28.98) && sw.ok && sw.swapped;
-    add('v0.6 konum girişi', 'Çift giriş, harita bağlantısı, yanlış alana yazılan tûl', 'çift → iki alan; “E” → tûl alanı', pairOk ? 'doğru' : JSON.stringify([p1, p2, p3, p4, sw].map(r => r.pair || r.err || r.swapped)), '—', pairOk);
+    add('konum girişi', 'Çift giriş, harita bağlantısı, yanlış alana yazılan tûl', 'çift → iki alan; “E” → tûl alanı', pairOk ? 'doğru' : JSON.stringify([p1, p2, p3, p4, sw].map(r => r.pair || r.err || r.swapped)), '—', pairOk);
     const bad = [CP('95', 'lat').err, CP('41 65 0', 'lat').err, CP('41 X', 'lat').err], nums = [G.HRCoord.parseNum('1.054'), G.HRCoord.parseNum('40,5 m'), G.HRCoord.parseNum('267')];
-    add('v0.6 konum girişi', 'Hatalı girişler ve sayı alanları', 'range · minsec · letter / 1054 · 40,5 · 267', `${bad.join(' · ')} / ${nums.join(' · ')}`, '—', bad.join() === 'range,minsec,letter' && nums[0] === 1054 && nums[1] === 40.5 && nums[2] === 267);
-    // v0.8: bağımsız inceleme raporu bulguları
+    add('konum girişi', 'Hatalı girişler ve sayı alanları', 'range · minsec · letter / 1054 · 40,5 · 267', `${bad.join(' · ')} / ${nums.join(' · ')}`, '—', bad.join() === 'range,minsec,letter' && nums[0] === 1054 && nums[1] === 40.5 && nums[2] === 267);
+    // UTC saat farkı kutusu
+    const po = ['+3', '3', 'UTC+3', '−5', '-3:30', '+5,5', '+0545', 'GMT-4', '±0', 'x', '+15', '+3:20'].map(parseOff);
+    const poOk = JSON.stringify(po) === JSON.stringify([180, 180, 180, -300, -210, 330, 345, -240, 0, null, null, null]);
+    const zo = [180, -300, 330, 0].map(zoneForOff), zoOff = zo.map(z => offAt(z, '2026-12-10'));
+    add('UTC saat farkı', 'Yazım biçimleri (+3, UTC+3, −5, -3:30, +5,5, +0545, GMT-4, ±0; hatalılar) ve sabit dilim eşlemesi', '12/12 · +3 −5 +5:30 ±0', `${po.filter((x, i) => x === [180, 180, 180, -300, -210, 330, 345, -240, 0, null, null, null][i]).length}/12 · ${zoOff.map(fmtOff).join(' ')}`, '—', poOk && JSON.stringify(zoOff) === '[180,-300,330,0]');
+    const bOff = [offAt('Europe/Berlin', '2026-01-15'), offAt('Europe/Berlin', '2026-07-15'), offAt('Europe/Istanbul', '2026-07-15')];
+    add('UTC saat farkı', 'Bölgesel dilim yaz saatini izler: Berlin ocak / temmuz, İstanbul temmuz', '+1 / +2 / +3', bOff.map(fmtOff).join(' / '), '—', JSON.stringify(bOff) === '[60,120,180]');
+    // bağımsız inceleme raporu bulguları
     const iso = ms => new Date(ms).toISOString().slice(0, 16).replace('T', ' ');
     const dst = [['Europe/Berlin', '2026-03-29', 30, '2026-03-28 23:30'], ['Europe/Berlin', '2026-10-25', 30, '2026-10-24 22:30'], ['Europe/Berlin', '2026-03-29', 1200, '2026-03-29 18:00'],
       ['Europe/Berlin', '2026-03-29', 150, '2026-03-29 01:30'], ['Europe/Berlin', '2026-10-25', 150, '2026-10-25 00:30'], ['America/New_York', '2026-03-08', 1200, '2026-03-09 00:00'], ['Europe/London', '2026-10-25', 1080, '2026-10-25 18:00']];
     const dstGot = dst.map(([z, d, m]) => iso(C.localToUT(d, m, z)));
-    add('v0.8 saat dilimi', 'Yaz saati geçiş günlerinde yerel saat → UTC (Berlin 00:30, 20:00, 02:30 · New York · Londra)', dst.map(x => x[3].slice(11)).join(' / '), dstGot.map(x => x.slice(11)).join(' / '), '0 dk', dst.every((x, i) => x[3] === dstGot[i]));
+    add('saat dilimi', 'Yaz saati geçiş günlerinde yerel saat → UTC (Berlin 00:30, 20:00, 02:30 · New York · Londra)', dst.map(x => x[3].slice(11)).join(' / '), dstGot.map(x => x.slice(11)).join(' / '), '0 dk', dst.every((x, i) => x[3] === dstGot[i]));
     const yq = C.evening({ lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' }, '2026-12-10');
-    add('v0.8 Yallop (1997)', 'İstanbul 10.12.2026: q, jeosentrik ARCL ile (inceleme raporundaki bağımsız hesap ≈ 0,1149)', '0,115 ± 0,005', num(yq.yallopQ, 4), '±0,005', Math.abs(yq.yallopQ - 0.1149) <= 0.005);
+    add('Yallop (1997)', 'İstanbul 10.12.2026: q, jeosentrik ARCL ile (inceleme raporundaki bağımsız hesap ≈ 0,1149)', '0,115 ± 0,005', num(yq.yallopQ, 4), '±0,005', Math.abs(yq.yallopQ - 0.1149) <= 0.005);
     const cG = A.SearchMoonPhase(0, TT('2026-08-01T00:00Z'), 40), fullG = []; for (let la = -66; la <= 66; la += 6) for (let lo = -180; lo < 180; lo += 15) fullG.push([la, lo]);
     const gB = C.earliestDay(cG, null), gF = C.earliestDay(cG, fullG);
-    add('v0.8 küresel kapsam', 'Ağustos 2026 ictimâsı: tarih çizgisi kuşağı = bütün dünya ızgarası (en erken akşam)', gF ? ymdOf(gF.evening) : '—', gB ? ymdOf(gB.evening) : '—', '—', gB && gF && ymdOf(gB.evening) === ymdOf(gF.evening));
+    add('küresel kapsam', 'Ağustos 2026 ictimâsı: tarih çizgisi kuşağı = bütün dünya ızgarası (en erken akşam)', gF ? ymdOf(gF.evening) : '—', gB ? ymdOf(gB.evening) : '—', '—', gB && gF && ymdOf(gB.evening) === ymdOf(gF.evening));
     const keepF = { r: $('recRes').value, s: $('recSeers').value, f: $('recFirst').value, l: $('recLast').value };
     $('recRes').value = 'naked'; $('recSeers').value = '0'; const fe1 = recFormError();
     $('recSeers').value = '1'; $('recFirst').value = '18:20'; $('recLast').value = '18:05'; const fe2 = recFormError();
     $('recRes').value = 'noObs'; $('recSeers').value = '0'; $('recFirst').value = ''; $('recLast').value = ''; const fe3 = recFormError();
     Object.assign($('recRes'), { value: keepF.r }); $('recSeers').value = keepF.s; $('recFirst').value = keepF.f; $('recLast').value = keepF.l;
-    add('v0.8 kayıt formu', 'Gördüm + 0 kişi / ilk > son saat / gözlem yapılamadı', 'hata / hata / geçerli', `${fe1 ? 'hata' : 'geçerli'} / ${fe2 ? 'hata' : 'geçerli'} / ${fe3 ? 'hata' : 'geçerli'}`, '—', fe1 === t.recErrSeers && fe2 === t.recErrOrder && !fe3);
-    // v0.7: yaklaşan ay başı rasadı (geçmiş geceye gitmez), resmî sürüm bildirimi ve bütünlük
+    add('kayıt formu', 'Gördüm + 0 kişi / ilk > son saat / gözlem yapılamadı', 'hata / hata / geçerli', `${fe1 ? 'hata' : 'geçerli'} / ${fe2 ? 'hata' : 'geçerli'} / ${fe3 ? 'hata' : 'geçerli'}`, '—', fe1 === t.recErrSeers && fe2 === t.recErrOrder && !fe3);
+    // yaklaşan ay başı rasadı (geçmiş geceye gitmez), resmî sürüm bildirimi ve bütünlük
     const keep2 = LOC; LOC = { lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' };
     let u1 = null, u2 = null, u3 = null; try { u1 = nextRasad('2026-11-11'); u2 = nextRasad('2026-11-12'); u3 = nextRasad('2026-12-11'); } finally { LOC = keep2; }
-    add('v0.7 yaklaşan rasad', 'İstanbul: 11.11 / 12.11 / 11.12.2026’den itibaren ilk ay başı gecesi', '2026-11-11 / 2026-12-10 / 2027-01-09',
+    add('yaklaşan rasad', 'İstanbul: 11.11 / 12.11 / 11.12.2026’den itibaren ilk ay başı gecesi', '2026-11-11 / 2026-12-10 / 2027-01-09',
       `${u1.a && u1.a.ymd} / ${u2.a && u2.a.ymd} / ${u3.a && u3.a.ymd}`, '—', u1.a && u1.a.ymd === '2026-11-11' && u2.a && u2.a.ymd === '2026-12-10' && u3.a && u3.a.ymd === '2027-01-09' && (!u3.b || u3.b.ymd >= '2027-01-09'));
-    add('v0.7 resmî sürüm', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · resmî`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'resmî' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
+    add('resmî sürüm', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · resmî`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'resmî' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
     const ok = rows.filter(x => x.ok).length;
     $('tests').innerHTML = `<caption class="small" style="text-align:left;padding-bottom:8px">${ok} / ${rows.length} ${t.pass.toLowerCase()}</caption>
       <thead><tr><th>${t.tCase}</th><th>${t.tQty}</th><th>${t.tExp}</th><th>${t.tGot}</th><th>${t.tTol}</th><th>${t.tRes}</th></tr></thead><tbody>` +
@@ -6863,6 +7068,7 @@ var qrcode = function() {
 
   let rzT; window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (DAY && view === 'plan') renderTime(); }, 200); });
   fillStatic(); bind(); route(); setLive(true); update();
+  applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
   G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, official: () => OFFICIAL, notice: () => NOTICE };
 })(window);

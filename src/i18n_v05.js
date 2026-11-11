@@ -1,4 +1,4 @@
-/* v0.5 metinleri: ayarlar, canlı/dondur, ay başı rasadı, saha, rü’yet kaydı ve tutanak, baskı sayfaları */
+/* metinleri: ayarlar, canlı/dondur, ay başı rasadı, saha, rü’yet kaydı ve tutanak, baskı sayfaları */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.5.0';

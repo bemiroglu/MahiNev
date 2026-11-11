@@ -1,4 +1,4 @@
-/* Batı ufku çizimi (v0.2): eşit ölçekli (1° yatay = 1° dikey), zaman kaydırıcılı, sahaya uygun. */
+/* Batı ufku çizimi: eşit ölçekli (1° yatay = 1° dikey), zaman kaydırıcılı, sahaya uygun. */
 (function (G) {
   'use strict';
   const A = G.Astronomy;
@@ -10,6 +10,9 @@
   const objName = (id, L) => (NAMES[L] && NAMES[L][id]) || id;
   const CARD = { tr: ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD', 'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'], en: ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'] };
   const card = (az, L) => CARD[L][Math.round(((az % 360) + 360) % 360 / 22.5) % 16];
+  // Yön etiketinin yanında küçük derece değeri (semt; kuzeyden saat yönünde)
+  const degTxt = (az, L) => { const v = ((Math.round(az * 10) / 10 % 360) + 360) % 360; return (Number.isInteger(v) ? String(v) : (L === 'tr' ? String(v).replace('.', ',') : String(v))) + '°'; };
+  const cardDeg = (az, L) => `${card(az, L)}<tspan font-size="0.72em" font-weight="500" dx="3" opacity=".75">${degTxt(az, L)}</tspan>`;
   function col(name) { return getComputedStyle(document.body).getPropertyValue(name).trim() || '#888'; }
   function hex(c) { const m = c.match(/^#?([0-9a-f]{6})$/i); if (!m) return [128, 128, 128]; const n = parseInt(m[1], 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
   function mix(a, b, f) { const x = hex(a), y = hex(b); f = Math.max(0, Math.min(1, f)); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * f)).join(',')})`; }
@@ -119,7 +122,7 @@
       if (a % 22.5 === 0 || (a * 2) % 45 === 0) { /* noop */ }
     }
     for (let k = Math.ceil(a0 / 22.5); k * 22.5 <= a1; k++) {
-      const a = k * 22.5; s += `<text class="nohalo" x="${X(a)}" y="${H + 31}" font-size="${11 * F}" font-weight="700" text-anchor="middle" fill="${col('--ink')}">${card(a, L)}</text>`;
+      const a = k * 22.5; s += `<text class="nohalo" x="${X(a)}" y="${H + 31}" font-size="${11 * F}" font-weight="700" text-anchor="middle" fill="${col('--ink')}">${cardDeg(a, L)}</text>`;
     }
     s += '</svg>';
     // okuma paneli
@@ -139,7 +142,7 @@
     return { svg: s, read, range: [r.gurub.AddDays(-6 / 1440), end] };
   }
 
-  // 360° panorama (v0.3): seçili an batı penceresi dışında kaldığında bütün ufuk; yatayda semt 0–360°, dikeyde irtifâ −12°…+62° (ölçek eşit değildir)
+  // 360° panorama: seçili an batı penceresi dışında kaldığında bütün ufuk; yatayda semt 0–360°, dikeyde irtifâ −12°…+62° (ölçek eşit değildir)
   function panorama(loc, t, L, opt = {}) {
     const core = C(), tr = L === 'tr';
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
@@ -170,7 +173,7 @@
     s += `<g opacity="${op}" transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="10" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -10 A10 10 0 0 1 0 10 A${rx.toFixed(2)} 10 0 0 ${sweep} 0 -10Z" fill="${col('--moon')}"/></g>`;
     s += `<text x="${mx}" y="${my - 15}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${tr ? 'Ay' : 'Moon'} ${now.moon.alt.toFixed(1)}°</text>`;
     s += `<rect x="0" y="${H}" width="${W}" height="30" fill="${col('--surface-2')}"/>`;
-    for (let a = 0; a < 360; a += 45) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + 6}" stroke="${col('--muted')}"/><text class="nohalo" x="${Math.max(10, X(a))}" y="${H + 22}" font-size="${11 * F}" font-weight="700" text-anchor="middle" fill="${col('--ink')}">${card(a, L)}</text>`;
+    for (let a = 0; a < 360; a += 45) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + 6}" stroke="${col('--muted')}"/><text class="nohalo" x="${a === 0 ? 3 : X(a)}" y="${H + 22}" font-size="${11 * F}" font-weight="700" text-anchor="${a === 0 ? 'start' : 'middle'}" fill="${col('--ink')}">${cardDeg(a, L)}</text>`;
     s += '</svg>';
     const flags = [];
     if (now.moon.alt < 0) flags.push(tr ? `Ay ufkun ${Math.abs(now.moon.alt).toFixed(1)}° altında` : `Moon ${Math.abs(now.moon.alt).toFixed(1)}° below the horizon`);

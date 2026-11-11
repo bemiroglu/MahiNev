@@ -38,7 +38,7 @@
 | ICOP (International Astronomical Center) | Aylık gözlem sonuçları, hilâl ve sabah hilâli için ayrı formlar, yönteme göre sınıflama (çıplak göz, optik, CCD), doğrulama sonrası yayın | Kayıt alanları: sonuç türleri, sabah hilâli bilgisi |
 | ICOUK (moonsighting.org.uk) | Olumlu ve olumsuz raporların ikisinin de bildirilmesi, gurûb ve hilâl fotoğrafı, sahadan 1–2 dakikada rapor | "Görmedim" kaydının önemi, fotoğraf eki, hızlı rapor metni |
 | moonsighting.com | Ülke ve tarihe göre rapor listesi, şüpheli iddiaların işaretlenmesi | Hesaba göre imkânsız beyanların işaretlenmesi |
-| Moon Calculator (M. Ahmed) | 13 ölçütle görünürlük haritası, en erken görünme taraması | Dünya haritası ve en erken gün taraması (v0.2'den beri) |
+| Moon Calculator (M. Ahmed) | 13 ölçütle görünürlük haritası, en erken görünme taraması | Dünya haritası ve en erken gün taraması |
 | Accurate Times (M. Odeh) | Hilâlin (ay merkezinin değil) koordinatları, takvimler | Batı ufkunda hilâlin konumu ve yumruk ölçeği |
 | HilalNama | Heyetlere sunulacak PDF rapor, raporların yanında hesâbî veriler | A4 tutanak ve rasad planı |
 | Moon Sighting (iOS) | Çevrimdışı planlama, gözlem günlüğü, hatırlatmalar | Planlanan özellik: takvim dosyası (.ics) ile hatırlatma |

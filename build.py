@@ -63,7 +63,7 @@ paras = [re.sub(r'\s+', ' ', p).strip() for p in canon.splitlines() if p.strip()
 canon_js = 'window.HR_CANON_TR = ' + json.dumps(paras, ensure_ascii=False) + ';'
 # Modül sırası önemlidir: çekirdek → takvimler → metinler → veri → çizim → arayüz
 ORDER = ['core.js', 'calendars.js', 'i18n.js', 'i18n_ext.js', 'land.js', None, 'canon_en.js', 'guide.js',
-         'i18n_v03.js', 'i18n_v04.js', 'i18n_v05.js', 'i18n_v06.js', 'i18n_v07.js', 'i18n_v08.js', 'stars.js', 'online.js', 'qrcode.js',
+         'i18n_v03.js', 'i18n_v04.js', 'i18n_v05.js', 'i18n_v06.js', 'i18n_v07.js', 'i18n_v08.js', 'i18n_v09.js', 'stars.js', 'online.js', 'qrcode.js',
          'integrity.js', 'coords.js', 'sky.js', 'starmap.js', 'map.js', 'ui.js']
 parts = [canon_js if n is None else (src / n).read_text(encoding='utf-8') for n in ORDER]
 mods = '\n'.join(parts).replace('</script', '<\\/script')

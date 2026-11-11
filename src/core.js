@@ -1,4 +1,4 @@
-/* Hilâl Rü'yet Yardımcısı — hesap çekirdeği (v0.1)
+/* Mâh-ı Nev — hesap çekirdeği
  * Kanonik dayanak: Se'âdet-i Ebediyye (Hakîkat Kitâbevi), s. 175–186, 314–316, 326, 344, 358–362.
  * Astronomik motor: Astronomy Engine (Don Cross, MIT).
  * Bütün açılar derece, bütün anlar AstroTime (UT). */
@@ -107,8 +107,10 @@
   }
 
   // Yerel tarih (YYYY-MM-DD, IANA tz) → o günün yerel öğlesi (AstroTime)
+  const TZF = new Map();   // saat dilimi biçimleyicileri önbelleği (hız)
   function tzOffsetMin(tz, date) {
-    const f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    let f = TZF.get(tz);
+    if (!f) { f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); TZF.set(tz, f); }
     const p = {}; for (const x of f.formatToParts(date)) p[x.type] = x.value;
     const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second);
     return Math.round((asUTC - Math.floor(date.getTime() / 1000) * 1000) / 60000);
@@ -118,7 +120,7 @@
     const [y, m, d] = ymd.split('-').map(Number);
     return T(new Date(Date.UTC(y, m - 1, d) + (12 - lon / 15) * 3600000));
   }
-  // Yerel duvar saati (YYYY-MM-DD + gece yarısından dakika, IANA tz) → UTC ms (v0.8: yaz saati geçişlerinde doğru).
+  // Yerel duvar saati (YYYY-MM-DD + gece yarısından dakika, IANA tz) → UTC ms; yaz saati geçişlerinde de doğrudur.
   // Günün öncesindeki ve sonrasındaki saat farkı aday alınır; aranan ânda gerçekten geçerli olan seçilir. İleri alınan saatte
   // olmayan bir saat geçişten sonraki karşılığına, geri alınan saatte iki kez yaşanan bir saat ilk yaşanışına çevrilir.
   function localToUT(ymd, minutes, tz) {
@@ -184,7 +186,7 @@
       r.best = tb;
       const ms = topo('Moon', tb, obs), su = topo('Sun', tb, obs);
       // Yallop (1997, NAO TN 69 §2–3): ARCL ve ARCV jeosentrik (havasız); W' = SD' (1 − cos ARCL), SD' toposentrik yarıçap.
-      // Odeh (2004): ARCL, ARCV ve W toposentrik (havasız). v0.8: iki model kendi tanımıyla ayrı hesaplanıyor.
+      // Odeh (2004): ARCL, ARCV ve W toposentrik (havasız). iki model kendi tanımıyla ayrı hesaplanıyor.
       const arclTopo = sep(su.ra, su.dec, ms.ra, ms.dec), arclGeo = beynunet(tb);
       const sdMoonArcmin = deg(Math.asin(MOON_R_KM / (ms.distAU * AU_KM))) * 60;
       const Wy = sdMoonArcmin * (1 - Math.cos(rad(arclGeo))), W = sdMoonArcmin * (1 - Math.cos(rad(arclTopo)));
@@ -261,7 +263,7 @@
   function earliestDay(conj, places, onProgress) {
     // Bir yerel tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olur; aynı enlemde o tarih için en elverişli akşam oradadır.
     // Bu yüzden küresel arama bu boylam kuşağında, kutup daireleri arasında (±66°) yapılır. tools/kuresel_dogrulama.py,
-    // bütün dünya ızgarasıyla aynı günün bulunduğunu doğrular (v0.8).
+    // bütün dünya ızgarasıyla aynı günün bulunduğunu doğrular.
     const grid = places || (() => { const g = []; for (let la = -66; la <= 66; la += 3) for (let lo = -177.5; lo <= -140; lo += 5) g.push([la, lo]); return g; })();
     const cd = conj.date;
     const base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
