@@ -103,7 +103,7 @@
     el.innerHTML = '<div class="mapbox"><canvas></canvas><div class="mapprog" hidden></div><div class="mapmsg" hidden></div></div>';
     const cv = el.querySelector('canvas'), prog = el.querySelector('.mapprog'), msg = el.querySelector('.mapmsg');
     let last = null, pickCb = null, seq = 0;
-    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = w + 'px'; cv.style.height = h + 'px'; return { w, h, d }; }
+    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = '100%'; cv.style.height = 'auto'; return { w, h, d }; }  // v0.8: gizliyken ölçülen genişlik sayfayı taşırmasın
     const proj = (w, h) => ({ x: lon => (lon + 180) / 360 * w, y: lat => (LAT_TOP - lat) / (LAT_TOP - LAT_BOT) * h });
 
     async function render(p) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.7.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.8.0
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Resmî sürüm / Official version: https://github.com/bemiroglu/MahiNev
   Değiştirilmiş kopyalar dağıtılamaz. Modified copies may not be distributed.
@@ -11,10 +11,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b111b">
+<meta name="description" content="Mâh-ı Nev: Tam İlmihâl Se’âdet-i Ebediyye esaslı hilâl rasad yardımcısı. Tek dosya, çevrimdışı çalışır. Takvim değildir; hesâbî imkânı ve kesin reddi gösterir.">
+<meta property="og:title" content="Mâh-ı Nev — Hilâl Rasad Yardımcısı">
+<meta property="og:description" content="Tam İlmihâl esaslı hilâl rasad yardımcısı: rasad gecesi, arama penceresi, gökyüzü haritası, rü’yet kaydı ve tutanak.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bemiroglu.github.io/MahiNev/">
 <title>Mâh-ı Nev — Hilâl Rasad Yardımcısı</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
 <style>
 /* Plan: alacakaranlık gökyüzü. Masada açık/koyu tema, sahada kırmızı gece teması (karanlığa alışmış gözü korur).
    Düzen: Plan sekmesinde önce durum, sonra tam genişlikte ufuk çizimi; ölçümler ve ay başı kartı yan yana. */
@@ -100,12 +102,14 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 select.compact { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; min-height: 34px; }
 .stick { position: sticky; top: 0; z-index: 6; background: var(--bg); margin-bottom: 14px; }
+.card { scroll-margin-top: 170px; }
 nav.tabs { background: var(--bg); display: flex; gap: 2px; border-bottom: 1px solid var(--line); overflow-x: auto; }
 nav.tabs a { padding: 11px 14px; text-decoration: none; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; font-weight: 500; }
 nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
 .notice { background: var(--info-bg); border-left: 3px solid var(--info); padding: 9px 14px; border-radius: 6px; font-size: .9rem; margin: 0 0 14px; }
-.layout { display: grid; grid-template-columns: 290px 1fr; gap: 16px; align-items: start; }
-@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .layout > aside { order: 2; } }
+.layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 16px; align-items: start; }
+.layout > *, .grid2 > * { min-width: 0; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .layout > aside { order: 2; } }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; }
 .card h2 { font: 600 1.05rem/1.3 var(--font-display); margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
 .card h3 { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; font-weight: 600; }
@@ -139,8 +143,8 @@ dl.kv dt { color: var(--muted); font-size: .9rem; padding-right: 12px; display: 
 dl.kv dd { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
 dl.kv dd small { display: block; color: var(--muted); font-size: .78rem; font-family: var(--font-body); }
 dl.kv dd.txt { font-family: var(--font-body); }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 1060px) { .grid2 { grid-template-columns: 1fr; } }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 1060px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
 .sky { width: 100%; height: auto; display: block; border-radius: 8px; }
 .skyctl { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 10px; }
 .skyctl input[type=range] { width: 100%; accent-color: var(--accent); min-height: 32px; }
@@ -215,6 +219,12 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .strip button[aria-current="date"] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
 .strip button.today .d { text-decoration: underline; }
 .mapmsg { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; max-width: 80%; text-align: center; }
+.safety { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 8px 12px; border-radius: 6px; font-size: .86rem; margin: 0 0 14px; }
+.safety::before { content: "⚠ "; }
+#view-saha .safety { margin: 8px 0 0; font-size: .82rem; }
+.safety .short { display: none; }
+@media (max-width: 700px) { .safety .long { display: none; } .safety .short { display: inline; } }
+.rectools { margin-top: 8px; }
 .warnbox { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 7px 10px; border-radius: 6px; font-size: .85rem; margin: 6px 0 0; }
 .radio { display: flex; flex-direction: column; gap: 4px; }
 .radio label { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; min-height: 28px; cursor: pointer; }
@@ -268,7 +278,7 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
 .envnote { font-size: .82rem; background: var(--info-bg); border-left: 3px solid var(--info); padding: 6px 10px; border-radius: 6px; margin: 8px 0 0; }
 @media (max-width: 640px) {
   dialog.full { max-width: 100vw; width: 100vw; max-height: 100vh; height: 100vh; margin: 0; border-radius: 0; padding: 10px; }
-  .mbar { padding: 6px 8px; gap: 4px 8px; } .mbar .when { flex-basis: 100%; order: 2; font-size: .9rem; } .mbar .acts { margin-left: auto; } .mbar .chips { display: none; }
+  .mbar { padding: 6px 8px; gap: 4px 8px; } .mbar .when { flex-basis: 100%; order: 2; font-size: .9rem; } .mbar .acts { margin-left: auto; } .mbar .chips .chip:not(.loc) { display: none; }
   .mbar .when .hj .note { display: none; } .mbar .acts .btn { min-height: 30px; padding: 3px 8px; font-size: .8rem; }
   header.top { padding: 10px 0 6px; } .brand p { display: none; }
   .pano-scroll.west svg { min-width: 640px; height: auto; }
@@ -311,6 +321,14 @@ dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 /* v0.6 */
 .hint { font-size: .86rem; color: var(--muted); background: var(--surface-2); border-left: 3px solid var(--info); border-radius: 6px; padding: 6px 10px; margin: -4px 0 12px; line-height: 1.45; }
 body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCard { display: none !important; }
+/* v0.8: dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
+#hIntro { cursor: pointer; }
+@media (max-width: 700px) {
+  body:not(.introOpen) #introCard ol, body:not(.introOpen) #introCard .btns { display: none; }
+  #hIntro::after { content: " ▾"; font-size: .8em; color: var(--muted); }
+  body.introOpen #hIntro::after { content: " ▴"; }
+  .tools .btn .lbl { display: none; }
+}
 .intro ol { margin: 0 0 8px; padding-left: 1.3em; } .intro li { margin: 5px 0; }
 .coordnote { font-size: .82rem; margin: -2px 0 10px; color: var(--muted); min-height: 1.1em; } .coordnote.err { color: var(--bad); font-weight: 600; }
 .fstrip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 5px 12px 6px; background: var(--surface); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 10px 10px; font: 600 .9rem var(--font-body); }
@@ -352,6 +370,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
 
   <main id="view-plan">
     <p class="notice" id="notCalendar"></p>
+    <p class="safety" id="safety" role="note"></p>
     <div class="layout">
       <aside class="stack">
         <section class="card" aria-labelledby="hLoc">
@@ -367,7 +386,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
           <div class="field"><label for="hMax" id="lHMax"></label><input id="hMax" type="text" inputmode="decimal" autocomplete="off"></div>
           <div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div>
           <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
-          <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p>
+          <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p><p class="cap" id="hMaxNote" hidden></p>
         </section>
         <section class="card" aria-labelledby="hDate">
           <h2 id="hDate"></h2>
@@ -435,7 +454,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
       <div class="fbig" id="fBig" role="status"></div>
       <div id="fTrack"></div>
       <div class="cd" id="fCd"></div>
-      <p class="bigwhere" id="fWhere"></p><p class="small" id="fHeading"></p>
+      <p class="bigwhere" id="fWhere"></p><p class="small" id="fHeading"></p><p class="safety" id="fSafety" role="note"></p><p class="cap" id="fCompassNote" hidden></p>
       <div id="fSky"></div>
       <div id="fGuides"></div>
       <div class="ftools"><button class="btn" type="button" id="fNight" aria-pressed="false"></button><button class="btn" type="button" id="fWake" aria-pressed="false"></button><button class="btn" type="button" id="fCompass" aria-pressed="false"></button><button class="btn" type="button" id="fSM"></button><button class="btn" type="button" id="fLoc"></button><button class="btn" type="button" id="fFont">A+</button></div>
@@ -455,11 +474,13 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
         <div class="field"><label for="recContact" id="lRecContact"></label><input id="recContact" type="text"></div>
         <div class="field"><label for="recWith" id="lRecWith"></label><input id="recWith" type="number" min="0" step="1" value="0"></div>
         <div class="field"><label for="recSeers" id="lRecSeers"></label><input id="recSeers" type="number" min="0" step="1" value="0"></div>
-        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"></div>
+        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"><p class="cap" id="recPhotoKeep"></p></div>
       </div>
       <div class="field"><label for="recNote" id="lRecNote"></label><textarea id="recNote" rows="2"></textarea></div>
       <div class="btns recbtns"><button class="btn primary" type="button" id="recSave"></button></div>
       <p class="where" id="recEval" role="status"></p><h3 id="hRecList"></h3><div class="scroll" id="recList"></div>
+      <div class="btns rectools"><button class="btn" type="button" id="recBackup"></button><button class="btn" type="button" id="recImport"></button><button class="btn" type="button" id="recPhotoCheck"></button><input type="file" id="recImportFile" accept="application/json,.json" hidden><input type="file" id="recPhotoFile" accept="image/*" hidden></div>
+      <p class="cap" id="recBackupNote"></p>
       <h3 id="hNets"></h3><div id="netsBody" class="small"></div>
     </section>
     <details class="card extra" style="margin-top:16px" id="fCheck"><summary id="hCheck"></summary><div class="prose" id="checkBody"></div></details>
@@ -493,6 +514,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
         <h3 id="hLic"></h3>
         <p class="cap" id="licBody"></p>
         <button class="btn" type="button" id="dlHtml2"></button>
+        <p class="cap" id="privacyNote"></p>
       </div>
     </div>
   </dialog>
@@ -891,20 +913,25 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     const f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
     const p = {}; for (const x of f.formatToParts(date)) p[x.type] = x.value;
     const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second);
-    return (asUTC - date.getTime()) / 60000;
+    return Math.round((asUTC - Math.floor(date.getTime() / 1000) * 1000) / 60000);
   }
   // Konumun yerel güneş öğlesi: YYYY-MM-DD tarihinin UTC gece yarısı + (12 − boylam/15) saat
   function solarNoon(ymd, lon) {
     const [y, m, d] = ymd.split('-').map(Number);
     return T(new Date(Date.UTC(y, m - 1, d) + (12 - lon / 15) * 3600000));
   }
-  // Saat diliminin yerel gece yarısı (UTC ms)
-  function tzMidnight(ymd, tz) {
+  // Yerel duvar saati (YYYY-MM-DD + gece yarısından dakika, IANA tz) → UTC ms (v0.8: yaz saati geçişlerinde doğru).
+  // Günün öncesindeki ve sonrasındaki saat farkı aday alınır; aranan ânda gerçekten geçerli olan seçilir. İleri alınan saatte
+  // olmayan bir saat geçişten sonraki karşılığına, geri alınan saatte iki kez yaşanan bir saat ilk yaşanışına çevrilir.
+  function localToUT(ymd, minutes, tz) {
     const [y, m, d] = ymd.split('-').map(Number);
-    let g = Date.UTC(y, m - 1, d);
-    const off = tzOffsetMin(tz, new Date(g + 12 * 3600000));
-    return g - off * 60000;
+    const wall = Date.UTC(y, m - 1, d) + minutes * 60000;
+    const oB = tzOffsetMin(tz, new Date(wall - 86400000)), oA = tzOffsetMin(tz, new Date(wall + 86400000));
+    const ok = [...new Set([oB, oA])].map(o => wall - o * 60000).filter(t => wall - tzOffsetMin(tz, new Date(t)) * 60000 === t);
+    return ok.length ? Math.min(...ok) : wall - oB * 60000;   // iki kez yaşanan saat → ilki; olmayan saat → geçişten sonraki karşılığı
   }
+  // Saat diliminin yerel gece yarısı (UTC ms)
+  function tzMidnight(ymd, tz) { return localToUT(ymd, 0, tz); }
   function localNoon(ymd, tz) {
     const [y, m, d] = ymd.split('-').map(Number);
     let guess = Date.UTC(y, m - 1, d, 12);
@@ -958,16 +985,18 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       const tb = ss.AddDays(r.lagMin * 4 / 9 * MIN);
       r.best = tb;
       const ms = topo('Moon', tb, obs), su = topo('Sun', tb, obs);
-      const arclTopo = sep(su.ra, su.dec, ms.ra, ms.dec);
+      // Yallop (1997, NAO TN 69 §2–3): ARCL ve ARCV jeosentrik (havasız); W' = SD' (1 − cos ARCL), SD' toposentrik yarıçap.
+      // Odeh (2004): ARCL, ARCV ve W toposentrik (havasız). v0.8: iki model kendi tanımıyla ayrı hesaplanıyor.
+      const arclTopo = sep(su.ra, su.dec, ms.ra, ms.dec), arclGeo = beynunet(tb);
       const sdMoonArcmin = deg(Math.asin(MOON_R_KM / (ms.distAU * AU_KM))) * 60;
-      const W = sdMoonArcmin * (1 - Math.cos(rad(arclTopo)));
+      const Wy = sdMoonArcmin * (1 - Math.cos(rad(arclGeo))), W = sdMoonArcmin * (1 - Math.cos(rad(arclTopo)));
       const arcvGeo = geoAlt('Moon', tb, obs) - geoAlt('Sun', tb, obs);
       const arcvTopo = ms.airAlt - su.airAlt;
       const poly = w => 11.8371 - 6.3226 * w + 0.7319 * w * w - 0.1018 * w * w * w;
-      const q = (arcvGeo - poly(W)) / 10;
+      const q = (arcvGeo - poly(Wy)) / 10;
       const V = arcvTopo - (-0.1018 * W ** 3 + 0.7319 * W ** 2 - 6.3226 * W + 7.1651);
       r.bestMoonAlt = ms.alt; r.bestMoonAz = ms.az; r.bestSunAlt = su.alt; r.bestSunAz = su.az;
-      r.W = W; r.arcl = arclTopo; r.arcvGeo = arcvGeo; r.arcvTopo = arcvTopo;
+      r.W = W; r.Wy = Wy; r.arcl = arclTopo; r.arclGeo = arclGeo; r.arcvGeo = arcvGeo; r.arcvTopo = arcvTopo;
       r.yallopQ = q;
       r.yallop = q > 0.216 ? 'A' : q > -0.014 ? 'B' : q > -0.160 ? 'C' : q > -0.232 ? 'D' : q > -0.293 ? 'E' : 'F';
       r.odehV = V;
@@ -1032,8 +1061,10 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   // Hesâbî en erken gün (D3): beynûnet ≥ 8° ve görünen irtifâ ≥ 5° şartının ilk sağlandığı akşamın ertesi günü.
   // dateUTC: ictimânın UTC tarihi (Date). places: [[lat,lon],...] veya null (küresel ızgara).
   function earliestDay(conj, places, onProgress) {
-    // Bir yerel tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olur; o tarih için en elverişli akşam oradadır.
-    const grid = places || (() => { const g = []; for (let la = -60; la <= 60; la += 2.5) for (let lo = -177.5; lo <= -140; lo += 5) g.push([la, lo]); return g; })();
+    // Bir yerel tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olur; aynı enlemde o tarih için en elverişli akşam oradadır.
+    // Bu yüzden küresel arama bu boylam kuşağında, kutup daireleri arasında (±66°) yapılır. tools/kuresel_dogrulama.py,
+    // bütün dünya ızgarasıyla aynı günün bulunduğunu doğrular (v0.8).
+    const grid = places || (() => { const g = []; for (let la = -66; la <= 66; la += 3) for (let lo = -177.5; lo <= -140; lo += 5) g.push([la, lo]); return g; })();
     const cd = conj.date;
     const base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
     for (let k = 0; k <= 3; k++) {
@@ -1085,10 +1116,10 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
         if (lag > 0 && lag < 600) {
           const tb = ss.AddDays(lag * 4 / 9 / 1440);
           const mo = topo('Moon', tb, obs), su = topo('Sun', tb, obs);
-          const arcl = sep(su.ra, su.dec, mo.ra, mo.dec);
-          const W = deg(Math.asin(MOON_R_KM / (mo.distAU * AU_KM))) * 60 * (1 - Math.cos(rad(arcl)));
+          const arcl = sep(su.ra, su.dec, mo.ra, mo.dec), sd = deg(Math.asin(MOON_R_KM / (mo.distAU * AU_KM))) * 60;
+          const W = sd * (1 - Math.cos(rad(arcl))), Wy = sd * (1 - Math.cos(rad(beynunet(tb))));
           const poly = w => 11.8371 - 6.3226 * w + 0.7319 * w * w - 0.1018 * w * w * w;
-          out.q = (geoAlt('Moon', tb, obs) - geoAlt('Sun', tb, obs) - poly(W)) / 10;
+          out.q = (geoAlt('Moon', tb, obs) - geoAlt('Sun', tb, obs) - poly(Wy)) / 10;
           out.V = (mo.airAlt - su.airAlt) - (-0.1018 * W ** 3 + 0.7319 * W ** 2 - 6.3226 * W + 7.1651);
         }
       }
@@ -1221,7 +1252,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   }
 
   const Q = 'Qa4AayT+K8a3D8JeSBryXgoVUr1alb7zcmzQOZkX/u1jEx3iuozey25tyfEErebPR9SSR9iPpIALLLX9Uf'; // sürüm bildirimi parçası (build.py)
-  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, firstEvening, skyObjects, twilight, at, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
+  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, firstEvening, skyObjects, twilight, at, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Takvim usulleri (Se'âdet-i Ebediyye s. 358–362) ve aritmetik hicrî takvim.
@@ -1365,7 +1396,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       safak17: 'Kâdîhân, İmâmeyn şafakı (−17°, kızıllık)', safak17Note: 'İmâmeyn’e ve diğer üç mezhebe göre şafak kızıllığın kaybolmasıdır (s. 178); bu ölçüyle şafak daha erken biter.',
       width: 'Hilâl kalınlığı W (topozentrik)', arcl: 'ARCL (topozentrik uzanım)', arcv: 'ARCV (jeosentrik / topozentrik)', dip: 'İnhitât-ı ufk (ufuk alçalması)', zaviye: 'İrtifâ zâviyesi (şer’î gurûb)',
       local: 'yerel', min: 'dk', h: 'sa', d: 'gün', none: '—', computing: 'hesaplanıyor…',
-      testsTitle: 'Doğrulama vakaları', testsIntro: 'Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Se’âdet-i Ebediyye’deki örnekler, Jamry ekranı ve bağımsız Python hesabıdır.',
+      testsTitle: 'Doğrulama vakaları', testsIntro: 'Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Tam İlmihâl’deki örnekler, Jamry ekranı ve bağımsız Python hesabıdır.',
       tCase: 'Vaka', tQty: 'Büyüklük', tExp: 'Beklenen', tGot: 'Hesaplanan', tTol: 'Tolerans', tRes: 'Sonuç', pass: 'Geçti', fail: 'Kaldı',
       helpRules: 'Programın kuralları', helpCanon: 'Kanonik kural metni', helpSources: 'Kaynaklar', helpTerms: 'Terimler',
       footer: 'v0.1 · hesap çekirdeği ve detay paneli · Astronomy Engine 2.1.19 (MIT)'
@@ -1424,7 +1455,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       safak17: 'Kâdîhân, Imâmayn twilight (−17°, red glow)', safak17Note: 'According to the Imâmayn and the other three schools, twilight ends when the red glow disappears (p. 178); by this measure it ends earlier.',
       width: 'Crescent width W (topocentric)', arcl: 'ARCL (topocentric elongation)', arcv: 'ARCV (geocentric / topocentric)', dip: 'İnhitât-ı ufk (dip of the horizon)', zaviye: 'Altitude angle (şer’î gurûb)',
       local: 'local', min: 'min', h: 'h', d: 'd', none: '—', computing: 'computing…',
-      testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Se’âdet-i Ebediyye, the Jamry screenshot and an independent Python calculation.',
+      testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Tam İlmihâl, the Jamry screenshot and an independent Python calculation.',
       tCase: 'Case', tQty: 'Quantity', tExp: 'Expected', tGot: 'Computed', tTol: 'Tolerance', tRes: 'Result', pass: 'Pass', fail: 'Fail',
       helpRules: 'Program rules', helpCanon: 'Canonical rule text', helpSources: 'Sources', helpTerms: 'Terms',
       footer: 'v0.1 · calculation core and detail panel · Astronomy Engine 2.1.19 (MIT)'
@@ -1445,7 +1476,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     phase: 'Gökyüzü', moonPos: 'Hilâlin konumu', planetsNear: 'Yakındaki parlak gezegenler', noPlanets: 'yok',
     planetWarn: 'Zühre ve Utârid nokta halinde parlar; hilâl sanılmamalıdır.',
     mapTitle: 'Dünya rü’yet haritası', mapEvening: 'Akşam', mapLayer: 'Katman', mapRes: 'Çözünürlük',
-    lySeadet: 'Se’âdet-i Ebediyye sınıfları', lyFirst: 'İlk görünürlük akşamı', lyYallop: 'Yallop (ek bilgi)', lyOdeh: 'Odeh (ek bilgi)',
+    lySeadet: 'Tam İlmihâl sınıfları', lyFirst: 'İlk görünürlük akşamı', lyYallop: 'Yallop (ek bilgi)', lyOdeh: 'Odeh (ek bilgi)',
     mapAge: 'Hilâl yaşı çizgileri (saat)', mapBorders: 'Ülke sınırları', map18: '18° gurûb boylamı',
     mapNoteSeadet: 'Her nokta kendi yerel gurûbunda değerlendirilir; tarih, o yerin yerel tarihidir. Yeşil ve sarı alanlarda rasad mümkündür.',
     mapNoteFirst: 'Her bölgenin bu ay için ilk elverişli akşamı (beynûnet ≥ 8° ve irtifâ ≥ 5°). Ay başı o akşamın ertesi günüdür.',
@@ -1480,7 +1511,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     phase: 'Sky', moonPos: 'Crescent position', planetsNear: 'Bright planets nearby', noPlanets: 'none',
     planetWarn: 'Venus and Mercury shine as points; do not take them for the crescent.',
     mapTitle: 'World sighting map', mapEvening: 'Evening', mapLayer: 'Layer', mapRes: 'Resolution',
-    lySeadet: 'Se’âdet-i Ebediyye classes', lyFirst: 'First-visibility evening', lyYallop: 'Yallop (additional)', lyOdeh: 'Odeh (additional)',
+    lySeadet: 'Tam İlmihâl classes', lyFirst: 'First-visibility evening', lyYallop: 'Yallop (additional)', lyOdeh: 'Odeh (additional)',
     mapAge: 'Moon-age lines (hours)', mapBorders: 'Country borders', map18: '18° sunset longitude',
     mapNoteSeadet: 'Each point is evaluated at its own local sunset; the date is the local date there. Green and yellow areas allow observation.',
     mapNoteFirst: 'The first suitable evening of this month for each region (beynûnet ≥ 8° and altitude ≥ 5°). The month begins the next day.',
@@ -1945,7 +1976,7 @@ window.HR_CANON_EN = [
     tutTitle: 'Rü’yet-i Hilâl Gözlem Tutanağı', tutSub: 'Gözlemcinin beyanı ve hesâbî karşılaştırma',
     tutObs: 'Gözlem', tutComp: 'Hesâbî veriler (karşılaştırma için)', tutPeople: 'Gözlemci ve birlikte bulunanlar', tutSign: 'İmza',
     tutWitness: 'Birlikte gözleyen (ad soyad, imza)', tutFiqh: 'Fıkhî hatırlatma',
-    tutFiqhTxt: 'Bulutlu havada Ramazân hilâli bir âdil müslimânın “gördüm” demesiyle, açık havada birçok kimsenin haberiyle sabit olur; bayram için iki âdil (iki erkek veya bir erkek iki kadın) ve “şehâdet ederim” lafzı gerekir; kâdî bulunmayan yerde de böyledir (Se’âdet-i Ebediyye s. 315–316). Şehir dışında veya yüksek yerde görenin yalnız başına haberi kabul edilebilir; muvakkitlerin (hesapçıların) sözü delil değildir; başkasının gördüğünü nakletmek şahitlik değil hikâyedir (Redd-ül-muhtâr, Kitâb-us-savm, hilâlin sübûtu bahsi). Bu tutanak gözlemcinin beyanını belgeler; hüküm yetkili makama aittir.',
+    tutFiqhTxt: 'Bulutlu havada Ramazân hilâli bir âdil müslimânın “gördüm” demesiyle, açık havada birçok kimsenin haberiyle sabit olur; bayram için iki âdil (iki erkek veya bir erkek iki kadın) ve “şehâdet ederim” lafzı gerekir; kâdî bulunmayan yerde de böyledir (Tam İlmihâl s. 315–316). Şehir dışında veya yüksek yerde görenin yalnız başına haberi kabul edilebilir; muvakkitlerin (hesapçıların) sözü delil değildir; başkasının gördüğünü nakletmek şahitlik değil hikâyedir (Redd-ül-muhtâr, Kitâb-us-savm, hilâlin sübûtu bahsi). Bu tutanak gözlemcinin beyanını belgeler; hüküm yetkili makama aittir.',
     tutBlank: 'Boş tutanak formu', tutResult: 'Sonuç', tutCalc: 'Hesaba göre', tutRecId: 'Kayıt no',
     // Baskı
     prTitle: 'Yazdır / PDF', prIntro: 'Her seçenek tek A4 sayfasına göre hazırlanır. Birden fazlasını seçerseniz her biri ayrı sayfaya basılır.', prGo: 'Hazırla',
@@ -1982,7 +2013,7 @@ window.HR_CANON_EN = [
     tutTitle: 'Crescent Sighting Report', tutSub: 'Observer’s statement and computed comparison',
     tutObs: 'Observation', tutComp: 'Computed data (for comparison)', tutPeople: 'Observer and companions', tutSign: 'Signature',
     tutWitness: 'Observing together (name, signature)', tutFiqh: 'Legal reminder',
-    tutFiqhTxt: 'In cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the report of many; for the feast two upright witnesses (two men, or one man and two women) and the words “I testify” are needed; likewise where there is no judge (Se’âdet-i Ebediyye pp. 315–316). One who saw it outside the city or from a high place may be accepted alone; the word of time-keepers (calculators) is no proof; relaying what others saw is narration, not testimony (Radd al-Muhtar, Book of Fasting, on establishing the crescent). This report documents the observer’s statement; the ruling belongs to the competent authority.',
+    tutFiqhTxt: 'In cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the report of many; for the feast two upright witnesses (two men, or one man and two women) and the words “I testify” are needed; likewise where there is no judge (Tam İlmihâl pp. 315–316). One who saw it outside the city or from a high place may be accepted alone; the word of time-keepers (calculators) is no proof; relaying what others saw is narration, not testimony (Radd al-Muhtar, Book of Fasting, on establishing the crescent). This report documents the observer’s statement; the ruling belongs to the competent authority.',
     tutBlank: 'Blank report form', tutResult: 'Result', tutCalc: 'Per calculation', tutRecId: 'Record no.',
     prTitle: 'Print / PDF', prIntro: 'Each option is laid out for one A4 page. If you choose several, each prints on its own page.', prGo: 'Prepare',
     prOpts: { plan: 'Observation plan (selected evening)', sky: 'Sky chart (selected moment)', month: 'Monthly sighting table', map: 'World sighting map (landscape)', tut: 'Sighting report (latest record)', blank: 'Blank report form' },
@@ -2107,6 +2138,89 @@ window.HR_CANON_EN = [
     tamper: 'This copy does not match the official Mâh-ı Nev release and may have been modified. Download the official version before relying on its results:',
     tamperShort: 'unofficial copy',
     printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Tam İlmihâl, pp. 315, 360).'
+  });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+/* v0.8 metinleri: bağımsız inceleme raporu sonrası düzeltmeler — göz güvenliği, kayıt bütünlüğü ve yedekleme,
+   gözlem sonucu türleri, form denetimleri, hesap/rasad/hüküm ayrımı, kapsam ve izlenebilirlik notları */
+(function (G) {
+  'use strict';
+  G.HR_VERSION = '0.8.0';
+  G.HR_RULES = 'TI-360/1';   // kural kümesi: Tam İlmihâl s. 178, 188, 194, 197, 315–316, 360 (docs/kanonik-rapor.md)
+  Object.assign(G.HRI18N.T.tr, {
+    // Göz güvenliği
+    safety: 'Göz güvenliği: Güneş tamamen batmadan dürbün, teleskop, kamera vizörü veya telefon yakınlaştırmasıyla batı ufkuna bakmayın. Güneş ışığı optik cihazla bakıldığında gözde kalıcı hasar yapar. Önce Güneş’in battığından emin olun; hilâli çıplak gözle arayın.',
+    safetyShort: 'Güneş batmadan dürbünle batıya bakmayın.',
+    safetyMobile: 'Göz güvenliği: Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın; gözde kalıcı hasar yapar. Hilâli çıplak gözle arayın.',
+    // Gözlem sonuçları (v0.8: “gözlem yapılamadı” ve “şüpheli” eklendi)
+    recRes: { naked: 'Çıplak gözle gördüm', aidedNaked: 'Önce dürbünle bulup sonra çıplak gözle gördüm', aided: 'Yalnız dürbün/teleskopla gördüm', photo: 'Yalnız fotoğrafla tespit edildi', doubt: 'Şüpheli: gördüğüm cismin hilâl olduğundan emin değilim', not: 'Dikkatle aradım, göremedim', noObs: 'Gözlem yapılamadı (bulut, ufuk engeli vb.)' },
+    evDoubt: 'Şüpheli gözlem rü’yet beyanı sayılmaz; yalnız bilgi olarak saklanır.',
+    evNotSaw: 'Kaydedildi: açık arama yapıldı, hilâl görülemedi. Bu kayıt tek başına ayın otuza tamamlandığını göstermez.',
+    evNoObs: 'Kaydedildi: gözlem yapılamadı. Bu kayıt hilâlin gökte bulunmadığını göstermez.',
+    evReject: 'Tam İlmihâl’e göre bu akşam hilâl görülemez: hesapla anlaşılan kat’îdir ve bu şartlardaki görme beyanı kabul edilmez (İmâm-ı Sübkî, s. 360). Beyanı değerlendirmek yetkili makama aittir.',
+    evOk: 'Hesapla çelişmiyor. Ay başı, şahitlik şartlarıyla ve yetkili makamın kararıyla sabit olur (s. 315–316).',
+    // Form denetimleri
+    recErrSeers: 'Gördüğünüzü bildiriyorsunuz; gören kişi sayısı en az 1 olmalı.',
+    recErrOrder: 'İlk görme saati, son görme saatinden sonra olamaz.',
+    recErrFuture: 'Kayıt zamanı ileri bir tarihte görünüyor; saati kontrol edin.',
+    recAnon: 'İsimsiz beyan: gözlemci adı yazılmadı. Kayıt bilgi olarak saklanır; imzalı şahitlik tutanağı yerine geçmez.',
+    // Saklama, yedekleme, fotoğraf doğrulama
+    recStoreFail: 'Kayıt bu tarayıcıda saklanamadı (depolama dolu olabilir). Kayıt JSON dosyası olarak indiriliyor; lütfen saklayın ve yedek alıp eski kayıtları silin.',
+    recMany: n => `${n} kayıt var. Tarayıcı depolaması sınırlıdır; “Tüm kayıtları yedekle” ile yedek alın.`,
+    recBackup: 'Tüm kayıtları yedekle', recImport: 'Yedekten geri yükle', recPhotoCheck: 'Fotoğrafı doğrula',
+    recImported: (a, b) => `${a} kayıt eklendi, ${b} kayıt zaten vardı.`, recImportBad: 'Dosya okunamadı ya da Mâh-ı Nev kaydı değil.',
+    recPhotoMatch: d => `Bu fotoğraf şu kayda aittir: ${d}. Özet eşleşiyor.`, recPhotoNone: 'Bu fotoğrafın özeti hiçbir kayıtla eşleşmiyor.',
+    recPhotoKeep: 'Özgün fotoğraf dosyasını ayrıca saklayın. Kayıtta yalnız özeti (SHA-256) ve küçük önizlemesi bulunur; özgün dosya “Fotoğrafı doğrula” ile kayda bağlanabilir.',
+    recThumbDropped: 'önizleme depolama yetersizliği yüzünden saklanmadı',
+    recBackupNote: 'Kayıtlar yalnız bu tarayıcıda durur; tarayıcı verisi silinirse kaybolur. Düzenli yedek alın.',
+    // Hicrî tarih ve kapsam
+    hjBook: 'Hesâbî tarihtir; ay başı rü’yetle kesinleşir. Tam İlmihâl: “Hilâli görmekle Ramezânın başlaması, hesâbla anlaşılandan bir gün sonra olabilir. Fekat bir gün önce olamaz” (s. 360).',
+    globalScope: 'Dünya geneli: aynı takvim gününün en geç gurûbu tarih çizgisinin hemen doğusunda olduğundan arama orada, kutup daireleri arasında (±66°) yapılır. Bütün dünya taramasıyla aynı günü verdiği doğrulanmıştır.',
+    // Yükseklik
+    hMaxUnset: 'Şehrin en yüksek yeri girilmedi (0 m alındı); şer’î gurûb ve temkin bu yükseklik olmadan hesaplandı (s. 176, 186). Biliyorsanız girin.',
+    // Pusula, hassasiyet, gizlilik
+    compassNote: 'Pusula yaklaşık yön verir: telefonun manyetik ölçümüdür, manyetik sapma düzeltilmez. Araç, gemi ve çelik yapı yakınında yanıltır. Yönü yardımcı yıldızlarla teyit edin.',
+    precisionNote: 'Hesap hassasiyeti ile gözlem hassasiyeti farklıdır. Gök cisimlerinin konumu yaklaşık 1 yay dakikası hassasiyetle hesaplanır; fakat ufuk yakınında ışığın kırılması hava sıcaklığı, basınç ve tabakalaşmayla değişir. Batış saatleri bu yüzden gerçekte 1–2 dakika, deniz üstünde daha fazla farklı olabilir. Program saatleri dakika olarak verir.',
+    privacyNote: 'Gizlilik: Konum, kayıtlar, isim ve fotoğraf önizlemeleri yalnız bu tarayıcıda saklanır; hiçbir sunucuya gönderilmez. Otomatik konum cihazınızın izniyle alınır ve cihazdan çıkmaz. Yalnız hava tahmini açıkken yaklaşık konum open-meteo.com’a gönderilir.',
+    claimReject: 'Tam İlmihâl’e göre kabul edilmez (İmâm-ı Sübkî, s. 360)', claimOk: 'Hesapla çelişmez; hüküm şahitlik şartlarıyla',
+    traceRules: 'Kural kümesi', traceEngine: 'Astronomi çekirdeği',
+    width: 'Hilâl kalınlığı W (Yallop / Odeh)', arcl: 'ARCL (jeosentrik, Yallop / topozentrik, Odeh)', arcv: 'ARCV (jeosentrik, Yallop / topozentrik, Odeh)',
+    introToggle: 'Nasıl kullanılır? (aç / kapat)',
+    noteFull: 'notun tamamı JSON kaydındadır'
+  });
+  Object.assign(G.HRI18N.T.en, {
+    safety: 'Eye safety: until the Sun has fully set, do not look toward the western horizon through binoculars, a telescope, a camera viewfinder or phone zoom. Sunlight seen through optics can cause permanent eye damage. Make sure the Sun has set; search for the crescent with the naked eye.',
+    safetyShort: 'Do not point binoculars west before sunset.',
+    safetyMobile: 'Eye safety: do not look west through binoculars, a camera or a telescope before sunset; it can permanently damage the eye. Search with the naked eye.',
+    recRes: { naked: 'Seen with the naked eye', aidedNaked: 'Found with binoculars, then seen with the naked eye', aided: 'Seen only with binoculars/telescope', photo: 'Detected only by photograph', doubt: 'Uncertain: not sure the object was the crescent', not: 'Searched carefully, not seen', noObs: 'Could not observe (clouds, obstructed horizon, etc.)' },
+    evDoubt: 'An uncertain observation is not a sighting claim; it is kept for information only.',
+    evNotSaw: 'Recorded: a clear search was made and the crescent was not seen. This record alone does not show that the month completes thirty days.',
+    evNoObs: 'Recorded: no observation was possible. This record does not show that the crescent was absent.',
+    evReject: 'Per Tam İlmihâl the crescent cannot be seen this evening: what is known by calculation is certain, and a sighting claim under these conditions is not accepted (Imam Subki, p. 360). Evaluating the claim belongs to the competent authority.',
+    evOk: 'Consistent with calculation. The month is established by witnesses meeting the conditions and by the competent authority (pp. 315–316).',
+    recErrSeers: 'You report a sighting; the number of people who saw it must be at least 1.',
+    recErrOrder: 'The first-seen time cannot be after the last-seen time.',
+    recErrFuture: 'The record time appears to be in the future; check the clock.',
+    recAnon: 'Anonymous statement: no observer name. The record is kept for information; it does not replace a signed witness report.',
+    recStoreFail: 'The record could not be stored in this browser (storage may be full). It is being downloaded as a JSON file; keep it, back up and remove old records.',
+    recMany: n => `${n} records. Browser storage is limited; use “Back up all records”.`,
+    recBackup: 'Back up all records', recImport: 'Restore from backup', recPhotoCheck: 'Verify a photo',
+    recImported: (a, b) => `${a} records added, ${b} already present.`, recImportBad: 'The file could not be read or is not a Mâh-ı Nev record.',
+    recPhotoMatch: d => `This photo belongs to the record of ${d}. Digest matches.`, recPhotoNone: 'This photo’s digest matches no record.',
+    recPhotoKeep: 'Keep the original photo file separately. The record holds only its digest (SHA-256) and a small preview; the original can be linked back with “Verify a photo”.',
+    recThumbDropped: 'preview not stored for lack of storage space',
+    recBackupNote: 'Records live only in this browser and are lost if browser data is cleared. Back up regularly.',
+    hjBook: 'A computed date; the month is established by sighting. Tam İlmihâl: beginning Ramadan by sighting the crescent may be one day later than what is known by calculation, but it cannot be one day earlier (p. 360).',
+    globalScope: 'Worldwide: the latest sunset of a given calendar day is just east of the date line, so the search is made there, between the polar circles (±66°). Verified to give the same day as a whole-world scan.',
+    hMaxUnset: 'The city’s highest point was not entered (0 m used); the legal sunset and temkin were computed without it (pp. 176, 186). Enter it if known.',
+    compassNote: 'The compass is approximate: it is the phone’s magnetic reading, not corrected for magnetic variation, and misleads near vehicles, ships and steel structures. Confirm the direction with the guide stars.',
+    precisionNote: 'Calculation accuracy is not observation accuracy. Positions are computed to about 1 arc-minute, but refraction near the horizon varies with temperature, pressure and layering. Setting times may therefore differ by 1–2 minutes in reality, more over the sea. Times are given to the minute.',
+    privacyNote: 'Privacy: location, records, names and photo previews are kept only in this browser and are never sent to a server. Automatic location uses your device permission and stays on the device. Only when the weather forecast is on is an approximate location sent to open-meteo.com.',
+    claimReject: 'Not accepted per Tam İlmihâl (Imam Subki, p. 360)', claimOk: 'Not contradicted; ruling by witness conditions',
+    traceRules: 'Rule set', traceEngine: 'Astronomy core',
+    width: 'Crescent width W (Yallop / Odeh)', arcl: 'ARCL (geocentric, Yallop / topocentric, Odeh)', arcv: 'ARCV (geocentric, Yallop / topocentric, Odeh)',
+    introToggle: 'How to use (show / hide)',
+    noteFull: 'full note in the JSON record'
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
@@ -5066,7 +5180,7 @@ var qrcode = function() {
     el.innerHTML = '<div class="mapbox"><canvas></canvas><div class="mapprog" hidden></div><div class="mapmsg" hidden></div></div>';
     const cv = el.querySelector('canvas'), prog = el.querySelector('.mapprog'), msg = el.querySelector('.mapmsg');
     let last = null, pickCb = null, seq = 0;
-    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = w + 'px'; cv.style.height = h + 'px'; return { w, h, d }; }
+    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = '100%'; cv.style.height = 'auto'; return { w, h, d }; }  // v0.8: gizliyken ölçülen genişlik sayfayı taşırmasın
     const proj = (w, h) => ({ x: lon => (lon + 180) / 360 * w, y: lat => (LAT_TOP - lat) / (LAT_TOP - LAT_BOT) * h });
 
     async function render(p) {
@@ -5205,7 +5319,7 @@ var qrcode = function() {
   // ---- Resmî sürüm bildirimi ve bütünlük denetimi (v0.7; build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD12873cb93a9c2d5f';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD385b994beea0347f';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -5249,10 +5363,13 @@ var qrcode = function() {
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
   let records = load('hr-records') || [];
+  const REC_WARN = 150; // v0.8: sınır yok; bu sayıdan sonra yedek alma hatırlatılır
 
   function load(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function save() { try { const o = Object.assign({}, st); delete o.tmin; delete o.anchor; delete o.live; delete o.frozen; delete o.locAuto; localStorage.setItem('hr-v05', JSON.stringify(o)); } catch (e) { /* depolama yok */ } }
-  function saveRec() { try { localStorage.setItem('hr-records', JSON.stringify(records)); } catch (e) { /* */ } }
+  // v0.8: kayıt saklama başarısı denetlenir; başarısızlık sessiz geçilmez
+  function storeRecs(list) { try { localStorage.setItem('hr-records', JSON.stringify(list)); return true; } catch (e) { return false; } }
+  function saveRec() { const ok = storeRecs(records); if (!ok && typeof toast === 'function') toast(t.recStoreFail, 8000); return ok; }
   function todayYmd(tz) { try { return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } }
   const locale = () => st.lang === 'tr' ? 'tr-TR' : 'en-GB';
   function fmtTime(at) { if (!at) return t.none; return new Intl.DateTimeFormat(locale(), { timeZone: st.tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).format(at.date); }
@@ -5319,10 +5436,19 @@ var qrcode = function() {
     set('lSmFace', t.smFace); set('lSmLines', t.smLines); set('lSmNames', t.smNames); set('lSmCons', t.smCons); set('lSmEcl', t.smEcl); set('smNote', t.smNote);
     $('smFace').innerHTML = [270, 180, 90, 0].map(v => `<option value="${v}">${esc(t.faces[v])}</option>`).join('');
     const ss = $('saveSelf'); if (ss) ss.onclick = saveSelf;
-    set('dlHtml', '⬇ ' + t.dlHtml); set('dlHtml2', '⬇ ' + t.dlHtml); $('dlHtml').title = t.dlHtmlTip; $('dlHtml2').title = t.dlHtmlTip;
+    $('dlHtml').innerHTML = `⬇<span class="lbl"> ${esc(t.dlHtml)}</span>`; $('dlHtml').setAttribute('aria-label', t.dlHtml); set('dlHtml2', '⬇ ' + t.dlHtml); $('dlHtml').title = t.dlHtmlTip; $('dlHtml2').title = t.dlHtmlTip;
     $('dlHtml').onclick = downloadHtml; $('dlHtml2').onclick = downloadHtml;
     set('hLic', t.licTitle); $('licBody').innerHTML = licHtml();
-    set('ver', 'v' + G.HR_VERSION); set('openSet', '⚙ ' + t.settings); set('hSet', t.settings); set('setClose', t.close); set('lLiveInt', t.liveInt);
+    // v0.8: göz güvenliği, gizlilik, kayıt araçları
+    $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span>`; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
+    set('fCompassNote', t.compassNote);
+    set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
+    $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
+    $('recImportFile').onchange = importRecords; $('recPhotoFile').onchange = checkPhoto;
+    $('hIntro').onclick = () => { document.body.classList.toggle('introOpen'); };
+    $('hIntro').title = t.introToggle;
+    showHMaxNote();
+    set('ver', 'v' + G.HR_VERSION); $('openSet').innerHTML = `⚙<span class="lbl"> ${esc(t.settings)}</span>`; $('openSet').setAttribute('aria-label', t.settings); $('openSet').title = t.settings; set('hSet', t.settings); set('setClose', t.close); set('lLiveInt', t.liveInt);
     $('liveInt').innerHTML = [1, 10, 60].map(v => `<option value="${v}"${(st.liveInt || 10) === v ? ' selected' : ''}>${esc(t.liveInts[v])}</option>`).join('');
     set('mbPlay', '▶ ' + t.play); set('mbFreeze', '❚❚ ' + t.freeze); set('prevNight', t.prevNight);
     set('hPr', t.prTitle); set('prClose', t.close); set('prIntro', t.prIntro); set('prGo', t.prGo); set('prNote', t.prNote);
@@ -5342,7 +5468,7 @@ var qrcode = function() {
       if (!h) { h = document.createElement('p'); h.className = 'hint'; const anchor = id === 'fBig' ? el : (el.closest('.cardhead') || el); anchor.insertAdjacentElement(id === 'fBig' ? 'beforebegin' : 'afterend', h); }
       h.textContent = 'ⓘ ' + t.hints[k];
     });
-    $('guideBody').innerHTML = G.HRGuide.render(st.lang, t);
+    $('guideBody').innerHTML = G.HRGuide.render(st.lang, t) + `<section class="card"><h2>${esc(st.lang === 'tr' ? 'Hesap ve gözlem hassasiyeti' : 'Calculation and observation accuracy')}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
     $('checkBody').innerHTML = G.HRGuide.planHtml(st.lang);
     applyTheme();
   }
@@ -5523,13 +5649,14 @@ var qrcode = function() {
   const CLS_STYLE = { notBorn: 'bad', below8: 'bad', below5: 'warn', possible: 'warn', visible: 'ok', midMonth: 'info' };
   const CLS_TOPIC = { notBorn: 'ictima', below8: 'beynunet', below5: 'besderece', possible: 'beynunet', visible: 'beynunet', midMonth: 'hesap' };
   const CLS_COLOR = { visible: '--c-visible', possible: '--c-possible', below5: '--c-below5', below8: '--c-below8', notBorn: '--c-notborn' };
+  function showHMaxNote() { const n = $('hMaxNote'); if (!n) return; n.hidden = !!(st.hMax && st.hMax > 0); n.textContent = t.hMaxUnset; }
   function locObj() { return { lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, hMax: st.hMax, tz: st.tz }; }
   const evCache = new Map();
   function eveningCached(loc, ymd) { const k = [loc.lat, loc.lon, loc.elev, loc.hObs, loc.hMax, ymd].join('|'); if (!evCache.has(k)) { let r; try { r = C.evening(loc, ymd); } catch (e) { r = { ok: false }; } evCache.set(k, r); } return evCache.get(k); }
 
   function update() {
     if (!isFinite(st.lat) || !isFinite(st.lon)) return;
-    LOC = locObj();
+    LOC = locObj(); showHMaxNote();
     R = eveningCached(LOC, st.date);
     tzCheck();
     if (!R.ok) {
@@ -5858,13 +5985,13 @@ var qrcode = function() {
     MONTH = { conj, hmn, eG, eL, eM, meth, isHajj };
     let a = kv(t.monthName, `${monthName(hmn.m)} ${hmn.y}`, t.monthNote, 'txt');
     a += kv(t.conj + ' ' + q('ictima'), fmtDT(conj), utcSub(conj));
-    a += kv(t.scope + ' ' + q('kuresel'), isHajj ? t.scopeLocal : t.scopeGlobal, '', 'txt');
+    a += kv(t.scope + ' ' + q('kuresel'), isHajj ? t.scopeLocal : t.scopeGlobal, isHajj ? '' : t.globalScope, 'txt');
     $('month1').innerHTML = a;
     renderMini();
     const ref = isHajj ? eL : eG;
     let b = '';
     if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), st.lang === 'tr' ? 'veya ertesi gün (s. 360)' : 'or the next day (p. 360)', 'txt'); }
-    b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : 'Se’âdet-i Ebediyye s. 326, 359', 'txt');
+    b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
     const hj = hijriOf(st.date);
     if (hj) b += kv(t.lunarDay + ' ' + q('hicri'), `<span class="lunar">${esc(hj.dayTxt)}</span><small>${esc(hj.monthTxt)}</small>`, t.lunarDayNote, 'txt');
     $('month2').innerHTML = b;
@@ -5901,7 +6028,7 @@ var qrcode = function() {
     h += kv(t.modernLimit, degf(r.beynunet), r.beynunet < C.K.MODERN_MIN_ELONG ? t.modernBelow : t.modernAbove);
     h += kv(t.bookWindow + ' ' + q('besderece'), r.windowEnd ? `${fmtTime(r.gurub)} – ${fmtTime(r.windowEnd)}` : t.noWindow, r.windowEnd ? t.bookWindowTxt : '');
     if (r.kadihan17) h += kv(t.safak17, r.kadihan17 === 'first' ? t.kFirst : t.kSecond, t.safak17Note, 'txt');
-    if (r.W != null) { h += kv(t.width, num(r.W, 3) + '′'); h += kv(t.arcl, degf(r.arcl)); h += kv(t.arcv, `${degf(r.arcvGeo)} / ${degf(r.arcvTopo)}`); }
+    if (r.W != null) { h += kv(t.width, `${num(r.Wy, 3)}′ / ${num(r.W, 3)}′`); h += kv(t.arcl, `${degf(r.arclGeo)} / ${degf(r.arcl)}`); h += kv(t.arcv, `${degf(r.arcvGeo)} / ${degf(r.arcvTopo)}`); }
     h += kv(t.dip, num(C.dipBook(st.hObs) * 60, 1) + '′', '106,92″ × √h (s. 185)');
     if (r.seri) h += kv(t.zaviye, num(r.seri.zaviye * 60, 1) + '′', `${t.temkin} ${num(r.seri.temkinMin, 2)} ${t.min}`);
     $('extra').innerHTML = h + (renderMonth.other || '');
@@ -6022,6 +6149,9 @@ var qrcode = function() {
     const today = todayYmd(st.tz);
     if (full || FRdate !== today || !FR || FRange === undefined) { FR = eveningCached(loc, today); FRdate = today; FAge = C.lastNewMoonBefore(now); FRange = eveningRange(FR, loc); }
     const city = CITIES.find(c => c.id === st.city);
+    // v0.8: Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
+    let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
+    $('fSafety').hidden = !sunUp; if (sunUp) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = !compassOn;
     $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
@@ -6093,7 +6223,7 @@ var qrcode = function() {
   function recTime() {
     const v = $('recAt').value; if (!v) return A.MakeTime(new Date());
     const [d, hmv] = v.split('T'), [hh, mm] = hmv.split(':').map(Number);
-    return A.MakeTime(new Date(C.tzMidnight(d, st.tz) + (hh * 60 + mm) * 60000));
+    return A.MakeTime(new Date(C.localToUT(d, hh * 60 + mm, st.tz)));
   }
   // Kayıt anının ait olduğu akşam: o yerel günün gurûbundan sonra ise o gün; gün doğumundan önceyse bir önceki gün; aradaysa gündüz
   function recEveningOf(at) {
@@ -6107,7 +6237,8 @@ var qrcode = function() {
   function showRecEvening() { const e = recEveningOf(recTime()); $('recEvLbl').textContent = e.day ? t.recDayLbl : t.recEvening(fmtCivil(civil(e.ymd))); }
   // ---- Rü’yet kaydı v2 (v0.5): ICOP benzeri alanlar + fıkhî alanlar, SHA-256 özeti, cihaz imzası ----
   function evaluateRecord(result, at) {
-    const saw = result !== 'not', e = recEveningOf(at), r = e.r;
+    const saw = !['not', 'noObs'].includes(result), e = recEveningOf(at), r = e.r;
+    if (result === 'noObs') return { txt: t.evNoObs, cls: 'p-info', ymd: e.ymd, e };
     if (!saw) return { txt: t.evNotSaw, cls: 'p-info', ymd: e.ymd, e };
     if (!r || !r.ok) return { txt: t.none, cls: 'p-info', ymd: e.ymd, e };
     if (e.day) return { txt: t.evDay, cls: 'p-warn', ymd: e.ymd, e };
@@ -6117,8 +6248,9 @@ var qrcode = function() {
     if (p.moon.alt < 5) parts.push(t.evWarn5);
     if (r.kadihan19) parts.push((r.kadihan19 === 'first' ? t.kFirst : t.kSecond) + (r.kadihanDiffer ? ` (${t.kdB}: ${r.kadihan17 === 'first' ? t.kdFirst : t.kdSecond})` : ''));
     if (result === 'aided' || result === 'photo') parts.push(t.evAided);
+    if (result === 'doubt') parts.push(t.evDoubt);
     parts.push(t.evOk);
-    return { txt: parts.join(' '), cls: result === 'aided' || result === 'photo' || p.moon.alt < 5 ? 'p-warn' : 'p-ok', ymd: e.ymd, e };
+    return { txt: parts.join(' '), cls: ['aided', 'photo', 'doubt'].includes(result) || p.moon.alt < 5 ? 'p-warn' : 'p-ok', ymd: e.ymd, e };
   }
   async function photoOf(file) {
     if (!file) return null;
@@ -6131,12 +6263,21 @@ var qrcode = function() {
     } catch (e) { return null; }
   }
   const isoT = at => at ? at.date.toISOString() : null;
+  // v0.8: çelişen form bilgileri kayıttan önce yakalanır
+  function recFormError() {
+    const result = $('recRes').value, seen = !['not', 'noObs'].includes(result);
+    if (seen && result !== 'doubt' && (+$('recSeers').value || 0) < 1) return t.recErrSeers;
+    const f = $('recFirst').value, l = $('recLast').value; if (f && l && f > l) return t.recErrOrder;
+    if (recTime().date.getTime() > Date.now() + 10 * 60000) return t.recErrFuture;
+    return null;
+  }
   async function addRecord() {
+    const err = recFormError(); if (err) { $('recEval').innerHTML = `<span class="pill p-bad">${esc(err)}</span>`; toast(err); return; }
     const at = recTime(), result = $('recRes').value, ev = evaluateRecord(result, at), loc = locObj(), r = ev.e.r;
     const p = C.at(at, loc), city = CITIES.find(c => c.id === st.city);
     const rec = {
       schema: 'hilal-ruyet-kaydi/1', id: (G.crypto && G.crypto.randomUUID ? G.crypto.randomUUID() : 'r' + Date.now().toString(36)), created: new Date().toISOString(),
-      app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME, official: OFFICIAL !== false },
+      app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME, official: OFFICIAL !== false, engine: 'Astronomy Engine 2.1.19', rules: G.HR_RULES, models: 'Yallop 1997 (geo ARCL); Odeh 2004 (topo)' },
       observer: { name: $('recName').value.trim(), contact: $('recContact').value.trim() },
       place: { name: city ? city[st.lang] : (st.locAuto ? t.myPlace : ''), lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, tz: st.tz, site: $('recPlace').value },
       observation: { at: at.date.toISOString(), evening: ev.ymd, result, firstSeen: $('recFirst').value || null, lastSeen: $('recLast').value || null, sky: $('recSky').value, companions: +$('recWith').value || 0, seers: +$('recSeers').value || 0, note: $('recNote').value.trim() },
@@ -6145,11 +6286,22 @@ var qrcode = function() {
         atObs: { moonAlt: +p.moon.alt.toFixed(3), moonAz: +p.moon.az.toFixed(2), sunAlt: +p.sun.alt.toFixed(3), elong: +p.elong.toFixed(3) }, evaluation: ev.txt, evalClass: ev.cls } : null,
       photo: await photoOf($('recPhoto').files && $('recPhoto').files[0])
     };
-    let sealed = rec; try { sealed = await G.HRSig.seal(rec); } catch (e) { /* özetsiz */ }
-    records.unshift(sealed); records = records.slice(0, 200);
-    try { localStorage.setItem('hr-records', JSON.stringify(records)); } catch (e) { if (sealed.photo) { sealed.photo = Object.assign({}, sealed.photo, { thumb: null }); saveRec(); } }
+    // v0.8: içerik önce kesinleşir, mühür (özet + imza) son içeriğe vurulur, sonra saklamanın başarısı denetlenir.
+    const sealOf = async x => { try { return await G.HRSig.seal(x); } catch (e) { return x; } };
+    let sealed = await sealOf(rec), stored = storeRecs([sealed, ...records]);
+    if (!stored && rec.photo && rec.photo.thumb) {   // depolama dolu: önizlemesiz içerikle YENİDEN mühürle
+      rec.photo = Object.assign({}, rec.photo, { thumb: null, thumbDropped: true });
+      sealed = await sealOf(rec); stored = storeRecs([sealed, ...records]);
+    }
+    if (!stored) {
+      $('recEval').innerHTML = `<span class="pill p-bad">${esc(t.recStoreFail)}</span>`;
+      saveFile(`ruyet-kaydi-${sealed.observation.evening}-${String(sealed.id).slice(0, 8)}.json`, JSON.stringify(sealed, null, 2), 'application/json');
+      return;
+    }
+    records.unshift(sealed);
+    if (records.length >= REC_WARN) toast(t.recMany(records.length), 8000);
     $('recNote').value = ''; $('recPhoto').value = ''; $('recFirst').value = ''; $('recLast').value = '';
-    $('recEval').innerHTML = `<span class="pill ${ev.cls}">${esc(t.recRes[result])}</span> ${esc(ev.txt)}<br><span class="hash">${esc(t.recHash)}: ${esc(sealed.hash || t.none)}${sealed.signer ? ` · ${esc(t.recSig)}: ${esc(sealed.signer.fp)}` : ` · ${esc(t.recNoSig)}`}</span>`;
+    $('recEval').innerHTML = `<span class="pill ${ev.cls}">${esc(t.recRes[result])}</span> ${esc(ev.txt)}${sealed.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}${sealed.photo && sealed.photo.thumbDropped ? `<br><span class="small">${esc(t.recThumbDropped)}</span>` : ''}<br><span class="hash">${esc(t.recHash)}: ${esc(sealed.hash || t.none)}${sealed.signer ? ` · ${esc(t.recSig)}: ${esc(sealed.signer.fp)}` : ` · ${esc(t.recNoSig)}`}</span>`;
     toast(t.recSaved); renderRecords(true); resetRecAt();
   }
   function recText(x) {
@@ -6161,13 +6313,45 @@ var qrcode = function() {
     if (o.firstSeen || o.lastSeen) L.push(`${t.recFirst}: ${o.firstSeen || '—'} · ${t.recLast}: ${o.lastSeen || '—'}`);
     if (c) L.push(`${t.tutCalc}: ${t.gurub} ${f(c.gurub)} · ${t.beyn.split(' ')[0]} ${c.beynunet.toFixed(2)}° · ${t.alt.split(' ')[0]} ${c.atObs.moonAlt.toFixed(2)}° · ${t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls}`);
     if (o.note) L.push(`${t.notes}: ${o.note}`);
-    L.push(`SHA-256: ${x.hash || '—'}${x.signer ? ' · key ' + x.signer.fp : ''}`, `${t.appTitle} v${(x.app && x.app.version) || ''}`);
+    if (!x.observer.name) L.push(t.recAnon);
+    L.push(`SHA-256: ${x.hash || '—'}${x.signer ? ' · key ' + x.signer.fp : ''}`, `${t.appTitle} v${(x.app && x.app.version) || ''}${x.app && x.app.rules ? ' · ' + t.traceRules + ' ' + x.app.rules : ''}${x.app && x.app.official === false ? ' · ' + t.tamperShort : ''}`);
     return L.join('\n');
   }
   async function saveFile(name, data, mime) {
     if (!ON.sandboxed) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: mime })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); return true; }
     const dl = await getDownloads(); if (!dl) { toast(t.printNA); return false; }
     try { await dl.save({ filename: name, data }); return true; } catch (e) { toast(e && e.code === 'declined' ? t.printDeclined : t.printNA); return false; }
+  }
+  // ---- v0.8: yedekleme, geri yükleme, fotoğraf doğrulama ----
+  function backupRecords() {
+    const data = { schema: 'mahinev-kayit-yedegi/1', created: new Date().toISOString(), app: { name: 'Mâh-ı Nev', version: G.HR_VERSION }, records };
+    saveFile(`mahinev-kayitlar-${todayYmd(st.tz)}.json`, JSON.stringify(data, null, 2), 'application/json');
+  }
+  async function importRecords(ev) {
+    const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
+    let list = null;
+    try { const j = JSON.parse(await f.text()); list = Array.isArray(j) ? j : j && Array.isArray(j.records) ? j.records : j && j.schema === 'hilal-ruyet-kaydi/1' ? [j] : null; } catch (e) { list = null; }
+    if (!list) { toast(t.recImportBad); return; }
+    const have = new Set(records.map(x => x.id || x.ts)); let add = 0, dup = 0;
+    for (const x of list) { if (!x || !(x.schema || x.ts)) continue; const k = x.id || x.ts; if (have.has(k)) { dup++; continue; } have.add(k); records.push(x); add++; }
+    records.sort((a, b) => String((b.observation && b.observation.at) || b.ts).localeCompare(String((a.observation && a.observation.at) || a.ts)));
+    if (saveRec()) toast(t.recImported(add, dup)); renderRecords(true);
+  }
+  async function checkPhoto(ev) {
+    const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
+    let h = null; try { h = await G.HRSig.sha256(await f.arrayBuffer()); } catch (e) { h = null; }
+    const x = h && records.find(r => r.photo && r.photo.sha256 === h);
+    const msg = x ? t.recPhotoMatch(`${fmtCivil(civil(x.observation.evening))} · ${x.observer.name || '—'}`) : t.recPhotoNone;
+    $('recEval').innerHTML = `<span class="pill ${x ? 'p-ok' : 'p-warn'}">${esc(msg)}</span><br><span class="hash">SHA-256 ${esc(h || '—')}</span>`; toast(msg);
+  }
+  // Kayıt listesinde her kaydın özeti ve imzası yeniden doğrulanır
+  async function verifyBadges() {
+    const els = $('recList').querySelectorAll('[data-ver]');
+    for (const el of els) {
+      const x = records[+el.dataset.ver]; if (!x || !x.hash) continue;
+      let v = { hash: false, sig: false }; try { v = await G.HRSig.verify(x); } catch (e) { /* */ }
+      el.innerHTML = v.hash ? `<span class="pill p-ok">✓ ${esc(t.recVerified)}${v.sig ? ' · ECDSA' : ''}</span>` : `<span class="pill p-bad">✗ ${esc(t.recBroken)}</span>`;
+    }
   }
   let recShown = -1;
   function renderRecords(force) {
@@ -6178,11 +6362,12 @@ var qrcode = function() {
       const o = x.observation;
       return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.place.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at)))}<br><span class="small">${esc(t.recEvening(fmtCivil(civil(o.evening), true)))}</span></td>
         <td><span class="pill ${x.computed ? x.computed.evalClass : (o.result === 'not' ? 'p-info' : 'p-warn')}">${esc(t.recRes[o.result])}</span>${x.observer.name ? `<br><span class="small">${esc(x.observer.name)}</span>` : ''}</td>
-        <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span></td>
+        <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
         <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
     }).join('')}</tbody></table>`;
     const L = $('recList');
     L.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { records.splice(+b.dataset.del, 1); saveRec(); renderRecords(true); });
+    verifyBadges();
     L.querySelectorAll('[data-tut]').forEach(b => b.onclick = () => printPages(['tut'], records[+b.dataset.tut]));
     L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(`ruyet-kaydi-${x.observation.evening}-${x.id.slice(0, 8)}.json`, JSON.stringify(x, null, 2), 'application/json'); });
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
@@ -6227,11 +6412,13 @@ var qrcode = function() {
     const hj = hijriAt(at);
     $('mbHijri').innerHTML = hj ? `${hj.local ? hj.html2 : hj.html} <span class="note" title="${esc(t.hjNote)}">· ${esc(t.hjHesabi)}${hj.after ? ' · ' + esc(t.hjAfter) : ''}</span> ${q('hicri')}` : '';
     const city = CITIES.find(c => c.id === st.city);
-    const chips = [`<span class="chip" title="${esc(st.locAuto ? t.chipLocAuto : t.chipLocMan)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? city[st.lang] : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))}</span>`];
+    const chips = [`<button type="button" class="chip loc" id="mbLoc" title="${esc((st.locAuto ? t.chipLocAuto : t.chipLocMan) + ' · ' + t.location)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? city[st.lang] : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))} ✎</button>`];
     if (ON.sandboxed) chips.push(`<span class="chip off" title="${esc(t.sandboxNote)}">${esc(t.chipSandbox)}</span>`);
     else if (!ON.online()) chips.push(`<span class="chip off">${esc(t.chipOffline)}</span>`);
     if (WX.ass) chips.push(`<span class="chip" title="${esc(t.wxTitle)}">${{ good: '☀', fair: '⛅', poor: '☁' }[WX.ass.level]} ${esc(t.wxLevel[WX.ass.level])}</span>`);
     $('mbChips').innerHTML = chips.join('');
+    // v0.8: konum çipi Konum kartına götürür (dar ekranda kart aşağıda kaldığı için)
+    $('mbLoc').onclick = () => { if (view !== 'plan') location.hash = '#plan'; setTimeout(() => { const c = $('hLoc'); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'start' }); try { $('city').focus({ preventScroll: true }); } catch (e) { /* */ } } }, 60); };
     $('mbNow').hidden = live;
     $('mbLive').hidden = !live || field;
     $('mbPlay').setAttribute('aria-pressed', String(live && !frozen)); $('mbFreeze').setAttribute('aria-pressed', String(frozen));
@@ -6262,7 +6449,7 @@ var qrcode = function() {
       return `<div class="${r.cls.code === 'visible' ? 'ok' : 'warn'}"><b>${esc(lbl)}</b><strong>${esc(fmtCivil(civil(x.ymd)))}</strong><span class="small">${esc(t.upIn(days))} · ${esc(t.upMonth(monthName(h.m) + ' ' + h.y))}</span><br><span class="small">${esc(clsText(r)[0])} · ${esc(t.upWin)} ${hhmm(r.gurub)}–${hhmm(r.windowEnd || r.moonset)} · ${t.beyn.split(' ')[0]} ${degf(r.beynunet, 1)}</span><br><button class="btn primary" type="button" data-up="${x.ymd}">${esc(t.upPlan)}</button></div>`;
     };
     const hj = hijriAt(A.MakeTime(new Date()));
-    let h = (hj ? `<div><b>${esc(t.upToday)}</b><strong>${hj.local ? hj.html2 : hj.html}</strong><span class="small">${esc(t.hjShort)}</span></div>` : '') + box(t.upA, d.a);
+    let h = (hj ? `<div><b>${esc(t.upToday)}</b><strong>${hj.local ? hj.html2 : hj.html}</strong><span class="small">${esc(t.hjShort)} ${esc(t.hjBook)}</span></div>` : '') + box(t.upA, d.a);
     if (d.b && (!d.a || d.b.ymd !== d.a.ymd)) h += box(t.upB, d.b);
     if (d.prev) {
       const pr = d.prev, ph = CAL.monthForConjunction(pr.r.ictimaPrev.date), ago = Math.round((civil(d.today) - civil(pr.ymd)) / 86400000);
@@ -6391,7 +6578,7 @@ var qrcode = function() {
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
-  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}</span></footer>`; }
+  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}</span></footer>`; }
   const locLine = () => `<strong>${esc(placeName())}</strong> · ${num(st.lat, 4)}°, ${num(st.lon, 4)}° · ${num(st.elev, 0)} m · ${esc(st.tz)}`;
   function pagePlan() {
     const r = R; if (!r) return '';
@@ -6459,7 +6646,7 @@ var qrcode = function() {
       row(t.recPlace, blank ? `${v('', 70)}<br>☐ ${esc(t.recPlaceOpts.open)} ☐ ${esc(t.recPlaceOpts.high)} ☐ ${esc(t.recPlaceOpts.city)}` : `${esc(pl.name || '')} ${num(pl.lat, 4)}°, ${num(pl.lon, 4)}° · ${num(pl.elev, 0)} m<br>${esc(t.recPlaceOpts[pl.site] || '')}`) +
       row(t.recSky, blank ? Object.values(t.recSkyOpts).map(s => `☐ ${esc(s)}`).join(' ') : esc(t.recSkyOpts[o.sky] || '')) +
       row(`${t.recWith} / ${t.recSeers}`, blank ? `${v('', 15)} / ${v('', 15)}` : `${o.companions} / ${o.seers}`) +
-      row(t.notes, blank ? `${v('', 110)}<br>${v('', 110)}` : esc(o.note || '—'));
+      row(t.notes, blank ? `${v('', 110)}<br>${v('', 110)}` : (o.note && o.note.length > 240 ? `<span class="clamp">${esc(o.note.slice(0, 240))}…</span> <span class="small">(${esc(t.noteFull)})</span>` : esc(o.note || '—')) + (!blank && !x.observer.name ? `<br><span class="small">${esc(t.recAnon)}</span>` : ''));
     const comp = c ? row(t.lastConj.replace(/\(.*\)/, ''), esc(f(c.ictima))) + row(t.gurub.replace(/\(.*\)/, ''), tm(c.gurub) + (c.seriGurub ? ` · ${esc(t.seri.replace(/\(.*\)/, ''))} ${tm(c.seriGurub)}` : '')) +
       row(t.stWindow, c.windowEnd ? `${tm(c.gurub)} – ${tm(c.windowEnd)}` : t.none) + row(t.moonset.replace(/\(.*\)/, ''), tm(c.moonset)) +
       row(t.beyn.replace(/\(.*\)/, ''), degf(c.beynunet)) + row(`${t.alt.replace(/\(.*\)/, '')} (${st.lang === 'tr' ? 'gözlem anında' : 'at observation'})`, `${degf(c.atObs.moonAlt)} · ${t.az.split(' ')[0]} ${degf(c.atObs.moonAz, 1)}`) +
@@ -6467,7 +6654,7 @@ var qrcode = function() {
     const photo = !blank && x.photo && x.photo.thumb ? `<figure class="pph"><img src="${x.photo.thumb}" alt=""><figcaption class="hash">SHA-256 ${esc(x.photo.sha256)}</figcaption></figure>` : '';
     const qr = !blank && x.hash ? qrSvg(`HRK1|${x.id}|${x.hash}`) : '';
     return `<section class="a4 tut">${pgHead(t.tutTitle, esc(t.tutSub) + (blank ? '' : ` · ${esc(t.tutRecId)}: ${esc(x.id)}`))}
-      <div class="cols tcols"><div><h3>${esc(t.tutObs)}</h3><table class="pt">${obsT}</table>${photo}</div><div><h3>${esc(t.tutComp)}</h3><table class="pt">${comp}</table></div></div>
+      <div class="cols tcols"><div><h3>${esc(t.tutObs)}</h3><table class="pt">${obsT}</table></div><div><h3>${esc(t.tutComp)}</h3><table class="pt">${comp}</table>${photo}</div></div>
       <h3>${esc(t.tutPeople)}</h3>
       <table class="sig"><tr><th>${esc(t.recName)}</th><td>${v(ob.name, 70)}</td><th>${esc(t.tutSign)}</th><td><span class="blank" style="min-width:45mm"></span></td></tr>
         <tr><th>${esc(t.recContact)}</th><td colspan="3">${v(ob.contact, 90)}</td></tr>
@@ -6501,7 +6688,7 @@ var qrcode = function() {
     table.sig { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.sig th { text-align: left; font-weight: 600; color: #444; padding: 1.6mm 2mm .8mm 0; white-space: nowrap; } table.sig td { padding: 1.6mm 0 .8mm; }
     .fiqh { border: .6pt solid #c9b27a; background: #fbf6e8; border-radius: 2mm; padding: 2mm 3mm; } .fiqh p { margin: 0; font-size: 8.3pt; line-height: 1.45; }
     .integ { display: flex; gap: 4mm; align-items: center; } .qr svg { width: 26mm; height: 26mm; display: block; } .hash { font: 500 7.6pt var(--font-mono); word-break: break-all; margin: .5mm 0; color: #333; }
-    .pph { margin: 2mm 0 0; } .pph img { max-width: 100%; max-height: 34mm; display: block; border-radius: 1mm; } .pph figcaption { margin-top: .6mm; }
+    .pph { margin: 2mm 0 0; } .pph img { max-width: 100%; max-height: 26mm; display: block; border-radius: 1mm; } .pph figcaption { margin-top: .6mm; }
     .cap { font-size: 8pt; color: #444; margin: 0; } .small { font-size: 8pt; color: #555; } .legend { font-size: 8pt; }
     button, .q { display: none !important; }`;
   async function printPages(kinds, rec) {
@@ -6644,6 +6831,23 @@ var qrcode = function() {
     add('v0.6 konum girişi', 'Çift giriş, harita bağlantısı, yanlış alana yazılan tûl', 'çift → iki alan; “E” → tûl alanı', pairOk ? 'doğru' : JSON.stringify([p1, p2, p3, p4, sw].map(r => r.pair || r.err || r.swapped)), '—', pairOk);
     const bad = [CP('95', 'lat').err, CP('41 65 0', 'lat').err, CP('41 X', 'lat').err], nums = [G.HRCoord.parseNum('1.054'), G.HRCoord.parseNum('40,5 m'), G.HRCoord.parseNum('267')];
     add('v0.6 konum girişi', 'Hatalı girişler ve sayı alanları', 'range · minsec · letter / 1054 · 40,5 · 267', `${bad.join(' · ')} / ${nums.join(' · ')}`, '—', bad.join() === 'range,minsec,letter' && nums[0] === 1054 && nums[1] === 40.5 && nums[2] === 267);
+    // v0.8: bağımsız inceleme raporu bulguları
+    const iso = ms => new Date(ms).toISOString().slice(0, 16).replace('T', ' ');
+    const dst = [['Europe/Berlin', '2026-03-29', 30, '2026-03-28 23:30'], ['Europe/Berlin', '2026-10-25', 30, '2026-10-24 22:30'], ['Europe/Berlin', '2026-03-29', 1200, '2026-03-29 18:00'],
+      ['Europe/Berlin', '2026-03-29', 150, '2026-03-29 01:30'], ['Europe/Berlin', '2026-10-25', 150, '2026-10-25 00:30'], ['America/New_York', '2026-03-08', 1200, '2026-03-09 00:00'], ['Europe/London', '2026-10-25', 1080, '2026-10-25 18:00']];
+    const dstGot = dst.map(([z, d, m]) => iso(C.localToUT(d, m, z)));
+    add('v0.8 saat dilimi', 'Yaz saati geçiş günlerinde yerel saat → UTC (Berlin 00:30, 20:00, 02:30 · New York · Londra)', dst.map(x => x[3].slice(11)).join(' / '), dstGot.map(x => x.slice(11)).join(' / '), '0 dk', dst.every((x, i) => x[3] === dstGot[i]));
+    const yq = C.evening({ lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' }, '2026-12-10');
+    add('v0.8 Yallop (1997)', 'İstanbul 10.12.2026: q, jeosentrik ARCL ile (inceleme raporundaki bağımsız hesap ≈ 0,1149)', '0,115 ± 0,005', num(yq.yallopQ, 4), '±0,005', Math.abs(yq.yallopQ - 0.1149) <= 0.005);
+    const cG = A.SearchMoonPhase(0, TT('2026-08-01T00:00Z'), 40), fullG = []; for (let la = -66; la <= 66; la += 6) for (let lo = -180; lo < 180; lo += 15) fullG.push([la, lo]);
+    const gB = C.earliestDay(cG, null), gF = C.earliestDay(cG, fullG);
+    add('v0.8 küresel kapsam', 'Ağustos 2026 ictimâsı: tarih çizgisi kuşağı = bütün dünya ızgarası (en erken akşam)', gF ? ymdOf(gF.evening) : '—', gB ? ymdOf(gB.evening) : '—', '—', gB && gF && ymdOf(gB.evening) === ymdOf(gF.evening));
+    const keepF = { r: $('recRes').value, s: $('recSeers').value, f: $('recFirst').value, l: $('recLast').value };
+    $('recRes').value = 'naked'; $('recSeers').value = '0'; const fe1 = recFormError();
+    $('recSeers').value = '1'; $('recFirst').value = '18:20'; $('recLast').value = '18:05'; const fe2 = recFormError();
+    $('recRes').value = 'noObs'; $('recSeers').value = '0'; $('recFirst').value = ''; $('recLast').value = ''; const fe3 = recFormError();
+    Object.assign($('recRes'), { value: keepF.r }); $('recSeers').value = keepF.s; $('recFirst').value = keepF.f; $('recLast').value = keepF.l;
+    add('v0.8 kayıt formu', 'Gördüm + 0 kişi / ilk > son saat / gözlem yapılamadı', 'hata / hata / geçerli', `${fe1 ? 'hata' : 'geçerli'} / ${fe2 ? 'hata' : 'geçerli'} / ${fe3 ? 'hata' : 'geçerli'}`, '—', fe1 === t.recErrSeers && fe2 === t.recErrOrder && !fe3);
     // v0.7: yaklaşan ay başı rasadı (geçmiş geceye gitmez), resmî sürüm bildirimi ve bütünlük
     const keep2 = LOC; LOC = { lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul' };
     let u1 = null, u2 = null, u3 = null; try { u1 = nextRasad('2026-11-11'); u2 = nextRasad('2026-11-12'); u3 = nextRasad('2026-12-11'); } finally { LOC = keep2; }

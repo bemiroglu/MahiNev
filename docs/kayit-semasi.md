@@ -8,11 +8,12 @@ Saha sekmesindeki "Rü'yet kaydı ve tutanak" formu her gözlem için bir JSON k
 |---|---|
 | `observer` | Gözlemcinin adı ve isteğe bağlı iletişim bilgisi. Program ikisini de yalnızca bu cihazda saklar. |
 | `place` | Enlem, boylam, rakım, saat dilimi ve gözlem yeri türü: `open` şehir dışı, `high` yüksek yer, `city` şehir içi. |
-| `observation.result` | `naked` çıplak gözle; `aidedNaked` dürbünle bulup çıplak gözle; `aided` yalnız optik yardımla; `photo` yalnız fotoğrafla; `not` görülmedi. |
+| `observation.result` | `naked` çıplak gözle; `aidedNaked` dürbünle bulup çıplak gözle; `aided` yalnız optik yardımla; `photo` yalnız fotoğrafla; `doubt` şüpheli (cismin hilâl olduğu kesin değil, rü'yet beyanı sayılmaz); `not` dikkatle arandı, görülmedi; `noObs` gözlem yapılamadı (bulut, ufuk engeli vb.; hilâlin bulunmadığını göstermez). |
 | `observation.sky` | `clear` açık, `partly` parçalı, `cloud` bulutlu (hilâl bulut arasından), `haze` puslu. Açık ve bulutlu hava farkı fıkhen önemlidir (s. 315). |
 | `observation.evening` | Kaydın ait olduğu akşam. Gurûbdan sonra yapılan kayıt o güne, gün doğumundan önceki kayıt bir önceki güne aittir. |
 | `computed` | Program tarafından eklenir: ictimâ, gurûb, şer'î gurûb, kitabın penceresi, beynûnet, gözlem anında hilâlin irtifâı, sınıf, Kâdîhân, değerlendirme. **Hüküm değildir.** |
-| `photo` | Fotoğrafın SHA-256 özeti ve küçük bir önizlemesi. Asıl dosya cihazda kalır. |
+| `app` | Programın adı ve sürümü; `source` resmî adres, `official` bütünlük denetiminin sonucu, `engine` astronomi çekirdeği, `rules` kural kümesi (ör. `TI-360/1`), `models` modern ölçütlerin tanımı (v0.8). |
+| `photo` | Fotoğrafın SHA-256 özeti ve küçük bir önizlemesi. Asıl dosya cihazda kalır; programdaki "Fotoğrafı doğrula" düğmesi, seçilen dosyanın özetinin bir kayıtla eşleşip eşleşmediğini gösterir. Depolama yetersizse önizleme saklanmaz (`thumbDropped: true`); bu durumda kayıt önizlemesiz içerikle yeniden mühürlenir. |
 | `signer`, `sig` | Cihaz imzası. Biçim ECDSA P-256 / SHA-256, imza IEEE P1363 (r‖s) olarak base64 ile kodlanır. İmzalanan veri `hash` metnidir. |
 | `hash` | `hash` ve `sig` hariç kaydın kanonik JSON'unun SHA-256 özeti. |
 
@@ -41,3 +42,11 @@ python3 tools/verify_record.py kayit.json
 ## QR kodu
 
 Tutanaktaki QR kodu `HRK1|<kayıt-no>|<sha256>` metnini taşır. Basılı tutanak bu yolla dijital kayıtla eşleştirilir.
+
+## Saklama ve yedekleme (v0.8)
+
+- Kayıtlar yalnız tarayıcıda (localStorage) durur. Kayıt sayısında sınır yoktur; 150 kayıttan sonra yedek alma hatırlatılır.
+- Kayıt saklanamazsa (depolama dolu) program açık hata verir ve kaydı JSON dosyası olarak indirir; başarı izlenimi verilmez.
+- **Tüm kayıtları yedekle** düğmesi `mahinev-kayit-yedegi/1` biçiminde bir dosya üretir: `{ schema, created, app, records: [...] }`.
+- **Yedekten geri yükle** bu dosyayı, tek bir kaydı veya kayıt dizisini kabul eder; `id` aynı olan kayıtları ikinci kez eklemez.
+- Kayıt listesinde her kaydın özeti ve imzası açılışta yeniden doğrulanır.

@@ -11,10 +11,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b111b">
+<meta name="description" content="Mâh-ı Nev: Tam İlmihâl Se’âdet-i Ebediyye esaslı hilâl rasad yardımcısı. Tek dosya, çevrimdışı çalışır. Takvim değildir; hesâbî imkânı ve kesin reddi gösterir.">
+<meta property="og:title" content="Mâh-ı Nev — Hilâl Rasad Yardımcısı">
+<meta property="og:description" content="Tam İlmihâl esaslı hilâl rasad yardımcısı: rasad gecesi, arama penceresi, gökyüzü haritası, rü’yet kaydı ve tutanak.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bemiroglu.github.io/MahiNev/">
 <title>Mâh-ı Nev — Hilâl Rasad Yardımcısı</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
 <style>
 /* Plan: alacakaranlık gökyüzü. Masada açık/koyu tema, sahada kırmızı gece teması (karanlığa alışmış gözü korur).
    Düzen: Plan sekmesinde önce durum, sonra tam genişlikte ufuk çizimi; ölçümler ve ay başı kartı yan yana. */
@@ -100,12 +102,14 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 select.compact { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; min-height: 34px; }
 .stick { position: sticky; top: 0; z-index: 6; background: var(--bg); margin-bottom: 14px; }
+.card { scroll-margin-top: 170px; }
 nav.tabs { background: var(--bg); display: flex; gap: 2px; border-bottom: 1px solid var(--line); overflow-x: auto; }
 nav.tabs a { padding: 11px 14px; text-decoration: none; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; font-weight: 500; }
 nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
 .notice { background: var(--info-bg); border-left: 3px solid var(--info); padding: 9px 14px; border-radius: 6px; font-size: .9rem; margin: 0 0 14px; }
-.layout { display: grid; grid-template-columns: 290px 1fr; gap: 16px; align-items: start; }
-@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .layout > aside { order: 2; } }
+.layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 16px; align-items: start; }
+.layout > *, .grid2 > * { min-width: 0; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .layout > aside { order: 2; } }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; }
 .card h2 { font: 600 1.05rem/1.3 var(--font-display); margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
 .card h3 { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; font-weight: 600; }
@@ -139,8 +143,8 @@ dl.kv dt { color: var(--muted); font-size: .9rem; padding-right: 12px; display: 
 dl.kv dd { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
 dl.kv dd small { display: block; color: var(--muted); font-size: .78rem; font-family: var(--font-body); }
 dl.kv dd.txt { font-family: var(--font-body); }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 1060px) { .grid2 { grid-template-columns: 1fr; } }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 1060px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
 .sky { width: 100%; height: auto; display: block; border-radius: 8px; }
 .skyctl { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 10px; }
 .skyctl input[type=range] { width: 100%; accent-color: var(--accent); min-height: 32px; }
@@ -215,6 +219,12 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .strip button[aria-current="date"] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
 .strip button.today .d { text-decoration: underline; }
 .mapmsg { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; max-width: 80%; text-align: center; }
+.safety { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 8px 12px; border-radius: 6px; font-size: .86rem; margin: 0 0 14px; }
+.safety::before { content: "⚠ "; }
+#view-saha .safety { margin: 8px 0 0; font-size: .82rem; }
+.safety .short { display: none; }
+@media (max-width: 700px) { .safety .long { display: none; } .safety .short { display: inline; } }
+.rectools { margin-top: 8px; }
 .warnbox { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 7px 10px; border-radius: 6px; font-size: .85rem; margin: 6px 0 0; }
 .radio { display: flex; flex-direction: column; gap: 4px; }
 .radio label { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; min-height: 28px; cursor: pointer; }
@@ -268,7 +278,7 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
 .envnote { font-size: .82rem; background: var(--info-bg); border-left: 3px solid var(--info); padding: 6px 10px; border-radius: 6px; margin: 8px 0 0; }
 @media (max-width: 640px) {
   dialog.full { max-width: 100vw; width: 100vw; max-height: 100vh; height: 100vh; margin: 0; border-radius: 0; padding: 10px; }
-  .mbar { padding: 6px 8px; gap: 4px 8px; } .mbar .when { flex-basis: 100%; order: 2; font-size: .9rem; } .mbar .acts { margin-left: auto; } .mbar .chips { display: none; }
+  .mbar { padding: 6px 8px; gap: 4px 8px; } .mbar .when { flex-basis: 100%; order: 2; font-size: .9rem; } .mbar .acts { margin-left: auto; } .mbar .chips .chip:not(.loc) { display: none; }
   .mbar .when .hj .note { display: none; } .mbar .acts .btn { min-height: 30px; padding: 3px 8px; font-size: .8rem; }
   header.top { padding: 10px 0 6px; } .brand p { display: none; }
   .pano-scroll.west svg { min-width: 640px; height: auto; }
@@ -311,6 +321,14 @@ dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 /* v0.6 */
 .hint { font-size: .86rem; color: var(--muted); background: var(--surface-2); border-left: 3px solid var(--info); border-radius: 6px; padding: 6px 10px; margin: -4px 0 12px; line-height: 1.45; }
 body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCard { display: none !important; }
+/* v0.8: dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
+#hIntro { cursor: pointer; }
+@media (max-width: 700px) {
+  body:not(.introOpen) #introCard ol, body:not(.introOpen) #introCard .btns { display: none; }
+  #hIntro::after { content: " ▾"; font-size: .8em; color: var(--muted); }
+  body.introOpen #hIntro::after { content: " ▴"; }
+  .tools .btn .lbl { display: none; }
+}
 .intro ol { margin: 0 0 8px; padding-left: 1.3em; } .intro li { margin: 5px 0; }
 .coordnote { font-size: .82rem; margin: -2px 0 10px; color: var(--muted); min-height: 1.1em; } .coordnote.err { color: var(--bad); font-weight: 600; }
 .fstrip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 5px 12px 6px; background: var(--surface); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 10px 10px; font: 600 .9rem var(--font-body); }
@@ -352,6 +370,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
 
   <main id="view-plan">
     <p class="notice" id="notCalendar"></p>
+    <p class="safety" id="safety" role="note"></p>
     <div class="layout">
       <aside class="stack">
         <section class="card" aria-labelledby="hLoc">
@@ -367,7 +386,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
           <div class="field"><label for="hMax" id="lHMax"></label><input id="hMax" type="text" inputmode="decimal" autocomplete="off"></div>
           <div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div>
           <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
-          <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p>
+          <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p><p class="cap" id="hMaxNote" hidden></p>
         </section>
         <section class="card" aria-labelledby="hDate">
           <h2 id="hDate"></h2>
@@ -435,7 +454,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
       <div class="fbig" id="fBig" role="status"></div>
       <div id="fTrack"></div>
       <div class="cd" id="fCd"></div>
-      <p class="bigwhere" id="fWhere"></p><p class="small" id="fHeading"></p>
+      <p class="bigwhere" id="fWhere"></p><p class="small" id="fHeading"></p><p class="safety" id="fSafety" role="note"></p><p class="cap" id="fCompassNote" hidden></p>
       <div id="fSky"></div>
       <div id="fGuides"></div>
       <div class="ftools"><button class="btn" type="button" id="fNight" aria-pressed="false"></button><button class="btn" type="button" id="fWake" aria-pressed="false"></button><button class="btn" type="button" id="fCompass" aria-pressed="false"></button><button class="btn" type="button" id="fSM"></button><button class="btn" type="button" id="fLoc"></button><button class="btn" type="button" id="fFont">A+</button></div>
@@ -455,11 +474,13 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
         <div class="field"><label for="recContact" id="lRecContact"></label><input id="recContact" type="text"></div>
         <div class="field"><label for="recWith" id="lRecWith"></label><input id="recWith" type="number" min="0" step="1" value="0"></div>
         <div class="field"><label for="recSeers" id="lRecSeers"></label><input id="recSeers" type="number" min="0" step="1" value="0"></div>
-        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"></div>
+        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"><p class="cap" id="recPhotoKeep"></p></div>
       </div>
       <div class="field"><label for="recNote" id="lRecNote"></label><textarea id="recNote" rows="2"></textarea></div>
       <div class="btns recbtns"><button class="btn primary" type="button" id="recSave"></button></div>
       <p class="where" id="recEval" role="status"></p><h3 id="hRecList"></h3><div class="scroll" id="recList"></div>
+      <div class="btns rectools"><button class="btn" type="button" id="recBackup"></button><button class="btn" type="button" id="recImport"></button><button class="btn" type="button" id="recPhotoCheck"></button><input type="file" id="recImportFile" accept="application/json,.json" hidden><input type="file" id="recPhotoFile" accept="image/*" hidden></div>
+      <p class="cap" id="recBackupNote"></p>
       <h3 id="hNets"></h3><div id="netsBody" class="small"></div>
     </section>
     <details class="card extra" style="margin-top:16px" id="fCheck"><summary id="hCheck"></summary><div class="prose" id="checkBody"></div></details>
@@ -493,6 +514,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
         <h3 id="hLic"></h3>
         <p class="cap" id="licBody"></p>
         <button class="btn" type="button" id="dlHtml2"></button>
+        <p class="cap" id="privacyNote"></p>
       </div>
     </div>
   </dialog>

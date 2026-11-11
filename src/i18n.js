@@ -60,7 +60,7 @@
       safak17: 'Kâdîhân, İmâmeyn şafakı (−17°, kızıllık)', safak17Note: 'İmâmeyn’e ve diğer üç mezhebe göre şafak kızıllığın kaybolmasıdır (s. 178); bu ölçüyle şafak daha erken biter.',
       width: 'Hilâl kalınlığı W (topozentrik)', arcl: 'ARCL (topozentrik uzanım)', arcv: 'ARCV (jeosentrik / topozentrik)', dip: 'İnhitât-ı ufk (ufuk alçalması)', zaviye: 'İrtifâ zâviyesi (şer’î gurûb)',
       local: 'yerel', min: 'dk', h: 'sa', d: 'gün', none: '—', computing: 'hesaplanıyor…',
-      testsTitle: 'Doğrulama vakaları', testsIntro: 'Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Se’âdet-i Ebediyye’deki örnekler, Jamry ekranı ve bağımsız Python hesabıdır.',
+      testsTitle: 'Doğrulama vakaları', testsIntro: 'Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Tam İlmihâl’deki örnekler, Jamry ekranı ve bağımsız Python hesabıdır.',
       tCase: 'Vaka', tQty: 'Büyüklük', tExp: 'Beklenen', tGot: 'Hesaplanan', tTol: 'Tolerans', tRes: 'Sonuç', pass: 'Geçti', fail: 'Kaldı',
       helpRules: 'Programın kuralları', helpCanon: 'Kanonik kural metni', helpSources: 'Kaynaklar', helpTerms: 'Terimler',
       footer: 'v0.1 · hesap çekirdeği ve detay paneli · Astronomy Engine 2.1.19 (MIT)'
@@ -119,7 +119,7 @@
       safak17: 'Kâdîhân, Imâmayn twilight (−17°, red glow)', safak17Note: 'According to the Imâmayn and the other three schools, twilight ends when the red glow disappears (p. 178); by this measure it ends earlier.',
       width: 'Crescent width W (topocentric)', arcl: 'ARCL (topocentric elongation)', arcv: 'ARCV (geocentric / topocentric)', dip: 'İnhitât-ı ufk (dip of the horizon)', zaviye: 'Altitude angle (şer’î gurûb)',
       local: 'local', min: 'min', h: 'h', d: 'd', none: '—', computing: 'computing…',
-      testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Se’âdet-i Ebediyye, the Jamry screenshot and an independent Python calculation.',
+      testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Tam İlmihâl, the Jamry screenshot and an independent Python calculation.',
       tCase: 'Case', tQty: 'Quantity', tExp: 'Expected', tGot: 'Computed', tTol: 'Tolerance', tRes: 'Result', pass: 'Pass', fail: 'Fail',
       helpRules: 'Program rules', helpCanon: 'Canonical rule text', helpSources: 'Sources', helpTerms: 'Terms',
       footer: 'v0.1 · calculation core and detail panel · Astronomy Engine 2.1.19 (MIT)'

@@ -17,6 +17,18 @@ Mâh-ı Nev ("yeni ay", hilâl) tek bir HTML dosyasıdır. Kurulum gerektirmez; 
 
 Programın içinden de **⬇ HTML'yi indir** düğmesiyle o anda kullandığınız sürümü tek dosya olarak indirebilirsiniz.
 
+![Plan ekranı: yaklaşan ay başı rasadı, bu akşamın değerlendirmesi](docs/img/plan.png)
+
+## Nasıl başlarım?
+
+1. [Çevrimiçi adresi](https://bemiroglu.github.io/MahiNev/) açın veya `mahinev.html` dosyasını indirip tarayıcıda açın.
+2. **Konum:** Şehrinizi seçin ya da "Konumumu kullan"a dokunun. Arz ve tûlü dilediğiniz biçimde yazabilirsiniz (41,0082 · 41°00'29"K).
+3. **Yaklaşan ay başı rasadı** kartında rasad gecesini görün, "Bu geceyi planla" ile o akşama gidin.
+4. Rasad akşamı telefondan **Saha** sekmesini açın: saat, geri sayım, bakılacak yön ve gökyüzü çizimi oradadır.
+5. Gördüğünüzde veya göremediğinizde **Rü'yet kaydı** oluşturun; A4 tutanak olarak basabilir, JSON olarak paylaşabilirsiniz.
+
+<p align="center"><img src="docs/img/saha-mobil.png" alt="Saha sekmesi (telefon)" width="300"></p>
+
 ## Resmî sürüm
 
 Mâh-ı Nev'in resmî sürümü yalnızca **[github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev)** adresinden dağıtılır. Bunun sebebi, programın fıkhî kararlarının Tam İlmihâl'e bağlı olması ve başkalarınca değiştirilmemesi gerekmesidir.
@@ -51,10 +63,23 @@ Mâh-ı Nev'in resmî sürümü yalnızca **[github.com/bemiroglu/MahiNev](https
   - Kayıt; gözlem şartlarını, fotoğrafı, SHA-256 bütünlük özetini ve cihaz imzasını (ECDSA) içerir.
   - Tutanak A4 olarak, imza satırları ve QR kodu ile basılır.
 - **Odaklı A4 çıktılar:** rasad planı, gökyüzü haritası, aylık çizelge, dünya haritası ve tutanak; her biri tek sayfaya sığar.
+- **Gizlilik:** Kayıtlar, isimler ve konum yalnız tarayıcınızda durur. Program, siz hava tahminini açmadıkça dışarıya hiç bağlanmaz.
+- **Göz güvenliği:** Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın. Hilâl çıplak gözle aranır.
 - **Ek bilgiler:**
   - Modern ölçütler (Yallop, Odeh, Danjon) yalnızca ek bilgi olarak verilir.
   - Aritmetik takvim usulleri yalnızca takvim bilgisi olarak gösterilir.
 - **İsteğe bağlı çevrimiçi katman:** otomatik konum ile hava ve görüş tahmini (Open-Meteo). Hava tahmini başlangıçta kapalıdır.
+
+## Doğrulama
+
+- **Program içinde:** Doğrulama sekmesinde 52 test bulunur. Bunlar kitaptaki örnekleri (Receb 1400, s. 360), şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
+- **Uçtan uca tarama:** `tests/ui_tarama.py` şunları dener: 2 ekran boyutu, 2 dil, 5 tema, bütün sekmeler, diyaloglar ve 9 uç konum (kutup gecesi, tarih çizgisi, yaz saati, Mekke). Tarama hata, taşma ve dış istek arar.
+- **Küresel kapsam:** `tools/kuresel_dogrulama.py`
+- **Bağımsız inceleme:** v0.6.0 üzerine yapılan bilimsel, fıkhî ve teknik inceleme raporunun bulguları ve verilen kararlar [docs/kanonik-rapor.md §16](docs/kanonik-rapor.md)'dadır.
+
+Program bir gözlem **planlama ve kayıt** yardımcısıdır. Bağımsız bir efemeris referansı veya fıkhî karar sistemi değildir.
+
+![Dünya rü'yet haritası](docs/img/harita.png)
 
 ## Esaslar
 
@@ -84,6 +109,8 @@ Hata bildirimi ve rü'yet raporu için [Issues](https://github.com/bemiroglu/Mah
 python3 build.py                 # dist/mahinev.html ve dist/mahinev-v<sürüm>.html
 pip install playwright && playwright install chromium
 python3 tests/run_tests.py       # Doğrulama sekmesindeki testler
+python3 tests/ui_tarama.py       # uçtan uca arayüz taraması (uzun sürer)
+python3 tools/kuresel_dogrulama.py
 ```
 
 ## Lisans

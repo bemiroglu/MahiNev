@@ -24,7 +24,7 @@
       "properties": {
         "at": { "type": "string", "format": "date-time", "description": "UTC" },
         "evening": { "type": "string", "format": "date", "description": "kaydın ait olduğu akşam (yerel tarih)" },
-        "result": { "enum": ["naked", "aidedNaked", "aided", "photo", "not"] },
+        "result": { "enum": ["naked", "aidedNaked", "aided", "photo", "doubt", "not", "noObs"], "description": "v0.8: doubt = şüpheli gözlem, noObs = gözlem yapılamadı" },
         "firstSeen": { "type": ["string", "null"], "description": "yerel saat HH:MM" },
         "lastSeen": { "type": ["string", "null"] },
         "sky": { "enum": ["clear", "partly", "cloud", "haze"] },

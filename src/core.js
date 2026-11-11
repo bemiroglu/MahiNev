@@ -111,20 +111,25 @@
     const f = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
     const p = {}; for (const x of f.formatToParts(date)) p[x.type] = x.value;
     const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second);
-    return (asUTC - date.getTime()) / 60000;
+    return Math.round((asUTC - Math.floor(date.getTime() / 1000) * 1000) / 60000);
   }
   // Konumun yerel güneş öğlesi: YYYY-MM-DD tarihinin UTC gece yarısı + (12 − boylam/15) saat
   function solarNoon(ymd, lon) {
     const [y, m, d] = ymd.split('-').map(Number);
     return T(new Date(Date.UTC(y, m - 1, d) + (12 - lon / 15) * 3600000));
   }
-  // Saat diliminin yerel gece yarısı (UTC ms)
-  function tzMidnight(ymd, tz) {
+  // Yerel duvar saati (YYYY-MM-DD + gece yarısından dakika, IANA tz) → UTC ms (v0.8: yaz saati geçişlerinde doğru).
+  // Günün öncesindeki ve sonrasındaki saat farkı aday alınır; aranan ânda gerçekten geçerli olan seçilir. İleri alınan saatte
+  // olmayan bir saat geçişten sonraki karşılığına, geri alınan saatte iki kez yaşanan bir saat ilk yaşanışına çevrilir.
+  function localToUT(ymd, minutes, tz) {
     const [y, m, d] = ymd.split('-').map(Number);
-    let g = Date.UTC(y, m - 1, d);
-    const off = tzOffsetMin(tz, new Date(g + 12 * 3600000));
-    return g - off * 60000;
+    const wall = Date.UTC(y, m - 1, d) + minutes * 60000;
+    const oB = tzOffsetMin(tz, new Date(wall - 86400000)), oA = tzOffsetMin(tz, new Date(wall + 86400000));
+    const ok = [...new Set([oB, oA])].map(o => wall - o * 60000).filter(t => wall - tzOffsetMin(tz, new Date(t)) * 60000 === t);
+    return ok.length ? Math.min(...ok) : wall - oB * 60000;   // iki kez yaşanan saat → ilki; olmayan saat → geçişten sonraki karşılığı
   }
+  // Saat diliminin yerel gece yarısı (UTC ms)
+  function tzMidnight(ymd, tz) { return localToUT(ymd, 0, tz); }
   function localNoon(ymd, tz) {
     const [y, m, d] = ymd.split('-').map(Number);
     let guess = Date.UTC(y, m - 1, d, 12);
@@ -178,16 +183,18 @@
       const tb = ss.AddDays(r.lagMin * 4 / 9 * MIN);
       r.best = tb;
       const ms = topo('Moon', tb, obs), su = topo('Sun', tb, obs);
-      const arclTopo = sep(su.ra, su.dec, ms.ra, ms.dec);
+      // Yallop (1997, NAO TN 69 §2–3): ARCL ve ARCV jeosentrik (havasız); W' = SD' (1 − cos ARCL), SD' toposentrik yarıçap.
+      // Odeh (2004): ARCL, ARCV ve W toposentrik (havasız). v0.8: iki model kendi tanımıyla ayrı hesaplanıyor.
+      const arclTopo = sep(su.ra, su.dec, ms.ra, ms.dec), arclGeo = beynunet(tb);
       const sdMoonArcmin = deg(Math.asin(MOON_R_KM / (ms.distAU * AU_KM))) * 60;
-      const W = sdMoonArcmin * (1 - Math.cos(rad(arclTopo)));
+      const Wy = sdMoonArcmin * (1 - Math.cos(rad(arclGeo))), W = sdMoonArcmin * (1 - Math.cos(rad(arclTopo)));
       const arcvGeo = geoAlt('Moon', tb, obs) - geoAlt('Sun', tb, obs);
       const arcvTopo = ms.airAlt - su.airAlt;
       const poly = w => 11.8371 - 6.3226 * w + 0.7319 * w * w - 0.1018 * w * w * w;
-      const q = (arcvGeo - poly(W)) / 10;
+      const q = (arcvGeo - poly(Wy)) / 10;
       const V = arcvTopo - (-0.1018 * W ** 3 + 0.7319 * W ** 2 - 6.3226 * W + 7.1651);
       r.bestMoonAlt = ms.alt; r.bestMoonAz = ms.az; r.bestSunAlt = su.alt; r.bestSunAz = su.az;
-      r.W = W; r.arcl = arclTopo; r.arcvGeo = arcvGeo; r.arcvTopo = arcvTopo;
+      r.W = W; r.Wy = Wy; r.arcl = arclTopo; r.arclGeo = arclGeo; r.arcvGeo = arcvGeo; r.arcvTopo = arcvTopo;
       r.yallopQ = q;
       r.yallop = q > 0.216 ? 'A' : q > -0.014 ? 'B' : q > -0.160 ? 'C' : q > -0.232 ? 'D' : q > -0.293 ? 'E' : 'F';
       r.odehV = V;
@@ -252,8 +259,10 @@
   // Hesâbî en erken gün (D3): beynûnet ≥ 8° ve görünen irtifâ ≥ 5° şartının ilk sağlandığı akşamın ertesi günü.
   // dateUTC: ictimânın UTC tarihi (Date). places: [[lat,lon],...] veya null (küresel ızgara).
   function earliestDay(conj, places, onProgress) {
-    // Bir yerel tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olur; o tarih için en elverişli akşam oradadır.
-    const grid = places || (() => { const g = []; for (let la = -60; la <= 60; la += 2.5) for (let lo = -177.5; lo <= -140; lo += 5) g.push([la, lo]); return g; })();
+    // Bir yerel tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olur; aynı enlemde o tarih için en elverişli akşam oradadır.
+    // Bu yüzden küresel arama bu boylam kuşağında, kutup daireleri arasında (±66°) yapılır. tools/kuresel_dogrulama.py,
+    // bütün dünya ızgarasıyla aynı günün bulunduğunu doğrular (v0.8).
+    const grid = places || (() => { const g = []; for (let la = -66; la <= 66; la += 3) for (let lo = -177.5; lo <= -140; lo += 5) g.push([la, lo]); return g; })();
     const cd = conj.date;
     const base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
     for (let k = 0; k <= 3; k++) {
@@ -305,10 +314,10 @@
         if (lag > 0 && lag < 600) {
           const tb = ss.AddDays(lag * 4 / 9 / 1440);
           const mo = topo('Moon', tb, obs), su = topo('Sun', tb, obs);
-          const arcl = sep(su.ra, su.dec, mo.ra, mo.dec);
-          const W = deg(Math.asin(MOON_R_KM / (mo.distAU * AU_KM))) * 60 * (1 - Math.cos(rad(arcl)));
+          const arcl = sep(su.ra, su.dec, mo.ra, mo.dec), sd = deg(Math.asin(MOON_R_KM / (mo.distAU * AU_KM))) * 60;
+          const W = sd * (1 - Math.cos(rad(arcl))), Wy = sd * (1 - Math.cos(rad(beynunet(tb))));
           const poly = w => 11.8371 - 6.3226 * w + 0.7319 * w * w - 0.1018 * w * w * w;
-          out.q = (geoAlt('Moon', tb, obs) - geoAlt('Sun', tb, obs) - poly(W)) / 10;
+          out.q = (geoAlt('Moon', tb, obs) - geoAlt('Sun', tb, obs) - poly(Wy)) / 10;
           out.V = (mo.airAlt - su.airAlt) - (-0.1018 * W ** 3 + 0.7319 * W ** 2 - 6.3226 * W + 7.1651);
         }
       }
@@ -441,5 +450,5 @@
   }
 
   const Q = '@@N1@@'; // sürüm bildirimi parçası (build.py)
-  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, firstEvening, skyObjects, twilight, at, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
+  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, firstEvening, skyObjects, twilight, at, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

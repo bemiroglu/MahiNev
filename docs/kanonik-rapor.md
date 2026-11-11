@@ -614,3 +614,33 @@ Yarım küre yazılmazsa arz Kuzey, tûl Doğu kabul edilir. Tûl yanlış alana
 **Saha şeridi:** Saat, sıradaki olaya geri sayım ve akşam çubuğu sayfa kaydırılsa da görünür kalır.
 
 **Kutup bölgeleri:** Kutup gecesi ile güneşin batmadığı günler ayrılır. Kitabın s. 315'teki notu hatırlatılır: yirmidört saatten uzun günlerde oruç için gündüzü böyle uzun olmayan bir şehrin zamanına uyulur.
+
+## 16. v0.7–v0.8: Mâh-ı Nev adı ve bağımsız inceleme raporu sonrası kararlar (11 Kasım 2026)
+
+**Ad ve dağıtım (v0.7):**
+
+- Program "Mâh-ı Nev — Hilâl Rasad Yardımcısı" adını aldı. Resmî depo: github.com/bemiroglu/MahiNev.
+- Lisans CC BY-NC-ND 4.0'dır; değiştirilmiş kopyalar dağıtılamaz.
+- Program açılışta kendi bütünlüğünü denetler. Değiştirilmiş kopyada "resmî olmayan kopya" uyarısı çıkar.
+
+**Bağımsız inceleme raporu (v0.6.0 üzerine) — bulgular ve kararlar.** Ölçü yine Tam İlmihâl'dir. Rapordaki her öneri bu ölçüyle tartıldı.
+
+| Bulgu | Karar | Dayanak |
+|---|---|---|
+| Yaz saati geçiş günlerinde yerel saat → UTC dönüşümü 1 saat kayıyor | **Düzeltildi.** Saat farkı aranan ânın kendisinde alınır; Berlin, New York ve Londra geçişleri test edildi | Kayıt zamanı hesapları etkiler |
+| Yallop'ta hilâl genişliği toposentrik açıyla hesaplanıyor | **Düzeltildi.** Yallop: jeosentrik ARCL ve ARCV; Odeh: toposentrik. İstanbul 10.12.2026 için q = 0,1149 (raporun bağımsız hesabıyla aynı) | Yallop 1997, NAO TN 69 §2–3. Yalnız ek bilgi; kitabın hükmünü etkilemez |
+| Depolama dolunca önizleme mühürden sonra siliniyor; kaydın başarısızlığı sessiz geçebiliyor | **Düzeltildi.** Önce içerik kesinleşir, sonra mühür vurulur. Başarısızlıkta açık hata verilir ve kayıt dosya olarak indirilir. 200 kayıt sınırı kaldırıldı; yedekleme, geri yükleme ve fotoğraf doğrulama eklendi | Kayıt bütünlüğü |
+| Göz güvenliği uyarısı yok | **Eklendi.** Uyarı Plan sekmesinde her zaman, Saha sekmesinde Güneş ufkun üstündeyken görünür | Rü'yet zaten çıplak gözle olur; optik cihaz yalnız yardımcıdır (Rasad Hakkında Zarûrî Malûmat) |
+| Hesâbî hicrî gün, rü'yetle sabit tarih sanılabilir | **Yapı korundu, açıklama güçlendirildi.** "Hesâbî" etiketinin yanına kitabın hükmü yazılır: "Hilâli görmekle Ramezânın başlaması, hesâbla anlaşılandan bir gün sonra olabilir. Fekat bir gün önce olamaz" (s. 360). "n (veya n−1)" gösterimi bu hükmün karşılığıdır | s. 360 (Sübkî bahsi). Not: s. 326'daki "Bayramın birinci günü bu hesâb ile bulunan gündür…" cümlesi Işık usulü hesabına aittir; bu yüzden astronomik gösterim için ona atıf yapılmaz |
+| Kesin red otomatik fıkhî karar gibi görünüyor | **Hüküm korundu, ifade düzeltildi.** Kesin red programın değil, kitabın hükmüdür: "hesâba inanılır, çünki hesâbla anlaşılan kat'îdir" (İmâm-ı Sübkî, s. 360). Metin artık bunu kitaba dayandırır ve beyanı değerlendirmenin yetkili makama ait olduğunu söyler | s. 315–316, 360 |
+| "Dünya geneli" taraması yalnız Pasifik kuşağında | **Doğrulandı, kapsam yazıldı.** Aynı takvim gününün en geç gurûbu tarih çizgisinin hemen doğusundadır. 14 ayda bütün dünya ızgarasıyla aynı gün bulundu (`tools/kuresel_dogrulama.py`). Enlem kutup dairelerine (±66°) genişletildi; kapsam Ay kartında yazılır | Hanefî'de ihtilâf-ı metâli' muteber değildir (s. 315) |
+| Gözlem sonucu türleri yetersiz | **"Şüpheli" ve "gözlem yapılamadı" eklendi.** Olumsuz kayıt, ayın otuza tamamlandığını ilan etmez; "gözlem yapılamadı" kaydı hilâlin bulunmadığını göstermez | s. 314–315: tamamlama, aramanın sonucudur; tek kişinin beyanı değildir |
+| Form tutarsızlıkları | **Eklendi.** Görme beyanında gören kişi en az 1 olmalı; ilk görme saati son görme saatinden sonra olamaz; ileri tarihli kayıt uyarı verir. İsimsiz beyan "şahitlik tutanağı yerine geçmez" diye işaretlenir | s. 315–316 (şahitlik şartları) |
+| Şehrin en yüksek yeri 0 m iken anlamı belirsiz | **Not eklendi.** "Girilmedi (0 m alındı); şer'î gurûb ve temkin bu yükseklik olmadan hesaplandı" | s. 176, 186 |
+| Pusula hakiki kerteriz değil | **Not eklendi.** Pusula yaklaşık yön verir; manyetik sapma düzeltilmez, gemide ve çelik yapı yanında yanıltır | — |
+| Hesap hassasiyeti ≠ gözlem hassasiyeti | **Rehber'e eklendi.** Ufuk yakınında kırılma değişkendir; batış saatleri gerçekte 1–2 dakika farklı olabilir | — |
+| Sürüm izlenebilirliği | **Eklendi.** Her kayıt; astronomi çekirdeğini, kural kümesini (`TI-360/1`) ve modern model tanımlarını taşır. Kural kümesi baskılara da yazılır | — |
+| Otomatik konum varsayılanı | **Korundu.** Konum cihazdan çıkmaz ve tarayıcı izin ister. Ayarlar'a gizlilik açıklaması eklendi | Kullanıcı kararı (v0.4) |
+| Gemi kipi; üç kullanıcı düzeyli arayüz | **Sonraki sürüme bırakıldı** | P1/P2 |
+
+**Dış bağlantı:** Yazı tipleri artık Google'dan yüklenmiyor. Program, kullanıcı hava tahminini açmadıkça dışarıya hiç bağlanmaz.

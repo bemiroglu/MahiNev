@@ -1,4 +1,4 @@
-# Mâh-ı Nev — Kullanım kılavuzu (v0.7)
+# Mâh-ı Nev — Kullanım kılavuzu (v0.8)
 
 ## Başlarken
 
@@ -127,3 +127,28 @@ Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir. claude.a
 - Sayfanın altında ve **Ayarlar → Lisans ve resmî sürüm** bölümünde telif, lisans (CC BY-NC-ND 4.0) ve resmî adres (github.com/bemiroglu/MahiNev) yazar.
 - **⬇ HTML'yi indir** düğmesi, kullandığınız sürümü tek dosya olarak indirir. Bu dosyayı internetsiz kullanabilir ve değiştirmeden paylaşabilirsiniz.
 - Ekranın üstünde kırmızı **"resmî olmayan kopya"** uyarısı görürseniz, dosya değiştirilmiş olabilir. Hesap sonuçlarına güvenmeden önce resmî sürümü indirin.
+
+## Rü'yet kaydı (v0.8)
+
+- **Sonuç türleri:**
+  - **çıplak gözle gördüm**;
+  - **dürbünle bulup çıplak gözle gördüm**;
+  - **yalnız dürbünle** ve **yalnız fotoğrafla** (bu ikisi Tam İlmihâl'e göre rü'yet sayılmaz, yardımcı bilgidir);
+  - **şüpheli** (cismin hilâl olduğu kesin değil);
+  - **dikkatle aradım, göremedim**;
+  - **gözlem yapılamadı** (bulut, ufuk engeli vb.).
+- "Göremedim" ve "gözlem yapılamadı" kayıtları farklıdır. İkisi de tek başına ayın otuza tamamlandığını göstermez.
+- **Program şu tutarsızlıklarda uyarır:**
+  - görme beyanı varken gören kişi sayısı 0 ise;
+  - ilk görme saati son görme saatinden sonraysa;
+  - kayıt zamanı ileri bir tarihteyse.
+- İsim yazılmayan kayıt **isimsiz beyan** olarak işaretlenir. Bu kayıt imzalı şahitlik tutanağı yerine geçmez.
+- **Yedekleme:** Kayıtlar yalnız bu tarayıcıda durur. **Tüm kayıtları yedekle** ile düzenli yedek alın; **Yedekten geri yükle** ile başka bir cihaza taşıyın.
+- **Fotoğraf:** Kayıtta fotoğrafın yalnız özeti ve küçük bir önizlemesi bulunur. Özgün dosyayı ayrıca saklayın. **Fotoğrafı doğrula** düğmesi, seçtiğiniz dosyanın hangi kayda ait olduğunu gösterir.
+- **Saklama hatası:** Depolama dolarsa program açıkça uyarır ve kaydı dosya olarak indirir.
+
+## Güvenlik ve hassasiyet
+
+- **Göz güvenliği:** Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın.
+- **Pusula:** Yaklaşık yön verir. Gemide veya çelik yapı yanında yönü yardımcı yıldızlarla teyit edin.
+- **Batış saatleri:** Ufuk yakınında kırılma değişkendir. Saatler gerçekte 1–2 dakika, deniz üstünde daha fazla farklı olabilir.

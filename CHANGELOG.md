@@ -1,5 +1,42 @@
 # Değişiklik günlüğü
 
+## 0.8.0 — 2026-11-11 · ilk genel yayın
+
+Bu sürüm, v0.6.0 üzerine yapılan bağımsız bilimsel, fıkhî ve teknik inceleme raporundaki bulgulara göre hazırlandı. Kararların gerekçeleri `docs/kanonik-rapor.md` §16'dadır.
+
+- **Saat dilimi düzeltmesi:** Yaz saati geçiş günlerinde kayıt saatinin UTC karşılığı artık doğru hesaplanıyor (önceden 1 saat kayabiliyordu).
+- **Yallop (1997) düzeltmesi:** Hilâl genişliği Yallop'ta jeosentrik ARCL ile, Odeh'te toposentrik ARCL ile hesaplanıyor. Ayrıntı panelinde ikisi ayrı gösteriliyor. Bu yalnız ek bilgiyi etkiler.
+- **Rü'yet kaydı:**
+  - Mühür, saklanacak son içeriğe vuruluyor. Depolama dolarsa önizleme düşürülüp kayıt yeniden mühürleniyor.
+  - Kayıt hiç saklanamazsa açık hata veriliyor ve kayıt dosya olarak indiriliyor.
+  - 200 kayıt sınırı kalktı. Yeni düğmeler: **Tüm kayıtları yedekle**, **Yedekten geri yükle**, **Fotoğrafı doğrula**.
+  - Listede her kaydın özeti ve imzası yeniden doğrulanıyor.
+  - Yeni sonuç türleri: **şüpheli gözlem** ve **gözlem yapılamadı**.
+  - Form denetimleri eklendi: gören kişi sayısı, ilk ve son görme sırası, ileri tarih.
+  - İsim yazılmayan beyan "isimsiz beyan" olarak işaretleniyor.
+  - Kayıtlar artık astronomi çekirdeğini ve kural kümesini (`TI-360/1`) de taşıyor.
+- **Göz güvenliği uyarısı:** Plan ve Saha sekmelerine eklendi.
+- **Hesap, rasad ve hüküm ayrımı:**
+  - Hicrî tarihin yanında Tam İlmihâl'in hükmü yazıyor: rü'yetle başlama hesaptan bir gün sonra olabilir, önce olamaz (s. 360).
+  - Kesin red ifadesi kitaba dayandırıldı ve "beyanı değerlendirmek yetkili makama aittir" notu eklendi.
+- **Dünya geneli kapsamı:** Kapsam açıkça yazılıyor; tarama kutup dairelerine (±66°) genişletildi. `tools/kuresel_dogrulama.py`, bütün dünya ızgarasıyla aynı günün bulunduğunu doğruluyor.
+- **Notlar:**
+  - Şehrin en yüksek yeri girilmediğinde bu açıkça yazılıyor.
+  - Pusulanın yaklaşık olduğu belirtiliyor.
+  - Rehber'de hesap ve gözlem hassasiyeti açıklanıyor.
+  - Ayarlar'da gizlilik açıklaması var.
+- **Dış bağlantı yok:** Google Fonts kaldırıldı. Program, hava tahmini açılmadıkça dışarıya bağlanmıyor.
+- **Mobil:**
+  - Başlık düğmeleri simgeye dönüştü.
+  - "Nasıl kullanılır?" kartı katlanabilir.
+  - Konum çipi Konum kartına götürüyor.
+  - Gizli haritanın sayfayı yana taşırması giderildi.
+  - Bazı ekranlarda görülen yatay taşma giderildi.
+- **Adlandırma:** Kalan "Se'âdet-i Ebediyye" etiketleri "Tam İlmihâl" yapıldı.
+- **Doğrulama:**
+  - 52 test geçiyor. Yeni testler: yaz saati, Yallop, küresel kapsam ve kayıt formu.
+  - `tests/ui_tarama.py` ile uçtan uca tarama yapılıyor: 2 ekran boyutu, 2 dil, 5 tema, 5 sekme ve 9 uç konum. Bu taramada hata, taşma ve dış istek çıkmadı.
+
 ## 0.7.0 — 2026-11-11
 
 - **Yeni ad: Mâh-ı Nev.** Program artık "Mâh-ı Nev — Hilâl Rasad Yardımcısı" (EN: Crescent Sighting Assistant) adını taşıyor. Resmî depo: github.com/bemiroglu/MahiNev.
