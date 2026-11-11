@@ -1,0 +1,18 @@
+name: Hata bildirimi / Bug report
+description: Programda gördüğünüz bir hatayı bildirin.
+labels: ["hata"]
+body:
+  - type: input
+    id: surum
+    attributes: { label: "Sürüm (başlıktaki etiket, ör. v0.5.0)" }
+    validations: { required: true }
+  - type: textarea
+    id: ne
+    attributes: { label: "Ne oldu, ne bekliyordunuz?" }
+    validations: { required: true }
+  - type: textarea
+    id: adim
+    attributes: { label: "Adımlar (konum, tarih, saat, sekme)" }
+  - type: input
+    id: cihaz
+    attributes: { label: "Cihaz ve tarayıcı" }

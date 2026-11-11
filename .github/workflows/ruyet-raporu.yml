@@ -1,0 +1,36 @@
+name: Rü'yet raporunu doğrula
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  issues: write
+jobs:
+  verify:
+    if: contains(github.event.issue.labels.*.name, 'ruyet-raporu')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install cryptography
+      - name: JSON'u ayıkla ve doğrula
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess
+          m = re.search(r"```json\s*(\{.*?\})\s*```", os.environ['BODY'], re.S)
+          open('kayit.json', 'w', encoding='utf-8').write(m.group(1) if m else '{}')
+          PY
+          python3 tools/verify_record.py kayit.json > sonuc.txt || true
+          cat sonuc.txt
+      - name: Etiketle
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const out = fs.readFileSync('sonuc.txt', 'utf8');
+            const labels = [out.includes('özet DOĞRU') ? 'ozet-dogru' : 'ozet-hatali'];
+            if (out.includes('imza True')) labels.push('imzali');
+            await github.rest.issues.addLabels({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, labels });
+            await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body: 'Otomatik doğrulama:\n```\n' + out + '\n```\nBu kontrol yalnızca kaydın bütünlüğünü sınar; şer\'î hüküm yetkili makama aittir.' });

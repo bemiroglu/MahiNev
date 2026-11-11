@@ -1,0 +1,81 @@
+/* v0.5 metinleri: ayarlar, canlı/dondur, ay başı rasadı, saha, rü’yet kaydı ve tutanak, baskı sayfaları */
+(function (G) {
+  'use strict';
+  G.HR_VERSION = '0.5.0';
+  Object.assign(G.HRI18N.T.tr, {
+    wxOff: 'Hava tahmini kapalı; ⚙ Ayarlar → “İnternet ve konum” bölümünden açılabilir.',
+    settings: 'Ayarlar', theme: 'Görünüm', liveInt: 'Canlı kipte ekran yenileme', liveInts: { 1: 'Her saniye', 10: '10 saniyede bir', 60: 'Dakikada bir' },
+    play: 'Canlı', freeze: 'Dondur', modeFrozen: 'Şimdi (donduruldu)',
+    nightChoice: 'Ay başı rasadı', prevNight: '◀ Önceki ay', nextNight: 'Sonraki ay ▶',
+    hjGlobal: 'Dünya geneli', hjLocal: 'Burada', hjShort: 'Kamerî gün şer’î gurûbda başlar (s. 188).',
+    upTitle: 'Yaklaşan ay başı rasadı',
+    stWindow: 'Tam İlmihâl’e göre arama', stBest: 'En iyi an (Yallop)', stAfterWin: 'pencereden sonra; Tam İlmihâl’e göre hilâl o anda 5°’nin altındadır',
+    stNoWindow: 'Bu akşam Tam İlmihâl’in penceresi yok', liveTag: 'Şimdi', thisEvening: d => `${d} akşamı`,
+    // Saha
+    fNowOk: 'Hilâl şimdi aranabilir', fNowWait: m => `Aramaya ${m} kaldı`, fNowAfter: 'Bu akşamın arama penceresi bitti', fNowNo: 'Bu akşam hilâl rasadı yok',
+    fNowWin: (a, b) => `Tam İlmihâl’e göre arama: ${a} – ${b}`, fNowLook: 'Bakılacak yer', fTonight: 'Bu akşamın hesâbî değerlendirmesi',
+    fTrackNote: 'Akşam çizelgesi: sarı bant Tam İlmihâl’in penceresi, yeşil bant aranabilir aralık, dikey çizgi şimdiki an.',
+    // Kayıt v2
+    record: 'Rü’yet kaydı ve tutanak', recResult: 'Sonuç',
+    recRes: { naked: 'Çıplak gözle gördüm', aidedNaked: 'Önce dürbünle bulup sonra çıplak gözle gördüm', aided: 'Yalnız dürbün/teleskopla gördüm', photo: 'Yalnız fotoğrafla tespit edildi', not: 'Görmedim' },
+    recFirst: 'İlk görme saati', recLast: 'Son görme saati', recSky: 'Gök durumu', recSkyOpts: { clear: 'Açık', partly: 'Parçalı bulutlu', cloud: 'Bulutlu (hilâl bulut arasından)', haze: 'Puslu / tozlu' },
+    recPlace: 'Gözlem yeri', recPlaceOpts: { open: 'Şehir dışı, açık arazi', high: 'Yüksek yer', city: 'Şehir içi' },
+    recName: 'Gözlemcinin adı soyadı', recContact: 'İletişim (isteğe bağlı)', recWith: 'Birlikte gözleyen kişi sayısı', recSeers: 'Bunlardan gören sayısı', recPhoto: 'Fotoğraf (isteğe bağlı)',
+    recSave: 'Kaydı oluştur', recPrint: 'Tutanak (A4)', recJson: 'JSON', recCopy: 'Metni kopyala', recCopied: 'Rapor metni panoya kopyalandı.', recSaved: 'Kayıt oluşturuldu; bütünlük özeti hesaplandı.',
+    recHash: 'Bütünlük özeti (SHA-256)', recSig: 'İmza anahtarı parmak izi', recNoSig: 'bu ortamda imza yok',
+    recIntro: 'Kayıt bu cihazda saklanır. Tutanak çıktısı imzalanıp yetkili kişiye veya heyete elden verilebilir; JSON dosyası ve rapor metni ağlara iletilebilir. Görmedim kayıtları da önemlidir: otuz günü tamamlamaya delil olur.',
+    recNets: 'Rapor gönderilebilecek açık ağlar', recNetsNote: 'Bu ağlar programdan bağımsızdır; bildirimleri kendi ölçütleriyle değerlendirir. Fıkhî hüküm yetkili makama aittir.',
+    recNeedName: 'Tutanak için gözlemcinin adı gereklidir.',
+    evAided: 'Tam İlmihâl’e göre rü’yet çıplak gözle olur; dürbün ve fotoğraf yalnız yardımcıdır (Rasad Hakkında Zarûrî Malûmat).', recLegacy: 'eski biçim kayıt', recVerified: 'özet doğrulandı', recBroken: 'özet uyuşmuyor!',
+    // Tutanak
+    tutTitle: 'Rü’yet-i Hilâl Gözlem Tutanağı', tutSub: 'Gözlemcinin beyanı ve hesâbî karşılaştırma',
+    tutObs: 'Gözlem', tutComp: 'Hesâbî veriler (karşılaştırma için)', tutPeople: 'Gözlemci ve birlikte bulunanlar', tutSign: 'İmza',
+    tutWitness: 'Birlikte gözleyen (ad soyad, imza)', tutFiqh: 'Fıkhî hatırlatma',
+    tutFiqhTxt: 'Bulutlu havada Ramazân hilâli bir âdil müslimânın “gördüm” demesiyle, açık havada birçok kimsenin haberiyle sabit olur; bayram için iki âdil (iki erkek veya bir erkek iki kadın) ve “şehâdet ederim” lafzı gerekir; kâdî bulunmayan yerde de böyledir (Se’âdet-i Ebediyye s. 315–316). Şehir dışında veya yüksek yerde görenin yalnız başına haberi kabul edilebilir; muvakkitlerin (hesapçıların) sözü delil değildir; başkasının gördüğünü nakletmek şahitlik değil hikâyedir (Redd-ül-muhtâr, Kitâb-us-savm, hilâlin sübûtu bahsi). Bu tutanak gözlemcinin beyanını belgeler; hüküm yetkili makama aittir.',
+    tutBlank: 'Boş tutanak formu', tutResult: 'Sonuç', tutCalc: 'Hesaba göre', tutRecId: 'Kayıt no',
+    // Baskı
+    prTitle: 'Yazdır / PDF', prIntro: 'Her seçenek tek A4 sayfasına göre hazırlanır. Birden fazlasını seçerseniz her biri ayrı sayfaya basılır.', prGo: 'Hazırla',
+    prOpts: { plan: 'Rasad planı (seçili akşam)', sky: 'Gökyüzü haritası (seçili an)', month: 'Aylık rü’yet çizelgesi', map: 'Dünya rü’yet haritası (yatay)', tut: 'Rü’yet tutanağı (son kayıt)', blank: 'Boş tutanak formu' },
+    prNote: 'Bağımsız dosyada tarayıcının yazdırma penceresi açılır (“PDF olarak kaydet” seçilebilir). claude.ai içinde sayfa HTML dosyası olarak kaydedilir.',
+    pgPlanTitle: 'Hilâl rasad planı', pgMonthTitle: 'Aylık rü’yet çizelgesi', pgCheck: 'Rasad sırasında',
+    pgChecklist: ['Gurûbdan 20 dakika önce yerinizde olun; batı ufkunun açık olduğunu kontrol edin.', 'Gurûb noktasını ve hilâlin semtini pusulayla işaretleyin; yumruk ölçeğini kullanın.', 'Önce gözü alıştırın; hilâli çıplak gözle arayın.', 'Hilâl 5°’ye inince arama biter (s. 360).', 'Gördüyseniz saati, yeri ve şartları hemen kaydedin; görmediyseniz de kaydedin.'],
+    pgCols: ['Akşam', 'Gurûb', 'Beynûnet', 'İrtifâ', 'Fark', 'Sınıf'],
+    footer: 'Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · qrcode-generator (MIT) · Open-Meteo'
+  });
+  Object.assign(G.HRI18N.T.en, {
+    wxOff: 'Forecast is off; turn it on in ⚙ Settings → “Internet and location”.',
+    settings: 'Settings', theme: 'Appearance', liveInt: 'Screen refresh in live mode', liveInts: { 1: 'Every second', 10: 'Every 10 seconds', 60: 'Every minute' },
+    play: 'Live', freeze: 'Freeze', modeFrozen: 'Now (frozen)',
+    nightChoice: 'Month-start observation', prevNight: '◀ Previous month', nextNight: 'Next month ▶',
+    hjGlobal: 'Worldwide', hjLocal: 'Here', hjShort: 'The lunar day begins at the legal sunset (p. 188).',
+    upTitle: 'Upcoming month-start observation',
+    stWindow: 'Search per Tam İlmihâl', stBest: 'Best time (Yallop)', stAfterWin: 'after the window; per Tam İlmihâl the crescent is then below 5°',
+    stNoWindow: 'No book window this evening', liveTag: 'Now', thisEvening: d => `Evening of ${d}`,
+    fNowOk: 'The crescent can be searched for now', fNowWait: m => `${m} until the search starts`, fNowAfter: 'This evening’s search window is over', fNowNo: 'No crescent observation this evening',
+    fNowWin: (a, b) => `Search per Tam İlmihâl: ${a} – ${b}`, fNowLook: 'Where to look', fTonight: 'This evening’s computed assessment',
+    fTrackNote: 'Evening chart: yellow band Tam İlmihâl’s window, green band the search interval, vertical line the current moment.',
+    record: 'Sighting record and report', recResult: 'Result',
+    recRes: { naked: 'Seen with the naked eye', aidedNaked: 'Found with binoculars, then seen with the naked eye', aided: 'Seen only with binoculars/telescope', photo: 'Detected only by photograph', not: 'Not seen' },
+    recFirst: 'First seen at', recLast: 'Last seen at', recSky: 'Sky', recSkyOpts: { clear: 'Clear', partly: 'Partly cloudy', cloud: 'Cloudy (crescent between clouds)', haze: 'Hazy / dusty' },
+    recPlace: 'Observing site', recPlaceOpts: { open: 'Outside the city, open land', high: 'High place', city: 'Inside the city' },
+    recName: 'Observer’s full name', recContact: 'Contact (optional)', recWith: 'Number of people observing together', recSeers: 'Of whom saw it', recPhoto: 'Photograph (optional)',
+    recSave: 'Create record', recPrint: 'Report (A4)', recJson: 'JSON', recCopy: 'Copy text', recCopied: 'Report text copied to the clipboard.', recSaved: 'Record created; integrity digest computed.',
+    recHash: 'Integrity digest (SHA-256)', recSig: 'Signing key fingerprint', recNoSig: 'no signature in this environment',
+    recIntro: 'Records are kept on this device. The printed report can be signed and handed to the responsible person or committee; the JSON file and report text can be sent to networks. “Not seen” records matter too: they support completing thirty days.',
+    recNets: 'Open networks that accept reports', recNetsNote: 'These networks are independent of this programme and assess reports by their own standards. The legal ruling belongs to the competent authority.',
+    recNeedName: 'The observer’s name is needed for the report.',
+    evAided: 'Per Tam İlmihâl, sighting is with the naked eye; binoculars and photographs are only aids (Rasad Hakkında Zarûrî Malûmat).', recLegacy: 'old-format record', recVerified: 'digest verified', recBroken: 'digest mismatch!',
+    tutTitle: 'Crescent Sighting Report', tutSub: 'Observer’s statement and computed comparison',
+    tutObs: 'Observation', tutComp: 'Computed data (for comparison)', tutPeople: 'Observer and companions', tutSign: 'Signature',
+    tutWitness: 'Observing together (name, signature)', tutFiqh: 'Legal reminder',
+    tutFiqhTxt: 'In cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the report of many; for the feast two upright witnesses (two men, or one man and two women) and the words “I testify” are needed; likewise where there is no judge (Se’âdet-i Ebediyye pp. 315–316). One who saw it outside the city or from a high place may be accepted alone; the word of time-keepers (calculators) is no proof; relaying what others saw is narration, not testimony (Radd al-Muhtar, Book of Fasting, on establishing the crescent). This report documents the observer’s statement; the ruling belongs to the competent authority.',
+    tutBlank: 'Blank report form', tutResult: 'Result', tutCalc: 'Per calculation', tutRecId: 'Record no.',
+    prTitle: 'Print / PDF', prIntro: 'Each option is laid out for one A4 page. If you choose several, each prints on its own page.', prGo: 'Prepare',
+    prOpts: { plan: 'Observation plan (selected evening)', sky: 'Sky chart (selected moment)', month: 'Monthly sighting table', map: 'World sighting map (landscape)', tut: 'Sighting report (latest record)', blank: 'Blank report form' },
+    prNote: 'In the standalone file the browser’s print dialog opens (“Save as PDF” is available). Inside claude.ai the page is saved as an HTML file.',
+    pgPlanTitle: 'Crescent observation plan', pgMonthTitle: 'Monthly sighting table', pgCheck: 'During the observation',
+    pgChecklist: ['Be in place 20 minutes before sunset; check that the western horizon is clear.', 'Mark the sunset point and the crescent’s azimuth with a compass; use the fist scale.', 'Let your eyes adapt; search with the naked eye.', 'The search ends when the crescent reaches 5° (p. 360).', 'If seen, record time, place and conditions at once; record it if not seen too.'],
+    pgCols: ['Evening', 'Sunset', 'Beynûnet', 'Altitude', 'Lag', 'Class'],
+    footer: 'Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · qrcode-generator (MIT) · Open-Meteo'
+  });
+})(typeof globalThis !== 'undefined' ? globalThis : window);

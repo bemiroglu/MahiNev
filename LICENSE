@@ -1,0 +1,60 @@
+Mâh-ı Nev — Hilâl Rasad Yardımcısı (Crescent Sighting Assistant)
+Copyright (c) 2026 bemiroglu
+Official version: https://github.com/bemiroglu/MahiNev
+
+This work is licensed under the Creative Commons
+Attribution-NonCommercial-NoDerivatives 4.0 International License
+(CC BY-NC-ND 4.0).
+Full legal code: https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
+Summary (TR):    https://creativecommons.org/licenses/by-nc-nd/4.0/deed.tr
+
+----------------------------------------------------------------------
+ÖZET (bağlayıcı olan, yukarıdaki lisansın tam metnidir)
+
+Paylaşabilirsiniz: Programı her ortamda ve biçimde kopyalayıp
+dağıtabilirsiniz. Bunu şu şartlarla yapabilirsiniz:
+
+  * Atıf. Eser sahibini ve lisansı belirtin, resmî adrese
+    (github.com/bemiroglu/MahiNev) bağlantı verin.
+  * Gayriticarî. Ticarî amaçla kullanamazsınız.
+  * Türetilemez. Programı değiştirir, dönüştürür veya üzerine inşa
+    ederseniz, değiştirilmiş hâlini dağıtamazsınız.
+
+Programın içine gömülü telif ve lisans bildirimi ile bütünlük
+denetimi eserin parçasıdır. Bunları kaldırmak veya değiştirmek, eseri
+değiştirmek demektir.
+
+----------------------------------------------------------------------
+SUMMARY (the full legal code above is what governs)
+
+You may copy and redistribute the program in any medium or format,
+under these terms:
+
+  * Attribution. Credit the author, name the licence and link to the
+    official repository (github.com/bemiroglu/MahiNev).
+  * NonCommercial. You may not use the material for commercial
+    purposes.
+  * NoDerivatives. If you remix, transform or build upon the
+    material, you may not distribute the modified material.
+
+The copyright and licence notice embedded in the program, and its
+integrity check, are part of the work. Removing or altering them is a
+modification.
+
+----------------------------------------------------------------------
+THIRD-PARTY COMPONENTS
+
+This licence covers only the original work of Mâh-ı Nev. The embedded
+third-party components keep their own licences:
+
+  * Astronomy Engine (MIT)
+  * d3-celestial (BSD-3-Clause)
+  * qrcode-generator (MIT)
+  * Natural Earth data (public domain)
+
+Details are in THIRD_PARTY_NOTICES.md. Short quotations from Tam
+İlmihâl Se'âdet-i Ebediyye (Hakîkat Kitâbevi) are cited with page
+numbers; the book itself is not part of this repository.
+
+For permissions beyond the scope of this licence, open an issue at
+https://github.com/bemiroglu/MahiNev/issues.

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hilal-ruyet-kaydi/1",
+  "title": "Hilâl rü'yet kaydı (sürüm 1)",
+  "type": "object",
+  "required": ["schema", "id", "created", "app", "observer", "place", "observation", "hash"],
+  "properties": {
+    "schema": { "const": "hilal-ruyet-kaydi/1" },
+    "id": { "type": "string", "description": "UUID" },
+    "created": { "type": "string", "format": "date-time" },
+    "app": { "type": "object", "properties": { "name": { "type": "string" }, "version": { "type": "string" } } },
+    "observer": { "type": "object", "properties": { "name": { "type": "string" }, "contact": { "type": "string" } } },
+    "place": {
+      "type": "object", "required": ["lat", "lon", "tz"],
+      "properties": {
+        "name": { "type": "string" }, "lat": { "type": "number" }, "lon": { "type": "number" },
+        "elev": { "type": "number", "description": "zemin rakımı, m" }, "hObs": { "type": "number", "description": "gözlemcinin zeminden yüksekliği, m" },
+        "tz": { "type": "string", "description": "IANA saat dilimi" },
+        "site": { "enum": ["open", "high", "city"], "description": "şehir dışı açık arazi / yüksek yer / şehir içi" }
+      }
+    },
+    "observation": {
+      "type": "object", "required": ["at", "evening", "result"],
+      "properties": {
+        "at": { "type": "string", "format": "date-time", "description": "UTC" },
+        "evening": { "type": "string", "format": "date", "description": "kaydın ait olduğu akşam (yerel tarih)" },
+        "result": { "enum": ["naked", "aidedNaked", "aided", "photo", "not"] },
+        "firstSeen": { "type": ["string", "null"], "description": "yerel saat HH:MM" },
+        "lastSeen": { "type": ["string", "null"] },
+        "sky": { "enum": ["clear", "partly", "cloud", "haze"] },
+        "companions": { "type": "integer", "minimum": 0 },
+        "seers": { "type": "integer", "minimum": 0 },
+        "note": { "type": "string" }
+      }
+    },
+    "computed": {
+      "type": ["object", "null"],
+      "description": "Programın hesapladığı karşılaştırma verileri (hüküm değildir)",
+      "properties": {
+        "ictima": { "type": ["string", "null"] }, "gurub": { "type": ["string", "null"] }, "seriGurub": { "type": ["string", "null"] },
+        "moonset": { "type": ["string", "null"] }, "windowEnd": { "type": ["string", "null"] },
+        "beynunet": { "type": "number" }, "moonAltGurub": { "type": "number" }, "lagMin": { "type": ["number", "null"] }, "ageH": { "type": ["number", "null"] },
+        "cls": { "enum": ["notBorn", "below8", "below5", "possible", "visible", "midMonth"] }, "kadihan": { "type": ["string", "null"] },
+        "atObs": { "type": "object" }, "evaluation": { "type": "string" }, "evalClass": { "type": "string" }
+      }
+    },
+    "photo": { "type": ["object", "null"], "properties": { "sha256": { "type": "string" }, "name": { "type": "string" }, "thumb": { "type": ["string", "null"] } } },
+    "signer": { "type": "object", "properties": { "pub": { "type": "object", "description": "ECDSA P-256 açık anahtar (JWK: kty, crv, x, y)" }, "fp": { "type": "string", "description": "SHA-256(kanonik JWK) ilk 16 onaltılık" } } },
+    "hash": { "type": "string", "description": "SHA-256(kanonik JSON; hash ve sig hariç), onaltılık" },
+    "sig": { "type": "object", "properties": { "alg": { "const": "ECDSA-P256-SHA256" }, "value": { "type": "string", "description": "base64; imzalanan veri: hash metninin UTF-8 baytları; biçim IEEE P1363 (r||s)" } } }
+  }
+}

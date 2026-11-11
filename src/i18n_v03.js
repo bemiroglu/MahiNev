@@ -1,0 +1,83 @@
+/* v0.3 arayüz metinleri ve "karanlık eşiği" açıklaması */
+(function (G) {
+  'use strict';
+  Object.assign(G.HRI18N.T.tr, {
+    timeBar: 'Seçili an: günün her saati', live: 'Canlı', nowBtn: 'Şimdi',
+    tbHint: 'Kaydırıcı seçili günün 00:00’ından ertesi gün 03:00’e kadar uzanır. Koyu bant gece, sarı bant Tam İlmihâl’in penceresi, yeşil bant hilâlin aranabileceği aralıktır.',
+    evSunrise: 'Güneş doğuşu', evGurub: 'Gurûb', evMoonrise: 'Ay doğuşu', evMoonset: 'Ay batışı', evSafak: 'Şafak sonu (−19°)', evWin: 'Tam İlmihâl’in penceresi', evSearch: 'Aranabilir aralık',
+    prefs: 'Gösterim tercihleri',
+    darkLbl: 'Hilâli aramaya başlarken güneş ne kadar alçalmış olmalı?',
+    darkOpt: { gurub: 'Gurûb anı (Tam İlmihâl’in penceresi)', m3: 'Güneş 3° altta (gök biraz kararınca)', m6: 'Güneş 6° altta (sivil alacakaranlık sonu)' },
+    darkHelp: 'Bu seçim yalnızca “aranabilir aralık” gösterimini değiştirir (zaman çubuğu, seçili an, anlık harita, saha modu). Tam İlmihâl’in sınıflarını ve kesin red hükmünü değiştirmez.',
+    timeFmt: 'Saat gösterimi', tfLocal: 'Yalnızca seçili saat dilimi', tfBoth: 'Saat dilimi ve UTC birlikte',
+    landOnly: 'Renkleri yalnızca karalarda göster',
+    nightA: 'Rasad gecesi (ilk mümkün akşam)', nightB: 'En elverişli akşam (beynûnet ≥ 18°)', nightNone: 'Önümüzdeki aylarda uygun akşam bulunamadı.',
+    nightGo: 'Git', nightChoice: 'Hangi gece?',
+    midHint: 'Seçili akşam ay ortasındadır; hilâl rasadı söz konusu değildir.', midGo: 'En yakın rasad gecesine git',
+    momentTitle: 'Bu anda gözlem', obsOk: 'Hilâl şu an aranabilir.', obsNo: 'Şu an hilâl aranamaz:',
+    why: { age: 'hilâl dönemi değil (ictimâdan sonraki ilk 4 gün dışında)', sun: 'güneş henüz seçilen eşiğin altına inmedi', elong: 'beynûnet 8°’nin altında (s. 360)', moonDown: 'ay ufkun altında', low: 'hilâl 5°’nin altında (Tam İlmihâl’e göre görülemez, s. 360)' },
+    todayRange: 'Bu günün aranabilir aralığı', noRange: 'bu gün aranabilir aralık yok',
+    sunL: 'Güneş', moonL: 'Ay', elongNow: 'Beynûnet (bu anda)', ageNow: 'Ayın yaşı (bu anda)', phaseL: 'Evre', riseSet: 'Doğuş / batış',
+    phaseName: { new: 'Muhâk (ictimâ yakını)', waxCres: 'Büyüyen hilâl', firstQ: 'İlk dördün', waxGib: 'Büyüyen şişkin ay', full: 'Bedir (dolunay)', wanGib: 'Küçülen şişkin ay', lastQ: 'Son dördün', wanCres: 'Küçülen hilâl (sabah)' },
+    morningTitle: 'Sabah hilâli (ictimâdan önce)',
+    morningCode: { possible: 'Gün doğmadan önce doğu ufkunda eski hilâl görülebilir.', below5: 'Eski hilâl gün doğarken 5°’nin altında; görülmesi beklenmez.', below8: 'Beynûnet 8°’nin altında; eski hilâl görülmez.', moonBelow: 'Ay gün doğarken ufkun altında.' },
+    morningNote: 'Sabah görülen hilâl biten ayındır; yeni ayın başına delil değildir, ictimânın yaklaştığını gösterir.',
+    panoTitle: 'Bütün ufuk (360°)', panoNote: 'Seçili an batı penceresinin dışında olduğundan bütün ufuk gösteriliyor. Dikey ölçek sıkıştırılmıştır.',
+    stripTitle: 'Aylık rü’yet şeridi', stripNote: 'Her kutu bir akşamdır: renk, o akşam gurûb anındaki sınıftır. A rasad gecesi, B en elverişli akşamdır; “s” sabah hilâli görülebilen günleri gösterir. Bir kutuya dokununca o gün seçilir.',
+    stripLoading: 'Hesaplanıyor…',
+    tzWarn: (tz, h) => `Seçili saat dilimi (${tz}) bu konumun güneş saatinden ${h} saat farklı. Saatler ${tz} saatine göre gösterilir; doğru dilimi seçmeniz önerilir.`,
+    mapMode: 'Harita kipi', mmEvening: 'Akşam (her yer kendi gurûbunda)', mmInstant: 'Seçili an (anlık)',
+    play: '▶ Oynat', pause: '❚❚ Durdur', mapTime: 'Seçili an',
+    mapInstantNote: 'Seçili anda: aydınlık taraf gündüz, koyulaşan gölge alacakaranlık ve gecedir. Yeşil bölgede hilâl şu an aranabilir; turuncu bölgede ay ufkun üstündedir ama 5°’nin altındadır. ☀ güneşin, ☾ ayın tam tepede olduğu noktadır.',
+    lgDayNight: 'Gece-gündüz sınırı', lgMoonHz: 'Ayın ufku (kesikli)', lgSearch: 'Şu an aranabilir', lgLow: 'Ay ufukta, 5°’nin altında', lgNight: 'Gece', lgOutline: 'İnce çizgi: sınıf sınırı',
+    sunSub: 'Güneş tepede', moonSub: 'Ay tepede', prevMonth: 'Önceki ay', nextMonth: 'Sonraki ay',
+    recAt: 'Kayıt zamanı', recEvening: d => `Ait olduğu akşam: ${d}`, recDayLbl: 'gündüz (gurûbdan önce)',
+    fSearch: 'Şu an aranabilir mi?', fMorning: 'Sabah',
+    bestAfterWin: (a, b) => `Bu akşam Yallop’un en iyi anı, hilâl 5°’nin altına indikten sonradır. Tam İlmihâl’e göre hilâl ${a}–${b} arasında aranır (s. 360); zaman çubuğu bu aralıkla açılır.`,
+    footer: 'v0.3 · zaman çubuğu, anlık harita, aylık şerit, tercihler · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+  });
+  Object.assign(G.HRI18N.T.en, {
+    timeBar: 'Selected moment: any hour of the day', live: 'Live', nowBtn: 'Now',
+    tbHint: 'The slider runs from 00:00 of the selected day to 03:00 the next day. Dark band: night; yellow band: Tam İlmihâl’s window; green band: when the crescent can be searched for.',
+    evSunrise: 'Sunrise', evGurub: 'Sunset', evMoonrise: 'Moonrise', evMoonset: 'Moonset', evSafak: 'End of twilight (−19°)', evWin: 'Tam İlmihâl window', evSearch: 'Search interval',
+    prefs: 'Display preferences',
+    darkLbl: 'How far should the Sun be below the horizon before searching?',
+    darkOpt: { gurub: 'At sunset (Tam İlmihâl’s window)', m3: 'Sun 3° below (sky slightly darker)', m6: 'Sun 6° below (end of civil twilight)' },
+    darkHelp: 'This choice only changes the “search interval” display (time bar, selected moment, live map, field mode). It does not change Tam İlmihâl’s classes or the rejection rule.',
+    timeFmt: 'Time display', tfLocal: 'Selected time zone only', tfBoth: 'Time zone and UTC together',
+    landOnly: 'Colour land areas only',
+    nightA: 'Observation night (first possible evening)', nightB: 'Best evening (beynûnet ≥ 18°)', nightNone: 'No suitable evening found in the coming months.',
+    nightGo: 'Go', nightChoice: 'Which night?',
+    midHint: 'The selected evening is mid-month; no crescent observation applies.', midGo: 'Go to the nearest observation night',
+    momentTitle: 'Observation at this moment', obsOk: 'The crescent can be searched for now.', obsNo: 'The crescent cannot be searched for now:',
+    why: { age: 'not the crescent period (outside the first 4 days after conjunction)', sun: 'the Sun is not yet below the chosen threshold', elong: 'beynûnet below 8° (p. 360)', moonDown: 'the Moon is below the horizon', low: 'the crescent is below 5° (not visible per Tam İlmihâl, p. 360)' },
+    todayRange: 'Search interval on this day', noRange: 'no search interval on this day',
+    sunL: 'Sun', moonL: 'Moon', elongNow: 'Beynûnet (now)', ageNow: 'Moon age (now)', phaseL: 'Phase', riseSet: 'Rise / set',
+    phaseName: { new: 'New Moon (near conjunction)', waxCres: 'Waxing crescent', firstQ: 'First quarter', waxGib: 'Waxing gibbous', full: 'Full Moon', wanGib: 'Waning gibbous', lastQ: 'Last quarter', wanCres: 'Waning crescent (morning)' },
+    morningTitle: 'Morning crescent (before conjunction)',
+    morningCode: { possible: 'The old crescent may be seen in the east before sunrise.', below5: 'The old crescent is below 5° at sunrise; not expected to be seen.', below8: 'Beynûnet below 8°; the old crescent is not seen.', moonBelow: 'The Moon is below the horizon at sunrise.' },
+    morningNote: 'A crescent seen in the morning belongs to the ending month; it is no evidence for the new month, only a sign that conjunction is near.',
+    panoTitle: 'Full horizon (360°)', panoNote: 'The selected moment is outside the western window, so the full horizon is shown. The vertical scale is compressed.',
+    stripTitle: 'Monthly sighting strip', stripNote: 'Each box is one evening; its colour is the class at sunset. A: observation night, B: best evening; “m” marks days with a visible morning crescent. Tap a box to select that day.',
+    stripLoading: 'Calculating…',
+    tzWarn: (tz, h) => `The selected time zone (${tz}) differs by ${h} hours from this location’s solar time. Times are shown in ${tz}; choosing the right zone is recommended.`,
+    mapMode: 'Map mode', mmEvening: 'Evening (each place at its own sunset)', mmInstant: 'Selected moment (live)',
+    play: '▶ Play', pause: '❚❚ Pause', mapTime: 'Selected moment',
+    mapInstantNote: 'At the selected moment: the bright side is day, the deepening shade is twilight and night. In the green area the crescent can be searched for now; in the orange area the Moon is up but below 5°. ☀ and ☾ mark where the Sun and the Moon are overhead.',
+    lgDayNight: 'Day–night line', lgMoonHz: 'Moon’s horizon (dashed)', lgSearch: 'Searchable now', lgLow: 'Moon up, below 5°', lgNight: 'Night', lgOutline: 'Thin line: class boundary',
+    sunSub: 'Sun overhead', moonSub: 'Moon overhead', prevMonth: 'Previous month', nextMonth: 'Next month',
+    recAt: 'Time of record', recEvening: d => `Belongs to the evening of ${d}`, recDayLbl: 'daytime (before sunset)',
+    fSearch: 'Searchable now?', fMorning: 'Morning',
+    bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (p. 360); the time bar opens on that interval.`,
+    footer: 'v0.3 · time bar, live map, monthly strip, preferences · Astronomy Engine 2.1.19 (MIT) · Natural Earth'
+  });
+  const T = G.HRGuide && G.HRGuide.TOPICS;
+  if (T) {
+    T.tr.karanlik = ['Güneş ne kadar alçalmalı?',
+      'Kitap, hilâlin gurûbdan sonra arandığını ve ufka 5° yaklaşınca görülemeyeceğini bildirir (s. 360); aramaya başlamak için güneşin ayrıca kaç derece alçalması gerektiğine dair bir sınır koymaz. Bu sebeple program Tam İlmihâl’in sınıflarını ve kesin red hükmünü bu seçime bağlamaz.',
+      'Gurûbdan hemen sonra gök hâlâ parlaktır; ince hilâlin gökle zıtlığı (kontrastı) güneş birkaç derece alçaldıkça artar, hilâl ise bu arada ufka yaklaşır. En iyi denge çoğu zaman gurûbdan birkaç dakika sonradır (Yallop: gurûb + farkın 4/9’u). Güneş −6°’de sivil alacakaranlık biter. Bu seçim, zaman çubuğundaki yeşil “aranabilir aralık” bandını, seçili an kartını, anlık haritayı ve saha modunu birlikte değiştirir.'];
+    T.en.karanlik = ['How far should the Sun be below the horizon?',
+      'Tam İlmihâl states that the crescent is sought after sunset and cannot be seen once it is within 5° of the horizon (p. 360); it sets no separate limit for how far the Sun must have sunk before searching. The programme therefore does not tie Tam İlmihâl’s classes or the rejection rule to this choice.',
+      'Right after sunset the sky is still bright; the crescent’s contrast against the sky improves as the Sun sinks a few degrees, while the crescent itself approaches the horizon. The best balance is often a few minutes after sunset (Yallop: sunset + 4/9 of the lag). Civil twilight ends with the Sun at −6°. This choice changes, together, the green “search interval” band on the time bar, the selected-moment card, the live map and field mode.'];
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : window);

@@ -1,2 +1,108 @@
-# MahiNev
-Mâh-ı Nev (Hilâl Rasad Yardımcısı - Crescent Sighting Assistant)
+# Mâh-ı Nev
+
+**Hilâl Rasad Yardımcısı · Crescent Sighting Assistant**
+
+*Tam İlmihâl Se'âdet-i Ebediyye (Hakîkat Kitâbevi) esaslı kamerî ay başı rasad yardımcısı*
+
+> **Bu program bir takvim değildir.** Kamerî ay başı, hilâlin çıplak gözle görülmesiyle (rü'yet) kesinleşir. Programın verdiği her sonuç *hesâbî imkândır*. Hüküm, şahitlik şartlarıyla ve yetkili makamca verilir (Tam İlmihâl, s. 315–316, 360).
+
+Mâh-ı Nev ("yeni ay", hilâl) tek bir HTML dosyasıdır. Kurulum gerektirmez; indirip tarayıcıda açmanız yeterlidir. İnternetsiz çalışır ve Türkçe ile İngilizce arayüzü vardır.
+
+| | |
+|---|---|
+| **Çevrimiçi kullan** | <https://bemiroglu.github.io/MahiNev/> |
+| **İndir (son sürüm)** | [`dist/mahinev.html`](dist/mahinev.html) → sayfada *Download raw file* |
+| **Değişiklikler** | [CHANGELOG.md](CHANGELOG.md) |
+| **Lisans** | [CC BY-NC-ND 4.0](LICENSE): ticarî olmayan, değiştirilmeden, kaynak gösterilerek paylaşım |
+
+Programın içinden de **⬇ HTML'yi indir** düğmesiyle o anda kullandığınız sürümü tek dosya olarak indirebilirsiniz.
+
+## Resmî sürüm
+
+Mâh-ı Nev'in resmî sürümü yalnızca **[github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev)** adresinden dağıtılır. Bunun sebebi, programın fıkhî kararlarının Tam İlmihâl'e bağlı olması ve başkalarınca değiştirilmemesi gerekmesidir.
+
+- Her HTML dosyasında lisans bilgisi ve bu adres bulunur.
+- Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse ekranın üstünde **"resmî olmayan kopya"** uyarısı çıkar; aynı ibare baskı çıktılarına ve rü'yet kayıtlarına da yazılır.
+
+## Ne yapar?
+
+- **Bu akşamın hilâl değerlendirmesi:**
+  - Değerlendirme Tam İlmihâl'in sınıflarına göre yapılır: ictimâ, beynûnet 8°/18° ve ufuktan 5° (s. 360).
+  - Kesin red, rü'yet beyanı ve Kâdîhân kontrolü (s. 316) birlikte verilir.
+  - Kâdîhân kontrolünde İmâm-ı a'zam kavli (−19°) esastır. İmâmeyn kavli (−17°) alternatif olarak sonucuyla birlikte gösterilir.
+- **Arama penceresi:** Gurûbdan hilâlin 5°'ye indiği âna kadar sürer. Program bunun yanında aranabilir aralığı da gösterir; aralığın karanlık eşiği seçilebilir.
+- **Günün her saati için gözlem durumu:**
+  - batı ufku çizimi, 360° bütün ufuk ve gökyüzü haritası;
+  - yönelim için parlak yıldız ve gezegenler, hilâle göre konumlarıyla.
+- **Ay başı rasadı planlaması:**
+  - yaklaşan ve önceki ay başı rasad gecesi;
+  - aylık rü'yet şeridi;
+  - hesâbî en erken gün (dünya geneli ve yerel).
+- **Hicrî tarih:**
+  - Kamerî gün şer'î gurûbda değişir (s. 188).
+  - İki ihtimalin bulunduğu günlerde ikisi birlikte gösterilir.
+  - Yerel kapsam dünya genelinden farklıysa ikinci satırda yazılır.
+- **Dünya rü'yet haritası:** Akşam ve anlık kipleri vardır; ilk görünürlük katmanı ve 18° gurûb boylamı da gösterilir.
+- **Saha kipi (telefon, açık hava):**
+  - canlı saat ve sabit duran geri sayımlar;
+  - gece (kırmızı) ve güneş altı temaları;
+  - pusula ve ekranın açık kalması.
+- **Rü'yet kaydı ve tutanak:**
+  - Kayıt; gözlem şartlarını, fotoğrafı, SHA-256 bütünlük özetini ve cihaz imzasını (ECDSA) içerir.
+  - Tutanak A4 olarak, imza satırları ve QR kodu ile basılır.
+- **Odaklı A4 çıktılar:** rasad planı, gökyüzü haritası, aylık çizelge, dünya haritası ve tutanak; her biri tek sayfaya sığar.
+- **Ek bilgiler:**
+  - Modern ölçütler (Yallop, Odeh, Danjon) yalnızca ek bilgi olarak verilir.
+  - Aritmetik takvim usulleri yalnızca takvim bilgisi olarak gösterilir.
+- **İsteğe bağlı çevrimiçi katman:** otomatik konum ile hava ve görüş tahmini (Open-Meteo). Hava tahmini başlangıçta kapalıdır.
+
+## Esaslar
+
+Bütün kararlarda hayati ölçü, Tam İlmihâl'e (Ehl-i sünnet fıkhı) tam uymaktır. Hiyerarşi şöyledir:
+
+1. Tam İlmihâl;
+2. kitabın açık eşikleri (8°, 18°, 5°);
+3. en hassas modern efemeris;
+4. modern gözlem ölçütleri (yalnızca ek bilgi).
+
+Belgeler:
+
+- [docs/kanonik-metin.md](docs/kanonik-metin.md): temel kural metni.
+- [docs/kanonik-rapor.md](docs/kanonik-rapor.md): esaslar, terminoloji, doğrulama örnekleri ve alınan kararlar.
+- [docs/tasarim-ilkeleri.md](docs/tasarim-ilkeleri.md): tasarım ilkeleri; yeni kullanıcıya rehberlik bunlardan biridir.
+- [docs/kullanim-kilavuzu.md](docs/kullanim-kilavuzu.md): kullanım kılavuzu.
+- [docs/kayit-semasi.md](docs/kayit-semasi.md) ve [docs/sehadet-agi.md](docs/sehadet-agi.md): rü'yet kaydı ve şehâdet ağı.
+- [docs/mimari.md](docs/mimari.md) ve [docs/github-otomasyon.md](docs/github-otomasyon.md): mimari ve yayın.
+
+## Geri bildirim
+
+Hata bildirimi ve rü'yet raporu için [Issues](https://github.com/bemiroglu/MahiNev/issues) şablonlarını kullanın. Fıkhî bir konu içeren öneriler, Tam İlmihâl'den sayfa numarasıyla gelmelidir. Ayrıntılar: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Derleme (geliştirici)
+
+```bash
+python3 build.py                 # dist/mahinev.html ve dist/mahinev-v<sürüm>.html
+pip install playwright && playwright install chromium
+python3 tests/run_tests.py       # Doğrulama sekmesindeki testler
+```
+
+## Lisans
+
+Mâh-ı Nev © 2026 bemiroglu. [Creative Commons Atıf-GayriTicari-Türetilemez 4.0 Uluslararası (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.tr) ile lisanslanmıştır; bkz. [LICENSE](LICENSE).
+
+Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+---
+
+### English
+
+**Mâh-ı Nev** ("the new moon") is a single-file, offline, bilingual (TR/EN) HTML program that assists the naked-eye sighting of the new crescent according to *Tam İlmihâl Se'âdet-i Ebediyye* (Hakîkat Kitâbevi).
+
+**It is not a calendar.** Everything it shows is computed possibility; the month begins by sighting and testimony.
+
+- **Use online:** <https://bemiroglu.github.io/MahiNev/>
+- **Download:** [`dist/mahinev.html`](dist/mahinev.html), or use the **Download HTML** button inside the program.
+
+The official version is distributed only at [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev). The program checks its own integrity and marks modified copies as *unofficial*.
+
+Licensed under [CC BY-NC-ND 4.0](LICENSE): non-commercial sharing, unmodified, with attribution. Embedded third-party components keep their own licences.

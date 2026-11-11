@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="tr">
+<!--
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v@@VERSION@@
+  © 2026 bemiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+  Resmî sürüm / Official version: https://github.com/bemiroglu/MahiNev
+  Değiştirilmiş kopyalar dağıtılamaz. Modified copies may not be distributed.
+  Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir (THIRD_PARTY_NOTICES.md).
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b111b">
+<title>Mâh-ı Nev — Hilâl Rasad Yardımcısı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Plan: alacakaranlık gökyüzü. Masada açık/koyu tema, sahada kırmızı gece teması (karanlığa alışmış gözü korur).
+   Düzen: Plan sekmesinde önce durum, sonra tam genişlikte ufuk çizimi; ölçümler ve ay başı kartı yan yana. */
+:root {
+  --bg: #e8ecf1; --surface: #ffffff; --surface-2: #f2f4f7; --ink: #142030; --muted: #556275; --line: #d2d9e2;
+  --accent: #9a5a12; --accent-ink: #ffffff;
+  --ok: #1f7a4a; --ok-bg: #e0f1e7; --warn: #9c6200; --warn-bg: #faedd3; --bad: #b0352d; --bad-bg: #f7dfdc; --info: #3d5d86; --info-bg: #e2eaf4;
+  --sky-day: #9fc0de; --sky-dusk: #f0c38c; --sky-night: #0f1a2e; --sky-glow: #ffb466; --sky-grid: #ffffff; --sky-text: #102035; --sky-star: #fff6d8; --moon: #fbf3d6; --ground: #2e3746; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
+  --map-sea: #cdd9e4; --map-land: #eef0ec; --map-coast: #6b7785; --map-border: #a3adb8; --map-iso: #7a4f00; --map-label-bg: rgba(255,255,255,.85); --map-mark: #ffffff; --map-mark-ring: #142030; --map-night: #0b1a33; --map-day: #fff4cf; --map-edge: #2b3746;
+  --c-visible: #2e9e5b; --c-possible: #e3b21c; --c-below5: #e07b24; --c-below8: #c8402f; --c-notborn: #7d8794; --c-nosun: #4f5f78;
+  --font-display: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --r: 10px; color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1019; --surface: #111a28; --surface-2: #162133; --ink: #e5eaf1; --muted: #93a1b4; --line: #23314a;
+    --accent: #e3a548; --accent-ink: #1a1206;
+    --ok: #5cc98a; --ok-bg: #11301f; --warn: #e8b34a; --warn-bg: #33270f; --bad: #ef7f76; --bad-bg: #3a1714; --info: #8fb4e3; --info-bg: #15243a;
+    --sky-day: #2e4f78; --sky-dusk: #7a4a2c; --sky-night: #060b14; --sky-glow: #c87838; --sky-grid: #9fb3cc; --sky-text: #e8edf4; --sky-star: #fff2c8; --moon: #fbf1cf; --ground: #03060a; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
+    --map-sea: #0d1828; --map-land: #1d2a3c; --map-coast: #6f819a; --map-border: #3c4c63; --map-iso: #f2d16b; --map-label-bg: rgba(10,16,25,.85); --map-mark: #ffffff; --map-mark-ring: #0a1019; --map-night: #000208; --map-day: #9cc3f0; --map-edge: #d5deea;
+    --c-visible: #3fbf72; --c-possible: #e8c13a; --c-below5: #e8873a; --c-below8: #d6493c; --c-notborn: #5d6878; --c-nosun: #34435c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"], body.th-dark {
+  --bg: #0a1019; --surface: #111a28; --surface-2: #162133; --ink: #e5eaf1; --muted: #93a1b4; --line: #23314a;
+  --accent: #e3a548; --accent-ink: #1a1206;
+  --ok: #5cc98a; --ok-bg: #11301f; --warn: #e8b34a; --warn-bg: #33270f; --bad: #ef7f76; --bad-bg: #3a1714; --info: #8fb4e3; --info-bg: #15243a;
+  --sky-day: #2e4f78; --sky-dusk: #7a4a2c; --sky-night: #060b14; --sky-glow: #c87838; --sky-grid: #9fb3cc; --sky-text: #e8edf4; --sky-star: #fff2c8; --moon: #fbf1cf; --ground: #03060a; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
+  --map-sea: #0d1828; --map-land: #1d2a3c; --map-coast: #6f819a; --map-border: #3c4c63; --map-iso: #f2d16b; --map-label-bg: rgba(10,16,25,.85); --map-mark: #ffffff; --map-mark-ring: #0a1019; --map-night: #000208; --map-day: #9cc3f0; --map-edge: #d5deea;
+  --c-visible: #3fbf72; --c-possible: #e8c13a; --c-below5: #e8873a; --c-below8: #d6493c; --c-notborn: #5d6878; --c-nosun: #34435c;
+  color-scheme: dark;
+}
+body.th-light {
+  --bg: #e8ecf1; --surface: #ffffff; --surface-2: #f2f4f7; --ink: #142030; --muted: #556275; --line: #d2d9e2;
+  --accent: #9a5a12; --accent-ink: #ffffff;
+  --ok: #1f7a4a; --ok-bg: #e0f1e7; --warn: #9c6200; --warn-bg: #faedd3; --bad: #b0352d; --bad-bg: #f7dfdc; --info: #3d5d86; --info-bg: #e2eaf4;
+  --sky-day: #9fc0de; --sky-dusk: #f0c38c; --sky-night: #0f1a2e; --sky-glow: #ffb466; --sky-grid: #ffffff; --sky-text: #102035; --sky-star: #fff6d8; --moon: #fbf3d6; --ground: #2e3746; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
+  --map-sea: #cdd9e4; --map-land: #eef0ec; --map-coast: #6b7785; --map-border: #a3adb8; --map-iso: #7a4f00; --map-label-bg: rgba(255,255,255,.85); --map-mark: #ffffff; --map-mark-ring: #142030; --map-night: #0b1a33; --map-day: #fff4cf; --map-edge: #2b3746;
+  --c-visible: #2e9e5b; --c-possible: #e3b21c; --c-below5: #e07b24; --c-below8: #c8402f; --c-notborn: #7d8794; --c-nosun: #4f5f78;
+  color-scheme: light;
+}
+/* Gece teması: yalnızca koyu kırmızı tonlar; karanlığa alışmış gözü bozmaz */
+body.th-night {
+  --bg: #000000; --surface: #0a0000; --surface-2: #120201; --ink: #e0442f; --muted: #9a2e20; --line: #3a0b06;
+  --accent: #ff5a3a; --accent-ink: #000000;
+  --ok: #ff6a4f; --ok-bg: #2a0702; --warn: #c8432c; --warn-bg: #1c0402; --bad: #8c2618; --bad-bg: #160301; --info: #b8392a; --info-bg: #120201;
+  --sky-day: #2a0703; --sky-dusk: #200502; --sky-night: #030000; --sky-glow: #4a1006; --sky-grid: #3a0b06; --sky-text: #e0442f; --sky-star: #ff6a4f; --moon: #ff7a5c; --ground: #000000; --sky-label: #ff6a4f; --sky-halo: #000000;
+  --map-sea: #050000; --map-land: #170302; --map-coast: #6a1a10; --map-border: #3a0b06; --map-iso: #ff6a4f; --map-label-bg: rgba(0,0,0,.85); --map-mark: #ff7a5c; --map-mark-ring: #000000; --map-night: #000000; --map-day: #4a1006; --map-edge: #ff6a4f;
+  --c-visible: #ff6a4f; --c-possible: #c2402b; --c-below5: #7a2415; --c-below8: #4a120a; --c-notborn: #220604; --c-nosun: #140303;
+  color-scheme: dark;
+}
+/* Güneş altı: açık havada, parlak ışıkta en yüksek kontrast */
+body.th-sun {
+  --bg: #ffffff; --surface: #ffffff; --surface-2: #f1f1f1; --ink: #000000; --muted: #262626; --line: #1a1a1a;
+  --accent: #8a3b00; --accent-ink: #ffffff;
+  --ok: #005a24; --ok-bg: #d7f2df; --warn: #7a4300; --warn-bg: #ffe9b8; --bad: #9e0b00; --bad-bg: #ffd9d4; --info: #002f6c; --info-bg: #dde8f7;
+  --sky-day: #7fa9d4; --sky-dusk: #e9a85f; --sky-night: #071226; --sky-glow: #ff9a3c; --sky-grid: #ffffff; --sky-text: #000000; --sky-star: #ffffff; --moon: #fff7d6; --ground: #1d232c; --sky-label: #ffffff; --sky-halo: #000000;
+  --map-sea: #b9cde0; --map-land: #ffffff; --map-coast: #000000; --map-border: #555555; --map-iso: #5a3200; --map-label-bg: rgba(255,255,255,.95); --map-mark: #ffffff; --map-mark-ring: #000000; --map-night: #001033; --map-day: #fff1b8; --map-edge: #000000;
+  --c-visible: #1a8a45; --c-possible: #e0a800; --c-below5: #e06a00; --c-below8: #c01e10; --c-notborn: #6b6b6b; --c-nosun: #3b4a66;
+  color-scheme: light;
+}
+body.th-sun .card, body.th-sun .status { border-width: 2px; }
+body.th-sun .small, body.th-sun .cap, body.th-sun dl.kv dt { color: #000; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+html { font-size: 16px; }
+body { background: var(--bg); color: var(--ink); font: .9375rem/1.5 var(--font-body); }
+a { color: var(--accent); }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1220px; margin: 0 auto; padding: 0 16px 40px; }
+header.top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 16px 0 10px; }
+.brand { display: flex; align-items: center; gap: 12px; flex: 1 1 300px; }
+.brand svg { flex: none; }
+.brand h1 { font: 600 1.4rem/1.15 var(--font-display); margin: 0; text-wrap: balance; }
+.brand p { margin: 2px 0 0; color: var(--muted); font-size: .88rem; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--surface); }
+.seg button { border: 0; background: none; padding: 6px 12px; cursor: pointer; min-height: 34px; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+select.compact { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; min-height: 34px; }
+.stick { position: sticky; top: 0; z-index: 6; background: var(--bg); margin-bottom: 14px; }
+nav.tabs { background: var(--bg); display: flex; gap: 2px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+nav.tabs a { padding: 11px 14px; text-decoration: none; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; font-weight: 500; }
+nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+.notice { background: var(--info-bg); border-left: 3px solid var(--info); padding: 9px 14px; border-radius: 6px; font-size: .9rem; margin: 0 0 14px; }
+.layout { display: grid; grid-template-columns: 290px 1fr; gap: 16px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .layout > aside { order: 2; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; }
+.card h2 { font: 600 1.05rem/1.3 var(--font-display); margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+.card h3 { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; font-weight: 600; }
+.stack { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.field label { font-size: .82rem; color: var(--muted); }
+.field input, .field select, .field textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 8px 9px; min-width: 0; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.btn { border: 1px solid var(--line); background: var(--surface-2); border-radius: 8px; padding: 7px 11px; cursor: pointer; min-height: 36px; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.q { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface-2); color: var(--muted); font: 600 12px/1 var(--font-body); cursor: pointer; padding: 0; flex: none; }
+.q:hover { color: var(--accent); border-color: var(--accent); }
+.msg { font-size: .85rem; color: var(--bad); min-height: 1em; margin: 4px 0 0; }
+.status { border-radius: var(--r); padding: 16px 18px; border: 1px solid var(--line); display: grid; grid-template-columns: 8px 1fr; gap: 0 14px; background: var(--surface); }
+.status .bar { border-radius: 4px; background: var(--muted); }
+.status h2 { margin: 0; font: 600 1.3rem/1.25 var(--font-display); text-wrap: balance; display: flex; gap: 8px; align-items: center; }
+.status .sub { color: var(--muted); margin: 4px 0 10px; }
+.status .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .88rem; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: .82rem; font-weight: 500; }
+.s-ok .bar { background: var(--ok); } .s-warn .bar { background: var(--warn); } .s-bad .bar { background: var(--bad); } .s-info .bar { background: var(--info); }
+.p-ok { background: var(--ok-bg); color: var(--ok); } .p-warn { background: var(--warn-bg); color: var(--warn); } .p-bad { background: var(--bad-bg); color: var(--bad); } .p-info { background: var(--info-bg); color: var(--info); }
+.best { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-top: 12px; }
+.best .big { font: 500 2.1rem/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.best .lbl { color: var(--muted); font-size: .85rem; }
+dl.kv { display: grid; grid-template-columns: minmax(150px, 1fr) auto; margin: 0; }
+dl.kv dt, dl.kv dd { padding: 7px 0; border-bottom: 1px solid var(--line); margin: 0; }
+dl.kv dt { color: var(--muted); font-size: .9rem; padding-right: 12px; display: flex; gap: 6px; align-items: flex-start; }
+dl.kv dd { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+dl.kv dd small { display: block; color: var(--muted); font-size: .78rem; font-family: var(--font-body); }
+dl.kv dd.txt { font-family: var(--font-body); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 1060px) { .grid2 { grid-template-columns: 1fr; } }
+.sky { width: 100%; height: auto; display: block; border-radius: 8px; }
+.skyctl { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 10px; }
+.skyctl input[type=range] { width: 100%; accent-color: var(--accent); min-height: 32px; }
+.skyctl .tval { font: 600 1.15rem var(--font-mono); font-variant-numeric: tabular-nums; }
+.readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 12px; }
+.readout div { background: var(--surface-2); border-radius: 8px; padding: 8px 10px; }
+.readout b { display: block; font-size: .75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.where { font-size: 1.05rem; margin: 12px 0 0; }
+.flag { color: var(--warn); font-weight: 600; }
+.cap { font-size: .82rem; color: var(--muted); margin: 8px 0 0; }
+details.extra summary { cursor: pointer; font: 600 1.05rem/1.3 var(--font-display); }
+details.extra p.note { color: var(--muted); font-size: .88rem; }
+.lunar { font: 600 1.25rem/1.2 var(--font-mono); white-space: nowrap; }
+.small { font-size: .85rem; color: var(--muted); }
+table.t { width: 100%; border-collapse: collapse; font-size: .9rem; }
+table.t th, table.t td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t th { color: var(--muted); font-weight: 600; font-size: .8rem; }
+table.t td.n { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.scroll { overflow-x: auto; }
+.prose { max-width: 78ch; }
+.prose p { margin: 0 0 .8em; }
+.prose h3 { font: 600 1rem var(--font-display); margin: 1.1em 0 .5em; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose .lab { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 600; margin: .8em 0 .2em; }
+ul.check { padding-left: 1.2em; } ul.check li { margin: .35em 0; }
+details.topic { border-bottom: 1px solid var(--line); padding: 8px 0; } details.topic summary { cursor: pointer; font-weight: 600; }
+.guide-grid { display: grid; gap: 16px; }
+/* harita */
+.mapbox { position: relative; }
+.mapbox canvas { display: block; width: 100%; border-radius: 8px; cursor: crosshair; }
+.mapprog { position: absolute; top: 8px; left: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; font: 500 .85rem var(--font-mono); }
+.mapctl { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; margin-bottom: 12px; }
+.mapctl .field { margin: 0; }
+.chk { display: inline-flex; gap: 6px; align-items: center; font-size: .9rem; min-height: 32px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 0; font-size: .85rem; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 1px solid var(--line); }
+.minimap { margin-top: 12px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.facts div { background: var(--surface-2); border-radius: 8px; padding: 8px 10px; }
+.facts b { display: block; font-size: .75rem; color: var(--muted); font-weight: 600; }
+.facts strong { font-size: 1rem; }
+/* saha */
+.field-top { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+.clock { font: 600 3rem/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.cd { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; }
+.cd div { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
+.cd b { display: block; font-size: .78rem; color: var(--muted); font-weight: 600; }
+.cd span { font: 600 1.5rem var(--font-mono); font-variant-numeric: tabular-nums; }
+.bigwhere { font-size: 1.3rem; line-height: 1.4; margin: 12px 0 0; }
+.recbtns .btn { min-height: 52px; font-size: 1.05rem; padding: 10px 18px; }
+dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); max-width: min(640px, 92vw); padding: 18px 20px; }
+dialog::backdrop { background: rgba(0,0,0,.55); }
+footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
+/* v0.3 */
+.tb { margin-top: 4px; }
+.tb svg { display: block; width: 100%; height: auto; }
+.tb input[type=range] { width: 100%; accent-color: var(--accent); min-height: 34px; margin: 2px 0 0; }
+.tbhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.tbhead .tval { font: 600 1.6rem/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.tbhead .utc { font: 500 .9rem var(--font-mono); color: var(--muted); }
+.livepill { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 600; color: var(--ok); }
+.livepill::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+.obs { border-left: 4px solid var(--muted); padding: 8px 12px; border-radius: 6px; background: var(--surface-2); margin: 12px 0 0; }
+.obs.ok { border-color: var(--ok); } .obs.no { border-color: var(--bad); } .obs.wait { border-color: var(--warn); }
+.obs p { margin: 2px 0; }
+.strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 4px; }
+.strip button { border: 1px solid var(--line); background: var(--surface-2); border-radius: 6px; padding: 12px 2px 4px; cursor: pointer; min-height: 60px; display: flex; flex-direction: column; align-items: center; gap: 1px; font: 500 .78rem/1.1 var(--font-body); position: relative; }
+.strip button .d { font: 600 .95rem/1 var(--font-mono); }
+.strip button .sw { width: 70%; height: 6px; border-radius: 3px; background: var(--c-notborn); opacity: .35; }
+.strip button .tag { position: absolute; top: 2px; right: 3px; font: 700 .68rem/1 var(--font-body); color: var(--accent); }
+.strip button .mtag { position: absolute; top: 2px; left: 3px; font: 700 .68rem/1 var(--font-body); color: var(--muted); }
+.strip button[aria-current="date"] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+.strip button.today .d { text-decoration: underline; }
+.mapmsg { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; max-width: 80%; text-align: center; }
+.warnbox { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 7px 10px; border-radius: 6px; font-size: .85rem; margin: 6px 0 0; }
+.radio { display: flex; flex-direction: column; gap: 4px; }
+.radio label { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; min-height: 28px; cursor: pointer; }
+.radio input { margin-top: 4px; accent-color: var(--accent); }
+/* v0.4 */
+svg.sky text:not(.nohalo) { paint-order: stroke; stroke: var(--sky-halo); stroke-width: 3.2px; stroke-linejoin: round; }
+.mbar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 7px 12px; border-radius: 0 0 10px 10px; background: var(--surface); border: 1px solid var(--line); border-top: 0; }
+.mbar .mode { font: 700 .74rem/1 var(--font-body); letter-spacing: .07em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); white-space: nowrap; }
+.mbar .mode::before { content: '● '; }
+.mbar .when { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; flex: 1 1 320px; min-width: 0; }
+.mbar .when .d { font-weight: 600; }
+.mbar .when .tm { font: 700 1.15rem/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.mbar .when .hj { color: var(--muted); }
+.mbar .when .hj b { color: var(--ink); font-weight: 600; }
+.mbar .chips { display: flex; flex-wrap: wrap; gap: 6px; font-size: .8rem; }
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; background: var(--surface-2); white-space: nowrap; color: var(--ink); }
+button.chip { cursor: pointer; font-size: .8rem; }
+.chip.off { color: var(--muted); }
+.mbar .acts { display: flex; gap: 6px; margin-left: auto; }
+.mbar .acts .btn { min-height: 32px; padding: 4px 10px; font-size: .85rem; }
+body.planning .mbar { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+body.planning .mbar .mode { background: var(--accent-ink); color: var(--accent); }
+body.planning .mbar .mode::before { content: '◆ '; }
+body.planning .mbar .hj, body.planning .mbar .hj b { color: var(--accent-ink); }
+body.planning .mbar .chip { background: transparent; border-color: currentColor; color: var(--accent-ink); }
+body.planning .mbar .acts .btn { background: var(--accent-ink); color: var(--accent); border-color: var(--accent-ink); font-weight: 600; }
+body.planning #status, body.planning #tbCard, body.planning #skyCard, body.planning #wxCard { box-shadow: inset 4px 0 0 var(--accent); }
+.planhead { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin: 0 0 6px; }
+.planhead .tag { font: 700 .72rem/1 var(--font-body); letter-spacing: .07em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent); padding: 4px 8px; border-radius: 4px; }
+.up { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.up > div { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; border-left: 4px solid var(--muted); }
+.up > div.ok { border-color: var(--ok); } .up > div.warn { border-color: var(--warn); } .up > div.prev { border-left-style: dashed; opacity: .92; }
+.up b { display: block; font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.up strong { display: block; font-size: 1.08rem; margin: 2px 0; }
+.up strong b { display: inline; text-transform: none; letter-spacing: 0; font-size: inherit; color: inherit; } .up strong .hjl { font-size: .92rem; font-weight: 500; }
+.up .btn { margin-top: 6px; }
+table.wx { width: 100%; border-collapse: collapse; font-size: .88rem; }
+table.wx th, table.wx td { padding: 5px 6px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+table.wx th:first-child, table.wx td:first-child { text-align: left; }
+table.wx th { color: var(--muted); font-weight: 600; font-size: .78rem; }
+.wxbar { display: inline-block; width: 46px; height: 8px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); vertical-align: middle; margin-left: 6px; overflow: hidden; }
+.wxbar i { display: block; height: 100%; background: var(--muted); }
+.pano-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
+.pano-scroll svg { width: auto; max-width: none; height: 300px; }
+.cardhead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: space-between; margin-bottom: 12px; }
+.cardhead h2 { margin: 0 !important; }
+dialog.full { max-width: min(980px, 98vw); width: 100%; max-height: 96vh; padding: 14px 16px; }
+dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; }
+.smctl { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: 8px 0; font-size: .88rem; }
+.guides { margin: 8px 0 0; padding-left: 1.1em; } .guides li { margin: 2px 0; }
+.envnote { font-size: .82rem; background: var(--info-bg); border-left: 3px solid var(--info); padding: 6px 10px; border-radius: 6px; margin: 8px 0 0; }
+@media (max-width: 640px) {
+  dialog.full { max-width: 100vw; width: 100vw; max-height: 100vh; height: 100vh; margin: 0; border-radius: 0; padding: 10px; }
+  .mbar { padding: 6px 8px; gap: 4px 8px; } .mbar .when { flex-basis: 100%; order: 2; font-size: .9rem; } .mbar .acts { margin-left: auto; } .mbar .chips { display: none; }
+  .mbar .when .hj .note { display: none; } .mbar .acts .btn { min-height: 30px; padding: 3px 8px; font-size: .8rem; }
+  header.top { padding: 10px 0 6px; } .brand p { display: none; }
+  .pano-scroll.west svg { min-width: 640px; height: auto; }
+  body.v-saha .mbar .when .hj, body.v-saha .mbar .chips { display: none; } body.v-saha .mbar .when { order: 0; flex-basis: auto; }
+}
+/* v0.5 */
+.tamper { background: #9f2a22; color: #fff; border-radius: 10px; padding: 10px 14px; margin: 8px 0; font-weight: 600; }
+.tamper a { color: #fff; text-decoration: underline; }
+.lic { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 8px; }
+footer#footer a { color: inherit; }
+.ver { font: 500 .72rem/1 var(--font-mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; }
+dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
+.setgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px 22px; }
+#mbLive { display: inline-flex; } #mbLive button { min-height: 32px; padding: 3px 10px; font-size: .85rem; }
+#mbLive button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.mbar .tm .s { opacity: .6; font-size: .85em; }
+.hjl { display: block; font-size: .8rem; }
+#sky { height: clamp(250px, 44vw, 420px); }
+#sky > svg { width: 100%; height: 100%; display: block; }
+.pano-scroll.west svg { height: 300px; width: auto; min-width: 0; }
+#moment .obs { min-height: 4.6em; }
+.strip { min-height: 136px; }
+.st-row { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; margin: 6px 0 0; font-size: .92rem; }
+.st-row b { color: var(--muted); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+.st-row .mono { font: 600 1.05rem var(--font-mono); font-variant-numeric: tabular-nums; }
+.up { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.up > div { min-height: 118px; }
+/* Saha */
+.fhero { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); }
+.fhero > * { min-width: 0; }
+.fnow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.fbig { font: 700 1.25rem/1.25 var(--font-body); padding: 10px 14px; border-radius: 10px; border-left: 6px solid var(--muted); background: var(--surface-2); }
+.fbig.ok { border-color: var(--ok); } .fbig.wait { border-color: var(--warn); } .fbig.no { border-color: var(--bad); }
+.fbig small { display: block; font: 500 .9rem var(--font-body); color: var(--muted); margin-top: 2px; }
+.ftools { display: flex; flex-wrap: wrap; gap: 6px; }
+.ftools .btn { min-height: 40px; }
+#fTrack svg { display: block; width: 100%; height: auto; }
+.recgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 14px; }
+.hash { font: 500 .78rem var(--font-mono); word-break: break-all; color: var(--muted); }
+/* v0.6 */
+.hint { font-size: .86rem; color: var(--muted); background: var(--surface-2); border-left: 3px solid var(--info); border-radius: 6px; padding: 6px 10px; margin: -4px 0 12px; line-height: 1.45; }
+body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCard { display: none !important; }
+.intro ol { margin: 0 0 8px; padding-left: 1.3em; } .intro li { margin: 5px 0; }
+.coordnote { font-size: .82rem; margin: -2px 0 10px; color: var(--muted); min-height: 1.1em; } .coordnote.err { color: var(--bad); font-weight: 600; }
+.fstrip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 5px 12px 6px; background: var(--surface); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 10px 10px; font: 600 .9rem var(--font-body); }
+.fstrip #fsTxt { font-variant-numeric: tabular-nums; } .fstrip #fsTxt b { font-family: var(--font-mono); }
+.fstrip #fsBar { flex: 1 1 160px; min-width: 120px; } .fstrip svg { display: block; width: 100%; height: 14px; }
+.kd { margin-top: 6px; font-size: .9rem; } .kd p { margin: 2px 0; } .kd .diff { color: var(--warn); font-weight: 600; }
+[hidden] { display: none !important; }
+@media (max-width: 560px) { .field-top { grid-template-columns: 1fr; } .clock { font-size: 2.3rem; } .bigwhere { font-size: 1.1rem; } .best .big { font-size: 1.7rem; } .facts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tamper" id="tamper" role="alert" hidden></div>
+  <header class="top">
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="var(--sky-night)" stroke="var(--line)"/><path d="M21 8 A12 12 0 1 0 21 32 A14 14 0 0 1 21 8Z" fill="var(--accent)"/></svg>
+      <div><h1 id="appTitle"></h1><p id="appSub"></p></div>
+    </div>
+    <div class="tools">
+      <span class="ver" id="ver" title="Sürüm / Version"></span>
+      <button class="btn" type="button" id="dlHtml"></button>
+      <button class="btn" type="button" id="openSet"></button>
+      <div class="seg" role="group" aria-label="Dil / Language"><button id="langTr" type="button">TR</button><button id="langEn" type="button">EN</button></div>
+    </div>
+  </header>
+  <div class="stick">
+  <nav class="tabs" aria-label="Sekmeler">
+    <a href="#plan" id="tabPlan"></a><a href="#harita" id="tabMap"></a><a href="#saha" id="tabField"></a><a href="#rehber" id="tabGuide"></a><a href="#dogrulama" id="tabTests"></a>
+  </nav>
+  <div class="mbar" id="mbar" role="status" aria-live="off">
+    <span class="mode" id="mbMode"></span>
+    <div class="when"><span class="d" id="mbDate"></span><span class="tm" id="mbTime"></span><span class="hj" id="mbHijri"></span></div>
+    <div class="chips" id="mbChips"></div>
+    <div class="acts"><div class="seg" role="group" id="mbLive"><button type="button" id="mbPlay"></button><button type="button" id="mbFreeze"></button></div><button class="btn" type="button" id="mbNow"></button><button class="btn" type="button" id="mbPrint"></button></div>
+  </div>
+  <div class="fstrip" id="fStrip" hidden><span id="fsTxt"></span><div id="fsBar"></div></div>
+  </div>
+
+  <main id="view-plan">
+    <p class="notice" id="notCalendar"></p>
+    <div class="layout">
+      <aside class="stack">
+        <section class="card" aria-labelledby="hLoc">
+          <h2 id="hLoc"></h2>
+          <div class="field"><label for="city" id="lCity"></label><select id="city"></select></div>
+          <div class="row2">
+            <div class="field"><label for="lat" id="lLat"></label><input id="lat" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+            <div class="field"><label for="lon" id="lLon"></label><input id="lon" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+          </div>
+          <p class="coordnote" id="coordNote" role="status"></p>
+          <div class="field"><label for="elev" id="lElev"></label><input id="elev" type="text" inputmode="decimal" autocomplete="off"></div>
+          <div class="field"><label for="hObs" id="lHObs"></label><input id="hObs" type="text" inputmode="decimal" autocomplete="off"></div>
+          <div class="field"><label for="hMax" id="lHMax"></label><input id="hMax" type="text" inputmode="decimal" autocomplete="off"></div>
+          <div class="field"><label for="tz" id="lTz"></label><select id="tz"></select></div>
+          <div class="btns"><button class="btn" type="button" id="myLoc"></button></div>
+          <p class="msg" id="locMsg" role="status"></p><p class="warnbox" id="tzWarn" hidden></p>
+        </section>
+        <section class="card" aria-labelledby="hDate">
+          <h2 id="hDate"></h2>
+          <div class="field"><label for="date" id="lDate"></label><input id="date" type="date"></div>
+          <div class="btns">
+            <button class="btn" type="button" id="prevDay"></button>
+            <button class="btn" type="button" id="today"></button>
+            <button class="btn" type="button" id="nextDay"></button>
+          </div>
+          <div class="field" style="margin-top:12px"><label for="nightKind" id="lNightKind"></label><select id="nightKind"></select></div>
+          <div class="btns"><button class="btn" type="button" id="prevNight"></button><button class="btn primary" type="button" id="nextNight"></button></div>
+          <p class="msg" id="nightMsg" role="status"></p>
+        </section>
+      </aside>
+      <div class="stack">
+        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
+        <section class="card" id="upCard"><h2 id="hUp"></h2><div class="up" id="upBody"></div></section>
+        <section class="status" id="status" aria-live="polite"><div class="bar"></div><div id="statusBody"></div></section>
+        <section class="card" id="tbCard"><h2 id="hTb"></h2>
+          <div class="tbhead"><span class="tval" id="tbVal">--:--</span><span class="utc" id="tbUtc"></span><span class="livepill" id="tbLive" hidden></span></div>
+          <div class="tb"><div id="tbTrack"></div><input type="range" id="tb" min="0" max="1620" step="1" aria-labelledby="hTb"></div>
+          <div class="btns" style="margin-top:6px"><button class="btn" type="button" data-jump="gurub" id="jGurub"></button><button class="btn" type="button" data-jump="best" id="jBest"></button><button class="btn" type="button" data-jump="win" id="jWin"></button><button class="btn" type="button" data-jump="now" id="jNow"></button></div>
+          <div id="tbLegend" class="legend"></div>
+          <div id="moment"></div>
+        </section>
+        <section class="card" id="wxCard"><h2 id="hWx"></h2><div id="wxBody"></div></section>
+        <section class="card" id="skyCard"><div class="cardhead"><h2 id="hSky"></h2><div class="btns"><button class="btn" type="button" id="openSM"></button></div></div><div id="sky"></div><div id="guides"></div>
+          <p class="where" id="skyWhere"></p><div class="readout" id="skyRead"></div><p class="cap" id="skyNote"></p></section>
+        <section class="card" id="stripCard"><h2 id="hStrip"></h2><div class="strip" id="strip"></div><p class="cap" id="stripNote"></p></section>
+        <div class="grid2">
+          <section class="card"><h2 id="hDetail"></h2><dl class="kv" id="detail"></dl></section>
+          <section class="card"><h2 id="hMonth"></h2><dl class="kv" id="month1"></dl><div class="minimap" id="miniMap"></div><div class="legend" id="miniLegend"></div><p class="cap" id="miniHow"></p><dl class="kv" id="month2"></dl></section>
+        </div>
+        <details class="card extra" id="extraBox"><summary id="hExtra"></summary><p class="note" id="extraNote"></p><dl class="kv" id="extra"></dl></details>
+      </div>
+    </div>
+  </main>
+
+  <main id="view-harita" hidden>
+    <section class="card"><h2 id="hMap"></h2>
+      <div class="mapctl">
+        <div class="field"><label for="mMode" id="lMMode"></label><select id="mMode"></select></div>
+        <div class="field"><label for="mDate" id="lMDate"></label><input id="mDate" type="date"></div>
+        <div class="btns"><button class="btn" type="button" id="mPrev">◀</button><button class="btn" type="button" id="mNext">▶</button></div>
+        <div class="field"><label for="mLayer" id="lMLayer"></label><select id="mLayer"></select></div>
+        <div class="field"><label for="mRes" id="lMRes"></label><select id="mRes"><option value="4">4°</option><option value="3">3°</option><option value="2">2°</option></select></div>
+        <label class="chk"><input type="checkbox" id="mAge"><span id="lMAge"></span></label>
+        <label class="chk"><input type="checkbox" id="mBorders"><span id="lMBorders"></span></label>
+        <label class="chk"><input type="checkbox" id="m18"><span id="lM18"></span></label>
+        <label class="chk"><input type="checkbox" id="mLand"><span id="lMLand"></span></label>
+      </div>
+      <div class="mapctl" id="mInstCtl" hidden>
+        <div class="field" style="flex:1 1 260px"><label for="mTime" id="lMTime"></label><input type="range" id="mTime" min="0" max="1620" step="5"></div>
+        <span class="tval" id="mTimeVal" style="font:600 1.15rem var(--font-mono)"></span>
+        <div class="btns"><button class="btn" type="button" id="mHPrev">−1 h</button><button class="btn" type="button" id="mHNext">+1 h</button><button class="btn" type="button" id="mPlay"></button><button class="btn" type="button" id="mNow"></button></div>
+      </div>
+      <div id="bigMap"></div><div class="legend" id="mapLegend"></div><p class="cap" id="mapNote"></p>
+      <div id="pickBox" hidden><h3 id="hPick"></h3><dl class="kv" id="pickKv"></dl><div class="btns" style="margin-top:8px"><button class="btn primary" type="button" id="pickUse"></button></div></div>
+    </section>
+  </main>
+
+  <main id="view-saha" hidden>
+    <section class="card fhero">
+      <div class="fnow"><div class="clock" id="fClock">--:--:--</div><div><p class="small" id="fDate" style="margin:0"></p><p class="small" id="fHijri" style="margin:0"></p></div></div>
+      <div class="fbig" id="fBig" role="status"></div>
+      <div id="fTrack"></div>
+      <div class="cd" id="fCd"></div>
+      <p class="bigwhere" id="fWhere"></p><p class="small" id="fHeading"></p>
+      <div id="fSky"></div>
+      <div id="fGuides"></div>
+      <div class="ftools"><button class="btn" type="button" id="fNight" aria-pressed="false"></button><button class="btn" type="button" id="fWake" aria-pressed="false"></button><button class="btn" type="button" id="fCompass" aria-pressed="false"></button><button class="btn" type="button" id="fSM"></button><button class="btn" type="button" id="fLoc"></button><button class="btn" type="button" id="fFont">A+</button></div>
+      <p class="msg" id="fMsg"></p>
+      <div id="fStatus"></div><div id="fWx"></div><p class="small" id="fMorning"></p>
+    </section>
+    <section class="card" style="margin-top:16px"><h2 id="hRec"></h2>
+      <p class="small" id="recIntro"></p>
+      <div class="recgrid">
+        <div class="field"><label for="recAt" id="lRecAt"></label><input id="recAt" type="datetime-local" step="60"><p class="small" id="recEvLbl" style="margin:2px 0 0"></p></div>
+        <div class="field"><label for="recRes" id="lRecRes"></label><select id="recRes"></select></div>
+        <div class="field"><label for="recFirst" id="lRecFirst"></label><input id="recFirst" type="time"></div>
+        <div class="field"><label for="recLast" id="lRecLast"></label><input id="recLast" type="time"></div>
+        <div class="field"><label for="recSky" id="lRecSky"></label><select id="recSky"></select></div>
+        <div class="field"><label for="recPlace" id="lRecPlace"></label><select id="recPlace"></select></div>
+        <div class="field"><label for="recName" id="lRecName"></label><input id="recName" type="text" autocomplete="name"></div>
+        <div class="field"><label for="recContact" id="lRecContact"></label><input id="recContact" type="text"></div>
+        <div class="field"><label for="recWith" id="lRecWith"></label><input id="recWith" type="number" min="0" step="1" value="0"></div>
+        <div class="field"><label for="recSeers" id="lRecSeers"></label><input id="recSeers" type="number" min="0" step="1" value="0"></div>
+        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"></div>
+      </div>
+      <div class="field"><label for="recNote" id="lRecNote"></label><textarea id="recNote" rows="2"></textarea></div>
+      <div class="btns recbtns"><button class="btn primary" type="button" id="recSave"></button></div>
+      <p class="where" id="recEval" role="status"></p><h3 id="hRecList"></h3><div class="scroll" id="recList"></div>
+      <h3 id="hNets"></h3><div id="netsBody" class="small"></div>
+    </section>
+    <details class="card extra" style="margin-top:16px" id="fCheck"><summary id="hCheck"></summary><div class="prose" id="checkBody"></div></details>
+  </main>
+  <main id="view-rehber" hidden><div id="guideBody"></div></main>
+  <main id="view-dogrulama" hidden><section class="card"><h2 id="hTests"></h2><p class="small" id="testsIntro"></p><div class="scroll"><table class="t" id="tests"></table></div></section></main>
+  <dialog id="dlg"><div class="prose" id="dlgBody"></div><div class="btns" style="justify-content:flex-end"><button class="btn" type="button" id="dlgClose"></button></div></dialog>
+  <dialog id="setDlg" aria-labelledby="hSet" class="setdlg">
+    <div class="cardhead"><h2 id="hSet" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="setClose"></button></div>
+    <div class="setgrid">
+      <div>
+        <div class="field"><label for="theme" id="lTheme"></label><select id="theme"></select></div>
+        <div class="field"><label for="fontSize" id="lFontSize"></label><select id="fontSize"></select></div>
+        <div class="field"><label for="timeFmt" id="lTimeFmt"></label><select id="timeFmt"></select></div>
+        <div class="field"><label for="liveInt" id="lLiveInt"></label><select id="liveInt"></select></div>
+      </div>
+      <div>
+        <fieldset style="border:0;padding:0;margin:0"><legend class="small" id="lDark" style="margin-bottom:6px"></legend><div class="radio" id="darkOpts"></div></fieldset>
+        <p class="cap" id="darkHelp"></p>
+      </div>
+      <div>
+        <h3 id="hOnline"></h3>
+        <label class="chk"><input type="checkbox" id="optWx"><span id="lOptWx"></span></label>
+        <label class="chk"><input type="checkbox" id="optAutoLoc"><span id="lOptAutoLoc"></span></label>
+        <h3 id="hHelp"></h3>
+        <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
+        <p class="cap" id="explainNote"></p>
+        <p class="cap" id="onlineNote"></p>
+      </div>
+      <div class="lic">
+        <h3 id="hLic"></h3>
+        <p class="cap" id="licBody"></p>
+        <button class="btn" type="button" id="dlHtml2"></button>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="prDlg" aria-labelledby="hPr" class="setdlg">
+    <div class="cardhead"><h2 id="hPr" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="prClose"></button></div>
+    <p class="small" id="prIntro"></p>
+    <div class="radio" id="prOpts"></div>
+    <div class="btns" style="margin-top:12px"><button class="btn primary" type="button" id="prGo"></button></div>
+    <p class="cap" id="prNote"></p>
+  </dialog>
+  <dialog id="smDlg" class="full" aria-labelledby="smTitle">
+    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smClose"></button></div></div>
+    <p class="small" id="smWhen" style="margin:0"></p>
+    <div class="smctl"><label for="smFace" id="lSmFace"></label><select id="smFace" class="compact"></select>
+      <label class="chk"><input type="checkbox" id="smLines" checked><span id="lSmLines"></span></label>
+      <label class="chk"><input type="checkbox" id="smNames" checked><span id="lSmNames"></span></label>
+      <label class="chk"><input type="checkbox" id="smCons"><span id="lSmCons"></span></label>
+      <label class="chk"><input type="checkbox" id="smEcl" checked><span id="lSmEcl"></span></label></div>
+    <div class="smwrap" id="smBody"></div><p class="cap" id="smNote"></p>
+  </dialog>
+  <p class="msg" id="toast" role="status" style="position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;color:var(--ink);z-index:20;max-width:92vw" hidden></p>
+  <footer id="footer"></footer>
+</div>
+<!--ASTRONOMY-->
+<script>
+window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+/*MODULES*/
+</script>
+</body>
+</html>
