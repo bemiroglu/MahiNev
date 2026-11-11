@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0-deneme.3
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -2307,7 +2307,7 @@ window.HR_CANON_EN = [
 /* Metinler: internet izinleri, JPG çıktısı, UTC saat farkı */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.9.0-deneme.3';
+  G.HR_VERSION = '0.9.0';
   Object.assign(G.HRI18N.T.tr, {
     // İnternet bağlantıları ve izinler
     hOnline: 'İnternet bağlantıları ve izinler',
@@ -5648,7 +5648,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD84674d250bf91a35';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD9cac0d11c1b0c2ea';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }

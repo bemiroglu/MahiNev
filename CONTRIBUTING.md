@@ -5,9 +5,8 @@ Mâh-ı Nev, [CC BY-NC-ND 4.0](LICENSE) ile yayımlanır. Programın fıkhî kar
 ## Nasıl katkı verilir?
 
 1. **Hata bildirimi:** [Issues](https://github.com/bemiroglu/MahiNev/issues) → *Hata bildirimi* şablonunu kullanın. Konumu, tarihi, saati ve programın sürümünü yazın.
-2. **Rü'yet raporu:** Hilâli gördüyseniz veya göremediyseniz, *Rü'yet raporu* şablonuyla kaydınızı (JSON) ekleyin.
-3. **Fıkhî konular:** Bu tür önerilerde Tam İlmihâl Se'âdet-i Ebediyye'den **sayfa numarasıyla** dayanak gösterin.
-4. **Kod önerisi:** Pull request açabilirsiniz; ancak öneri olarak değerlendirilir. Kabul edilen fikirler, depo sahibince programa işlenir.
+2. **Fıkhî konular:** Bu tür önerilerde Tam İlmihâl Se'âdet-i Ebediyye'den **sayfa numarasıyla** dayanak gösterin.
+3. **Kod önerisi:** Pull request açabilirsiniz; ancak öneri olarak değerlendirilir. Kabul edilen fikirler, depo sahibince programa işlenir.
 
 ## Değişmez esaslar
 
@@ -16,9 +15,9 @@ Mâh-ı Nev, [CC BY-NC-ND 4.0](LICENSE) ile yayımlanır. Programın fıkhî kar
 - Program takvim değildir: hiçbir ekran veya çıktı, ayın başladığını hesaba dayanarak ilan edemez.
 - Metinler Türkçe ve İngilizce birlikte güncellenir. Kitap terimi önce yazılır, modern karşılığı parantez içinde verilir.
 
-## Depo sahibi için derleme
+## Depo sahibi için
 
-- Kaynak kod `src/` altındadır.
-- Derlemek için `python3 build.py`, sınamak için `python3 tests/run_tests.py` çalıştırılır.
-- Yeni hesaplar için Doğrulama sekmesine test eklenir.
-- Derleme, gömülü sürüm bildirimini ve bütünlük özetini her seferinde yeniden üretir. Bu yüzden dağıtılan HTML yalnızca `build.py` çıktısı olmalıdır.
+- Kaynak kod `src/` altındadır; `python3 build.py` tek dosyalık `dist/mahinev.html`'i üretir. Derleme, gömülü yayın bildirimini ve bütünlük özetini her seferinde yeniden hesaplar; dağıtılan HTML yalnız `build.py` çıktısı olmalıdır.
+- Sınama: `python3 tests/run_tests.py` (Doğrulama sekmesindeki testler), `python3 tests/ui_tarama.py` (arayüz taraması), `python3 tools/kuresel_dogrulama.py` (dünya geneli kapsamı).
+- Yayın: `main` dalına gelen her sürüm GitHub Actions ile Pages'te yayımlanır (Settings → Pages → Source: GitHub Actions). Sürüm dosyası (`mahinev-v<sürüm>.html`) GitHub Releases'e eklenir.
+- Kanonik kararlar `docs/kanonik-rapor.md`'dedir; yeni hesaplar için Doğrulama sekmesine test eklenir.

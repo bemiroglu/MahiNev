@@ -37,7 +37,7 @@ python3 tools/verify_record.py kayit.json
 - **Özet:** kaydın değiştirilip değiştirilmediği.
 - **İmza:** kaydın, kayıtta yazılı açık anahtarın sahibi olan cihazdan gelip gelmediği.
 
-İmza, kişinin kimliğini **kanıtlamaz**. Kimlik, anahtarın sorumlu bir kişi tarafından tanınmasıyla (anahtar kayıt defteri) veya ıslak imzalı tutanakla bağlanır (bkz. [sehadet-agi.md](sehadet-agi.md)).
+İmza, kişinin kimliğini **kanıtlamaz**. Kimlik, anahtarın sorumlu bir kişi tarafından tanınmasıyla (anahtar kayıt defteri) veya ıslak imzalı tutanakla bağlanır.
 
 ## QR kodu
 

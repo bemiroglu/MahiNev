@@ -4,7 +4,7 @@ labels: ["hata"]
 body:
   - type: input
     id: surum
-    attributes: { label: "Sürüm (başlıktaki etiket, ör. v0.8.0)" }
+    attributes: { label: "Sürüm (başlıktaki etiket, ör. v0.9.0)" }
     validations: { required: true }
   - type: textarea
     id: ne

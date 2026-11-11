@@ -102,15 +102,13 @@ Belgeler:
 
 - [docs/kanonik-metin.md](docs/kanonik-metin.md): temel kural metni.
 - [docs/kanonik-rapor.md](docs/kanonik-rapor.md): esaslar, terminoloji, doğrulama örnekleri ve alınan kararlar.
-- [docs/tasarim-ilkeleri.md](docs/tasarim-ilkeleri.md): tasarım ilkeleri; yeni kullanıcıya rehberlik bunlardan biridir.
 - [docs/kullanim-kilavuzu.md](docs/kullanim-kilavuzu.md): kullanım kılavuzu.
-- [docs/kayit-semasi.md](docs/kayit-semasi.md) ve [docs/sehadet-agi.md](docs/sehadet-agi.md): rü'yet kaydı ve şehâdet ağı.
-- [docs/mimari.md](docs/mimari.md) ve [docs/github-otomasyon.md](docs/github-otomasyon.md): mimari ve yayın.
+- [docs/kayit-semasi.md](docs/kayit-semasi.md): rü'yet kaydı ve doğrulaması.
 - [docs/yol-haritasi.md](docs/yol-haritasi.md): planlanan işler (gemi kipi, üç kullanıcı düzeyi).
 
 ## Geri bildirim
 
-Hata bildirimi ve rü'yet raporu için [Issues](https://github.com/bemiroglu/MahiNev/issues) şablonlarını kullanın. Fıkhî bir konu içeren öneriler, Tam İlmihâl'den sayfa numarasıyla gelmelidir. Ayrıntılar: [CONTRIBUTING.md](CONTRIBUTING.md).
+Hata bildirimi için [Issues](https://github.com/bemiroglu/MahiNev/issues) şablonunu kullanın. Fıkhî bir konu içeren öneriler, Tam İlmihâl'den sayfa numarasıyla gelmelidir. Ayrıntılar: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Derleme (geliştirici)
 

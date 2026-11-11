@@ -1,19 +1,15 @@
 # Mâh-ı Nev (Hilâl Rasad Yardımcısı) — Kanonik Kaynak Raporu
 
-Nov 10, 2026 
-
 ## 1. Amaç ve kaynak düzeni
 
-Bu rapor, Mâh-ı Nev'in (Hilâl Rasad Yardımcısı) bundan sonraki bütün tasarım ve kod kararlarında tek başvuru metnidir. Kaynak: *Tam İlmihâl Se'âdet-i Ebediyye* (Hüseyn Hilmi Işık, Hakîkat Kitâbevi; yüklenen PDF, 1248 sayfa, Ocak 2026 baskısı). Kitap baştan sona tarandı. Hilâl, ictimâ, vakit, ufuk ve takvim bahisleri sayfa numaralarıyla süzüldü. Kitaptaki sayısal örnekler modern efemerisle yeniden hesaplandı.
+Bu rapor, Mâh-ı Nev'in (Hilâl Rasad Yardımcısı) bundan sonraki bütün tasarım ve kod kararlarında tek başvuru metnidir. Kaynak: *Tam İlmihâl Se'âdet-i Ebediyye* (Hüseyn Hilmi Işık, Hakîkat Kitâbevi, Ocak 2026 baskısı; sayfa numaraları bu baskıya göredir). Kitap baştan sona tarandı. Hilâl, ictimâ, vakit, ufuk ve takvim bahisleri sayfa numaralarıyla süzüldü. Kitaptaki sayısal örnekler modern efemerisle yeniden hesaplandı.
 
 **Kaynak hiyerarşisi** (üstteki alttakini bağlar):
 
-1. **Kanonik kural metni ve Se'âdet-i Ebediyye.** Fıkhî hüküm, terminoloji ve eşikler buradan gelir. Değiştirilmez.
+1. **Tam İlmihâl Se'âdet-i Ebediyye ve kanonik kural metni.** Fıkhî hüküm, terminoloji ve eşikler buradan gelir. Değiştirilmez.
 2. **Bilimsel hassaslaştırma.** Kitapta sabit veya yuvarlanmış verilen astronomik büyüklükler (süreler, ihtilâf-ı manzar, inhitât-ı ufk, kırılma) her an ve her konum için efemerisle hesaplanır. Kitabın eşiği korunur, yalnızca hesap hassaslaşır. Kitabın açıkça hüküm bağladığı eşikler (8°, 18°, 5°) değişmez. Modern ölçümler ek bilgi olarak yanlarında gösterilir (Bölüm 4).
-3. **Modern gözlem modelleri** (Yallop, Odeh). "Modern gözlem modeli (ek bilgi)" etiketiyle tutulur; varsayılan olarak kapalıdır. İstisna: Yallop'un en iyi gözlem anı ana panelde gösterilir (D4).
-4. **Takvimler** (Diyanet, kitaptaki aritmetik usuller, Ümmü'l-Kurâ). Yalnızca karşılaştırma bilgisidir; hiçbir zaman rü'yet hükmünün yerine geçmez.
-
-**Çalışma yöntemi.** Kitabı her oturumda yeniden yüklemeye gerek yok. Bundan sonra bu rapor kanonik özettir. Başka bir oturumda veya başka bir yapay zekâ ile çalışırken bu raporu Markdown/PDF olarak dışa aktarıp vermek yeterlidir. Yardım metnine birebir girecek pasajlar aşağıda sayfa numarasıyla gösterildi. Tam metin gerektiğinde yalnızca o sayfalar kitaptan kopyalanır.
+3. **Modern gözlem modelleri** (Yallop, Odeh). "Modern gözlem modeli (ek bilgi)" etiketiyle tutulur; varsayılan olarak kapalıdır. Yallop'un en iyi gözlem anı, kitabın penceresinin yanında ek bilgi olarak gösterilir (D4).
+4. **Takvim usulleri** (kitaptaki aritmetik usuller: Işık, Uluğ Beğ, Kindî; tabular takvim). Rü'yet hükmünün yerine geçmez. Zilhiccede, şahitle sabit olmayan yerler için kitabın bildirdiği Işık usulü ana gösterimdir (s. 326).
 
 ## 2. Kanonik fıkhî esaslar
 
@@ -304,86 +300,52 @@ Kitaptaki iki sayısal örnek hassas efemerisle yeniden hesaplandı. Kayseri 198
 
 ## 8. Programa yansıyan kurallar
 
-Ekranda her zaman Se'âdet-i Ebediyye'ye dayanan sınıflandırma görünür. Modern modeller ve takvimler yalnızca kullanıcı açarsa, ayrı etiketle görünür.
-
-**Görünürlük katmanları**
+Ekranda her zaman Tam İlmihâl'e dayanan sınıflandırma görünür. Modern modeller ve takvim usulleri ayrı etiketle, ek bilgi olarak görünür.
 
 | Katman | Varsayılan | Etiket |
 | --- | --- | --- |
-| Se'âdet-i Ebediyye sınıfları (Bölüm 4) | Açık | "Hesâbî rü'yet imkânı" |
-| Yallop / Odeh sınıfları | Kapalı | "Modern gözlem modeli (ek bilgi)". Optik araç gerektiren sınıflarda "çıplak gözle değil" notu |
-| Diyanet takvimi | Kapalı | "Diyanet (önceden ilan edilmiş, hesâbî)"; gri, ikinci planda |
-| Aritmetik usuller (Bölüm 6) | Kapalı | "Takvim usulü — rü'yet hükmü vermez" |
+| Tam İlmihâl sınıfları (Bölüm 4) | Açık | "Hesâbî rü'yet imkânı" |
+| Yallop / Odeh sınıfları | Kapalı | "Modern gözlem modeli (ek bilgi)"; optik araç gerektiren sınıflarda "çıplak gözle değil" notu |
+| Aritmetik usuller (Bölüm 6) | Ay başı bilgisinde | "Takvim usulü"; Zilhiccede Işık usulü ana gösterimdir (s. 326) |
 
-**Çift takvim hücresi.** Üstte miladi gün, altta hicrî gün yer alır. Hicrî günün üç durumu vardır:
+**Hicrî gün.** Hesâbîdir. Ay başına yakın günlerde iki ihtimal birlikte gösterilir ("1 | 29/30", "n (veya n−1)"). Bu, "hesapla anlaşılandan bir gün sonra olabilir, bir gün önce olamaz" hükmünün karşılığıdır (s. 360). Kamerî gün şer'î gurûbda değişir (s. 188).
 
-- **Kesinleşmiş:** Kullanıcı rü'yet kaydı girmiştir. Dolu renk.
-- **Hesâbî:** Ay başına yakın günlerde iki ihtimal yan yana gösterilir: "1 | 30". Bu, "aynı gün veya bir gün sonra, önce asla" kuralının doğrudan karşılığıdır.
-- **Diyanet:** Açılan katmanda küçük, gri bir rozet.
-
-**Hücre işaretleri:** ictimâ günü için köşe üçgeni; beynûnetin 8°'yi ve 18°'yi ilk aştığı akşamlar için küçük simgeler; seçili konumda o akşamın durumu için renkli nokta.
-
-**Detay paneli** (Jamry'deki alanların kitap terimleriyle karşılığı):
+**Akşam değerlendirmesi:**
 
 - **Gurûb:** Zâhirî gurûb (gözlem için) ve şer'î gurûb (temkinli).
-- **Ayın gurûbu** ve iki gurûb arasındaki fark (dakika).
-- **Hilâl yaşı:** Son ictimâdan beri geçen saat. Son ve sonraki ictimâ anı da yazılır.
-- **Konum ve parlaklık:** Beynûnet (uzanım), irtifâ (yükseklik), semt (azimut), güneşle semt farkı ve aydınlanma yüzdesi.
-- **En iyi gözlem anı ve pencere:** Ana panelde en iyi gözlem anı gösterilir: gurûb + 4/9 × fark (Yallop 1997; kaynağı etikette yazılır). Kitabın penceresi ek bilgi katmanındadır: zâhirî gurûbdan hilâlin görünen irtifâı 5°'ye inene kadar (s. 360). Kitaba göre hilâl gurûbdan sonraki 45 dakika içinde görünür.
+- **Kitabın penceresi:** Zâhirî gurûbdan hilâlin görünen irtifâı 5°'ye inene kadar (s. 360). Ana panelde önce bu pencere gösterilir; yanında Yallop'un en iyi gözlem anı ek bilgi olarak yazılır.
+- **Ayın gurûbu**, hilâl yaşı, beynûnet, irtifâ, semt ve aydınlanma.
 - **Pratik yönlendirme:** "Güneşin battığı noktanın 12° solunda, 6° yukarıda" gibi.
-- **Kâdîhân kontrolü:** Ay şafak sonundan önce mi, sonra mı batıyor?
+- **Kâdîhân kontrolü:** Ay şafaktan önce mi, sonra mı batıyor (Bölüm 5)?
 
-**Dünya haritası:** Her ızgara noktası Bölüm 4'teki beş sınıftan biriyle boyanır. Beynûnetin 18°'ye ulaştığı anda güneşin battığı boylam bir çizgi olarak çizilir; bu kitabın s. 360'taki usulüdür. Yallop/Odeh katmanı isteğe bağlıdır.
+**Dünya haritası:** Her ızgara noktası, o yerin yerel gurûbunda Bölüm 4'teki sınıflardan biriyle boyanır. Beynûnetin 18°'ye ulaştığı anda güneşin battığı boylam bir çizgi olarak çizilir (s. 360).
 
 **Ay modları:**
 
-- **Ramezân:** Küresel. Dünyada herhangi bir yerdeki ilk rü'yet imkânı esastır (s. 315).
-- **Zilhicce:** Hac için Mekke merkezli görünüm ve Arefe uyarısı (s. 344, 360). Kurban bayramı için kullanıcının yeri esastır, yani mahallîdir (Redd-ül-muhtâr).
+- **Ramezân:** Küresel. Dünyada herhangi bir yerdeki rü'yet, gerektirici surette sabit olunca her yeri bağlar (s. 315).
+- **Zilhicce:** Hac Mekke'deki rü'yete göredir; Arefe uyarısı verilir (s. 344, 360). Kurban mahallîdir (Redd-ül-muhtâr). Şahitle sabit olmayan yerler için Zilhiccenin birinci günü Işık usulüyle gösterilir; bayram bu gün veya bir gün sonrasıdır (s. 326). Astronomik hesap yanında ek bilgidir.
 - **Diğer aylar:** Kullanıcının konumu.
 
-**Rü'yet kaydı:** Bir "kullanıcı beyanı"dır, şahitlik yerine geçmez. Sübkî kuralı (s. 360) esastır. Kesin red üç durumdadır: ictimâ henüz olmamışsa, ay güneşten önce batıyorsa veya gurûbda beynûnet 8°'nin altındaysa (s. 360). Diğer durumlar uyarı olarak gösterilir. Kâdîhân kontrolü ayrıca çalıştırılır.
+**Rü'yet kaydı:** Bir "kullanıcı beyanı"dır, şahitlik yerine geçmez. Kesin red üç durumdadır: ictimâ henüz olmamışsa, ay güneşten önce batıyorsa veya gurûbda beynûnet 8°'nin altındaysa (Sübkî, s. 360). Diğer durumlar uyarı olarak gösterilir.
 
-**Hesâbî en erken gün (Sübkî alt sınırı).** Bu sınır en hassas efemerisle bulunur. Önce dünyada herhangi bir yerde gurûbda şu iki şartın birlikte sağlandığı ilk akşam aranır: beynûnet ≥ 8° ve hilâlin görünen irtifâı ≥ 5°. En erken gün, bu akşamın ertesi günüdür. Zilhicce'de bu hesap hac için Mekke'ye, kurban için kullanıcının yerine göre yapılır (Redd-ül-muhtâr, ihtilâf-ı metâli' Tembih'i). Kitabın Işık usulüyle bulduğu gün (s. 326) yanında "Işık Usulü" etiketiyle gösterilir. İkisi ayrışırsa kullanıcıya not düşülür (Bölüm 6).
+**Hesâbî en erken gün (Sübkî alt sınırı).** Dünyada bir yerde gurûbda beynûnet ≥ 8° ve hilâlin görünen irtifâı ≥ 5° şartlarının birlikte sağlandığı ilk akşam aranır; en erken gün bu akşamın ertesi günüdür.
 
-**Rü'yetin sübûtu (Redd-ül-muhtâr, Kitâb-us-savm).** Küresel Ramezân hükmü, başka bir yerdeki rü'yet "gerektirici surette" sabit olunca geçerlidir. Bu yüzden rü'yet kaydında kaynak türü seçilir: şahitlik, hâkim hükmü, yaygın haber veya aktarma (hikâye). Dünya haritası yalnızca imkânı gösterir; sübût bilgisi kullanıcı kaydından gelir. Şahitlik şartları:
+**Rü'yetin sübûtu (Redd-ül-muhtâr, Kitâb-us-savm).** Küresel Ramezân hükmü, başka bir yerdeki rü'yet "gerektirici surette" sabit olunca geçerlidir: iki şahit, hâkim hükmüne şahitlik veya haberin yayılması. Dünya haritası yalnızca imkânı gösterir. Şahitlik şartları (s. 315–316):
 
 - **Bulutlu havada Ramezân:** Bir âdil kişi yeter.
-- **Bulutlu havada bayram ve diğer aylar:** İki erkek veya bir erkek ile iki kadın gerekir.
-- **Açık havada:** Kalabalık bir cemaatin haber vermesi gerekir.
+- **Bayram:** İki âdil; bulutlu havada Şevvâl için iki erkek veya bir erkek ile iki kadın.
+- **Açık havada:** Birçok kimsenin haber vermesi gerekir.
 
-Kaynaklar: Redd-ül-muhtâr, Kitâb-us-savm (şahitlik ve "Kurban bayramı hilâli" meseleleri); Se'âdet-i Ebediyye s. 315–316.
+**Çıplak göz şartı:** Sınıflar çıplak göz içindir. Kitap rü'yeti "gökte yeni ayı görmek" diye anlatır. Aletle gözlemin muteber olmadığını açıkça söyleyen hüküm, aynı geleneğin [Rasad Hakkında Zarûrî Malûmat](https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf) metnindedir.
 
-**Zaman ve konum:**
-
-- Her değer gözlem yerinin yerel saati ve UTC ile yazılır. Ezânî saat isteğe bağlıdır (s. 184, 198).
-- Gözlemci yüksekliği girilir ve inhitât-ı ufk hesabına katılır.
-- Sıcaklık ve basınç kırılma hesabı için isteğe bağlı girilir.
-
-**Çıplak göz şartı:** Programdaki sınıflar çıplak göz içindir. Kitap rü'yeti "gökte yeni ayı görmek" diye anlatır. Aletle gözlemin muteber olmadığını açıkça söyleyen hüküm ise bu kitapta değil, aynı geleneğin [Rasad Hakkında Zarûrî Malûmat](https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf) metnindedir.
-
-**Esnek yapı** (Jamry'nin bütün özelliklerini karşılayacak ve aşacak şekilde): Tek HTML dosyası içinde bağımsız modüller bulunur:
-
-- Astronomi çekirdeği.
-- Kriter eklentileri: Se'âdet-i Ebediyye (varsayılan), Yallop, Odeh.
-- Takvim eklentileri: Işık, Uluğ Beğ, Kindî, tabular, Diyanet verisi.
-- Görünümler: ay, yıl, harita, detay, ufuk simülasyonu.
-- Dil sözlükleri (TR/EN, ileride Arapça).
-- Kanonik yardım metni ve test vakaları (Receb 1980, Kayseri 1987, Jamry ekranları).
-
-Yeni takvim sayfaları yalnızca yeni bir eklenti ve görünüm olarak eklenir.
-
-## 9. Açık sorular ve sonraki adımlar
-
-Aşağıdaki karar soruları kodlamadan önce kapanmalıdır. Önerilen varsayılan her maddede yazılıdır.
-
-**Verilen kararlar (10 Kasım 2026)**
+## 9. Kararlar
 
 | Konu | Karar |
 | --- | --- |
 | Kesin red (D1) | Kesin red üç durumda: ictimâ olmamış, ay güneşten önce batıyor veya gurûbda beynûnet < 8° (Sübkî, s. 360). Modern 7,5° yalnızca ek bilgi |
 | 5° sınırı (D2) | Kitabın penceresi gurûbdan hilâlin görünen irtifâı 5°'ye inene kadar sürer. Gurûbda < 5° ise o akşam görülemez |
-| En erken mümkün gün (D3) | En hassas efemerisle (≥ 8° ve ≥ 5°). Işık usulünün sonucu yanında "Işık Usulü" etiketiyle |
-| En iyi gözlem anı (D4) | Ana panelde Yallop'un anı (gurûb + 4/9 × fark). Kitabın penceresi ek bilgi katmanında |
+| En erken mümkün gün (D3) | En hassas efemerisle (≥ 8° ve ≥ 5°). Zilhiccede, şahitle sabit olmayan yerler için ana gösterim Işık usulü (s. 326); astronomik hesap yanında |
+| En iyi gözlem anı (D4) | Ana panelde önce kitabın penceresi (gurûb → 5°); yanında Yallop'un en iyi anı (gurûb + 4/9 × fark) ek bilgi olarak |
 | Kâdîhân şafak kuralı | Esas −19°. −17° açıklamasıyla ek bilgi (Bölüm 5) |
 | Çıplak göz şartının kaynağı | Yardım metninde "Rasad Hakkında Zarûrî Malûmat" gösterilir |
 | Receb 1980 örneği | Hassas hesapla sunulur, kitabın ifadesi yanında verilir |
@@ -392,15 +354,13 @@ Aşağıdaki karar soruları kodlamadan önce kapanmalıdır. Önerilen varsayı
 | Mahallî hükmün kaynağı | Redd-ül-muhtâr, Kitâb-us-savm, ihtilâf-ı metâli' Tembih'i |
 | Redd-ül-muhtâr atıf biçimi | Eser, bölüm ve mesele adıyla; sayfa numarası verilmez |
 
-**Açık kalanlar**
-
-**Rapor kanonik olarak kapatıldı (10 Kasım 2026).** Açık karar kalmadı. Bundan sonraki bütün tasarım ve kod bu rapora dayanır. Değişiklik ancak yeni bir karar kaydıyla yapılır.
+Bütün tasarım ve kod bu rapora dayanır. Değişiklik ancak yeni bir karar kaydıyla yapılır.
 
 **Sonraki adımlar:** [docs/yol-haritasi.md](yol-haritasi.md).
 
 ## 10. Tam İlmihâl uyum denetimi
 
-Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır. Kitaptan ayrılan dört kabul (D1–D4) karara bağlanmıştır: D1, D2 ve D3 kitapla uyumludur. D4'te kullanıcı kararıyla Yallop'un en iyi anı ana panelde kalır; kitabın penceresi yanında gösterilir.
+Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır. Kitaptan ayrılan dört kabul (D1–D4) karara bağlanmıştır: Dördü de kitapla uyumludur; ana panelde her zaman önce kitabın ölçüsü gelir.
 
 **Uyumlu kabuller**
 
@@ -442,9 +402,9 @@ Raporun bütün kabulleri kitabın metniyle tek tek karşılaştırılmıştır.
 | D1 | s. 360: beynûnet 8°'den azken hilâl "hiçbir zemânda, hiçbiryerde görülemez"; Sübkî: hesaba göre doğmadan görüldü denirse hesaba inanılır | Kesin red: ictimâ olmamış, ay güneşten önce batıyor veya beynûnet < 8°. 7,5° ek bilgi | Uyumlu |
 | D2 | s. 360: ufka 5° yaklaşınca görülemez | Pencere gurûbdan 5°'ye kadar; gurûbda < 5° ise o akşam görülemez | Uyumlu |
 | D3 | s. 326: şahitle sabit olmayan yerlerde bayram Işık usulüyle bulunan gün veya ertesi; önce olamaz | Zilhicce'de ana gösterim Işık usulü (s. 326); astronomik hesap (hesâbî en erken gün) yanında ek bilgi (karar 12.11.2026) | Uyumlu |
-| D4 | s. 360: hilâl gurûbdan sonraki 45 dakika içinde görünür | Ana panelde Yallop'un anı; kitabın penceresi ek bilgi katmanında | Kullanıcı kararı; kitabın penceresi yanında görünür |
+| D4 | s. 360: hilâl gurûbdan sonraki 45 dakika içinde görünür; ufka 5° yaklaşınca görülemez | Ana panelde önce kitabın penceresi; Yallop'un en iyi anı yanında ek bilgi | Uyumlu |
 
-**Not.** D4 bir hükmün değil, gösterim önceliğinin tercihidir. Kitabın ilgili hükmü (s. 326, s. 360) programda her zaman yanında ve kaynağıyla görünür.
+ Kitabın ilgili hükmü (s. 326, s. 360) programda her zaman yanında ve kaynağıyla görünür.
 
 ## 11. Rü'yet arayüzü ilkeleri
 
@@ -493,18 +453,18 @@ Arayüz iki zamanı birbirinden ayırır: **akşam değerlendirmesi** ve **seçi
 **Hicrî tarih mantığı (kanonik):**
 
 1. Kamerî gün şer'î gurûbda değişir: ezânî gün, iki şer'î gurûb arasındaki zamandır (s. 188). Seçili an gurûbdan sonraysa ertesi günün hicrî tarihi gösterilir.
-2. Gün sayısı, her ay için hesâbî en erken günden sayılır; en erken günden önce yeni ay başlamaz. İlk günde "1 \[yeni ay\] veya 29/30 \[eski ay\]", sonraki günlerde "n (veya n−1)" yazılır.
+2. Gün sayısı, her ay için hesâbî en erken günden sayılır (Zilhiccede Işık usulüyle bulunan birinci günden, s. 326); bu günden önce yeni ay başlamaz. İlk günde "1 \[yeni ay\] veya 29/30 \[eski ay\]", sonraki günlerde "n (veya n−1)" yazılır.
 3. Ay adı ve yıl, ictimâya göre aritmetik takvimden alınır ve "hesâbî" diye işaretlenir. Muharrem'de yeni yıl yalnızca hilâl görülünce kesinleştiğinden, belirsiz günde eski yıl ile yeni yıl birlikte gösterilir ("1 Muharrem 1449 veya 29/30 Zilhicce 1448").
 
 **Kip ayrımı:** Program açılışta "Şimdi" (canlı) kipindedir ve yaklaşan rü'yet kartını (rasad gecesi, en elverişli akşam, bugünün hicrî tarihi) gösterir. Kullanıcı bir tarih, saat veya gece seçince "Rü'yet planlaması" kipine geçilir: an çubuğu vurgu rengine döner, ilgili kartlar işaretlenir, durum kartında "Planlama" başlığı ve aranacak hilâlin adı yazılır. Saha sekmesi her zaman "şimdi"dir.
 
-**Çevrimiçi katman (isteğe bağlı):** Astronomik hesapların hepsi internetsiz çalışır. İnternet varsa Open-Meteo'dan hava tahmini alınır. Tahmin iki nokta içindir: gözlemci ve hilâlin battığı yönde yaklaşık 25 km ötesi; 5° yükseklikteki görüş hattı 2 km'deki bulut tabanını bu mesafede keser. Tahmin bulutu (toplam ve alçak), görüş mesafesini, nemi, yağış ihtimalini ve aerosol optik derinliğini (pus, toz) kapsar. Değerlendirme yalnızca hazırlık içindir; s. 315'teki bulutlu ve açık havada şehâdet farkı yanında hatırlatılır. Konum izni verilmişse konum otomatik alınır; rakım bilinmiyorsa Open-Meteo'nun yükseklik servisi kullanılır. claude.ai içinde dış bağlantı, konum ve doğrudan yazdırma kapalıdır; orada "Dosya olarak kaydet" ile programın tamamı çevrimdışı çalışan tek dosya olarak indirilir.
+**Çevrimiçi katman (isteğe bağlı):** Astronomik hesapların hepsi internetsiz çalışır. Program, kullanıcı Ayarlar'dan açmadıkça internete bağlanmaz. Hava tahmini açılırsa Open-Meteo'dan alınır. Tahmin iki nokta içindir: gözlemci ve hilâlin battığı yönde yaklaşık 25 km ötesi; 5° yükseklikteki görüş hattı 2 km'deki bulut tabanını bu mesafede keser. Tahmin bulutu (toplam ve alçak), görüş mesafesini, nemi, yağış ihtimalini ve aerosol optik derinliğini (pus, toz) kapsar. Değerlendirme yalnızca hazırlık içindir; s. 315'teki bulutlu ve açık havada şehâdet farkı yanında hatırlatılır. Konum izni verilmişse konum otomatik alınır; rakım bilinmiyorsa Open-Meteo'nun yükseklik servisi kullanılır. claude.ai içinde dış bağlantı, konum ve doğrudan yazdırma kapalıdır; orada "Dosya olarak kaydet" ile programın tamamı çevrimdışı çalışan tek dosya olarak indirilir.
 
 **Gökyüzü haritası:** Stereografik bütün gök; bakış yönü alta gelir, varsayılanı batıdır. Haritada 5° çemberi (s. 360), ekliptik, isteğe bağlı takımyıldız çizgileri ve adları, parlak yıldızlar, gezegenler, Ay'ın evresi ve güneşin ufuk altındaki yönü bulunur. Yıldız verisi d3-celestial'dandır (Hipparcos, BSD-3). Yönelim yardımcıları, hilâlin (ay ufkun altındaysa gurûb noktasının) çevresindeki en parlak cisimleri, hilâle göre sağ-sol ve yukarı-aşağı derece farkıyla verir.
 
-**Saha ve okunurluk:** Beşinci tema eklendi: Güneş altı (yüksek kontrast). Yazı boyutu Normal, Büyük ve Çok büyük olarak seçilebilir. Gök çizimlerindeki etiketler koyu haleli açık renkle yazılır. Dar ekranda 360° panorama ve batı ufku yatay kaydırılabilir; panorama Ay'a odaklanarak açılır.
+**Saha ve okunurluk:** Beş tema vardır; Güneş altı teması yüksek kontrastlıdır. Yazı boyutu Normal, Büyük ve Çok büyük olarak seçilebilir. Gök çizimlerindeki etiketler koyu haleli açık renkle yazılır. Dar ekranda 360° panorama ve batı ufku yatay kaydırılabilir; panorama Ay'a odaklanarak açılır.
 
-**Baskı / PDF:** Plan, Harita, Saha ve gökyüzü haritası için açık temada baskı sayfası üretilir. Sayfada konum, an, hicrî tarih, durum, çizimler, hava ve tablolar yer alır; altına "takvim değildir" notu düşülür. Bağımsız dosyada tarayıcının yazdırma penceresi açılır ("PDF olarak kaydet"). claude.ai içinde sayfa HTML dosyası olarak indirilir.
+**Baskı / PDF:** Plan, Harita, Saha ve gökyüzü haritası için açık temada baskı sayfası üretilir. Sayfada konum, an, hicrî tarih, durum, çizimler, hava ve tablolar yer alır; altına "takvim değildir" notu düşülür. Tarayıcının yazdırma penceresi açılır ("PDF olarak kaydet"); sayfalar JPG olarak da kaydedilebilir. Dosya adları `MahiNev_tarih_saat_yer_tür` biçimindedir.
 
 ## 14. Şehâdetin belgelenmesi, zaman kipleri, sade arayüz
 
@@ -555,7 +515,7 @@ Saha sekmesi her zaman "şimdi"dir.
 - dünya haritası (yatay);
 - tutanak ve boş tutanak.
 
-**GitHub:** Kaynaklar, belgeler, kayıt şeması, Python doğrulayıcısı, testler ve rü'yet raporu issue formu depo düzeninde hazırlandı. Kod için MIT lisansı önerildi; onay proje sahibine aittir.
+**Yayın:** Program, belgeler, kayıt şeması, Python doğrulayıcısı ve testler github.com/bemiroglu/MahiNev deposunda yayımlanır. Lisans: CC BY-NC-ND 4.0.
 
 ## 15. Şafak iki kavli, "Tam İlmihâl" adı, rehberlik ilkesi, konum girişi
 
@@ -579,7 +539,6 @@ Saha sekmesi her zaman "şimdi"dir.
 - İlk açılışta "Nasıl kullanılır?" kartı görünür.
 - Her kartın başında tek cümlelik bir açıklama vardır: ne, neden, fıkhî dayanak.
 - Tecrübeli kullanıcı açıklamaları Ayarlar'dan kapatır.
-- İlkelerin tamamı: docs/tasarim-ilkeleri.md.
 
 **Konum girişi:** Program şu biçimleri anlar ve standart biçime çevirir:
 

@@ -1,7 +1,7 @@
 /* Metinler: internet izinleri, JPG çıktısı, UTC saat farkı */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.9.0-deneme.3';
+  G.HR_VERSION = '0.9.0';
   Object.assign(G.HRI18N.T.tr, {
     // İnternet bağlantıları ve izinler
     hOnline: 'İnternet bağlantıları ve izinler',

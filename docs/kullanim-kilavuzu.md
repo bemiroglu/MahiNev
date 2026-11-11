@@ -111,7 +111,7 @@ An çubuğundaki "⎙ Yazdır / PDF" düğmesi bir seçim penceresi açar. Her s
 - dünya haritası (yatay);
 - tutanak veya boş tutanak formu.
 
-Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir. claude.ai içinde sayfa HTML dosyası olarak kaydedilir.
+Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir; sayfalar JPG olarak da kaydedilebilir.
 
 ## Ayarlar (⚙)
 
