@@ -19,5 +19,5 @@ Mâh-ı Nev, [CC BY-NC-ND 4.0](LICENSE) ile yayımlanır. Programın fıkhî kar
 
 - Kaynak kod `src/` altındadır; `python3 build.py` tek dosyalık `dist/mahinev.html`'i üretir. Derleme, gömülü yayın bildirimini ve bütünlük özetini her seferinde yeniden hesaplar; dağıtılan HTML yalnız `build.py` çıktısı olmalıdır.
 - Sınama: `python3 tests/run_tests.py` (Doğrulama sekmesindeki testler), `python3 tests/ui_tarama.py` (arayüz taraması), `python3 tools/kuresel_dogrulama.py` (dünya geneli kapsamı).
-- Yayın: `main` dalına gelen her sürüm GitHub Actions ile Pages'te yayımlanır (Settings → Pages → Source: GitHub Actions). Sürüm dosyası (`mahinev-v<sürüm>.html`) GitHub Releases'e eklenir.
+- Yayın: `main` dalına gelen her sürüm GitHub Actions ile Pages'te yayımlanır (Settings → Pages → Source: GitHub Actions). Sürümlü kopya da aynı adreste yayımlanır: `https://bemiroglu.github.io/MahiNev/mahinev-v<sürüm>.html`.
 - Kanonik kararlar `docs/kanonik-rapor.md`'dedir; yeni hesaplar için Doğrulama sekmesine test eklenir.

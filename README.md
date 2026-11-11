@@ -11,7 +11,7 @@ Mâh-ı Nev ("yeni ay", hilâl) tek bir HTML dosyasıdır. Kurulum gerektirmez; 
 | | |
 |---|---|
 | **Çevrimiçi kullan** | <https://bemiroglu.github.io/MahiNev/> |
-| **İndir (son sürüm)** | [`dist/mahinev.html`](dist/mahinev.html) → sayfada *Download raw file* |
+| **İndir (son sürüm)** | [`mahinev-v0.9.0.html`](https://bemiroglu.github.io/MahiNev/mahinev-v0.9.0.html) (sayfayı açıp *Farklı kaydet*) veya [`dist/mahinev.html`](dist/mahinev.html) → *Download raw file* |
 | **Değişiklikler** | [CHANGELOG.md](CHANGELOG.md) |
 | **Lisans** | [CC BY-NC-ND 4.0](LICENSE): ticarî olmayan, değiştirilmeden, kaynak gösterilerek paylaşım |
 
