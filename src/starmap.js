@@ -3,6 +3,7 @@
  * Yıldızlar ve takımyıldız çizgileri: d3-celestial (BSD-3-Clause). Gezegenler, Ay ve Güneş: Astronomy Engine. */
 (function (G) {
   'use strict';
+  let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
   const A = G.Astronomy, C = () => G.HRCore;
   const col = n => getComputedStyle(document.body).getPropertyValue(n).trim() || '#888';
   const rad = d => d * Math.PI / 180;
@@ -26,10 +27,11 @@
     const dark = Math.max(0, Math.min(1, -now.sun.alt / 15));
     const skyBg = dark > 0.5 ? col('--sky-night') : col('--sky-day');
     const lab = col('--sky-label') || '#fff', halo = col('--sky-halo') || '#000', star = col('--sky-star'), acc = col('--accent');
+    const u = ++UID;
     let s = `<svg class="sky starmap" viewBox="0 0 ${W} ${W}" width="100%" role="img" aria-label="${tr ? 'Gökyüzü haritası' : 'Sky chart'}" style="--lab:${lab};--halo:${halo}">`;
-    s += `<defs><clipPath id="smClip"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath><radialGradient id="smBg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.5 ? col('--sky-night') : col('--sky-dusk')}"/></radialGradient></defs>`;
-    s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#smBg)" stroke="${col('--line')}"/>`;
-    s += `<g clip-path="url(#smClip)">`;
+    s += `<defs><clipPath id="smClip${u}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath><radialGradient id="smBg${u}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.5 ? col('--sky-night') : col('--sky-dusk')}"/></radialGradient></defs>`;
+    s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#smBg${u})" stroke="${col('--line')}"/>`;
+    s += `<g clip-path="url(#smClip${u})">`;
     // irtifâ halkaları ve 5° sınırı
     for (const a of [30, 60]) { const r = R * Math.tan(rad((90 - a) / 2)); s += `<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="none" stroke="${col('--sky-grid')}" stroke-opacity=".18" stroke-dasharray="3 5"/>`; }
     { const r5 = R * Math.tan(rad(85 / 2)); s += `<circle cx="${cx}" cy="${cy}" r="${r5.toFixed(1)}" fill="none" stroke="${acc}" stroke-opacity=".75" stroke-dasharray="6 5" stroke-width="1.2"/>`; }

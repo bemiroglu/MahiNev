@@ -1,6 +1,7 @@
 /* Batı ufku çizimi: eşit ölçekli (1° yatay = 1° dikey), zaman kaydırıcılı, sahaya uygun. */
 (function (G) {
   'use strict';
+  let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
   const A = G.Astronomy;
   const C = () => G.HRCore;
   const NAMES = {
@@ -61,11 +62,12 @@
     const top = mix(col('--sky-day'), col('--sky-night'), fDark), low = mix(col('--sky-dusk'), col('--sky-night'), Math.max(0, fDark * 1.2 - 0.1));
     const glowOp = Math.max(0, 0.9 - fDark * 1.1);
     const fmt = at => G.HRU.fmtTime(at).slice(0, 5);
+    const u = ++UID;
     let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 34}" role="img" aria-label="${tr ? 'Batı ufku' : 'Western horizon'}">
-      <defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient>
-      <radialGradient id="glow" cx="0.5" cy="1" r="0.6"><stop offset="0" stop-color="${col('--sky-glow')}" stop-opacity="${glowOp.toFixed(2)}"/><stop offset="1" stop-color="${col('--sky-glow')}" stop-opacity="0"/></radialGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyg)"/>
-      <ellipse cx="${X(now.sun.az)}" cy="${y0}" rx="${W * 0.35}" ry="${y0 * 0.8}" fill="url(#glow)"/>`;
+      <defs><linearGradient id="skyg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient>
+      <radialGradient id="glow${u}" cx="0.5" cy="1" r="0.6"><stop offset="0" stop-color="${col('--sky-glow')}" stop-opacity="${glowOp.toFixed(2)}"/><stop offset="1" stop-color="${col('--sky-glow')}" stop-opacity="0"/></radialGradient><clipPath id="above${u}"><rect x="0" y="0" width="${W}" height="${y0}"/></clipPath></defs>
+      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyg${u})"/>
+      <ellipse cx="${X(now.sun.az)}" cy="${y0}" rx="${W * 0.35}" ry="${y0 * 0.8}" fill="url(#glow${u})" clip-path="url(#above${u})"/>`;
     // irtifâ ızgarası (5° aralık)
     for (let a = 5; a < altMax; a += 5) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22" stroke-width="${a === 5 ? 0 : 0.8}"/>${a % 10 === 0 ? `<text x="${W - 4}" y="${Y(a) - 3}" font-size="${11 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".75">${a}°</text>` : ''}`;
     // diğer gök cisimleri
@@ -75,8 +77,12 @@
       s += `<circle cx="${X(o.az)}" cy="${Y(o.alt)}" r="${rr}" fill="${col('--sky-star')}"/><text x="${X(o.az) + rr + 3}" y="${Y(o.alt) + 4}" font-size="${11 * F}" fill="${col('--sky-label')}" opacity=".85">${objName(o.id, L)}</text>`;
     }
     // 5° çizgisi (kitap)
+    // yazı hilâlin üstüne binmesin: hilâl sol baştaysa yazı sağ başa geçer
+    const lim5 = `5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}`;
+    const lim5W = lim5.length * 12 * F * 0.56, mxl = X(now.moon.az);
+    const lim5R = now.moon.alt > -1 && mxl > -20 && mxl < 6 + lim5W + 26;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.4"/>
-      <text x="6" y="${y5 - 6}" font-size="${12 * F}" fill="${col('--sky-label')}" font-weight="600">5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}</text>`;
+      <text x="${lim5R ? W - 6 : 6}" y="${y5 - 6}" font-size="${12 * F}" text-anchor="${lim5R ? 'end' : 'start'}" fill="${col('--sky-label')}" font-weight="600">${lim5}</text>`;
     // ay yolu: pencere (kalın) ve devamı
     const vis = pts.filter(p => p.alt > -1);
     if (vis.length > 1) {
@@ -86,7 +92,7 @@
       if (win.length > 1) s += `<polyline fill="none" stroke="${col('--accent')}" stroke-width="4" stroke-linecap="round" stroke-opacity=".85" points="${P(win)}"/>`;
       for (const p of vis) {
         if (p.m < 0 || p.m % 10 !== 0) continue;
-        const lab = p.m % 20 === 0;
+        const lab = p.m % 20 === 0 && Math.hypot(X(p.az) - X(now.moon.az), Y(p.alt) - Y(now.moon.alt)) > 24 * F;   // hilâlin altında kalan saat yazılmaz
         s += `<circle cx="${X(p.az)}" cy="${Y(p.alt)}" r="2.6" fill="${col('--sky-label')}"/>` + (lab ? `<text x="${X(p.az) - 6}" y="${Y(p.alt) - 7}" font-size="${11 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".9">${fmt(p.t)}</text>` : '');
       }
     }
@@ -110,7 +116,9 @@
       if (r.best && Math.abs(t.ut - r.best.ut) < 1.5 / 1440) s += `<circle cx="${mx}" cy="${my}" r="17" fill="none" stroke="${col('--accent')}" stroke-width="2"/>`;
     }
     // yumruk ölçeği
-    const fx = 14, fy = H - 14;
+    // yumruk ölçeği gökte sol üstte durur (ufuktaki yazılarla çakışmaz); hilâl oradaysa yerdeki eski yerine iner
+    const fistW = 10 * ppd + 6 + 30 * 11 * F * 0.5, mUp = now.moon.alt > -1 && X(now.moon.az) < 14 + fistW + 16 && Y(now.moon.alt) < 16 * F + 26;
+    const fx = 14, fy = mUp ? H - 14 : 16 * F;
     s += `<g><line x1="${fx}" x2="${fx + 10 * ppd}" y1="${fy}" y2="${fy}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx}" x2="${fx}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx + 10 * ppd}" x2="${fx + 10 * ppd}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/>
       <text x="${fx + 10 * ppd + 6}" y="${fy + 4}" font-size="${11 * F}" fill="${col('--sky-label')}">10° ≈ ${tr ? '1 yumruk (kol uzatılmış)' : '1 fist at arm’s length'}</text></g>`;
     // semt ölçeği ve yönler
@@ -118,7 +126,7 @@
     for (let a = Math.ceil(a0 / 5) * 5; a <= a1; a += 5) {
       const major = a % 10 === 0;
       s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + (major ? 7 : 4)}" stroke="${col('--muted')}"/>`;
-      if (major) s += `<text class="nohalo" x="${X(a)}" y="${H + 19}" font-size="${10 * F}" text-anchor="middle" fill="${col('--muted')}">${((a % 360) + 360) % 360}°</text>`;
+      if (major && X(a) > 12 && X(a) < W - 12) s += `<text class="nohalo" x="${X(a)}" y="${H + 19}" font-size="${10 * F}" text-anchor="middle" fill="${col('--muted')}">${((a % 360) + 360) % 360}°</text>`;
       if (a % 22.5 === 0 || (a * 2) % 45 === 0) { /* noop */ }
     }
     for (let k = Math.ceil(a0 / 22.5); k * 22.5 <= a1; k++) {
@@ -153,9 +161,10 @@
     const y0 = Y(0), y5 = Y(5);
     const fDark = Math.max(0, Math.min(1, -now.sun.alt / 18));
     const top = mix(col('--sky-day'), col('--sky-night'), fDark), low = mix(col('--sky-dusk'), col('--sky-night'), Math.max(0, fDark * 1.2 - 0.1));
+    const u = ++UID;
     let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 30}" role="img" aria-label="${tr ? 'Bütün ufuk' : 'Full horizon'}">
-      <defs><linearGradient id="skyp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp)"/>`;
+      <defs><linearGradient id="skyp${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp${u})"/>`;
     for (let a = 10; a < aMax; a += 10) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22"/><text x="${W - 4}" y="${Y(a) - 3}" font-size="${10 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".7">${a}°</text>`;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.2"/><text x="6" y="${y5 - 5}" font-size="${11 * F}" fill="${col('--sky-label')}" font-weight="600">5°</text>`;
     // Parlak gök cisimleri: gezegenler (kadir < 2,5) ve parlak yıldızlar (kadir < 1,6). İsimler parlaklık sırasıyla,

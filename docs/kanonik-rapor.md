@@ -11,6 +11,8 @@ Bu rapor, Mâh-ı Nev'in (Hilâl Rasad Yardımcısı) bundan sonraki bütün tas
 3. **Modern gözlem modelleri** (Yallop, Odeh). "Modern gözlem modeli (ek bilgi)" etiketiyle tutulur; varsayılan olarak kapalıdır. Yallop'un en iyi gözlem anı, kitabın penceresinin yanında ek bilgi olarak gösterilir (D4).
 4. **Takvim usulleri** (kitaptaki aritmetik usuller: Işık, Uluğ Beğ, Kindî; tabular takvim). Rü'yet hükmünün yerine geçmez. Zilhiccede, şahitle sabit olmayan yerler için kitabın bildirdiği Işık usulü ana gösterimdir (s. 326).
 
+**Temel yardımcı kaynak.** *Naklî ve Aklî Delîllerle Rü'yet-i Hilâl* (Türkiye Takvimi Vakit Hesaplama Heyeti; Uluslararası Kamerî Aybaşları ve Hicrî Takvim Birliği Kongresi tebliği, İstanbul, 28–30 Mayıs 2016; [turktakvim.com](http://www.turktakvim.com)). Programın kullanımını ve rü'yet hâdisesini açıklamakta başvurulur; kitapla aynı yönü gösterir ve kitabın önüne geçmez. Kullanılan kısımları Bölüm 17'dedir.
+
 ## 2. Kanonik fıkhî esaslar
 
 Kamerî ay başı rü'yetle kesinleşir. Hesap, ayın başladığı vakti değil, yalnızca hilâlin görülebileceği geceyi bildirir (s. 360, İmâm-ı Sübkî). Program bu esasları aşağıdaki gibi uygular.
@@ -592,3 +594,24 @@ Yarım küre yazılmazsa arz Kuzey, tûl Doğu kabul edilir. Tûl yanlış alana
 
 - Göz güvenliği uyarısı Plan sekmesinde her zaman, Saha sekmesinde Güneş ufkun üstündeyken görünür.
 - Program, kullanıcı açmadıkça internete bağlanmaz. Hava tahmini ve internet yazı tipleri Ayarlar → *İnternet bağlantıları ve izinler* bölümünden açılır. Otomatik konum internet kullanmaz; konum cihazdan çıkmaz.
+
+## 17. Kongre tebliği (2016): kullanılan bilgiler
+
+Kaynak: Bölüm 1'deki tebliğ. Tebliğin 2-d kısmı büyük ölçüde Tam İlmihâl s. 315–316, 326 ve 360'taki metindir; o kısımlarda kitabın sayfası gösterilir. Aşağıdakiler kitap metnimizde bulunmayan ve açıklamalarda kullanılacak bilgilerdir (sayfa: tebliğin sayfası).
+
+| Bilgi | Tebliğ | Programdaki yeri |
+|---|---|---|
+| Bakara 189; "Ayı görünce oruc tutunuz…" ve "Şa'bânı otuza tamamlayın" hadîsleri (Buhârî, Müslim, Nesâî, Dârimî, Muvatta, Müsned) | s. 3 | Rehber: Naklî deliller (öneri) |
+| Mecelle md. 14: "Mevrid-i nassda ictihâda mesağ yoktur"; icmâ' kaydı (*Tebyîn-ül-hakâık*, *İ'ânet-ut-tâlibîn*) | s. 3 | Rehber: Naklî deliller (öneri) |
+| İbni Âbidîn, kıble bahsi (c. 1 s. 289): hilâl hesabın bildirdiği gece doğar, o gece görülmeyip ertesi gece görülebilir; oruca görüldüğü gece başlanır | s. 3–4 | Açıklama paneli (öneri) |
+| *Mecmû'a-i Zühdiyye*: Şevvâl hilâlini yalnız gören iftar edemez | s. 4 | Şevvâl rü'yet kaydı notu (öneri) |
+| Elmalılı Hamdi ve Fatin Gökmen (*Sebîl-ür-reşâd* c. 22): şer' rü'yete bağlamıştır; hesaba aykırı şahitlikte iki şahitle yetinilmemesi daha meşrûdur | s. 4–5 | Kesin red açıklaması (öneri) |
+| Prof. Hamit Dilgan (İTÜ, 17.6.1963): görülme imkânı ile bilfiil görülme ayrı tutulmalıdır | s. 5 | Rehber: Hesap ne söyler (öneri) |
+| Kazâ: Şa'bân rü'yetle başlamış ve 29. gece bayram hilâli görülmüşse bir gün, başlamamışsa iki gün (*Hindiyye*, *Kâdîhân*) | s. 7 | Ramazân/Şevvâl bilgi notu (öneri) |
+| Görenin kâdîya haber vermesi vâcibdir; kâdî/vâlî olmayan yerde âdil birinin haberiyle duyanlar oruca başlar (*Redd-ül-muhtâr*) | s. 7 | Rü'yet kaydı: bildirim alanı (öneri) |
+| USNO: çıplak gözle en erken güvenilir rü'yet ictimâdan 15,5 saat, teleskopla 12,1 saat sonra; görünürlüğü etkileyen etkenler | s. 8, 10–11 | Uzun açıklamalar, ek bilgi (öneri) |
+| İbrânî takviminde ay başlarının rü'yet ve şahitle tespiti; rasıd adı, yeri ve saatiyle kayıt | s. 8–9 | — |
+| **Receb 1437:** 7 Nisan 2016 akşamı hiçbir yerde görülmedi, 8 Nisan'da görüldü; ay 9 Nisan'da başladı (takvimlerde 8 Nisan) | s. 9 | Doğrulama testi (eklendi) |
+
+**Receb 1437 hesabı (program).** İctimâ 7.4.2016 11:24 UT. 7 Nisan akşamı İstanbul'da beynûnet 4,0° (kesin red); Mekke 3,6°, New York 7,7°; yalnız Meksika–Hawaii hattında 8,6°–10,8° (mümkün). Dünya geneli en erken gün 8 Nisan; rü'yetle başlama 9 Nisan. "Bir gün sonra olabilir, önce olamaz" hükmünün (s. 360) uygulamadaki karşılığıdır.
+

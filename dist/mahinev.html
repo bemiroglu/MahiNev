@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.9.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.10.0-deneme.1
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -288,7 +288,6 @@ dialog.full .smwrap { max-width: min(calc(96vh - 170px), 100%); margin: 0 auto; 
   .mbar { padding: 6px 8px; gap: 4px 8px; } .mbar .when { flex-basis: 100%; order: 2; font-size: .9rem; } .mbar .acts { margin-left: auto; } .mbar .chips .chip:not(.loc) { display: none; }
   .mbar .when .hj .note { display: none; } .mbar .acts .btn { min-height: 30px; padding: 3px 8px; font-size: .8rem; }
   header.top { padding: 10px 0 6px; } .brand p { display: none; }
-  .pano-scroll.west svg { min-width: 640px; height: auto; }
   body.v-saha .mbar .when .hj, body.v-saha .mbar .chips { display: none; } body.v-saha .mbar .when { order: 0; flex-basis: auto; }
 }
 .tamper { background: #9f2a22; color: #fff; border-radius: 10px; padding: 10px 14px; margin: 8px 0; font-weight: 600; }
@@ -312,7 +311,9 @@ dialog.setdlg { max-width: min(860px, 96vw); width: 100%; }
 .hjl { display: block; font-size: .8rem; }
 #sky { height: clamp(250px, 44vw, 420px); }
 #sky > svg { width: 100%; height: 100%; display: block; }
-.pano-scroll.west svg { height: 300px; width: auto; min-width: 0; }
+/* dar ekranda batı ufku çizimi genişliğe sığar: kaydırmadan bütün yazılar görünür */
+.pano-scroll.west svg { width: 100%; max-width: 100%; height: auto; min-width: 0; }
+#sky:has(> .pano-scroll.west) { height: auto; }
 #moment .obs { min-height: 4.6em; }
 .strip { min-height: 136px; }
 .st-row { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; margin: 6px 0 0; font-size: .92rem; }
@@ -2425,6 +2426,12 @@ window.HR_CANON_EN = [
     onlineNote: 'All astronomical calculations work without internet or location.',
     privacyNote: 'Privacy: Mâh-ı Nev never connects to the internet unless you turn a connection on. Your location, records, name, contact details and photo previews are kept only in this browser and are never sent to a server. The connections you can enable are listed above: the forecast sends an approximate location to open-meteo.com; web fonts connect to Google’s servers; automatic location uses no internet. The GitHub and licence links open only when you click them. The program contains no ads, counters or tracking code.'
   });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+/* Metinler: 0.10 geliştirme sürümü */
+(function (G) {
+  'use strict';
+  G.HR_VERSION = '0.10.0-deneme.1';
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Ayrıntılı açıklamalar: “?” notlarının uzun hâli. Kısa not her zaman görünür; ayrıntı, Ayarlar’da “Ayrıntılı” seçilirse
@@ -5084,6 +5091,7 @@ var qrcode = function() {
 /* Batı ufku çizimi: eşit ölçekli (1° yatay = 1° dikey), zaman kaydırıcılı, sahaya uygun. */
 (function (G) {
   'use strict';
+  let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
   const A = G.Astronomy;
   const C = () => G.HRCore;
   const NAMES = {
@@ -5144,11 +5152,12 @@ var qrcode = function() {
     const top = mix(col('--sky-day'), col('--sky-night'), fDark), low = mix(col('--sky-dusk'), col('--sky-night'), Math.max(0, fDark * 1.2 - 0.1));
     const glowOp = Math.max(0, 0.9 - fDark * 1.1);
     const fmt = at => G.HRU.fmtTime(at).slice(0, 5);
+    const u = ++UID;
     let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 34}" role="img" aria-label="${tr ? 'Batı ufku' : 'Western horizon'}">
-      <defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient>
-      <radialGradient id="glow" cx="0.5" cy="1" r="0.6"><stop offset="0" stop-color="${col('--sky-glow')}" stop-opacity="${glowOp.toFixed(2)}"/><stop offset="1" stop-color="${col('--sky-glow')}" stop-opacity="0"/></radialGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyg)"/>
-      <ellipse cx="${X(now.sun.az)}" cy="${y0}" rx="${W * 0.35}" ry="${y0 * 0.8}" fill="url(#glow)"/>`;
+      <defs><linearGradient id="skyg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient>
+      <radialGradient id="glow${u}" cx="0.5" cy="1" r="0.6"><stop offset="0" stop-color="${col('--sky-glow')}" stop-opacity="${glowOp.toFixed(2)}"/><stop offset="1" stop-color="${col('--sky-glow')}" stop-opacity="0"/></radialGradient><clipPath id="above${u}"><rect x="0" y="0" width="${W}" height="${y0}"/></clipPath></defs>
+      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyg${u})"/>
+      <ellipse cx="${X(now.sun.az)}" cy="${y0}" rx="${W * 0.35}" ry="${y0 * 0.8}" fill="url(#glow${u})" clip-path="url(#above${u})"/>`;
     // irtifâ ızgarası (5° aralık)
     for (let a = 5; a < altMax; a += 5) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22" stroke-width="${a === 5 ? 0 : 0.8}"/>${a % 10 === 0 ? `<text x="${W - 4}" y="${Y(a) - 3}" font-size="${11 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".75">${a}°</text>` : ''}`;
     // diğer gök cisimleri
@@ -5158,8 +5167,12 @@ var qrcode = function() {
       s += `<circle cx="${X(o.az)}" cy="${Y(o.alt)}" r="${rr}" fill="${col('--sky-star')}"/><text x="${X(o.az) + rr + 3}" y="${Y(o.alt) + 4}" font-size="${11 * F}" fill="${col('--sky-label')}" opacity=".85">${objName(o.id, L)}</text>`;
     }
     // 5° çizgisi (kitap)
+    // yazı hilâlin üstüne binmesin: hilâl sol baştaysa yazı sağ başa geçer
+    const lim5 = `5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}`;
+    const lim5W = lim5.length * 12 * F * 0.56, mxl = X(now.moon.az);
+    const lim5R = now.moon.alt > -1 && mxl > -20 && mxl < 6 + lim5W + 26;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.4"/>
-      <text x="6" y="${y5 - 6}" font-size="${12 * F}" fill="${col('--sky-label')}" font-weight="600">5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}</text>`;
+      <text x="${lim5R ? W - 6 : 6}" y="${y5 - 6}" font-size="${12 * F}" text-anchor="${lim5R ? 'end' : 'start'}" fill="${col('--sky-label')}" font-weight="600">${lim5}</text>`;
     // ay yolu: pencere (kalın) ve devamı
     const vis = pts.filter(p => p.alt > -1);
     if (vis.length > 1) {
@@ -5169,7 +5182,7 @@ var qrcode = function() {
       if (win.length > 1) s += `<polyline fill="none" stroke="${col('--accent')}" stroke-width="4" stroke-linecap="round" stroke-opacity=".85" points="${P(win)}"/>`;
       for (const p of vis) {
         if (p.m < 0 || p.m % 10 !== 0) continue;
-        const lab = p.m % 20 === 0;
+        const lab = p.m % 20 === 0 && Math.hypot(X(p.az) - X(now.moon.az), Y(p.alt) - Y(now.moon.alt)) > 24 * F;   // hilâlin altında kalan saat yazılmaz
         s += `<circle cx="${X(p.az)}" cy="${Y(p.alt)}" r="2.6" fill="${col('--sky-label')}"/>` + (lab ? `<text x="${X(p.az) - 6}" y="${Y(p.alt) - 7}" font-size="${11 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".9">${fmt(p.t)}</text>` : '');
       }
     }
@@ -5193,7 +5206,9 @@ var qrcode = function() {
       if (r.best && Math.abs(t.ut - r.best.ut) < 1.5 / 1440) s += `<circle cx="${mx}" cy="${my}" r="17" fill="none" stroke="${col('--accent')}" stroke-width="2"/>`;
     }
     // yumruk ölçeği
-    const fx = 14, fy = H - 14;
+    // yumruk ölçeği gökte sol üstte durur (ufuktaki yazılarla çakışmaz); hilâl oradaysa yerdeki eski yerine iner
+    const fistW = 10 * ppd + 6 + 30 * 11 * F * 0.5, mUp = now.moon.alt > -1 && X(now.moon.az) < 14 + fistW + 16 && Y(now.moon.alt) < 16 * F + 26;
+    const fx = 14, fy = mUp ? H - 14 : 16 * F;
     s += `<g><line x1="${fx}" x2="${fx + 10 * ppd}" y1="${fy}" y2="${fy}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx}" x2="${fx}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx + 10 * ppd}" x2="${fx + 10 * ppd}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/>
       <text x="${fx + 10 * ppd + 6}" y="${fy + 4}" font-size="${11 * F}" fill="${col('--sky-label')}">10° ≈ ${tr ? '1 yumruk (kol uzatılmış)' : '1 fist at arm’s length'}</text></g>`;
     // semt ölçeği ve yönler
@@ -5201,7 +5216,7 @@ var qrcode = function() {
     for (let a = Math.ceil(a0 / 5) * 5; a <= a1; a += 5) {
       const major = a % 10 === 0;
       s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + (major ? 7 : 4)}" stroke="${col('--muted')}"/>`;
-      if (major) s += `<text class="nohalo" x="${X(a)}" y="${H + 19}" font-size="${10 * F}" text-anchor="middle" fill="${col('--muted')}">${((a % 360) + 360) % 360}°</text>`;
+      if (major && X(a) > 12 && X(a) < W - 12) s += `<text class="nohalo" x="${X(a)}" y="${H + 19}" font-size="${10 * F}" text-anchor="middle" fill="${col('--muted')}">${((a % 360) + 360) % 360}°</text>`;
       if (a % 22.5 === 0 || (a * 2) % 45 === 0) { /* noop */ }
     }
     for (let k = Math.ceil(a0 / 22.5); k * 22.5 <= a1; k++) {
@@ -5236,9 +5251,10 @@ var qrcode = function() {
     const y0 = Y(0), y5 = Y(5);
     const fDark = Math.max(0, Math.min(1, -now.sun.alt / 18));
     const top = mix(col('--sky-day'), col('--sky-night'), fDark), low = mix(col('--sky-dusk'), col('--sky-night'), Math.max(0, fDark * 1.2 - 0.1));
+    const u = ++UID;
     let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 30}" role="img" aria-label="${tr ? 'Bütün ufuk' : 'Full horizon'}">
-      <defs><linearGradient id="skyp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient></defs>
-      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp)"/>`;
+      <defs><linearGradient id="skyp${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient></defs>
+      <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp${u})"/>`;
     for (let a = 10; a < aMax; a += 10) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22"/><text x="${W - 4}" y="${Y(a) - 3}" font-size="${10 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".7">${a}°</text>`;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.2"/><text x="6" y="${y5 - 5}" font-size="${11 * F}" fill="${col('--sky-label')}" font-weight="600">5°</text>`;
     // Parlak gök cisimleri: gezegenler (kadir < 2,5) ve parlak yıldızlar (kadir < 1,6). İsimler parlaklık sırasıyla,
@@ -5290,6 +5306,7 @@ var qrcode = function() {
  * Yıldızlar ve takımyıldız çizgileri: d3-celestial (BSD-3-Clause). Gezegenler, Ay ve Güneş: Astronomy Engine. */
 (function (G) {
   'use strict';
+  let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
   const A = G.Astronomy, C = () => G.HRCore;
   const col = n => getComputedStyle(document.body).getPropertyValue(n).trim() || '#888';
   const rad = d => d * Math.PI / 180;
@@ -5313,10 +5330,11 @@ var qrcode = function() {
     const dark = Math.max(0, Math.min(1, -now.sun.alt / 15));
     const skyBg = dark > 0.5 ? col('--sky-night') : col('--sky-day');
     const lab = col('--sky-label') || '#fff', halo = col('--sky-halo') || '#000', star = col('--sky-star'), acc = col('--accent');
+    const u = ++UID;
     let s = `<svg class="sky starmap" viewBox="0 0 ${W} ${W}" width="100%" role="img" aria-label="${tr ? 'Gökyüzü haritası' : 'Sky chart'}" style="--lab:${lab};--halo:${halo}">`;
-    s += `<defs><clipPath id="smClip"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath><radialGradient id="smBg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.5 ? col('--sky-night') : col('--sky-dusk')}"/></radialGradient></defs>`;
-    s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#smBg)" stroke="${col('--line')}"/>`;
-    s += `<g clip-path="url(#smClip)">`;
+    s += `<defs><clipPath id="smClip${u}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath><radialGradient id="smBg${u}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.5 ? col('--sky-night') : col('--sky-dusk')}"/></radialGradient></defs>`;
+    s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#smBg${u})" stroke="${col('--line')}"/>`;
+    s += `<g clip-path="url(#smClip${u})">`;
     // irtifâ halkaları ve 5° sınırı
     for (const a of [30, 60]) { const r = R * Math.tan(rad((90 - a) / 2)); s += `<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="none" stroke="${col('--sky-grid')}" stroke-opacity=".18" stroke-dasharray="3 5"/>`; }
     { const r5 = R * Math.tan(rad(85 / 2)); s += `<circle cx="${cx}" cy="${cy}" r="${r5.toFixed(1)}" fill="none" stroke="${acc}" stroke-opacity=".75" stroke-dasharray="6 5" stroke-width="1.2"/>`; }
@@ -5648,7 +5666,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD9cac0d11c1b0c2ea';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDf90b2982df7890de';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -7393,6 +7411,12 @@ var qrcode = function() {
     const eg = C.earliestDay(c26, null), el = C.earliestDay(c26, [[41.0, 29.0]]);
     add('Receb 1448 (Jamry)', 'Hesâbî en erken gün, İstanbul', '2026-12-11', ymdOf(el.first), '—', ymdOf(el.first) === '2026-12-11');
     add('Receb 1448 (Jamry)', 'Hesâbî en erken gün, dünya geneli', '2026-12-10', ymdOf(eg.first), '—', ymdOf(eg.first) === '2026-12-10');
+    // Receb 1437 (Kongre tebliği, 2016): 7 Nisan akşamı hiçbir yerde görülmedi, 8 Nisan'da görüldü; ay 9 Nisan'da başladı.
+    // Hesap 8 Nisan'ı "en erken" verir; rü'yetle başlama bir gün sonra olmuştur, önce değil (s. 360).
+    const c37 = A.SearchMoonPhase(0, TT('2016-04-04T00:00Z'), 10), e37 = C.earliestDay(c37, null);
+    const i37 = C.evening({ lat: 41.0082, lon: 28.9784, elev: 0, hObs: 0, tz: 'Europe/Istanbul' }, '2016-04-07');
+    add('Receb 1437 (rasad, 2016)', 'Dünya geneli en erken gün; rü’yetle başlama 9 Nisan', '2016-04-08 (9 Nisan ≥ bu gün)', ymdOf(e37.first), '—', ymdOf(e37.first) === '2016-04-08' && '2016-04-09' >= ymdOf(e37.first));
+    add('Receb 1437 (rasad, 2016)', 'İstanbul 7 Nisan akşamı', 'kesin red (beynûnet < 8°)', i37.ok ? i37.cls.code + ' · ' + i37.beynunet.toFixed(1) + '°' : '—', '—', i37.ok && i37.beynunet < 8);
     const fe = C.firstEvening(41.0, 29.0, c26);
     add('Harita', 'İlk görünürlük, İstanbul', '10 Aralık akşamı (k = 1)', fe ? 'k = ' + fe.k : '—', '—', fe && fe.k === 1);
     const ce = C.cell(41.0, 29.0, Date.UTC(2026, 10, 12), A.SearchMoonPhase(0, TT('2026-11-05T00:00Z'), 10), false);

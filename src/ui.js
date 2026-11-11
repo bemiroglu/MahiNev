@@ -1755,6 +1755,12 @@
     const eg = C.earliestDay(c26, null), el = C.earliestDay(c26, [[41.0, 29.0]]);
     add('Receb 1448 (Jamry)', 'Hesâbî en erken gün, İstanbul', '2026-12-11', ymdOf(el.first), '—', ymdOf(el.first) === '2026-12-11');
     add('Receb 1448 (Jamry)', 'Hesâbî en erken gün, dünya geneli', '2026-12-10', ymdOf(eg.first), '—', ymdOf(eg.first) === '2026-12-10');
+    // Receb 1437 (Kongre tebliği, 2016): 7 Nisan akşamı hiçbir yerde görülmedi, 8 Nisan'da görüldü; ay 9 Nisan'da başladı.
+    // Hesap 8 Nisan'ı "en erken" verir; rü'yetle başlama bir gün sonra olmuştur, önce değil (s. 360).
+    const c37 = A.SearchMoonPhase(0, TT('2016-04-04T00:00Z'), 10), e37 = C.earliestDay(c37, null);
+    const i37 = C.evening({ lat: 41.0082, lon: 28.9784, elev: 0, hObs: 0, tz: 'Europe/Istanbul' }, '2016-04-07');
+    add('Receb 1437 (rasad, 2016)', 'Dünya geneli en erken gün; rü’yetle başlama 9 Nisan', '2016-04-08 (9 Nisan ≥ bu gün)', ymdOf(e37.first), '—', ymdOf(e37.first) === '2016-04-08' && '2016-04-09' >= ymdOf(e37.first));
+    add('Receb 1437 (rasad, 2016)', 'İstanbul 7 Nisan akşamı', 'kesin red (beynûnet < 8°)', i37.ok ? i37.cls.code + ' · ' + i37.beynunet.toFixed(1) + '°' : '—', '—', i37.ok && i37.beynunet < 8);
     const fe = C.firstEvening(41.0, 29.0, c26);
     add('Harita', 'İlk görünürlük, İstanbul', '10 Aralık akşamı (k = 1)', fe ? 'k = ' + fe.k : '—', '—', fe && fe.k === 1);
     const ce = C.cell(41.0, 29.0, Date.UTC(2026, 10, 12), A.SearchMoonPhase(0, TT('2026-11-05T00:00Z'), 10), false);
