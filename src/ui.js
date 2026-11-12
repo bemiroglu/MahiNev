@@ -135,7 +135,7 @@
     $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span><button type="button" class="x" id="safetyX" aria-label="${esc(t.safetyHide)}" title="${esc(t.safetyHide)}">×</button>`;
     $('safetyX').onclick = () => { st.safetyOff = true; save(); $('optSafety').checked = false; paintSafety(); toast(t.safetyHidden, 6000); };
     set('lOptSafety', t.optSafety); $('optSafety').checked = !st.safetyOff; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
-    set('fCompassNote', t.compassNote); set('hNt', t.ntTitle); $('ntIntro').textContent = t.ntIntro; $('ntNet').textContent = t.ntNetNote; set('lNtKind', t.ntToKind); set('lNtName', t.ntToName); set('lNtAt', t.ntAt); set('lNtCh', t.ntChannel); set('lNtRef', t.ntRef); set('lNtNote', t.ntNote); set('ntSave', t.ntSave); set('ntCancel', t.ntCancel);
+    set('fCompassNote', t.compassNote); set('mPrev', t.mPrev); set('mNext', t.mNext); set('mList', t.mList); set('upList', t.mList); set('hRn', t.rnTitle); set('rnClose', t.close); $('rnIntro').textContent = t.rnIntro; set('rnPrev', t.rnPrev); set('rnNext', t.rnNext); set('rnNow', t.rnNow); set('hNt', t.ntTitle); $('ntIntro').textContent = t.ntIntro; $('ntNet').textContent = t.ntNetNote; set('lNtKind', t.ntToKind); set('lNtName', t.ntToName); set('lNtAt', t.ntAt); set('lNtCh', t.ntChannel); set('lNtRef', t.ntRef); set('lNtNote', t.ntNote); set('ntSave', t.ntSave); set('ntCancel', t.ntCancel);
     $('ntKind').innerHTML = Object.entries(t.ntToKinds).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); $('ntCh').innerHTML = Object.entries(t.ntChannels).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); set('cCalReset', t.cpCalReset); $('cHelp').textContent = t.cpCalHelp;
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
     $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
@@ -290,7 +290,7 @@
     $('exClose').onclick = closeExplain;
     $('dlgClose').onclick = () => closeDlg();
     $('fNight').onclick = () => { st.theme = st.theme === 'night' ? 'auto' : 'night'; save(); fillStatic(); repaintAll(); };
-    $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass; $('ntSave').onclick = saveNotice; $('ntCancel').onclick = () => { try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); } }; $('cCal').onclick = calibrateCompass; $('cCalReset').onclick = () => { st.cpOff = null; st.cpOffAt = 0; save(); paintCompass(true); };
+    $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass; $('mPrev').onclick = () => goNight(st.nightKind, -1, true); $('mNext').onclick = () => goNight(st.nightKind, 1, true); $('mList').onclick = () => openNights(); $('upList').onclick = () => openNights(); $('rnClose').onclick = () => closeDlg('rnDlg'); $('rnPrev').onclick = () => { rnFrom = addDays(rnFrom, -354); paintNights(); }; $('rnNext').onclick = () => { rnFrom = addDays(rnFrom, 354); paintNights(); }; $('rnNow').onclick = () => { rnFrom = addDays(todayYmd(st.tz), -32); paintNights(); }; $('ntSave').onclick = saveNotice; $('ntCancel').onclick = () => { try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); } }; $('cCal').onclick = calibrateCompass; $('cCalReset').onclick = () => { st.cpOff = null; st.cpOffAt = 0; save(); paintCompass(true); };
     $('recSave').onclick = addRecord;
     $('recAt').addEventListener('input', showRecEvening);
     window.addEventListener('hashchange', route);
@@ -530,6 +530,7 @@
   function clsText(r) { return t.cls[r.cls.code === 'notBorn' ? 'notBorn_' + r.cls.sub : r.cls.code]; }
   // Durum kartı: her kipte aynı satırlar (yerleşim kaymasın diye boş kalan satır da yer tutar)
   function renderStatus(r) {
+    try { paintMSel(); } catch (e) { $('mSel').textContent = ''; }
     const [title, sub] = clsText(r);
     $('status').className = 'status s-' + CLS_STYLE[r.cls.code];
     const [claim, ccls] = claimOf(r);
@@ -736,10 +737,10 @@
     }
     return { a: null, b: null };
   }
-  function goNight(kind, dir = 1) {
+  function goNight(kind, dir = 1, loud) {
     $('nightMsg').textContent = '';
     const x = dir < 0 ? prevNightOf(kind, st.date) : findNight(kind, addDays(st.date, 1));
-    if (!x) { $('nightMsg').textContent = t.nightNone; return; }
+    if (!x) { $('nightMsg').textContent = t.nightNone; if (loud) toast(t.nightNone); return; }
     setDate(x.ymd, { anchor: 'auto' });
   }
   function goNearestNight() {
@@ -747,6 +748,45 @@
     const d = y => Math.abs(civil(y) - civil(st.date));
     let x = nx; if (pv && pv.ymd < st.date && (!nx || d(pv.ymd) < d(nx.ymd))) x = pv;
     if (x) setDate(x.ymd, { anchor: 'auto' });
+  }
+
+  // ---- Kamerî ay başı rasad geceleri listesi (bu yer için hesâbî; dünyada en erken 1. gün alt sınırdır, s. 360) ----
+  function closeDlg(id) { const d = $(id); try { d.close(); } catch (e) { d.removeAttribute('open'); } }
+  let rnFrom = null, rnSeq = 0;
+  function openNights() {
+    rnFrom = addDays(st.date, -32); paintNights();
+    const d = $('rnDlg'); try { if (!d.open) d.showModal(); } catch (e) { d.setAttribute('open', ''); }
+  }
+  function paintNights() {
+    const my = ++rnSeq, body = $('rnBody'), rows = [];
+    body.innerHTML = `<p class="small">${esc(t.rnCalc)}</p>`;
+    let c = C.nextNewMoonAfter(A.MakeTime(civil(rnFrom)));
+    const fd = y => esc(fmtCivil(civil(y), true));
+    const step = () => {
+      if (my !== rnSeq) return;
+      if (rows.length >= 13 || !c) {
+        body.innerHTML = `<table><thead><tr>${t.rnCols.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`;
+        body.querySelectorAll('[data-rnplan]').forEach(b => b.onclick = () => { closeDlg('rnDlg'); setDate(b.dataset.rnplan, { anchor: 'auto' }); if (view !== 'plan') location.hash = '#plan'; });
+        body.querySelectorAll('[data-rnex]').forEach(b => b.onclick = () => openExplain(b.dataset.rnex));
+        return;
+      }
+      const cd = c.date, c0 = ymdOf(new Date(Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate())));
+      const o = C.observationNights(LOC, addDays(c0, -1)), ok = o && Math.abs(o.conj.ut - c.ut) < 1;
+      const hm = CAL.monthForConjunction(c.date), e = earliest(c, null);
+      const a = ok ? o.a : null, b = ok ? o.b : null;
+      const cell = x => x ? `<button class="lnk" type="button" data-rnplan="${x.ymd}">${fd(x.ymd)}</button><br><span class="small"><span class="dot" style="background:var(${CLS_COLOR[x.r.cls.code] || '--c-notborn'})"></span>${esc(clsText(x.r)[0])}</span>` : `<span class="small">${esc(t.rnNone)}</span>`;
+      const sel = (a && a.ymd === st.date) || (b && b.ymd === st.date);
+      rows.push(`<tr${sel ? ' class="now"' : ''}><td><b>${esc(monthName(hm.m))} ${hm.y}</b>${sel ? `<br><span class="small">${esc(t.rnSel)}</span>` : ''}</td><td>${esc(fmtDT(c))}</td><td>${cell(a)}</td><td>${cell(b)}</td><td>${e ? fd(ymdOf(e.first)) : '—'}</td><td>${a ? `<button class="btn" type="button" data-rnex="${a.ymd}">ⓘ ${esc(G.HRExplain.S[st.lang].btnShort)}</button>` : ''}</td></tr>`);
+      c = C.nextNewMoonAfter(c.AddDays(1));
+      setTimeout(step, 0);
+    };
+    setTimeout(step, 0);
+  }
+  function paintMSel() {
+    const el = $('mSel'); if (!el || !LOC) return;
+    const conj = C.nearestNewMoon(C.solarNoon(st.date, LOC.lon)), cd = conj.date, c0 = ymdOf(new Date(Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate())));
+    const o = C.observationNights(LOC, addDays(c0, -1)), hm = CAL.monthForConjunction(conj.date), m = `${monthName(hm.m)} ${hm.y}`;
+    el.textContent = o && Math.abs(o.conj.ut - conj.ut) < 1 && o.a && o.a.ymd === st.date ? t.mSelA(m) : o && o.b && o.b.ymd === st.date ? t.mSelB(m) : '';
   }
 
   // ---- Aylık rü’yet şeridi ----
@@ -1013,7 +1053,7 @@
       $('fStatus').innerHTML = `<div class="status s-${CLS_STYLE[FR.cls.code]}" style="margin-top:10px"><div class="bar"></div><div><p class="small" style="margin:0">${esc(t.fTonight)}</p><h2>${esc(title)} ${q(CLS_TOPIC[FR.cls.code])}</h2><p class="sub">${esc(sub2)}</p><span class="pill ${ccls}">${esc(claim)}</span>${exBtn(FR.ymd || today)}${FR.cls.code !== 'midMonth' ? kadihanHtml(FR, true) : ''}</div></div>`;
       let mo = null; try { mo = C.morning(loc, today); } catch (e) { mo = null; }
       $('fMorning').textContent = mo && mo.code !== 'none' ? `${t.fMorning} ${hhmm(mo.sunrise)}: ${t.morningCode[mo.code]} ${t.morningNote}` : '';
-      const hj = hijriAt(now); $('fHijri').innerHTML = hj ? (hj.local ? hj.html2 : hj.html) : '';
+      const hj = hijriAt(now); $('fHijri').innerHTML = hj ? hj.tagged : '';
     }
     if (full || Date.now() - fSkyAt > Math.max(5, st.liveInt || 10) * 1000) {
       fSkyAt = Date.now();
@@ -1403,7 +1443,11 @@
     if (!h) return null;
     const l = hijriOf(day, true), diff = l && l.plain !== h.plain;
     // Yerel kapsam yalnız dünya genelinden farklıysa ikinci satır olarak yazılır
-    return Object.assign({ after, local: diff ? l : null, html2: diff ? `<span class="hjl">${esc(t.hjGlobal)}: ${h.html}<br>${esc(t.hjLocal)}: ${l.html}</span>` : h.html }, h);
+    const html2 = diff ? `<span class="hjl">${esc(t.hjGlobal)}: ${h.html}<br>${esc(t.hjLocal)}: ${l.html}</span>` : h.html;
+    // tagged: aynı metin, sonunda "(hesâbî)" etiketiyle — ay başı rü'yetle kesinleşir; bant dışındaki her yerde bu kullanılır
+    const tag = `<span class="hjh">(${esc(t.hjHesabi)})</span>`;
+    const tagged = diff ? `<span class="hjl">${esc(t.hjGlobal)}: ${h.html}<br>${esc(t.hjLocal)}: ${l.html} ${tag}</span>` : `${h.html} ${tag}`;
+    return Object.assign({ after, local: diff ? l : null, html2, tagged }, h);
   }
   function renderBarClock() {
     if (!st.live && view !== 'saha') return;
@@ -1502,7 +1546,7 @@
       return `<div class="${r.cls.code === 'visible' ? 'ok' : 'warn'}"><b>${esc(lbl)}</b><strong>${esc(fmtCivil(civil(x.ymd)))}</strong><span class="small">${esc(t.upIn(days))} · ${esc(t.upMonth(monthName(h.m) + ' ' + h.y))}</span><br><span class="small">${esc(clsText(r)[0])} · ${esc(t.upWin)} ${hhmm(r.gurub)}–${hhmm(r.windowEnd || r.moonset)} · ${t.beyn.split(' ')[0]} ${degf(r.beynunet, 1)}</span><br><button class="btn primary" type="button" data-up="${x.ymd}">${esc(t.upPlan)}</button>${lbl === t.upA ? exBtn(x.ymd, true) : ''}</div>`;
     };
     const hj = hijriAt(A.MakeTime(new Date()));
-    let h = (hj ? `<div><b>${esc(t.upToday)}</b><strong>${hj.local ? hj.html2 : hj.html}</strong><span class="small">${esc(t.hjShort)} ${esc(t.hjBook)}</span></div>` : '') + box(t.upA, d.a);
+    let h = (hj ? `<div><b>${esc(t.upToday)}</b><strong>${hj.tagged}</strong><span class="small">${esc(t.hjShort)} ${esc(t.hjBook)}</span></div>` : '') + box(t.upA, d.a);
     if (d.b && (!d.a || d.b.ymd !== d.a.ymd)) h += box(t.upB, d.b);
     if (d.prev) {
       const pr = d.prev, ph = CAL.monthForConjunction(pr.r.ictimaPrev.date), ago = Math.round((civil(d.today) - civil(pr.ymd)) / 86400000);
@@ -1651,7 +1695,7 @@
     const tbl1 = row(t.gurub.replace(/\(.*\)/, ''), hhmm(r.gurub)) + row(t.seri.replace(/\(.*\)/, ''), r.seri && r.seri.seri ? hhmm(r.seri.seri) : t.none) + row(esc(t.stWindow), !mid && r.windowEnd ? `${hhmm(r.gurub)} – ${hhmm(r.windowEnd)}` : t.none) + row(esc(t.evSearch), rng ? `${hhmm(rng[0])} – ${hhmm(rng[1])}` : t.none) + row(esc(t.stBest), !mid && r.best ? hhmm(r.best) : t.none) + row(t.moonset.replace(/\(.*\)/, ''), hhmm(r.moonset)) + row(t.lag.replace(/\(.*\)/, ''), hm(r.lagMin));
     const tbl2 = row(t.beyn.replace(/\(.*\)/, ''), degf(r.beynunet)) + row(t.alt.replace(/\(.*\)/, ''), degf(r.moonAlt)) + row(t.az.replace(/\(.*\)/, ''), `${degf(r.moonAz, 1)} (${G.HRSky.card(r.moonAz, st.lang)}) · ${t.daz} ${degf(r.daz, 1)}`) + row(t.age.replace(/\(.*\)/, ''), ageTxt(r.ageH)) + row(t.illum.replace(/\(.*\)/, ''), num(r.illum, 2) + ' %') + row(t.lastConj.replace(/\(.*\)/, ''), fmtDT(r.ictimaPrev)) + row(t.kadihan.replace(/\(.*\)/, ''), r.kadihan19 ? `${esc(r.kadihan19 === 'first' ? t.kdFirst : t.kdSecond)} (−19°, ${hhmm(r.safak19)})<br><span class="small">${esc(t.kdB)}: ${esc(r.kadihan17 === 'first' ? t.kdFirst : t.kdSecond)} (${hhmm(r.safak17)})</span>` : t.none);
     const hj = hijriAt(r.gurub.AddDays(1 / 1440));
-    return `<section class="a4">${pgHead(t.pgPlanTitle, `${locLine()}<br><strong>${esc(t.thisEvening(fmtCivil(civil(st.date))))}</strong>${sought ? ' · ' + esc(t.planMonth(sought)) : ''}${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}`)}
+    return `<section class="a4">${pgHead(t.pgPlanTitle, `${locLine()}<br><strong>${esc(t.thisEvening(fmtCivil(civil(st.date))))}</strong>${sought ? ' · ' + esc(t.planMonth(sought)) : ''}${hj ? ' · ' + hj.tagged : ''}`)}
       <div class="pbox s-${CLS_STYLE[r.cls.code]}"><h2>${esc(title)}</h2><p>${esc(sub)}</p><p><span class="pill ${ccls}">${esc(t.claim)}: ${esc(claim)}</span></p></div>
       <div class="cols"><table class="pt">${tbl1}</table><table class="pt">${tbl2}</table></div>
       <h3>${esc(mid ? t.panoTitle : t.skyTitle)} · ${hhmm(tA)}</h3><div class="pfig">${svgs.w}</div>
@@ -1662,7 +1706,7 @@
   function pageSky(at) {
     const svg = withTheme('light', () => G.HRStarMap.draw(LOC, at, st.lang, Object.assign(smOptsSafe(), { size: 680 })).svg);
     const hj = hijriAt(at);
-    return `<section class="a4">${pgHead(t.smTitle, `${locLine()}<br><strong>${esc(fmtDT(at))}</strong>${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}`)}
+    return `<section class="a4">${pgHead(t.smTitle, `${locLine()}<br><strong>${esc(fmtDT(at))}</strong>${hj ? ' · ' + hj.tagged : ''}`)}
       <div class="psky">${svg}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
   }
   // Seçili akşamın gökyüzü haritası: hilâlin gurûbdan ay batımına kadar izi ve akşam çizelgesi
@@ -1693,7 +1737,7 @@
       return `<tr${x.mark ? ' class="sel"' : ''}><td>${hhmm(x.t)}</td><td>${degf(p.sun.alt, 1)}</td><td>${up ? `${degf(p.moon.alt, 1)} <span class="small">${esc(t.smEveFist(fist(p.moon.alt)))}</span>` : '—'}</td><td>${up ? degf(p.moon.az, 1) : '—'}</td><td>${up ? esc(d > 0 ? t.smEveLeft(dd) : t.smEveRight(dd)) : '—'}</td><td>${esc(x.note || (up ? '' : t.smEveDown))}</td></tr>`;
     }).join('');
     const hj = hijriAt(at);
-    return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}<br>${esc(t.smEveAt(hhmm(at), why))}`)}
+    return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>${hj ? ' · ' + hj.tagged : ''}<br>${esc(t.smEveAt(hhmm(at), why))}`)}
       <div class="psky eve">${svg}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
       <table class="mt eve"><thead><tr>${t.smEveCols.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>${pgFoot()}</section>`;
   }
@@ -1711,7 +1755,7 @@
     }
     return `<section class="a4">${pgHead(t.pgMonthTitle, `${locLine()}<br><strong>${esc(monthName(h.m))} ${h.y}</strong> · ${esc(t.conj)}: ${esc(fmtDT(conj))}`)}
       <table class="mt"><thead><tr>${t.pgCols.map(x => `<th>${esc(x)}</th>`).join('')}<th></th></tr></thead><tbody>${rows}</tbody></table>
-      <p class="cap">${esc(t.stripNote)}</p>${pgFoot()}</section>`;
+      <p class="cap">${esc(t.pgMonthNote)}</p>${pgFoot()}</section>`;
   }
   async function pageMap() {
     let img = '';
@@ -1755,7 +1799,7 @@
       <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p>${blank ? '' : `<p class="vfline">${esc(t.vfPrint)}</p>`}</div></div>
       ${pgFoot(blank ? '' : `${t.tutRecId} ${x.id.slice(0, 8)}`)}</section>`;
   }
-  const PRINT_CSS = `@page { size: A4; margin: 0; } @page land { size: A4 landscape; margin: 0; }
+  const PRINT_CSS = `@page { size: A4; margin: 0; } @page land { size: A4 landscape; margin: 0; } .hjh { font-size: .8em; color: #666; font-weight: 400; }
     html { font-size: 10pt; } body { background: #e8e8e8; margin: 0; color: #111; font-family: var(--font-body); }
     .a4 { width: 210mm; height: 297mm; padding: 11mm 13mm 9mm; box-sizing: border-box; overflow: hidden; background: #fff; margin: 6mm auto; position: relative; display: flex; flex-direction: column; gap: 2.6mm; break-after: page; page-break-after: always; }
     .a4.land { width: 297mm; height: 210mm; page: land; }

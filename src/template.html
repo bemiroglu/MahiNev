@@ -419,6 +419,18 @@ body:not(.explain) #fTip { display: none !important; }
 .cbig { font-size: 1.15rem; font-weight: 700; margin: 0 0 4px; }
 .cbox .btns { margin-top: 6px; }
 @media (max-width: 560px) { .cbox { grid-template-columns: minmax(0, 1fr); } .cdial { max-width: 230px; margin: 0 auto; width: 100%; } }
+.hjh { font-size: .8em; color: var(--muted); font-weight: 400; }
+
+/* ay başı gezintisi */
+.mnav { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 10px 14px; }
+.mnav.card > .btn { margin: 0; }
+.mnav .btn { padding: 5px 12px; font-size: .9rem; }
+.mnav #mSel { flex-basis: 100%; }
+#upCard { position: relative; }
+.btn.uplist { position: absolute; top: 14px; right: 52px; padding: 3px 10px; font-size: .85rem; }
+@media (max-width: 560px) { .btn.uplist { position: static; margin: 0 0 8px; } }
+#rnBody td .btn { padding: 3px 9px; font-size: .82rem; margin: 2px 4px 2px 0; }
+@media print { #rnDlg { display: none; } }
 </style>
 </head>
 <body>
@@ -485,7 +497,8 @@ body:not(.explain) #fTip { display: none !important; }
       </aside>
       <div class="stack">
         <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><p class="cap" id="introTip"></p><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
-        <section class="card" id="upCard"><h2 id="hUp"></h2><div class="up" id="upBody"></div></section>
+        <section class="card" id="upCard"><h2 id="hUp"></h2><button class="btn uplist" type="button" id="upList"></button><div class="up" id="upBody"></div></section>
+        <nav class="mnav card" id="mNav" aria-label="Ay başı"><button class="btn" type="button" id="mPrev"></button><button class="btn" type="button" id="mList"></button><button class="btn" type="button" id="mNext"></button><span class="small" id="mSel"></span></nav>
         <section class="status" id="status" aria-live="polite"><div class="bar"></div><div id="statusBody"></div></section>
         <section class="card" id="tbCard"><h2 id="hTb"></h2>
           <div class="tbhead"><span class="tval" id="tbVal">--:--</span><span class="utc" id="tbUtc"></span><span class="livepill" id="tbLive" hidden></span></div>
@@ -626,6 +639,12 @@ body:not(.explain) #fTip { display: none !important; }
     <div class="btns"><button class="btn primary" type="button" id="vfGo"></button></div>
     <div id="vfOut" role="status" style="margin-top:10px"></div>
     <p class="cap" id="vfNote"></p>
+  </dialog>
+  <dialog id="rnDlg" aria-labelledby="hRn" class="setdlg exdlg">
+    <div class="cardhead"><h2 id="hRn" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="rnClose"></button></div>
+    <p class="small" id="rnIntro"></p>
+    <div class="btns"><button class="btn" type="button" id="rnPrev"></button><button class="btn" type="button" id="rnNow"></button><button class="btn" type="button" id="rnNext"></button></div>
+    <div class="extab" id="rnBody"></div>
   </dialog>
   <dialog id="ntDlg" aria-labelledby="hNt" class="setdlg">
     <div class="cardhead"><h2 id="hNt" style="font:600 1.1rem var(--font-display)"></h2></div>

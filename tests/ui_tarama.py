@@ -51,6 +51,12 @@ async def main():
                         if bad: issues.append(f'{vp} {lang} {name} açıklama: şüpheli metin «{bad}»')
                         if wide > 2: issues.append(f'{vp} {lang} {name} açıklama: yatay taşma {wide}px')
                         await pg.keyboard.press('Escape'); await pg.wait_for_timeout(200)
+                    # rasad geceleri listesi
+                    if await pg.query_selector('#mList'):
+                        await pg.click('#mList'); await pg.wait_for_timeout(6000)
+                        bad = await pg.evaluate("""() => { const tx = document.getElementById('rnBody').innerText; const m = tx.match(/.{0,30}(undefined|NaN|\\[object Object\\]|Invalid Date|null).{0,30}/); return m ? m[0] : null; }""")
+                        if bad: issues.append(f'{vp} {lang} {name} rasad geceleri: şüpheli metin «{bad}»')
+                        await pg.keyboard.press('Escape'); await pg.wait_for_timeout(200)
                 await pg.evaluate("location.hash = '#plan'")
                 for dlg in ['openSet', 'mbPrint', 'openSM']:
                     try:

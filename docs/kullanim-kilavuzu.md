@@ -63,6 +63,15 @@ Sayfada bir şeye dokunduğunuzda okuduğunuz kart yerinde kalır; yeni bilgiler
 - Esas alınan kapsam **dünya genelidir**, çünkü bir şehirde görülünce her yerde lâzım olur (s. 315). Zilhicce'de kapsam yereldir (Mekke ve bulunulan yer).
 - Bulunduğunuz yerin yerel hesabı farklıysa **"Burada"** satırı ayrıca gösterilir.
 
+## Ay başından ay başına geçmek
+
+Plan sekmesinde, seçili akşamın değerlendirmesinin hemen üstünde üç düğme vardır:
+
+- **◀ Önceki ay başı** ve **Sonraki ay başı ▶:** seçili akşamı bir önceki veya bir sonraki kamerî ayın rasad gecesine götürür. Düğmelerin altında seçili akşamın hangi ayın rasad gecesi olduğu yazar.
+- **☰ Rasad geceleri:** 13 kamerî ayın listesini açar. Her satırda ayın hesâbî adı, ictimâ anı, bu yer için rasad gecesi (hesâben ilk mümkün akşam) ve en elverişli akşam, dünyada en erken 1. gün bulunur. Tarihe dokununca o akşam planlanır; "Açıkla" o akşamın açıklama penceresini açar. "Önceki/Sonraki 12 ay" ile listede ilerlenir. Aynı liste "Yaklaşan ay başı rasadı" kartından da açılır.
+
+Listedeki tarihler hesâbîdir; ay başı rü'yetle kesinleşir ve "dünyada en erken 1. gün"den önce olamaz (s. 360).
+
 ## "Bu akşam ne demek?" açıklama penceresi
 
 Plan sekmesindeki değerlendirme kartında, Saha sekmesinde ve "Yaklaşan ay başı rasadı" kartında **ⓘ Bu akşam ne demek?** düğmesi bulunur. Pencere, seçili akşam ve yer için şunları kitabın sayfalarıyla açıklar:

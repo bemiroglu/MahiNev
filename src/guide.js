@@ -25,7 +25,7 @@
         'Şafak vakitleri Tam İlmihâl’in hesap usulüyle bulunur: önce güneş merkezinin hakîkî ufka göre −19° veya −17° irtifâa indiği hakîkî vakit hesaplanır, sonra buna temkin eklenerek şer’î vakit elde edilir (s. 197; İstanbul’da yaklaşık 8–10 dakika). İkinci gecenin hilâli daha kalın ve daha yüksektir, daha geç batar; kural bu gerçeğe dayanır. Bu sayede “ilk gece gördüm” iddiası ayın batış saatiyle kontrol edilebilir.'],
       kuresel: ['Ramezân küresel, kurban mahallî',
         'Şa’bânın 30. gecesi bir şehirde hilâl görülünce bütün dünyada oruca başlamak lâzımdır (s. 315). Bunun için rü’yetin şahitlik, hâkim hükmü veya yaygın haberle sabit olması gerekir. Hac Mekke’deki rü’yete göredir; kurban ve namaz vakitleri bulunulan yere göredir (Redd-ül-muhtâr, Kitâb-us-savm).',
-        'Hilâl önce batıdaki yerlerde görülür. Aynı yerel tarihte gurûb batıda daha geç olur ve ay o arada güneşten daha çok uzaklaşır. Bu yüzden dünya genelinde en erken rü’yet çoğunlukla Amerika ve Pasifik’te mümkün olur.'],
+        'Hilâl önce batıdaki yerlerde görülebilir. Aynı yerel tarihte gurûb batıda daha geç olur ve ay o arada güneşten daha çok uzaklaşır. Bu yüzden dünya genelinde en erken rü’yet çoğunlukla Amerika ve Pasifik’te mümkün olur.'],
       sahitlik: ['Şahitlik',
         'Bulutlu havada Ramezân hilâlini bir âdil müslümanın görmesi yeter; açık havada çok kimsenin şahitliği gerekir. Kâdî bulunmayan yerde bir âdilin sözüyle Ramezân, iki âdilin sözüyle bayram olur. Bulutlu havada Şevvâl için iki erkek veya bir erkek ile iki kadın gerekir (s. 315–316).',
         'Programın kaydı bir kullanıcı beyanıdır; zamanı, yeri ve gözlem şartlarını belgelemeye yardım eder. Hesaba göre imkânsız bir akşam için yapılan beyan kesin reddedilir (İmâm-ı Sübkî, s. 360).'],

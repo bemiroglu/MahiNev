@@ -1,9 +1,16 @@
 /* Metinler: 0.10 (açıklama penceresi, ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.10.1';
+  G.HR_VERSION = '0.11.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
+    // ay başı gezintisi ve rasad geceleri listesi
+    mPrev: '◀ Önceki ay başı', mNext: 'Sonraki ay başı ▶', mList: '☰ Rasad geceleri',
+    mSelA: m => `Seçili akşam: ${m} için rasad gecesi (ilk mümkün akşam, bu yer)`, mSelB: m => `Seçili akşam: ${m} için en elverişli akşam (bu yer)`,
+    rnTitle: 'Kamerî ay başı rasad geceleri', rnIntro: 'Her satır bir kamerî ayın başıdır. Tarihler bu yer için hesâbîdir: hilâlin hesâben ilk görülebileceği akşam ve en elverişli akşam. Ay başı rü’yetle kesinleşir; “dünyada en erken 1. gün”den önce olamaz (s. 360). Bir satırdaki tarihe dokununca o akşam planlanır.',
+    rnPrev: '◀ Önceki 12 ay', rnNext: 'Sonraki 12 ay ▶', rnNow: 'Bugüne dön', rnCalc: 'Hesaplanıyor…',
+    rnCols: ['Kamerî ay (hesâbî)', 'İctimâ', 'Rasad gecesi (bu yer)', 'En elverişli akşam (bu yer)', 'Dünyada en erken 1. gün', ''],
+    rnNone: 'bu yerde uygun akşam yok', rnSel: 'seçili',
     // Ekran ve PDF tavsiyesi
     introTip: 'Hazırlık için büyük bir ekran (bilgisayar veya tablet) kullanmanızı tavsiye ederiz. Telefon ekranı sahada küçük kalır: rasad planını ve gökyüzü haritalarını önceden <b>Yazdır → PDF</b> ile kaydedip yanınıza alın; internetsiz ve tek bakışta okunur.',
     fieldTip: 'Sahada telefon ekranı küçük kalabilir. Rasad planını ve akşamın gökyüzü haritasını önceden PDF olarak kaydedip yanınıza almanız işinizi kolaylaştırır (⎙ Yazdır).',
@@ -50,6 +57,12 @@
     ntNetNote: 'İleride bir hilâl gözlem bildirim ağı kurulduğunda, bildirimler bu biçimde (kayıt + imzalı bildirim eki) oraya gönderilebilecek.'
   });
   Object.assign(T.en, {
+    mPrev: '◀ Previous month start', mNext: 'Next month start ▶', mList: '☰ Observation nights',
+    mSelA: m => `Selected evening: observation night for ${m} (first possible evening, this location)`, mSelB: m => `Selected evening: best evening for ${m} (this location)`,
+    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (p. 360). Tap a date to plan that evening.',
+    rnPrev: '◀ Previous 12 months', rnNext: 'Next 12 months ▶', rnNow: 'Back to today', rnCalc: 'Calculating…',
+    rnCols: ['Lunar month (calculated)', 'Conjunction', 'Observation night (here)', 'Best evening (here)', 'Earliest day 1 worldwide', ''],
+    rnNone: 'no suitable evening here', rnSel: 'selected',
     introTip: 'For preparation we recommend a large screen (computer or tablet). A phone screen is small in the field: save the observation plan and sky charts beforehand with <b>Print → PDF</b> and take them with you; they work offline and read at a glance.',
     fieldTip: 'A phone screen can be small in the field. Saving the observation plan and the evening sky chart as PDF beforehand makes the work easier (⎙ Print).',
     fieldTipClose: 'Hide',
@@ -91,6 +104,10 @@
     ntRow: 'Reported (to whom / when / how)',
     ntNetNote: 'When a crescent sighting notification network is set up, notifications can be sent there in this form (record + signed notification annex).'
   });
-  T.tr.prOpts = Object.assign({}, T.tr.prOpts, { skyEve: 'Gökyüzü haritası (seçili akşam)' });
-  T.en.prOpts = Object.assign({}, T.en.prOpts, { skyEve: 'Sky chart (selected evening)' });
+  T.tr.prOpts = Object.assign({}, T.tr.prOpts, { skyEve: 'Gökyüzü haritası (seçili akşam)', month: 'Aylık rü’yet imkânı çizelgesi', map: 'Dünya rü’yet imkânı haritası (yatay)' });
+  T.en.prOpts = Object.assign({}, T.en.prOpts, { skyEve: 'Sky chart (selected evening)', month: 'Monthly sighting-possibility table', map: 'World sighting-possibility map (landscape)' });
+  T.tr.printTitle = Object.assign({}, T.tr.printTitle, { map: 'Dünya rü’yet imkânı haritası' }); T.en.printTitle = Object.assign({}, T.en.printTitle, { map: 'World sighting-possibility map' });
+  // Aylık çizelge: hesâbî imkândır, gözlem sonucu değildir
+  Object.assign(T.tr, { pgMonthTitle: 'Aylık rü’yet imkânı çizelgesi', pgMonthNote: 'Her satır bir akşamdır. Sınıf, o akşam gurûb anındaki hesâbî rü’yet imkânıdır (s. 360); hilâlin görülüp görülmediği rasadla anlaşılır. A rasad gecesi, B en elverişli akşamdır; “s” sabah hilâlinin görülebileceği günlerdir.' });
+  Object.assign(T.en, { pgMonthTitle: 'Monthly sighting-possibility table', pgMonthNote: 'Each row is one evening. The class is the calculated possibility of sighting at sunset that evening (p. 360); whether the crescent is actually seen is known only by observation. A: observation night, B: best evening; “m”: a morning crescent can be seen.' });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
