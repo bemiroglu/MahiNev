@@ -8,13 +8,13 @@
 
 *Tam İlmihâl Se'âdet-i Ebediyye esaslı kamerî ay başı rasad yardımcısı*
 
-[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-0.9.0-9a5a12)](CHANGELOG.md)
+[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-0.10.0-9a5a12)](CHANGELOG.md)
 [![Lisans](https://img.shields.io/badge/lisans-CC%20BY--NC--ND%204.0-555)](LICENSE)
 ![İnternetsiz](https://img.shields.io/badge/internetsiz-%C3%A7al%C4%B1%C5%9F%C4%B1r-2e7d4f)
 ![Dil](https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%C2%B7%20English-3d5a80)
 
 **[▶ Çevrimiçi aç](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
-**[⬇ İndir (v0.9.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.9.0.html)** &nbsp;·&nbsp;
+**[⬇ İndir (v0.10.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.10.0.html)** &nbsp;·&nbsp;
 **[📖 Tam İlmihâl](https://www.hakikatkitabevi.net/book.php?bookCode=001)** &nbsp;·&nbsp;
 **[English ↓](#english)**
 
@@ -69,14 +69,18 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 | 📅 **Ay başı planlaması** | Yaklaşan ve önceki rasad gecesi, hicrî aylara göre gruplanmış rü'yet şeridi, hesâben en erken gün (dünya geneli ve yerel). |
 | 🗓 **Hicrî tarih** | Kamerî gün şer'î gurûbda değişir (s. 188). İki ihtimalin bulunduğu günlerde ikisi birlikte gösterilir. Zilhiccede ana gösterim kitabın bildirdiği Işık usulüdür (s. 326). |
 | 🗺 **Dünya rü'yet haritası** | Akşam ve anlık kipler; Tam İlmihâl sınıfları, ilk görünürlük katmanı, hilâl yaşı çizgileri ve 18° gurûb boylamı. |
-| 📱 **Saha kipi** | Telefonda açık havada kullanım için: canlı saat, sabit duran geri sayımlar, gece (kırmızı) ve güneş altı temaları, pusula, ekranın açık kalması. |
-| 📝 **Rü'yet kaydı ve tutanak** | Gözlem şartları, fotoğraf, SHA-256 bütünlük özeti ve cihaz imzası (ECDSA). A4 tutanak imza satırları ve QR koduyla basılır; kayıt sonradan doğrulanabilir. |
-| 🖨 **A4 çıktılar** | Rasad planı, gökyüzü haritası, aylık çizelge, dünya haritası ve tutanak; her biri tek sayfaya sığar. PDF veya JPG olarak kaydedilir; dosya adları tarih, saat ve yere göre sıralanır. |
+| ❔ **"Bu akşam ne demek?"** | Seçili akşam ve yer için açıklama penceresi: hilâlin burada ve dünyada durumu; 29. gün akşamı görülürse veya görülmezse yeni ayın 1. günü; "bir gün sonra olabilir, önce olamaz" sınırı (s. 360); otuza tamamlama; ayın adına göre kapsam ve hüküm. |
+| 📱 **Saha kipi** | Telefonda açık havada kullanım için: canlı saat, sabit duran geri sayımlar, gece (kırmızı) ve güneş altı temaları, ekranın açık kalması. **Pusula kadranı** hilâle kaç derece dönüleceğini söyler; Güneş'e çevrilerek manyetik sapma düzeltilir. |
+| 📝 **Rü'yet kaydı ve tutanak** | Gözlem şartları, fotoğraf, SHA-256 bütünlük özeti ve cihaz imzası (ECDSA). A4 tutanak imza satırları ve QR koduyla basılır; kayıt sonradan doğrulanabilir. **Bildirim ekleri** kaydın kime, ne zaman ve nasıl bildirildiğini, kaydı değiştirmeden ve ayrıca imzalı olarak saklar. |
+| 🖨 **A4 çıktılar** | Rasad planı, gökyüzü haritası (seçili an ve seçili akşam), aylık çizelge, dünya haritası ve tutanak; her biri tek sayfaya sığar. PDF veya JPG olarak kaydedilir; dosya adları tarih, saat ve yere göre sıralanır. |
 | 🔒 **Gizlilik** | Kayıtlar, isimler ve konum yalnız tarayıcınızda durur. Program, siz izin vermedikçe internete bağlanmaz. Hava tahmini ve internet yazı tipleri Ayarlar'dan açılır; ikisi de başlangıçta kapalıdır. |
 | 👁 **Göz güvenliği** | Güneş batmadan dürbün, kamera veya teleskopla batıya bakmayın. Hilâl çıplak gözle aranır. |
+| 📚 **Rehber** | Her konuda fıkhî esas ve bilimsel açıklama, kısa ve ayrıntılı; **Naklî deliller** konusu (âyet, hadîs, icmâ ve âlimlerin bildirdikleri). |
 | ➕ **Ek bilgiler** | Modern ölçütler (Yallop, Odeh, Danjon) ve aritmetik takvim usulleri yalnızca ek bilgi olarak, kitabın hükmünden sonra verilir. |
 
 <p align="center"><img src="docs/img/masaustu-harita.png" alt="Masaüstü · Dünya rü'yet haritası" width="900"><br><sub>Dünya rü'yet haritası: her yerin kendi gurûbunda hilâlin Tam İlmihâl'e göre durumu.</sub></p>
+
+<p align="center"><img src="docs/img/aciklama.png" alt="Açıklama penceresi" width="640"><br><sub>"Bu akşam ne demek?" penceresi: 9 Kasım 2026, İstanbul; önceki ay 12 Ekim'de başlamışsa.</sub></p>
 
 ## Yayın adresi ve bütünlük
 
@@ -86,7 +90,7 @@ Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse 
 
 ## Doğrulama
 
-- **Program içinde:** Doğrulama sekmesinde 54 test bulunur. Testler kitaptaki örnekleri (Receb 1400, s. 360), şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
+- **Program içinde:** Doğrulama sekmesinde 58 test bulunur. Testler kitaptaki örnekleri (Receb 1400, s. 360), Kongre tebliğindeki Receb 1437 vakasını, şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
 - **Uçtan uca tarama:** `tests/ui_tarama.py`; 2 ekran boyutu, 2 dil, 5 tema, bütün sekmeler, diyaloglar ve 9 uç konum (kutup gecesi, tarih çizgisi, yaz saati, Mekke). Hata, taşma ve dış istek arar.
 - **Küresel kapsam:** `tools/kuresel_dogrulama.py`
 - **Rü'yet kaydı:** `tools/verify_record.py` ile bir kaydın özeti, imzası ve QR kodu bilgisayarda doğrulanır.
@@ -144,7 +148,7 @@ Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir: [THIRD_PARTY_
 **Crescent Sighting Assistant based on *Tam İlmihâl Se'âdet-i Ebediyye***
 
 **[▶ Open online](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
-**[⬇ Download (v0.9.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.9.0.html)** &nbsp;·&nbsp;
+**[⬇ Download (v0.10.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.10.0.html)** &nbsp;·&nbsp;
 **[📖 The book](https://www.hakikatkitabevi.net/book.php?bookCode=001)**
 
 </div>
@@ -188,11 +192,13 @@ Mâh-ı Nev is a single HTML file. Nothing to install: download it and open it i
 | 📅 **Month-start planning** | Upcoming and previous observation nights, a sighting strip grouped by Hijri month, and the earliest possible day by calculation (worldwide and local). |
 | 🗓 **Hijri date** | The lunar day changes at the legal sunset (p. 188). Where two possibilities exist, both are shown. For Dhu al-Hijja the main display follows the Işık method given in the book (p. 326). |
 | 🗺 **World sighting map** | Evening and instant modes; Tam İlmihâl classes, a first-visibility layer, crescent-age lines and the 18° sunset meridian. |
-| 📱 **Field mode** | For outdoor use on a phone: live clock, steady countdowns, night (red) and sunlight themes, compass, keep-screen-on. |
-| 📝 **Sighting record and report** | Observing conditions, photo, SHA-256 integrity digest and a device signature (ECDSA). The A4 report prints with signature lines and a QR code, and the record can be verified later. |
-| 🖨 **A4 outputs** | Observation plan, sky chart, monthly table, world map and sighting report, each on one page. Save as PDF or JPG; file names sort by date, time and place. |
+| ❔ **"What does this evening mean?"** | An explanation window for the selected evening and place: the crescent here and worldwide; day 1 of the new month if it is seen or not seen on the evening of the 29th; the "one day later, never earlier" limit (p. 360); completing thirty days; scope and ruling by month. |
+| 📱 **Field mode** | For outdoor use on a phone: live clock, steady countdowns, night (red) and sunlight themes, keep-screen-on. The **compass dial** tells how many degrees to turn to face the crescent; calibrating on the Sun corrects magnetic variation. |
+| 📝 **Sighting record and report** | Observing conditions, photo, SHA-256 integrity digest and a device signature (ECDSA). The A4 report prints with signature lines and a QR code, and the record can be verified later. **Notification annexes** record to whom, when and how the sighting was reported, signed separately and without altering the record. |
+| 🖨 **A4 outputs** | Observation plan, sky chart (selected moment and selected evening), monthly table, world map and sighting report, each on one page. Save as PDF or JPG; file names sort by date, time and place. |
 | 🔒 **Privacy** | Records, names and location stay in your browser only. The program never goes online unless you allow it. Weather forecast and web fonts are switched on in Settings; both start off. |
 | 👁 **Eye safety** | Never look west through binoculars, a camera or a telescope before the Sun has set. Search for the crescent with the naked eye. |
+| 📚 **Guide** | For each topic the legal basis and a scientific explanation, short or detailed; a **Textual evidence** topic (Qur'an, hadith, consensus and the scholars' reports). |
 | ➕ **Additional information** | Modern criteria (Yallop, Odeh, Danjon) and arithmetic calendar methods are given only as additional information, after the book's ruling. |
 
 ## Published address and integrity
@@ -203,7 +209,7 @@ On opening, the program checks its own integrity. If the file has been altered, 
 
 ## Verification
 
-- **In the program:** the Verification tab runs 54 tests: the book's own examples (Rajab 1400, p. 360), dawn and *temkin* rules (pp. 178, 197), daylight-saving changes, the Yallop criterion, worldwide scope and record integrity.
+- **In the program:** the Verification tab runs 58 tests: the book's own examples (Rajab 1400, p. 360), the Rajab 1437 case from the congress paper, dawn and *temkin* rules (pp. 178, 197), daylight-saving changes, the Yallop criterion, worldwide scope and record integrity.
 - **End-to-end scan:** `tests/ui_tarama.py` covers 2 screen sizes, 2 languages, 5 themes, every tab and dialog, and 9 extreme locations (polar night, date line, daylight saving, Mecca), looking for errors, overflow and outside requests.
 - **Worldwide scope:** `tools/kuresel_dogrulama.py`
 - **Sighting records:** `tools/verify_record.py` checks a record's digest, signature and QR code on a computer.

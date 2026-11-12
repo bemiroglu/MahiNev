@@ -24,4 +24,5 @@ Aynı hesap, üç yoğunlukta sunulacak. Düzey, hangi kartların açık başlay
 
 - **Koordinattan saat dilimi:** Elle girilen koordinatın resmî saat dilimini çevrimdışı bulmak, dilim sınırları verisi gerektirir (birkaç yüz kilobayt). Şimdilik fark tûlden hesaplanıyor; kullanıcı listeden veya "UTC farkı" kutusundan düzeltiyor.
 - **Safari'de JPG çıktısı:** Safari ve iOS'ta ayrıca denenmeli.
-- **Rü'yet kayıtlarının toplanması:** Gözlemcilerin JSON kayıtlarını bir heyete iletmesi ve heyetin bunları toplu doğrulaması için basit bir düzen.
+- **Hilâl gözlem bildirim ve paylaşma ağı:** Gözlemcilerin kayıtlarını ve imzalı bildirim eklerini (`hilal-bildirim/1`) bir heyete veya ağa iletmesi, heyetin bunları toplu doğrulaması. Kayıt ve ek biçimi hazırdır ([kayit-semasi.md](kayit-semasi.md)).
+- **Pusula:** Android ve iOS telefonlarda sahada denenmeli; gemi kipindeki deviasyon girişiyle birleştirilebilir.

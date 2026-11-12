@@ -358,6 +358,7 @@ Ekranda her zaman Tam İlmihâl'e dayanan sınıflandırma görünür. Modern mo
 | Açıklama penceresi (D5) | "Bu akşam ne demek?" penceresi seçili akşam ve yer için hesâbî imkânı, ay başı senaryolarını, alt sınırı (s. 360) ve otuza tamamlamayı (s. 314–315) kitabın sayfalarıyla açıklar. Normalde kapalıdır; düğmeyle açılır |
 | Otuza tamamlamada önceki ayın başı (D6) | Esas hesâbî en erken gündür (önceki ay Zilhicce ise Işık usulü). Kullanıcının o ay için çıplak gözle "gördüm" kaydı varsa kayıt esas alınır ve bu açıkça yazılır; kayıt şahitlik değildir. Kullanıcı "bir gün sonra" veya kendi bildiği sabit başlangıcı seçebilir; seçim yalnız açıklamayı etkiler |
 | Naklî deliller (D7) | Rehber'de ayrı konu. Kaynak Kongre tebliğidir; kitabın hükümleri sayfalarıyla yanında verilir. Açıklamalarda bu konuya gönderme yapılır |
+| Bildirim ekleri (D8) | Rü'yet kaydı mühürlendikten sonra değiştirilmez. "Kime, ne zaman, nasıl bildirildi" bilgisi kayda bağlı (`recordHash`), ayrıca mühürlü bir ektir; kaydın özetine katılmaz. Biçim ileride kurulacak bir bildirim ağına esas olur |
 
 Bütün tasarım ve kod bu rapora dayanır. Değişiklik ancak yeni bir karar kaydıyla yapılır.
 
@@ -611,7 +612,7 @@ Kaynak: Bölüm 1'deki tebliğ. Tebliğin 2-d kısmı büyük ölçüde Tam İlm
 | Elmalılı Hamdi ve Fatin Gökmen (*Sebîl-ür-reşâd* c. 22): şer' rü'yete bağlamıştır; hesaba aykırı şahitlikte iki şahitle yetinilmemesi daha meşrûdur | s. 4–5 | Rehber: Naklî deliller |
 | Prof. Hamit Dilgan (İTÜ, 17.6.1963): görülme imkânı ile bilfiil görülme ayrı tutulmalıdır | s. 5 | Rehber: Naklî deliller; açıklama penceresi |
 | Kazâ: Şa'bân rü'yetle başlamış ve 29. gece bayram hilâli görülmüşse bir gün, başlamamışsa iki gün (*Hindiyye*, *Kâdîhân*) | s. 7 | Açıklama penceresi (Şevvâl) |
-| Görenin kâdîya haber vermesi vâcibdir; kâdî/vâlî olmayan yerde âdil birinin haberiyle duyanlar oruca başlar (*Redd-ül-muhtâr*) | s. 7 | Rü'yet kaydı: bildirim alanı (öneri) |
+| Görenin kâdîya haber vermesi vâcibdir; kâdî/vâlî olmayan yerde âdil birinin haberiyle duyanlar oruca başlar (*Redd-ül-muhtâr*) | s. 7 | Rü'yet kaydı: bildirim ekleri (`hilal-bildirim/1`) |
 | USNO: çıplak gözle en erken güvenilir rü'yet ictimâdan 15,5 saat, teleskopla 12,1 saat sonra; görünürlüğü etkileyen etkenler | s. 8, 10–11 | Rehber: Naklî deliller (ayrıntı) |
 | İbrânî takviminde ay başlarının rü'yet ve şahitle tespiti; rasıd adı, yeri ve saatiyle kayıt | s. 8–9 | — |
 | **Receb 1437:** 7 Nisan 2016 akşamı hiçbir yerde görülmedi, 8 Nisan'da görüldü; ay 9 Nisan'da başladı (takvimlerde 8 Nisan) | s. 9 | Doğrulama testi; açıklama penceresi örneği |

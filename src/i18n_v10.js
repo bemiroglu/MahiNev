@@ -1,7 +1,7 @@
-/* Metinler: 0.10 geliştirme sürümü (ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
+/* Metinler: 0.10 (açıklama penceresi, ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.10.0-deneme.1';
+  G.HR_VERSION = '0.10.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Ekran ve PDF tavsiyesi

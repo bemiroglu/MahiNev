@@ -1731,13 +1731,13 @@
     const tm = d => d ? new Intl.DateTimeFormat(locale(), { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(d)) : '—';
     const v = (val, w) => val ? esc(val) : `<span class="blank" style="min-width:${w || 40}mm"></span>`;
     const row = (k, val) => `<tr><th>${esc(k)}</th><td>${val}</td></tr>`;
-    const obsT = row(t.recAt, blank ? v('', 80) : `${esc(f(o.at))}<br><span class="small">${esc(o.at.slice(0, 16).replace('T', ' '))} UTC · ${esc(t.recEvening(fmtCivil(civil(o.evening))))}</span>`) +
+    const obsT = row(t.recAt, blank ? v('', 70) : `${esc(f(o.at))}<br><span class="small">${esc(o.at.slice(0, 16).replace('T', ' '))} UTC · ${esc(t.recEvening(fmtCivil(civil(o.evening))))}</span>`) +
       row(t.recResult, blank ? Object.values(t.recRes).map(s => `☐ ${esc(s)}`).join('<br>') : `<strong>${esc(t.recRes[o.result])}</strong>`) +
       row(`${t.recFirst} / ${t.recLast}`, blank ? `${v('', 25)} / ${v('', 25)}` : `${esc(o.firstSeen || '—')} / ${esc(o.lastSeen || '—')}`) +
       row(t.recPlace, blank ? `${v('', 70)}<br>☐ ${esc(t.recPlaceOpts.open)} ☐ ${esc(t.recPlaceOpts.high)} ☐ ${esc(t.recPlaceOpts.city)}` : `${esc(pl.name || '')} ${num(pl.lat, 4)}°, ${num(pl.lon, 4)}° · ${num(pl.elev, 0)} m<br>${esc(t.recPlaceOpts[pl.site] || '')}`) +
       row(t.recSky, blank ? Object.values(t.recSkyOpts).map(s => `☐ ${esc(s)}`).join(' ') : esc(t.recSkyOpts[o.sky] || '')) +
       row(`${t.recWith} / ${t.recSeers}`, blank ? `${v('', 15)} / ${v('', 15)}` : `${o.companions} / ${o.seers}`) +
-      row(t.notes, blank ? `${v('', 110)}<br>${v('', 110)}` : (o.note && o.note.length > 240 ? `<span class="clamp">${esc(o.note.slice(0, 240))}…</span> <span class="small">(${esc(t.noteFull)})</span>` : esc(o.note || '—')) + (!blank && !x.observer.name ? `<br><span class="small">${esc(t.recAnon)}</span>` : ''));
+      row(t.notes, blank ? `${v('', 78)}<br>${v('', 78)}` : (o.note && o.note.length > 240 ? `<span class="clamp">${esc(o.note.slice(0, 240))}…</span> <span class="small">(${esc(t.noteFull)})</span>` : esc(o.note || '—')) + (!blank && !x.observer.name ? `<br><span class="small">${esc(t.recAnon)}</span>` : ''));
     const comp = c ? row(t.lastConj.replace(/\(.*\)/, ''), esc(f(c.ictima))) + row(t.gurub.replace(/\(.*\)/, ''), tm(c.gurub) + (c.seriGurub ? ` · ${esc(t.seri.replace(/\(.*\)/, ''))} ${tm(c.seriGurub)}` : '')) +
       row(t.stWindow, c.windowEnd ? `${tm(c.gurub)} – ${tm(c.windowEnd)}` : t.none) + row(t.moonset.replace(/\(.*\)/, ''), tm(c.moonset)) +
       row(t.beyn.replace(/\(.*\)/, ''), degf(c.beynunet)) + row(`${t.alt.replace(/\(.*\)/, '')} (${st.lang === 'tr' ? 'gözlem anında' : 'at observation'})`, `${degf(c.atObs.moonAlt)} · ${t.az.split(' ')[0]} ${degf(c.atObs.moonAz, 1)}`) +
@@ -1767,7 +1767,7 @@
     .pbox { border: 1pt solid #bbb; border-left: 3mm solid #888; border-radius: 2mm; padding: 2mm 3.5mm; } .pbox p { margin: .6mm 0; font-size: 9pt; }
     .pbox.s-ok { border-left-color: var(--ok); } .pbox.s-warn { border-left-color: var(--warn); } .pbox.s-bad { border-left-color: var(--bad); } .pbox.s-info { border-left-color: var(--info); }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; } .tcols { grid-template-columns: 1.05fr 1fr; }
-    table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
+    table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } .tut .pt th { min-width: 27mm; } .tut .pt .blank { max-width: 100%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
     .pfig { height: 68mm; } .pfig svg { width: 100%; height: 100%; display: block; }
     .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; } .psky.eve { width: 178mm; height: auto; } table.mt.eve { margin-top: 2mm; } table.mt.eve td, table.mt.eve th { padding: 1.2mm 2mm; }
     .pmap img { width: 100%; max-height: 140mm; object-fit: contain; display: block; }

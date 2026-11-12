@@ -1,5 +1,23 @@
 # Sürümler
 
+## 0.10.0 — 12 Kasım 2026
+
+- **"Bu akşam ne demek?" açıklama penceresi:**
+  - Seçili akşam ve yer için hilâlin Tam İlmihâl'e göre durumu, dünyada mümkün ve görülebilir olduğu bölgeler.
+  - Ay başı senaryoları: 29. gün akşamı görülürse ve görülmezse yeni ayın 1. günü, "bir gün sonra olabilir, önce olamaz" alt sınırı (s. 360), otuza tamamlama (s. 314–315).
+  - Önceki ayın başı seçilebilir: hesâbî en erken gün, bir gün sonrası veya kullanıcının rü'yet kaydı.
+  - Ayın adına göre kapsam ve hüküm; Zilhiccede önce Işık usulü (s. 326).
+  - Plan, Saha ve "Yaklaşan ay başı rasadı" kartlarındaki düğmeyle açılır.
+- **Rehber → Naklî deliller:** Âyet, hadîs, icmâ ve âlimlerin bildirdikleri (Kongre tebliği, Türkiye Takvimi, 2016); kitabın hükümleri sayfalarıyla yanında.
+- **Gökyüzü haritası (seçili akşam):** Batı göğü; hilâlin gurûbdan ay batımına kadar yeri ve akşam çizelgesi. A4, PDF veya JPG.
+- **Pusula:** Kadran, hilâle veya gurûb noktasına kaç derece dönüleceği ve hilâlin kaç yumruk yukarıda olduğu. Telefon dik tutulunca arka kameranın yönü alınır. Güneş'e veya gurûb noktasına çevirerek manyetik sapma düzeltilir.
+- **Bildirim ekleri:** Rü'yet kaydının kime, ne zaman ve nasıl bildirildiği. Kayıt mühürlü kalır; bildirim, kayda bağlı ve ayrıca imzalı bir ektir (`hilal-bildirim/1`). Tutanakta "Bildirildi" satırı. İleride kurulacak bir bildirim ağına hazır.
+- **Kullanım tavsiyesi:** Hazırlık için büyük ekran; sahada önceden kaydedilmiş PDF.
+- **Düzeltmeler:**
+  - Saha sekmesindeki gök çiziminde alacakaranlık rengi görünmüyordu.
+  - Telefonda batı ufku çizimi ekrana sığar; yazılar hilâlin üstüne binmez.
+- **Doğrulama:** Receb 1437 vakası (Kongre tebliği, s. 9) ve açıklama penceresi senaryoları testlere eklendi (58 test).
+
 ## 0.9.0 — 12 Kasım 2026
 
 - **Kaynak önceliği:**
