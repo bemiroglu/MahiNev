@@ -135,7 +135,8 @@
     $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span><button type="button" class="x" id="safetyX" aria-label="${esc(t.safetyHide)}" title="${esc(t.safetyHide)}">×</button>`;
     $('safetyX').onclick = () => { st.safetyOff = true; save(); $('optSafety').checked = false; paintSafety(); toast(t.safetyHidden, 6000); };
     set('lOptSafety', t.optSafety); $('optSafety').checked = !st.safetyOff; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
-    set('fCompassNote', t.compassNote);
+    set('fCompassNote', t.compassNote); set('hNt', t.ntTitle); $('ntIntro').textContent = t.ntIntro; $('ntNet').textContent = t.ntNetNote; set('lNtKind', t.ntToKind); set('lNtName', t.ntToName); set('lNtAt', t.ntAt); set('lNtCh', t.ntChannel); set('lNtRef', t.ntRef); set('lNtNote', t.ntNote); set('ntSave', t.ntSave); set('ntCancel', t.ntCancel);
+    $('ntKind').innerHTML = Object.entries(t.ntToKinds).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); $('ntCh').innerHTML = Object.entries(t.ntChannels).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); set('cCalReset', t.cpCalReset); $('cHelp').textContent = t.cpCalHelp;
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
     $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
     $('recImportFile').onchange = importRecords; $('recPhotoFile').onchange = checkPhoto;
@@ -160,6 +161,7 @@
     set('lDetail', t.detailLvl); $('detailLvl').innerHTML = [['short', t.detailShort], ['long', t.detailLong]].map(([v, l]) => `<option value="${v}"${st.detail === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('hHelp', st.lang === 'tr' ? 'Rehberlik' : 'Guidance'); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
+    $('introTip').innerHTML = t.introTip; $('fTipTxt').textContent = t.fieldTip; set('fTipX', t.fieldTipClose); $('fTip').hidden = !!st.fieldTipDone; set('smEve', '⎙ ' + t.smEveBtn);
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
     set('lLayout', t.layoutLbl); set('layoutNote', t.layoutNote); $('layoutSel').innerHTML = [['sade', t.layoutSade], ['tam', t.layoutTam]].map(([v, l]) => `<option value="${v}"${st.layout === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
@@ -288,7 +290,7 @@
     $('exClose').onclick = closeExplain;
     $('dlgClose').onclick = () => closeDlg();
     $('fNight').onclick = () => { st.theme = st.theme === 'night' ? 'auto' : 'night'; save(); fillStatic(); repaintAll(); };
-    $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass;
+    $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass; $('ntSave').onclick = saveNotice; $('ntCancel').onclick = () => { try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); } }; $('cCal').onclick = calibrateCompass; $('cCalReset').onclick = () => { st.cpOff = null; st.cpOffAt = 0; save(); paintCompass(true); };
     $('recSave').onclick = addRecord;
     $('recAt').addEventListener('input', showRecEvening);
     window.addEventListener('hashchange', route);
@@ -303,6 +305,7 @@
     $('liveInt').onchange = e => { st.liveInt = +e.target.value; save(); };
     $('optExplain').onchange = e => { st.explain = e.target.checked; if (st.explain) st.introDone = false; save(); applyTheme(); };
     $('introClose').onclick = () => { st.introDone = true; save(); applyTheme(); };
+    $('fTipX').onclick = () => { st.fieldTipDone = true; save(); $('fTip').hidden = true; };
     ['recName', 'recContact'].forEach(id => $(id).addEventListener('change', e => { st[id] = e.target.value.trim(); save(); }));
     document.addEventListener('click', stabilize, true); document.addEventListener('change', stabilize, true);
     $('fontSize').onchange = e => { st.fontSize = +e.target.value; save(); applyTheme(); repaintAll(); };
@@ -317,7 +320,7 @@
     $('fLoc').onclick = () => autoLocate(true, true);
     $('smClose').onclick = () => { try { $('smDlg').close(); } catch (e) { $('smDlg').removeAttribute('open'); } };
     ['smFace', 'smLines', 'smNames', 'smCons', 'smEcl'].forEach(id => $(id).addEventListener('change', () => drawSM()));
-    $('smPrint').onclick = () => printPages(['sky']); $('smJpg').onclick = () => exportJpg(['sky']);
+    $('smPrint').onclick = () => printPages(['sky']); $('smJpg').onclick = () => exportJpg(['sky']); $('smEve').onclick = () => printPages(['skyEve']);
     window.addEventListener('online', () => { renderBar(); renderWx(true); }); window.addEventListener('offline', () => { renderBar(); renderWx(); });
   }
   function prefsChanged() {
@@ -989,7 +992,7 @@
     const city = CITIES.find(c => c.id === st.city);
     // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
-    const fShow = sunUp && !st.safetyOff && sightPossible(eveningCached(loc, todayYmd(st.tz))); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = !compassOn;
+    const fShow = sunUp && !st.safetyOff && sightPossible(eveningCached(loc, todayYmd(st.tz))); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = true;
     $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
@@ -1028,8 +1031,8 @@
       $('fGuides').innerHTML = guidesHtml(now, loc);
       $('fWx').innerHTML = WX.data && FR ? wxMini(FR) : '';
     }
-    if (compassOn) $('fHeading').textContent = heading == null ? t.compassFail : `${t.heading}: ${Math.round(heading)}° · ${t.turn(((fieldTick.moonAz - heading + 540) % 360) - 180)}`;
-    else $('fHeading').textContent = '';
+    $('fHeading').textContent = '';
+    if (compassOn) paintCompass(true);
     renderRecords();
   }
   async function toggleWake() {
@@ -1039,18 +1042,110 @@
       wakeLock.addEventListener('release', () => { wakeLock = null; $('fWake').setAttribute('aria-pressed', 'false'); });
     } catch (e) { $('fMsg').textContent = t.wakeFail; }
   }
+  // ---- Pusula: algılayıcıdan yön, eğim düzeltmesi, Güneş'le ayar, hilâle yönlendirme ----
+  // Yön: Android/Chrome 'deviceorientationabsolute' (alpha, beta, gamma; W3C dönüş matrisi), iOS 'webkitCompassHeading'.
+  // Telefon düzken üst kenarın, dik tutulunca arka kameranın baktığı yön alınır. Manyetik sapma ve yakındaki demirin
+  // etkisi, Güneş'e (veya gurûb noktasına) çevirip ayarlamakla giderilir: düzeltme = gerçek semt − ölçülen yön.
+  const CP = { status: 'off', mode: null, acc: null, sx: 0, sy: 0, n: 0, last: 0, raf: 0, timer: 0 };
+  const nrm = d => ((d % 360) + 540) % 360 - 180;
+  function rawHeading(e) {
+    if (typeof e.webkitCompassHeading === 'number' && !isNaN(e.webkitCompassHeading)) {
+      CP.acc = typeof e.webkitCompassAccuracy === 'number' ? e.webkitCompassAccuracy : null; CP.mode = e.beta != null && Math.abs(e.beta) > 50 ? 'up' : 'flat';
+      return e.webkitCompassHeading;
+    }
+    if (!(e.absolute === true || e.type === 'deviceorientationabsolute') || e.alpha == null || e.beta == null || e.gamma == null) return null;
+    const r = Math.PI / 180, a = e.alpha * r, b = e.beta * r, g = e.gamma * r;
+    const cA = Math.cos(a), sA = Math.sin(a), cB = Math.cos(b), sB = Math.sin(b), cG = Math.cos(g), sG = Math.sin(g);
+    CP.acc = null;
+    if (Math.abs(e.beta) > 45 && Math.abs(e.beta) < 135) {   // dik: arka kamera (−z) yönü
+      CP.mode = 'up';
+      return (Math.atan2(-cG * sA * sB - cA * sG, cA * cG * sB - sA * sG) / r + 360) % 360;
+    }
+    CP.mode = 'flat';   // düz: üst kenar (+y) yönü, ekran yatay çevrilmişse ekranın üstü
+    const ang = (screen.orientation && typeof screen.orientation.angle === 'number') ? screen.orientation.angle : (window.orientation || 0);
+    return ((Math.atan2(-cB * sA, cA * cB) / r) + ang + 720) % 360;
+  }
   function onOrient(e) {
-    if (typeof e.webkitCompassHeading === 'number') heading = e.webkitCompassHeading;
-    else if (e.absolute && e.alpha != null) heading = (360 - e.alpha) % 360;
+    const h = rawHeading(e); if (h == null) return;
+    // dairesel ortalama ile yumuşatma
+    const k = CP.n ? 0.25 : 1, r = Math.PI / 180;
+    CP.sx = CP.sx * (1 - k) + Math.sin(h * r) * k; CP.sy = CP.sy * (1 - k) + Math.cos(h * r) * k; CP.n++;
+    heading = (Math.atan2(CP.sx, CP.sy) / r + 360) % 360; CP.status = 'ok';
+    if (!CP.raf) CP.raf = requestAnimationFrame(() => { CP.raf = 0; if (Date.now() - CP.last > 90) paintCompass(); });
+  }
+  const cpOffset = () => st.cpOff != null && Date.now() - (st.cpOffAt || 0) < 6 * 3600000 ? st.cpOff : null;
+  function cpTargets() {
+    const loc = locObj(), now = A.MakeTime(new Date()), p = C.at(now, loc);
+    const gz = FR && FR.ok ? FR.sunAz : null;
+    let key, az, alt = null;
+    if (p.sun.alt > -0.8) { key = 'gurub'; az = gz != null ? gz : p.sun.az; }
+    else if (p.moon.alt > 0) { key = 'moon'; az = p.moon.az; alt = p.moon.alt; }
+    else { key = 'gurub'; az = gz != null ? gz : p.sun.az; }
+    return { p, gz, key, az, alt };
+  }
+  function dialSvg(H, tg) {
+    const W = 240, c = W / 2, R = 100, tr = st.lang === 'tr', cardL = tr ? ['K', 'D', 'G', 'B'] : ['N', 'E', 'S', 'W'];
+    const pos = (az, rr) => { const a = (az - H) * Math.PI / 180; return [c + rr * Math.sin(a), c - rr * Math.cos(a)]; };
+    let s = `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="${esc(t.cpTitle)}"><circle cx="${c}" cy="${c}" r="${R + 14}" fill="var(--surface)" stroke="var(--line)"/>`;
+    for (let a = 0; a < 360; a += 10) { const [x1, y1] = pos(a, R + 12), [x2, y2] = pos(a, a % 30 ? R + 6 : R + 1); s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--ink)" stroke-opacity="${a % 30 ? .35 : .7}"/>`; }
+    for (let i = 0; i < 4; i++) { const [x, y] = pos(i * 90, R - 12); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" text-anchor="middle" font-size="15" font-weight="700" fill="${i === 0 ? 'var(--bad, #c0392b)' : 'var(--ink)'}">${cardL[i]}</text>`; }
+    for (let a = 30; a < 360; a += 30) { if (a % 90 === 0) continue; const [x, y] = pos(a, R - 12); s += `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="middle" font-size="10" fill="var(--muted)">${a}</text>`; }
+    // gurûb noktası, Güneş ve hilâl
+    // iç halka: gurûb noktası (yarım daire) ve Güneş; dış halka: hilâl (aydınlık yüzü Güneş'e dönük)
+    if (tg.gz != null) { const [x, y] = pos(tg.gz, R - 58); s += `<path d="M${(x - 9).toFixed(1)} ${(y + 3).toFixed(1)} A9 9 0 0 1 ${(x + 9).toFixed(1)} ${(y + 3).toFixed(1)}Z" fill="var(--accent)"/><line x1="${(x - 11).toFixed(1)}" x2="${(x + 11).toFixed(1)}" y1="${(y + 3).toFixed(1)}" y2="${(y + 3).toFixed(1)}" stroke="var(--accent)" stroke-width="1.5"/>`; }
+    if (tg.p.sun.alt > -18) { const [x, y] = pos(tg.p.sun.az, R - 58); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${tg.p.sun.alt > -0.8 ? 'var(--accent)' : 'none'}" stroke="var(--accent)" stroke-width="1.5"/>`; }
+    if (tg.p.moon.alt > -1) {
+      const [x, y] = pos(tg.p.moon.az, R - 32), [sx, sy] = pos(tg.p.sun.az, R - 32), dx = x - sx, dy = y - sy, dl = Math.hypot(dx, dy) || 1;
+      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9" fill="#fbf3d6" stroke="#b8a76a"/><circle cx="${(x + 5 * dx / dl).toFixed(1)}" cy="${(y + 5 * dy / dl).toFixed(1)}" r="8.6" fill="#1b2433"/>`;
+    }
+    // hedefe yay ve sabit gösterge (baktığınız yön)
+    if (heading != null) {
+      const d = nrm(tg.az - H), a0 = -Math.PI / 2, a1 = a0 + d * Math.PI / 180, rr = R + 20, big = Math.abs(d) > 180 ? 1 : 0;
+      if (Math.abs(d) > 2) s += `<path d="M${(c + rr * Math.cos(a0)).toFixed(1)} ${(c + rr * Math.sin(a0)).toFixed(1)} A${rr} ${rr} 0 ${big} ${d > 0 ? 1 : 0} ${(c + rr * Math.cos(a1)).toFixed(1)} ${(c + rr * Math.sin(a1)).toFixed(1)}" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" opacity=".8"/>`;
+      s += `<path d="M${c} 4 L${c - 9} 22 L${c + 9} 22Z" fill="var(--accent)"/><line x1="${c}" y1="22" x2="${c}" y2="${c}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 4"/>`;
+    }
+    return s + `<circle cx="${c}" cy="${c}" r="3" fill="var(--ink)"/></svg>`;
+  }
+  function paintCompass(force) {
+    if (!compassOn) return; CP.last = Date.now();
+    const tg = cpTargets(), off = cpOffset(), H = heading != null ? (heading + (off || 0) + 360) % 360 : 0;
+    $('cDial').innerHTML = dialSvg(H, tg);
+    const name = t.cpTarget[tg.key], card = az => G.HRSky.card(az, st.lang);
+    const altTxt = tg.alt != null ? ' · ' + t.cpUpAlt(num(tg.alt, 1), t.smEveFist(num(Math.max(0, tg.alt) / 10, 1))) : '';
+    if (heading != null) {
+      const d = Math.round(nrm(tg.az - H));
+      $('cRead').textContent = (Math.abs(d) <= 3 ? t.cpAhead(name) : t.cpTurn(name, d)) + altTxt;
+      $('cSub').textContent = `${t.cpHead(Math.round(H), card(H))} · ${off != null ? t.cpCalDone(Math.round(off)) : t.cpRaw}`;
+    } else {
+      const fromG = tg.key === 'moon' && tg.gz != null ? ` · ${(tg.gz - tg.az) > 0 ? t.smEveLeft(num(Math.abs(tg.gz - tg.az), 1)) : t.smEveRight(num(Math.abs(tg.gz - tg.az), 1))} (${t.cpTarget.gurub.toLowerCase()})` : '';
+      $('cRead').textContent = `${name}: ${Math.round(tg.az)}° (${card(tg.az)})${fromG}${altTxt}`;
+      $('cSub').textContent = '';
+    }
+    const below = tg.key === 'gurub' && tg.p.sun.alt <= -0.8 ? t.cpBelow + ' ' : '';
+    const stat = CP.status === 'wait' ? t.cpWait : CP.status === 'none' ? t.cpNone + (location.protocol === 'file:' ? ' ' + t.cpNoneFile : '') : CP.status === 'denied' ? t.cpDenied
+      : (CP.mode === 'up' ? t.cpUp : t.cpFlat) + (CP.acc != null && (CP.acc < 0 || CP.acc > 15) ? ' ' + t.cpAcc(Math.round(Math.abs(CP.acc))) : '');
+    $('cStat').textContent = below + stat;
+    const sunVis = tg.p.sun.alt > -0.8;
+    $('cCal').textContent = sunVis ? t.cpCal : t.cpCalGurub; $('cCal').disabled = heading == null || (!sunVis && tg.gz == null);
+    $('cCalReset').hidden = off == null;
+  }
+  function calibrateCompass() {
+    if (heading == null) return;
+    const tg = cpTargets(), az = tg.p.sun.alt > -0.8 ? tg.p.sun.az : tg.gz; if (az == null) return;
+    st.cpOff = Math.round(nrm(az - heading) * 10) / 10; st.cpOffAt = Date.now(); save();
+    toast(t.cpCalDone(Math.round(st.cpOff))); paintCompass(true);
   }
   async function toggleCompass() {
-    compassOn = !compassOn; $('fCompass').setAttribute('aria-pressed', String(compassOn));
-    if (!compassOn) { window.removeEventListener('deviceorientationabsolute', onOrient); window.removeEventListener('deviceorientation', onOrient); return; }
-    try {
-      if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') { const p = await DeviceOrientationEvent.requestPermission(); if (p !== 'granted') throw new Error('denied'); }
-      window.addEventListener('deviceorientationabsolute', onOrient); window.addEventListener('deviceorientation', onOrient);
-      setTimeout(() => { if (heading == null) $('fHeading').textContent = t.compassFail; }, 2500);
-    } catch (e) { $('fHeading').textContent = t.compassFail; }
+    compassOn = !compassOn; $('fCompass').setAttribute('aria-pressed', String(compassOn)); $('cBox').hidden = !compassOn;
+    window.removeEventListener('deviceorientationabsolute', onOrient); window.removeEventListener('deviceorientation', onOrient); clearTimeout(CP.timer);
+    if (!compassOn) { CP.status = 'off'; return; }
+    heading = null; CP.n = 0; CP.status = 'wait';
+    let perm = null;   // iOS izin ister; izin sonucu ne olursa olsun olaylar dinlenir, 3 saniyede yön gelmezse sebebi yazılır
+    try { if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') perm = await DeviceOrientationEvent.requestPermission(); } catch (e) { perm = 'error'; }
+    if (!('DeviceOrientationEvent' in window)) CP.status = 'none';
+    else { window.addEventListener('deviceorientationabsolute', onOrient); window.addEventListener('deviceorientation', onOrient); CP.timer = setTimeout(() => { if (heading == null) { CP.status = perm === 'denied' ? 'denied' : 'none'; paintCompass(true); } }, 3000); }
+    paintCompass(true);
+    $('cBox').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
   // Kayıt zamanı (seçili saat diliminde) ve ait olduğu akşam
   function resetRecAt() {
@@ -1142,6 +1237,35 @@
     $('recEval').innerHTML = `<span class="pill ${ev.cls}">${esc(t.recRes[result])}</span> ${esc(ev.txt)}${sealed.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}${sealed.photo && sealed.photo.thumbDropped ? `<br><span class="small">${esc(t.recThumbDropped)}</span>` : ''}<br><span class="hash">${esc(t.recHash)}: ${esc(sealed.hash || t.none)}${sealed.signer ? ` · ${esc(t.recSig)}: ${esc(sealed.signer.fp)}` : ` · ${esc(t.recNoSig)}`}</span>`;
     toast(t.recSaved); renderRecords(true); resetRecAt();
   }
+  // ---- Bildirim ekleri: "kime, ne zaman" (kayıt mühürlü kalır; ek, kaydın özetine bağlı ve ayrıca imzalıdır) ----
+  let ntIdx = -1;
+  function noticeLine(n, x, bare) {
+    const tz = (x && x.place && x.place.tz) || st.tz;
+    const at = n.at ? new Intl.DateTimeFormat(locale(), { timeZone: tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(n.at)) : '—';
+    const to = `${t.ntToKinds[n.to && n.to.kind] || ''}${n.to && n.to.name ? ': ' + n.to.name : ''}`;
+    const ch = t.ntChannels[n.channel] || n.channel || '';
+    return (bare ? `${to} · ${at} · ${ch}` : t.ntLine(to, at, ch)) + (n.ref ? ` · ${n.ref}` : '');
+  }
+  function openNotice(i) {
+    ntIdx = i; $('ntMsg').textContent = ''; $('ntName').value = ''; $('ntRef').value = ''; $('ntNote').value = '';
+    const p = new Intl.DateTimeFormat('en-CA', { timeZone: st.tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()), g = k => p.find(x => x.type === k).value;
+    $('ntAt').value = `${g('year')}-${g('month')}-${g('day')}T${g('hour')}:${g('minute')}`;
+    try { $('ntDlg').showModal(); } catch (e) { $('ntDlg').setAttribute('open', ''); }
+  }
+  async function saveNotice() {
+    const x = records[ntIdx]; if (!x || !x.hash) return;
+    const name = $('ntName').value.trim(); if (!name) { $('ntMsg').textContent = t.ntNeed; return; }
+    let at = new Date();
+    if ($('ntAt').value) { const [d, hm] = $('ntAt').value.split('T'), [hh, mm] = hm.split(':').map(Number); at = new Date(C.localToUT(d, hh * 60 + mm, st.tz)); }
+    const n = { schema: 'hilal-bildirim/1', id: (G.crypto && G.crypto.randomUUID ? G.crypto.randomUUID() : 'n' + Date.now().toString(36)), created: new Date().toISOString(),
+      record: x.id, recordHash: x.hash, to: { kind: $('ntKind').value, name }, at: at.toISOString(), channel: $('ntCh').value, ref: $('ntRef').value.trim(), note: $('ntNote').value.trim(),
+      app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME, official: OFFICIAL !== false } };
+    let sealed = n; try { sealed = await G.HRSig.seal(n); } catch (e) { sealed = n; }
+    const prev = x.notices; x.notices = [...(x.notices || []), sealed];
+    if (!saveRec()) { x.notices = prev; $('ntMsg').textContent = t.recStoreFail; return; }
+    try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); }
+    toast(t.ntSaved); renderRecords(true);
+  }
   function recText(x) {
     const o = x.observation, c = x.computed, pl = x.place;
     const tz = pl.tz || st.tz, at = new Date(o.at), f = d => d ? new Intl.DateTimeFormat(locale(), { timeZone: tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(d)) : t.none;
@@ -1151,6 +1275,7 @@
     if (o.firstSeen || o.lastSeen) L.push(`${t.recFirst}: ${o.firstSeen || '—'} · ${t.recLast}: ${o.lastSeen || '—'}`);
     if (c) L.push(`${t.tutCalc}: ${t.gurub} ${f(c.gurub)} · ${t.beyn.split(' ')[0]} ${c.beynunet.toFixed(2)}° · ${t.alt.split(' ')[0]} ${c.atObs.moonAlt.toFixed(2)}° · ${t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls}`);
     if (o.note) L.push(`${t.notes}: ${o.note}`);
+    for (const n of (x.notices || [])) L.push(noticeLine(n, x) + (n.hash ? ` (${n.hash.slice(0, 16)}…)` : ''));
     if (!x.observer.name) L.push(t.recAnon);
     L.push(`SHA-256: ${x.hash || '—'}${x.signer ? ' · key ' + x.signer.fp : ''}`, `${t.appTitle} v${(x.app && x.app.version) || ''}${x.app && x.app.rules ? ' · ' + t.traceRules + ' ' + x.app.rules : ''}${x.app && x.app.official === false ? ' · ' + t.tamperShort : ''}`);
     return L.join('\n');
@@ -1171,7 +1296,16 @@
     try { const j = JSON.parse(await f.text()); list = Array.isArray(j) ? j : j && Array.isArray(j.records) ? j.records : j && j.schema === 'hilal-ruyet-kaydi/1' ? [j] : null; } catch (e) { list = null; }
     if (!list) { toast(t.recImportBad); return; }
     const have = new Set(records.map(x => x.id || x.ts)); let add = 0, dup = 0;
-    for (const x of list) { if (!x || !(x.schema || x.ts)) continue; const k = x.id || x.ts; if (have.has(k)) { dup++; continue; } have.add(k); records.push(x); add++; }
+    for (const x of list) {
+      if (!x || !(x.schema || x.ts)) continue; const k = x.id || x.ts;
+      if (have.has(k)) {   // aynı kayıt: yalnız yeni bildirim eklerini al
+        const cur = records.find(r => (r.id || r.ts) === k), ids = new Set(((cur && cur.notices) || []).map(n => n.id));
+        const extra = (x.notices || []).filter(n => n && n.id && !ids.has(n.id) && cur && n.recordHash === cur.hash);
+        if (extra.length) cur.notices = [...(cur.notices || []), ...extra];
+        dup++; continue;
+      }
+      have.add(k); records.push(x); add++;
+    }
     records.sort((a, b) => String((b.observation && b.observation.at) || b.ts).localeCompare(String((a.observation && a.observation.at) || a.ts)));
     if (saveRec()) toast(t.recImported(add, dup)); renderRecords(true);
   }
@@ -1209,12 +1343,18 @@
         <dl class="kv">${kv(t.recAt, esc(new Intl.DateTimeFormat(locale(), { timeZone: pl.tz || st.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at))) + ' · ' + esc(pl.name || ''), esc(t.recRes[o.result] || ''), 'txt')}
         ${kv(t.recHash, esc(v.hash ? t.vfHashOk : t.vfHashBad), `<span class="hash">${esc(x.hash)}</span>`, 'txt')}
         ${kv(t.recSig, x.sig ? esc(!v.hash ? t.vfSigNA : v.sig ? t.vfSigOk : t.vfSigBad) : esc(t.recNoSig), x.signer ? `<span class="hash">${esc(x.signer.fp)}</span>` : '', 'txt')}
-        ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}</dl></div>`);
+        ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}
+        ${(x.notices || []).length ? kv(t.ntRow, (await Promise.all(x.notices.map(async n => `${(await noticeOk(n, x)) ? '✓' : '✗'} ${esc(noticeLine(n, x))}`))).join('<br>'), '', 'txt') : ''}</dl></div>`);
     }
     out.innerHTML = rows.join('');
   }
   // Kayıt listesinde her kaydın özeti ve imzası yeniden doğrulanır
+  async function noticeOk(n, x) { try { const v = await G.HRSig.verify(n); return v.hash && (!n.sig || v.sig) && n.record === x.id && n.recordHash === x.hash; } catch (e) { return false; } }
   async function verifyBadges() {
+    for (const el of $('recList').querySelectorAll('[data-ntv]')) {
+      const [i, j] = el.dataset.ntv.split(':').map(Number), x = records[i], n = x && x.notices && x.notices[j]; if (!n) continue;
+      const ok = await noticeOk(n, x); el.innerHTML = `<span class="pill ${ok ? 'p-ok' : 'p-bad'}">${ok ? '✓' : '✗'} ${esc(ok ? t.ntOk : t.ntBad)}</span>`;
+    }
     const els = $('recList').querySelectorAll('[data-ver]');
     for (const el of els) {
       const x = records[+el.dataset.ver]; if (!x || !x.hash) continue;
@@ -1231,13 +1371,14 @@
       const o = x.observation;
       return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.place.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at)))}<br><span class="small">${esc(t.recEvening(fmtCivil(civil(o.evening), true)))}</span></td>
         <td><span class="pill ${x.computed ? x.computed.evalClass : (o.result === 'not' ? 'p-info' : 'p-warn')}">${esc(t.recRes[o.result])}</span>${x.observer.name ? `<br><span class="small">${esc(x.observer.name)}</span>` : ''}</td>
-        <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
-        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
+        <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${(x.notices || []).map((n, j) => `<span class="small ntl">✉ ${esc(noticeLine(n, x))} <span data-ntv="${i}:${j}"></span></span>`).join('')}${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
+        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-nt="${i}">✉ ${esc(t.ntBtn)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
     }).join('')}</tbody></table>`;
     const L = $('recList');
     L.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { records.splice(+b.dataset.del, 1); saveRec(); renderRecords(true); });
     verifyBadges();
     L.querySelectorAll('[data-tut]').forEach(b => b.onclick = () => printPages(['tut'], records[+b.dataset.tut]));
+    L.querySelectorAll('[data-nt]').forEach(b => b.onclick = () => openNotice(+b.dataset.nt));
     L.querySelectorAll('[data-tutjpg]').forEach(b => b.onclick = () => exportJpg(['tut'], records[+b.dataset.tutjpg]));
     L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(recBase(x, 'record') + '.json', JSON.stringify(x, null, 2), 'application/json'); });
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
@@ -1489,7 +1630,7 @@
   function openPrint() {
     const def = view === 'harita' ? ['map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
     const has = records.some(x => x.schema);
-    $('prOpts').innerHTML = ['plan', 'sky', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
+    $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
     try { $('prDlg').showModal(); } catch (e) { $('prDlg').setAttribute('open', ''); }
   }
   const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : (st.locAuto ? t.myPlace : (st.lang === 'tr' ? 'Seçilen konum' : 'Selected location')); };
@@ -1523,6 +1664,38 @@
     const hj = hijriAt(at);
     return `<section class="a4">${pgHead(t.smTitle, `${locLine()}<br><strong>${esc(fmtDT(at))}</strong>${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}`)}
       <div class="psky">${svg}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
+  }
+  // Seçili akşamın gökyüzü haritası: hilâlin gurûbdan ay batımına kadar izi ve akşam çizelgesi
+  function eveTrack(r) {
+    const g = r.gurub, end = r.moonUp && r.moonset ? r.moonset : g.AddDays(60 / 1440);
+    const span = Math.min(150, (end.ut - g.ut) * 1440), step = span <= 70 ? 10 : span <= 140 ? 15 : 20;
+    const ev = [{ t: g, note: t.smEveGurub, mark: true }];
+    if (r.windowEnd && r.windowEnd.ut > g.ut) ev.push({ t: r.windowEnd, note: t.smEve5, mark: true });
+    if (r.moonUp && r.moonset) ev.push({ t: r.moonset, note: t.smEveSet, mark: true });
+    const rows = ev.slice();
+    for (let m = step; m < span - 2; m += step) { const tt = g.AddDays(m / 1440); if (!ev.some(e => Math.abs(e.t.ut - tt.ut) * 1440 < 4)) rows.push({ t: tt }); }
+    rows.sort((a, b) => a.t.ut - b.t.ut);
+    let at, why;
+    if (r.windowEnd && r.windowEnd.ut > g.ut) { at = A.MakeTime(new Date((g.date.getTime() + r.windowEnd.date.getTime()) / 2)); why = t.smEveWhyWin; }
+    else if (r.moonUp && r.moonset) { at = A.MakeTime(new Date((g.date.getTime() + r.moonset.date.getTime()) / 2)); why = t.smEveWhyLag; }
+    else { at = g.AddDays(30 / 1440); why = t.smEveWhyNone; }
+    return { rows, at, why };
+  }
+  function pageSkyEve() {
+    const r = eveningCached(LOC, st.date);
+    if (!r.ok) return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>`)}<p>${esc(t.none)}</p>${pgFoot()}</section>`;
+    const { rows, at, why } = eveTrack(r);
+    const track = rows.map(x => ({ t: x.t, label: hhmm(x.t), mark: !!x.mark }));
+    const svg = withTheme('light', () => G.HRStarMap.drawWest(LOC, at, st.lang, { w: 900, h: 560, track, gurubAz: r.sunAz, span: 80, center: (r.sunAz + C.at(at, LOC).moon.az) / 2 }).svg);
+    const fist = a => num(Math.max(0, a) / 10, 1);
+    const body = rows.map(x => {
+      const p = C.at(x.t, LOC), up = p.moon.alt > -0.5, d = r.sunAz - p.moon.az, dd = Math.abs(d).toFixed(1).replace('.', st.lang === 'tr' ? ',' : '.');
+      return `<tr${x.mark ? ' class="sel"' : ''}><td>${hhmm(x.t)}</td><td>${degf(p.sun.alt, 1)}</td><td>${up ? `${degf(p.moon.alt, 1)} <span class="small">${esc(t.smEveFist(fist(p.moon.alt)))}</span>` : '—'}</td><td>${up ? degf(p.moon.az, 1) : '—'}</td><td>${up ? esc(d > 0 ? t.smEveLeft(dd) : t.smEveRight(dd)) : '—'}</td><td>${esc(x.note || (up ? '' : t.smEveDown))}</td></tr>`;
+    }).join('');
+    const hj = hijriAt(at);
+    return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}<br>${esc(t.smEveAt(hhmm(at), why))}`)}
+      <div class="psky eve">${svg}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
+      <table class="mt eve"><thead><tr>${t.smEveCols.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>${pgFoot()}</section>`;
   }
   function pageMonth() {
     const conj = C.nearestNewMoon(C.solarNoon(st.date, LOC.lon));
@@ -1576,6 +1749,7 @@
       <h3>${esc(t.tutPeople)}</h3>
       <table class="sig"><tr><th>${esc(t.recName)}</th><td>${v(ob.name, 70)}</td><th>${esc(t.tutSign)}</th><td><span class="blank" style="min-width:45mm"></span></td></tr>
         <tr><th>${esc(t.recContact)}</th><td colspan="3">${v(ob.contact, 90)}</td></tr>
+        <tr><th>${esc(t.ntRow)}</th><td colspan="3">${!blank && x.notices && x.notices.length ? x.notices.slice(0, 2).map(n => `<span class="small">${esc(noticeLine(n, x, true))}${n.hash ? ` · <span class="hash">${esc(n.hash.slice(0, 16))}</span>` : ''}</span>`).join('<br>') : '<span class="blank" style="min-width:120mm"></span>'}</td></tr>
         ${[1, 2, 3].map(i => `<tr><th>${esc(t.tutWitness)} ${i}</th><td colspan="3"><span class="blank" style="min-width:120mm"></span></td></tr>`).join('')}</table>
       <div class="fiqh"><h3>${esc(t.tutFiqh)}</h3><p>${esc(t.tutFiqhTxt)}</p></div>
       <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p>${blank ? '' : `<p class="vfline">${esc(t.vfPrint)}</p>`}</div></div>
@@ -1595,7 +1769,7 @@
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; } .tcols { grid-template-columns: 1.05fr 1fr; }
     table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
     .pfig { height: 68mm; } .pfig svg { width: 100%; height: 100%; display: block; }
-    .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; }
+    .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; } .psky.eve { width: 178mm; height: auto; } table.mt.eve { margin-top: 2mm; } table.mt.eve td, table.mt.eve th { padding: 1.2mm 2mm; }
     .pmap img { width: 100%; max-height: 140mm; object-fit: contain; display: block; }
     ol.pl { margin: 0; padding-left: 5mm; font-size: 8.6pt; } ol.pl li { margin: .6mm 0; } .guides { font-size: 8.6pt; margin: 0; }
     .lines { margin-top: auto; } .lines i { display: block; border-bottom: .5pt solid #999; height: 6mm; }
@@ -1616,8 +1790,8 @@
   const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
   function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
   const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : ''; };
-  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
-    en: { plan: 'watch-plan', sky: 'sky-chart', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
+    en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
@@ -1630,7 +1804,7 @@
   const printAt = kinds => SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
   function pagesBase(kinds, rec) {
     if (kinds.length === 1 && kinds[0] === 'tut') { const x = rec || records.find(r => r.schema); if (x) return recBase(x, 'tut'); }
-    return fileBase(kinds.length === 1 ? kinds[0] : 'pages', { hhmm: kinds.every(k => k === 'blank' || k === 'month') ? '' : hhmmTz(printAt(kinds).date, st.tz) });
+    return fileBase(kinds.length === 1 ? kinds[0] : 'pages', { hhmm: kinds.every(k => k === 'blank' || k === 'month' || k === 'skyEve') ? '' : hhmmTz(printAt(kinds).date, st.tz) });
   }
   // A4 sayfalarının tek HTML belgesi (yazdırma ve JPG çıktısı aynı belgeyi kullanır)
   async function buildPrint(kinds, rec) {
@@ -1639,6 +1813,7 @@
     for (const k of kinds) {
       if (k === 'plan') parts.push(pagePlan());
       else if (k === 'sky') parts.push(pageSky(at));
+      else if (k === 'skyEve') parts.push(pageSkyEve());
       else if (k === 'month') parts.push(pageMonth());
       else if (k === 'map') parts.push(await pageMap());
       else if (k === 'tut') parts.push(pageTut(rec || records.find(x => x.schema)));

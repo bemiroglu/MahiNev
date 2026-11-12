@@ -29,7 +29,7 @@ def parse_code(code):
     return None, None
 
 def verify(rec):
-    body = {k: v for k, v in rec.items() if k not in ('hash', 'sig')}
+    body = {k: v for k, v in rec.items() if k not in ('hash', 'sig', 'notices')}  # bildirim ekleri ayrıca mühürlüdür
     ok_hash = sha(canon(body)) == rec.get('hash')
     signer = rec.get('signer') or {}
     ok_fp = bool(signer.get('pub') and signer.get('fp') and sha(canon(signer['pub']))[:16] == signer['fp'])
@@ -70,4 +70,11 @@ if __name__ == '__main__':
             bad += not match
         print(line)
         bad += (not oh) or (os_ is False)
+        # bildirim ekleri (hilal-bildirim/1): her biri kendi özetini ve imzasını taşır, kaydın özetine bağlıdır
+        for n in rec.get('notices') or []:
+            nh, nf, ns = verify(n)
+            bound = n.get('record') == rec.get('id') and n.get('recordHash') == rec.get('hash')
+            to = n.get('to') or {}
+            print(f"  bildirim {n.get('at', '')[:16]} → {to.get('name', '')}: özet {'DOĞRU' if nh else 'HATALI'} · imza {ns if ns is not None else 'yok'} · kayda bağ {'UYUMLU' if bound else 'UYUMSUZ'}")
+            bad += (not nh) or (ns is False) or (not bound)
     sys.exit(1 if bad else 0)

@@ -404,7 +404,21 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 .extab .lnk { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
 .exbasis select { max-width: 100%; }
 .btn.exbtn { margin-left: 8px; padding: 3px 10px; font-size: .85rem; }
-@media print { #exDlg { display: none; } }
+@media print { #exDlg, #ntDlg { display: none; } }
+.ntl { display: block; margin-top: 3px; }
+
+/* saha ipucu */
+.ftip { margin: 0 0 10px; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); font-size: .88rem; display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; }
+.ftip .btn { padding: 2px 10px; font-size: .8rem; flex: none; }
+body:not(.explain) #fTip { display: none !important; }
+
+/* pusula */
+.cbox { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 14px; align-items: center; margin: 10px 0 4px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.cbox[hidden] { display: none; }
+.cdial svg { width: 100%; height: auto; display: block; }
+.cbig { font-size: 1.15rem; font-weight: 700; margin: 0 0 4px; }
+.cbox .btns { margin-top: 6px; }
+@media (max-width: 560px) { .cbox { grid-template-columns: minmax(0, 1fr); } .cdial { max-width: 230px; margin: 0 auto; width: 100%; } }
 </style>
 </head>
 <body>
@@ -470,7 +484,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
         </section>
       </aside>
       <div class="stack">
-        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
+        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><p class="cap" id="introTip"></p><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
         <section class="card" id="upCard"><h2 id="hUp"></h2><div class="up" id="upBody"></div></section>
         <section class="status" id="status" aria-live="polite"><div class="bar"></div><div id="statusBody"></div></section>
         <section class="card" id="tbCard"><h2 id="hTb"></h2>
@@ -518,6 +532,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 
   <main id="view-saha" hidden>
     <section class="card fhero">
+      <p class="ftip" id="fTip" hidden><span id="fTipTxt"></span> <button class="btn" type="button" id="fTipX"></button></p>
       <div class="fnow"><div class="clock" id="fClock">--:--:--</div><div><p class="small" id="fDate" style="margin:0"></p><p class="small" id="fHijri" style="margin:0"></p></div></div>
       <div class="fbig" id="fBig" role="status"></div>
       <div id="fTrack"></div>
@@ -526,6 +541,12 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
       <div id="fSky"></div>
       <div id="fGuides"></div>
       <div class="ftools"><button class="btn" type="button" id="fNight" aria-pressed="false"></button><button class="btn" type="button" id="fWake" aria-pressed="false"></button><button class="btn" type="button" id="fCompass" aria-pressed="false"></button><button class="btn" type="button" id="fSM"></button><button class="btn" type="button" id="fLoc"></button><button class="btn" type="button" id="fFont">A+</button></div>
+      <div class="cbox" id="cBox" hidden>
+        <div class="cdial" id="cDial"></div>
+        <div class="ctext"><p class="cbig" id="cRead" role="status" aria-live="polite"></p><p class="small" id="cSub"></p><p class="small" id="cStat"></p>
+          <div class="btns"><button class="btn" type="button" id="cCal"></button><button class="btn" type="button" id="cCalReset" hidden></button></div>
+          <p class="cap" id="cHelp"></p></div>
+      </div>
       <p class="msg" id="fMsg"></p>
       <div id="fStatus"></div><div id="fWx"></div><p class="small" id="fMorning"></p>
     </section>
@@ -606,6 +627,21 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <div id="vfOut" role="status" style="margin-top:10px"></div>
     <p class="cap" id="vfNote"></p>
   </dialog>
+  <dialog id="ntDlg" aria-labelledby="hNt" class="setdlg">
+    <div class="cardhead"><h2 id="hNt" style="font:600 1.1rem var(--font-display)"></h2></div>
+    <p class="small" id="ntIntro"></p>
+    <div class="grid2">
+      <div class="field"><label for="ntKind" id="lNtKind"></label><select id="ntKind"></select></div>
+      <div class="field"><label for="ntName" id="lNtName"></label><input id="ntName" type="text" maxlength="120" autocomplete="off"></div>
+      <div class="field"><label for="ntAt" id="lNtAt"></label><input id="ntAt" type="datetime-local"></div>
+      <div class="field"><label for="ntCh" id="lNtCh"></label><select id="ntCh"></select></div>
+      <div class="field"><label for="ntRef" id="lNtRef"></label><input id="ntRef" type="text" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label for="ntNote" id="lNtNote"></label><input id="ntNote" type="text" maxlength="200" autocomplete="off"></div>
+    </div>
+    <p class="msg" id="ntMsg"></p>
+    <div class="btns"><button class="btn primary" type="button" id="ntSave"></button><button class="btn" type="button" id="ntCancel"></button></div>
+    <p class="cap" id="ntNet"></p>
+  </dialog>
   <dialog id="exDlg" aria-labelledby="hEx" class="setdlg exdlg">
     <div class="cardhead"><h2 id="hEx" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="exClose"></button></div>
     <div id="exBody"></div>
@@ -618,7 +654,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <p class="cap" id="prNote"></p>
   </dialog>
   <dialog id="smDlg" class="full" aria-labelledby="smTitle">
-    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smJpg"></button><button class="btn" type="button" id="smClose"></button></div></div>
+    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smEve"></button><button class="btn" type="button" id="smJpg"></button><button class="btn" type="button" id="smClose"></button></div></div>
     <p class="small" id="smWhen" style="margin:0"></p>
     <div class="smctl"><label for="smFace" id="lSmFace"></label><select id="smFace" class="compact"></select>
       <label class="chk"><input type="checkbox" id="smLines" checked><span id="lSmLines"></span></label>
@@ -2450,10 +2486,101 @@ window.HR_CANON_EN = [
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
-/* Metinler: 0.10 geliştirme sürümü */
+/* Metinler: 0.10 geliştirme sürümü (ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
 (function (G) {
   'use strict';
   G.HR_VERSION = '0.10.0-deneme.1';
+  const T = G.HRI18N.T;
+  Object.assign(T.tr, {
+    // Ekran ve PDF tavsiyesi
+    introTip: 'Hazırlık için büyük bir ekran (bilgisayar veya tablet) kullanmanızı tavsiye ederiz. Telefon ekranı sahada küçük kalır: rasad planını ve gökyüzü haritalarını önceden <b>Yazdır → PDF</b> ile kaydedip yanınıza alın; internetsiz ve tek bakışta okunur.',
+    fieldTip: 'Sahada telefon ekranı küçük kalabilir. Rasad planını ve akşamın gökyüzü haritasını önceden PDF olarak kaydedip yanınıza almanız işinizi kolaylaştırır (⎙ Yazdır).',
+    fieldTipClose: 'Gizle',
+    // Akşam gökyüzü haritası
+    smEveTitle: 'Gökyüzü haritası (seçili akşam)',
+    smEveAt: (h, why) => `Harita anı: ${h} (${why})`,
+    smEveWhyWin: 'Tam İlmihâl penceresinin ortası', smEveWhyLag: 'gurûb ile ay batımı arası', smEveWhyNone: 'gurûbdan 30 dakika sonra',
+    smEveNote: 'Batı göğü, gurûb noktasına dönük bakan kişinin gördüğü gibidir: solda güney, sağda kuzey. Yıldız ve gezegenler harita anındadır. Noktalar hilâlin akşam boyunca yeridir; turuncu noktalar gurûb, ufuktan 5° ve ay batımı anlarıdır. Kesikli daire Güneş’in o andaki yeridir.',
+    smEveCols: ['Saat', 'Güneş', 'Hilâl irtifâı', 'Hilâl semti', 'Gurûb noktasına göre', 'Not'],
+    smEveLeft: d => `${d}° sol`, smEveRight: d => `${d}° sağ`, smEveFist: f => `≈ ${f} yumruk`,
+    smEveGurub: 'gurûb', smEve5: 'ufuktan 5° (pencere sonu)', smEveSet: 'ay batımı', smEveDown: 'hilâl ufkun altında',
+    smEveNoMoon: 'Bu akşam hilâl gurûbda ufkun altındadır; çizelge gurûbdan sonraki gökyüzünü gösterir.',
+    smEveBtn: 'Akşam haritası',
+    // Pusula
+    cpTitle: 'Pusula',
+    cpWait: 'Pusula algılayıcısı bekleniyor… Telefonu elinizde tutup biraz hareket ettirin.',
+    cpNone: 'Bu cihazda veya tarayıcıda pusula algılayıcısı çalışmıyor. Kadran kuzeyi yukarıda gösterir; yönü gurûb noktasından ve yardımcı yıldızlardan bulun.',
+    cpNoneFile: 'Dosyadan açılan sayfalarda bazı tarayıcılar algılayıcıya izin vermez; programı çevrimiçi adresinden (https) açmayı deneyin.',
+    cpDenied: 'Hareket ve yön algılayıcısına izin verilmedi. İzin için Pusula düğmesine yeniden dokunun ya da tarayıcı ayarlarına bakın.',
+    cpFlat: 'Telefonu yere paralel tutun; telefonun üst kenarı baktığınız yönü gösterir.',
+    cpUp: 'Telefonu dik tutun; arka kamera baktığınız yönü gösterir.',
+    cpHead: (h, c) => `Yönünüz: ${h}° (${c})`,
+    cpTarget: { moon: 'Hilâl', gurub: 'Gurûb noktası', sun: 'Güneş' },
+    cpTurn: (n, d) => `${n} için ${Math.abs(d)}° ${d < 0 ? 'sola' : 'sağa'} dönün`,
+    cpAhead: n => `${n} tam karşınızda`,
+    cpUpAlt: (a, f) => `ufuktan ${a}° yukarı (${f})`,
+    cpBelow: 'Hilâl ufkun altında; gurûb noktasını gösteriyorum.',
+    cpCal: 'Güneşle ayarla', cpCalGurub: 'Gurûb noktasıyla ayarla', cpCalReset: 'Ayarı kaldır',
+    cpCalHelp: 'Manyetik pusula gerçek kuzeyden birkaç derece sapar; araç ve demir yakınında daha da şaşar. Güneş batarken telefonu güneşe (veya gurûb noktasına) çevirip “ayarla”ya dokunun: program farkı hesaplayıp düzeltir. Güneşe dürbün veya kamerayla bakmayın.',
+    cpCalDone: d => `Ayarlandı: düzeltme ${d > 0 ? '+' : ''}${d}°`,
+    cpRaw: 'Ayarsız (manyetik yön; sapma düzeltilmedi)',
+    cpAcc: a => `Algılayıcı doğruluğu ±${a}°: telefonu havada “8” çizerek çevirin.`,
+    // Bildirim ekleri
+    ntBtn: 'Bildirim ekle', ntTitle: 'Bildirim: kime, ne zaman',
+    ntIntro: 'Gören kimsenin, gördüğünü yetkili makama bildirmesi vâcibdir (Redd-ül-muhtâr; Kongre tebliği, s. 7). Bildirdiğiniz kişiyi veya makamı burada kaydedin. Kayıt mühürlü kalır; bildirim, kayda bağlı ve ayrıca imzalı bir ek olarak saklanır.',
+    ntTo: 'Kime', ntToKind: 'Bildirilen', ntToKinds: { authority: 'Yetkili makam (müftülük vb.)', committee: 'Rasad / takvim heyeti', person: 'Kişi (âlim, hoca vb.)', network: 'Hilâl gözlem bildirim ağı', other: 'Diğer' },
+    ntToName: 'Ad / makam', ntAt: 'Ne zaman', ntChannel: 'Nasıl', ntChannels: { inPerson: 'Yüz yüze', phone: 'Telefon', message: 'Mesaj / e-posta', paper: 'Basılı tutanak', network: 'Bildirim ağı', other: 'Diğer' },
+    ntRef: 'Referans / evrak no (isteğe bağlı)', ntNote: 'Not (isteğe bağlı)', ntSave: 'Bildirimi kaydet', ntCancel: 'Vazgeç',
+    ntNeed: 'Kime bildirildiğini yazın.', ntSaved: 'Bildirim kayda eklendi.',
+    ntLine: (to, at, ch) => `Bildirildi: ${to} · ${at} · ${ch}`,
+    ntNone: 'Henüz bildirim kaydı yok.', ntOk: 'bildirim doğrulandı', ntBad: 'bildirim bozuk',
+    ntRow: 'Bildirildi (kime / ne zaman / nasıl)',
+    ntNetNote: 'İleride bir hilâl gözlem bildirim ağı kurulduğunda, bildirimler bu biçimde (kayıt + imzalı bildirim eki) oraya gönderilebilecek.'
+  });
+  Object.assign(T.en, {
+    introTip: 'For preparation we recommend a large screen (computer or tablet). A phone screen is small in the field: save the observation plan and sky charts beforehand with <b>Print → PDF</b> and take them with you; they work offline and read at a glance.',
+    fieldTip: 'A phone screen can be small in the field. Saving the observation plan and the evening sky chart as PDF beforehand makes the work easier (⎙ Print).',
+    fieldTipClose: 'Hide',
+    smEveTitle: 'Sky chart (selected evening)',
+    smEveAt: (h, why) => `Chart time: ${h} (${why})`,
+    smEveWhyWin: 'middle of the Tam İlmihâl window', smEveWhyLag: 'between sunset and moonset', smEveWhyNone: '30 minutes after sunset',
+    smEveNote: 'The western sky as seen facing the sunset point: south on the left, north on the right. Stars and planets are shown at the chart time. The dots are the crescent’s positions through the evening; orange dots mark sunset, 5° above the horizon and moonset. The dashed circle is the Sun at that moment.',
+    smEveCols: ['Time', 'Sun', 'Crescent altitude', 'Crescent azimuth', 'From the sunset point', 'Note'],
+    smEveLeft: d => `${d}° left`, smEveRight: d => `${d}° right`, smEveFist: f => `≈ ${f} fist`,
+    smEveGurub: 'sunset', smEve5: '5° above the horizon (end of window)', smEveSet: 'moonset', smEveDown: 'crescent below the horizon',
+    smEveNoMoon: 'This evening the crescent is below the horizon at sunset; the table shows the sky after sunset.',
+    smEveBtn: 'Evening chart',
+    cpTitle: 'Compass',
+    cpWait: 'Waiting for the compass sensor… Hold the phone and move it a little.',
+    cpNone: 'The compass sensor does not work on this device or browser. The dial shows north at the top; find the direction from the sunset point and the guide stars.',
+    cpNoneFile: 'Some browsers block the sensor on pages opened from a file; try opening the program from its online (https) address.',
+    cpDenied: 'Permission for the motion and orientation sensor was not given. Tap Compass again to allow it, or check the browser settings.',
+    cpFlat: 'Hold the phone flat; its top edge shows the direction you face.',
+    cpUp: 'Hold the phone upright; the back camera shows the direction you face.',
+    cpHead: (h, c) => `Your heading: ${h}° (${c})`,
+    cpTarget: { moon: 'Crescent', gurub: 'Sunset point', sun: 'Sun' },
+    cpTurn: (n, d) => `Turn ${Math.abs(d)}° ${d < 0 ? 'left' : 'right'} to face the ${n.toLowerCase()}`,
+    cpAhead: n => `${n} straight ahead`,
+    cpUpAlt: (a, f) => `${a}° above the horizon (${f})`,
+    cpBelow: 'The crescent is below the horizon; showing the sunset point.',
+    cpCal: 'Calibrate on the Sun', cpCalGurub: 'Calibrate on the sunset point', cpCalReset: 'Remove calibration',
+    cpCalHelp: 'A magnetic compass is off true north by a few degrees, more near vehicles and iron. As the Sun sets, point the phone at the Sun (or the sunset point) and tap “calibrate”: the program computes and corrects the difference. Never look at the Sun through binoculars or a camera.',
+    cpCalDone: d => `Calibrated: correction ${d > 0 ? '+' : ''}${d}°`,
+    cpRaw: 'Uncalibrated (magnetic heading; variation not corrected)',
+    cpAcc: a => `Sensor accuracy ±${a}°: move the phone in a figure 8.`,
+    ntBtn: 'Add notification', ntTitle: 'Notification: to whom, when',
+    ntIntro: 'Whoever sees the crescent must report it to the competent authority (Radd al-Muhtar; congress paper, p. 7). Record here the person or office you reported to. The record stays sealed; the notification is stored as a separately signed annex linked to it.',
+    ntTo: 'To whom', ntToKind: 'Reported to', ntToKinds: { authority: 'Competent authority (mufti’s office etc.)', committee: 'Observation / calendar committee', person: 'Person (scholar, teacher etc.)', network: 'Crescent sighting notification network', other: 'Other' },
+    ntToName: 'Name / office', ntAt: 'When', ntChannel: 'How', ntChannels: { inPerson: 'In person', phone: 'Phone', message: 'Message / e-mail', paper: 'Printed report', network: 'Notification network', other: 'Other' },
+    ntRef: 'Reference / document no. (optional)', ntNote: 'Note (optional)', ntSave: 'Save notification', ntCancel: 'Cancel',
+    ntNeed: 'Write whom you reported to.', ntSaved: 'Notification added to the record.',
+    ntLine: (to, at, ch) => `Reported: ${to} · ${at} · ${ch}`,
+    ntNone: 'No notification recorded yet.', ntOk: 'notification verified', ntBad: 'notification broken',
+    ntRow: 'Reported (to whom / when / how)',
+    ntNetNote: 'When a crescent sighting notification network is set up, notifications can be sent there in this form (record + signed notification annex).'
+  });
+  T.tr.prOpts = Object.assign({}, T.tr.prOpts, { skyEve: 'Gökyüzü haritası (seçili akşam)' });
+  T.en.prOpts = Object.assign({}, T.en.prOpts, { skyEve: 'Sky chart (selected evening)' });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Ayrıntılı açıklamalar: “?” notlarının uzun hâli. Kısa not her zaman görünür; ayrıntı, Ayarlar’da “Ayrıntılı” seçilirse
@@ -4999,7 +5126,7 @@ var qrcode = function() {
   }
   // Kaydı mühürler: hash = SHA-256(kanonik kayıt, hash ve sig hariç); sig = ECDSA(hash)
   async function seal(rec) {
-    const body = Object.assign({}, rec); delete body.hash; delete body.sig;
+    const body = Object.assign({}, rec); delete body.hash; delete body.sig; delete body.notices;   // bildirim ekleri kendi mühürlerini taşır
     const k = await ensureKey();
     if (k) body.signer = { pub: k.pub, fp: k.fp };
     const h = await sha256(canon(body));
@@ -5009,7 +5136,7 @@ var qrcode = function() {
   }
   async function verify(rec) {
     if (!subtle || !rec || !rec.hash) return { hash: false, sig: false };
-    const body = Object.assign({}, rec); delete body.hash; delete body.sig;
+    const body = Object.assign({}, rec); delete body.hash; delete body.sig; delete body.notices;   // bildirim ekleri kendi mühürlerini taşır
     const okHash = (await sha256(canon(body))) === rec.hash;
     let okSig = false;
     if (rec.sig && rec.signer && rec.signer.pub) {
@@ -5414,11 +5541,27 @@ var qrcode = function() {
       s += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="9" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -9 A9 9 0 0 1 0 9 A${rx.toFixed(2)} 9 0 0 ${sw} 0 -9Z" fill="${col('--moon')}"/></g>`;
       names.push({ x, y, r: 12, txt: (tr ? 'Ay ' : 'Moon ') + now.moon.alt.toFixed(1) + '°', strong: true });
     }
+    // akşam izi: hilâlin seçili akşamdaki yerleri (zaman etiketli) ve gurûb noktası
+    if (opt.track && opt.track.length) {
+      const pts = opt.track.map(k => { const m = core.at(k.t, loc).moon; return { k, alt: m.alt, az: m.az }; }).filter(p => p.alt > -0.5);
+      if (pts.length > 1) s += `<path d="${pts.map((p, i) => { const [x, y] = P(Math.max(0, p.alt), p.az); return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }).join('')}" fill="none" stroke="${col('--moon')}" stroke-width="1.6" stroke-dasharray="1 4" stroke-linecap="round"/>`;
+      for (const p of pts) {
+        const [x, y] = P(Math.max(0, p.alt), p.az);
+        s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${p.k.mark ? 3.4 : 2.4}" fill="${p.k.mark ? acc : col('--moon')}" stroke="${halo}" stroke-width=".8"/>`;
+        if (p.k.label) names.push({ x, y, r: 4, txt: p.k.label, small: true });
+      }
+    }
+    if (opt.gurubAz != null) {
+      const a = rad(opt.gurubAz - face), x = cx + (R - 2) * Math.sin(a), y = cy + (R - 2) * Math.cos(a);
+      s += `<path d="M${(x - 7).toFixed(1)} ${y.toFixed(1)} A7 7 0 0 1 ${(x + 7).toFixed(1)} ${y.toFixed(1)}Z" fill="${acc}" fill-opacity=".85"/>`;
+      names.push({ x, y: y - 4, r: 8, txt: tr ? 'gurûb noktası' : 'sunset point', key: true });
+    }
     // etiketler: üst üste binmeyi önleyen basit yerleştirme
     const placed = [];
-    names.sort((a, b) => (b.strong ? 1 : 0) - (a.strong ? 1 : 0));
+    const pri = n => n.strong ? 3 : n.small || n.key ? 2 : 0;   // önce Ay/Güneş, sonra akşam izi ve gurûb noktası, sonra yıldızlar
+    names.sort((a, b) => pri(b) - pri(a));
     for (const n of names) {
-      const fs = (n.strong ? 12.5 : 11) * F, w = n.txt.length * fs * 0.56;
+      const fs = (n.strong ? 12.5 : n.small ? 9.5 : 11) * F, w = n.txt.length * fs * 0.56;
       const cands = [[n.r + 3, fs * 0.35, 'start'], [-n.r - 3, fs * 0.35, 'end'], [0, -n.r - 4, 'middle'], [0, n.r + fs, 'middle']];
       for (const [dx, dy, anc] of cands) {
         const x0 = anc === 'start' ? n.x + dx : anc === 'end' ? n.x + dx - w : n.x - w / 2, y0 = n.y + dy - fs;
@@ -5458,7 +5601,83 @@ var qrcode = function() {
     });
   }
   const Q = '4WM+qbXyhFaIL9f1J9fP3E1V05nRsc93Lguo+edYthAqK9zc9U9gkCej9hiFsOrAe7gx/Fj/BDkU6+NiqB';
-  G.HRStarMap = { Q, draw, guides, horizonOf };
+  // Seçili akşam: batı yarım göğü (semt 180°–360°, irtifâ −6°…54°), eşit aralıklı semt/irtifâ ızgarası.
+  // Yıldızlar ve gezegenler harita anındadır; hilâlin akşam boyunca yeri zaman etiketli noktalarla gösterilir.
+  function drawWest(loc, t, L, opt = {}) {
+    const tr = L === 'tr', S = G.HR_STARS, core = C();
+    const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0)), H = horizonOf(t, obs);
+    const W = opt.w || 900, Hh = opt.h || 470, padL = 34, padB = 26, padT = 8, F = opt.scale || 1;
+    // semt aralığı: merkez (gurûb noktası ile hilâlin ortası), genişlik opt.span; irtifâ ölçeği semtle aynı (açılar bozulmaz)
+    const span = opt.span || 190, azC = opt.center != null ? opt.center : opt.gurubAz != null ? opt.gurubAz : 270, az0 = azC - span / 2, az1 = azC + span / 2;
+    const ppd0 = (W - padL - 6) / span, altMin = opt.altMin != null ? opt.altMin : -4, altMax = altMin + (Hh - padT - padB) / ppd0;
+    const X = az => padL + ((((az - az0) % 360) + 360) % 360) / (az1 - az0) * (W - padL - 6);
+    const inAz = az => { const d = (((az - az0) % 360) + 360) % 360; return d <= az1 - az0; };
+    const Y = alt => padT + (altMax - alt) / (altMax - altMin) * (Hh - padT - padB), y0 = Y(0);
+    const now = core.at(t, loc), dark = Math.max(0, Math.min(1, -now.sun.alt / 15));
+    const lab = col('--sky-label') || '#fff', halo = col('--sky-halo') || '#000', star = col('--sky-star'), acc = col('--accent'), grid = col('--sky-grid');
+    const u = ++UID;
+    let s = `<svg class="sky starmap west" viewBox="0 0 ${W} ${Hh}" width="100%" role="img" aria-label="${tr ? 'Batı göğü, seçili akşam' : 'Western sky, selected evening'}" style="--lab:${lab};--halo:${halo}">`;
+    s += `<defs><linearGradient id="swg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.6 ? col('--sky-night') : col('--sky-dusk') || col('--sky-day')}"/></linearGradient><clipPath id="swc${u}"><rect x="${padL}" y="${padT}" width="${W - padL - 6}" height="${y0 - padT}"/></clipPath></defs>`;
+    s += `<rect x="${padL}" y="${padT}" width="${W - padL - 6}" height="${(y0 - padT).toFixed(1)}" fill="url(#swg${u})"/>`;
+    s += `<rect x="${padL}" y="${y0.toFixed(1)}" width="${W - padL - 6}" height="${(Hh - padB - y0).toFixed(1)}" fill="${col('--ground')}" opacity=".85"/>`;
+    // ızgara
+    for (let a = 10; a < altMax; a += 10) s += `<line x1="${padL}" x2="${W - 6}" y1="${Y(a).toFixed(1)}" y2="${Y(a).toFixed(1)}" stroke="${grid}" stroke-opacity=".22"/><text class="nohalo" x="${padL - 4}" y="${(Y(a) + 4).toFixed(1)}" font-size="${10 * F}" text-anchor="end" fill="${col('--ink')}">${a}°</text>`;
+    for (let a = Math.ceil(az0 / 10) * 10; a <= az1; a += 10) { const x = X(a), maj = a % 30 === 0; s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${padT}" y2="${y0.toFixed(1)}" stroke="${grid}" stroke-opacity="${maj ? .22 : .1}"/>`; if (maj || span < 120) s += `<text class="nohalo" x="${x.toFixed(1)}" y="${(Hh - 8).toFixed(1)}" font-size="${10 * F}" text-anchor="middle" fill="${col('--ink')}">${((a % 360) + 360) % 360}°</text>`; }
+    const card = tr ? ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'] : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    for (let i = 0; i < 8; i++) { const a = i * 45; if (!inAz(a)) continue; s += `<text x="${X(a).toFixed(1)}" y="${(y0 + 15).toFixed(1)}" font-size="${(i % 2 ? 11 : 13) * F}" font-weight="700" text-anchor="middle" fill="${lab}">${card[i]}</text>`; }
+    s += `<line x1="${padL}" x2="${W - 6}" y1="${Y(5).toFixed(1)}" y2="${Y(5).toFixed(1)}" stroke="${acc}" stroke-dasharray="7 5" stroke-width="1.3"/>`;
+    s += `<g clip-path="url(#swc${u})">`;
+    // takımyıldız çizgileri
+    let d = '';
+    for (const ln of S.l) { let on = false, px = null; for (let i = 0; i < ln.length; i += 2) { const h = H(ln[i] / 100, ln[i + 1] / 100); if (h.alt < -2 || !inAz(h.az)) { on = false; continue; } const x = X(h.az), y = Y(h.alt); if (on && Math.abs(x - px) > W / 3) on = false; d += (on ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); on = true; px = x; } }
+    s += `<path d="${d}" fill="none" stroke="${grid}" stroke-opacity=".4" stroke-width=".8"/>`;
+    const lim = opt.limitMag || (dark > 0.7 ? 4.6 : dark > 0.35 ? 3.8 : 2.6), names = [];
+    for (let i = 0; i < S.s.length; i += 3) {
+      const m = S.s[i + 2] / 100; if (m > lim) continue;
+      const h = H(S.s[i] / 100, S.s[i + 1] / 100); if (h.alt < -1 || !inAz(h.az)) continue;
+      const x = X(h.az), y = Y(h.alt), r = Math.max(0.8, 3.6 - m * 0.65);
+      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="${star}"/>`;
+      const nm = S.n[i / 3]; if (nm && m <= 1.8 && h.alt > 0) names.push({ x, y, r, txt: tr ? nm[0] : nm[1] });
+    }
+    s += '</g>';
+    for (const o of core.skyObjects(t, obs).filter(o => o.kind === 'planet' && o.alt > -1 && inAz(o.az))) { const x = X(o.az), y = Y(o.alt); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(4.4 - Math.min(2, Math.max(-4, o.mag)) * 0.35).toFixed(1)}" fill="${acc}" stroke="${halo}" stroke-width="1"/>`; names.push({ x, y, r: 6, txt: G.HRSky.objName(o.id, L), pri: 2 }); }
+    // gurûb noktası ve Güneş (ufkun altında)
+    if (opt.gurubAz != null) { const x = X(opt.gurubAz); s += `<path d="M${(x - 8).toFixed(1)} ${y0.toFixed(1)} A8 8 0 0 1 ${(x + 8).toFixed(1)} ${y0.toFixed(1)}Z" fill="${acc}"/>`; names.push({ x, y: y0 - 6, r: 9, txt: tr ? 'gurûb noktası' : 'sunset point', pri: 2 }); }
+    if (now.sun.alt > altMin && inAz(now.sun.az)) { const x = X(now.sun.az), y = Y(now.sun.alt); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="none" stroke="${acc}" stroke-width="1.5" stroke-dasharray="2 2"/>`; }
+    // hilâlin izi
+    const pts = (opt.track || []).map(k => { const m = core.at(k.t, loc).moon; return { k, alt: m.alt, az: m.az }; }).filter(p => p.alt > altMin && inAz(p.az));
+    if (pts.length > 1) s += `<path d="${pts.map((p, i) => (i ? 'L' : 'M') + X(p.az).toFixed(1) + ' ' + Y(p.alt).toFixed(1)).join('')}" fill="none" stroke="${col('--moon')}" stroke-width="1.6" stroke-dasharray="1 4" stroke-linecap="round"/>`;
+    for (const p of pts) { const x = X(p.az), y = Y(p.alt); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${p.k.mark ? 3.6 : 2.6}" fill="${p.k.mark ? acc : col('--moon')}" stroke="${halo}" stroke-width=".8"/>`; if (p.k.label) names.push({ x, y, r: 4, txt: p.k.label, small: true, pri: 3 }); }
+    if (now.moon.alt > altMin && inAz(now.moon.az)) {
+      const x = X(now.moon.az), y = Y(now.moon.alt), k = A.Illumination('Moon', t).phase_fraction, ang = Math.atan2(Y(now.sun.alt) - y, X(now.sun.az) - x) * 180 / Math.PI;
+      const rx = Math.abs(1 - 2 * k) * 10, sw = k > 0.5 ? 1 : 0;
+      s += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="10" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -10 A10 10 0 0 1 0 10 A${rx.toFixed(2)} 10 0 0 ${sw} 0 -10Z" fill="${col('--moon')}"/></g>`;
+      names.push({ x, y, r: 12, txt: (tr ? 'Hilâl ' : 'Crescent ') + now.moon.alt.toFixed(1) + '°', strong: true, pri: 4 });
+    }
+    // etiketler: öncelik sırasıyla, çakışmadan
+    const placed = [];
+    names.sort((a, b) => (b.pri || 0) - (a.pri || 0));
+    for (const n of names) {
+      const fs = (n.strong ? 13 : n.small ? 10 : 11) * F, w = n.txt.length * fs * 0.56;
+      const cands = [[n.r + 3, fs * 0.35, 'start'], [-n.r - 3, fs * 0.35, 'end'], [0, -n.r - 4, 'middle'], [0, n.r + fs, 'middle'], [n.r + 3, -n.r - 2, 'start'], [-n.r - 3, n.r + fs, 'end']];
+      for (const [dx, dy, anc] of cands) {
+        const x0 = anc === 'start' ? n.x + dx : anc === 'end' ? n.x + dx - w : n.x - w / 2, y1 = n.y + dy - fs;
+        const box = [x0, y1, x0 + w, y1 + fs * 1.2];
+        if (box[0] < padL || box[2] > W - 4 || box[1] < padT) continue;
+        if (placed.some(b => !(box[2] < b[0] || box[0] > b[2] || box[3] < b[1] || box[1] > b[3]))) continue;
+        placed.push(box);
+        s += `<text x="${(n.x + dx).toFixed(1)}" y="${(n.y + dy).toFixed(1)}" font-size="${fs.toFixed(1)}" text-anchor="${anc}" fill="${lab}" font-weight="${n.strong ? 700 : n.small ? 600 : 500}">${esc(nb(n.txt))}</text>`;
+        break;
+      }
+    }
+    // 5° yazısı ve yumruk ölçeği (sağ üst)
+    s += `<text x="${(W - 10).toFixed(1)}" y="${(Y(5) - 5).toFixed(1)}" font-size="${10.5 * F}" text-anchor="end" fill="${lab}" font-weight="600">5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}</text>`;
+    const ppd = (W - padL - 6) / (az1 - az0), fx = W - 16 - 10 * ppd, fy = padT + 16;
+    s += `<line x1="${fx.toFixed(1)}" x2="${(fx + 10 * ppd).toFixed(1)}" y1="${fy}" y2="${fy}" stroke="${lab}" stroke-width="2"/><text x="${(fx - 6).toFixed(1)}" y="${fy + 4}" font-size="${10 * F}" text-anchor="end" fill="${lab}">10° ≈ ${tr ? '1 yumruk' : '1 fist'}</text>`;
+    s += `<rect x="${padL}" y="${padT}" width="${W - padL - 6}" height="${(Hh - padB - padT).toFixed(1)}" fill="none" stroke="${col('--line')}"/>`;
+    return { svg: s + '</svg>' };
+  }
+  G.HRStarMap = { Q, draw, drawWest, guides, horizonOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Dünya haritası. Eş-dikdörtgen izdüşüm, Canvas.
@@ -5964,7 +6183,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDd5cf756de7d63884';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD140533d18d45fa6f';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -6089,7 +6308,8 @@ var qrcode = function() {
     $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span><button type="button" class="x" id="safetyX" aria-label="${esc(t.safetyHide)}" title="${esc(t.safetyHide)}">×</button>`;
     $('safetyX').onclick = () => { st.safetyOff = true; save(); $('optSafety').checked = false; paintSafety(); toast(t.safetyHidden, 6000); };
     set('lOptSafety', t.optSafety); $('optSafety').checked = !st.safetyOff; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
-    set('fCompassNote', t.compassNote);
+    set('fCompassNote', t.compassNote); set('hNt', t.ntTitle); $('ntIntro').textContent = t.ntIntro; $('ntNet').textContent = t.ntNetNote; set('lNtKind', t.ntToKind); set('lNtName', t.ntToName); set('lNtAt', t.ntAt); set('lNtCh', t.ntChannel); set('lNtRef', t.ntRef); set('lNtNote', t.ntNote); set('ntSave', t.ntSave); set('ntCancel', t.ntCancel);
+    $('ntKind').innerHTML = Object.entries(t.ntToKinds).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); $('ntCh').innerHTML = Object.entries(t.ntChannels).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); set('cCalReset', t.cpCalReset); $('cHelp').textContent = t.cpCalHelp;
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
     $('recBackup').onclick = backupRecords; $('recImport').onclick = () => $('recImportFile').click(); $('recPhotoCheck').onclick = () => $('recPhotoFile').click();
     $('recImportFile').onchange = importRecords; $('recPhotoFile').onchange = checkPhoto;
@@ -6114,6 +6334,7 @@ var qrcode = function() {
     set('lDetail', t.detailLvl); $('detailLvl').innerHTML = [['short', t.detailShort], ['long', t.detailLong]].map(([v, l]) => `<option value="${v}"${st.detail === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('hHelp', st.lang === 'tr' ? 'Rehberlik' : 'Guidance'); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
+    $('introTip').innerHTML = t.introTip; $('fTipTxt').textContent = t.fieldTip; set('fTipX', t.fieldTipClose); $('fTip').hidden = !!st.fieldTipDone; set('smEve', '⎙ ' + t.smEveBtn);
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
     set('lLayout', t.layoutLbl); set('layoutNote', t.layoutNote); $('layoutSel').innerHTML = [['sade', t.layoutSade], ['tam', t.layoutTam]].map(([v, l]) => `<option value="${v}"${st.layout === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
@@ -6242,7 +6463,7 @@ var qrcode = function() {
     $('exClose').onclick = closeExplain;
     $('dlgClose').onclick = () => closeDlg();
     $('fNight').onclick = () => { st.theme = st.theme === 'night' ? 'auto' : 'night'; save(); fillStatic(); repaintAll(); };
-    $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass;
+    $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass; $('ntSave').onclick = saveNotice; $('ntCancel').onclick = () => { try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); } }; $('cCal').onclick = calibrateCompass; $('cCalReset').onclick = () => { st.cpOff = null; st.cpOffAt = 0; save(); paintCompass(true); };
     $('recSave').onclick = addRecord;
     $('recAt').addEventListener('input', showRecEvening);
     window.addEventListener('hashchange', route);
@@ -6257,6 +6478,7 @@ var qrcode = function() {
     $('liveInt').onchange = e => { st.liveInt = +e.target.value; save(); };
     $('optExplain').onchange = e => { st.explain = e.target.checked; if (st.explain) st.introDone = false; save(); applyTheme(); };
     $('introClose').onclick = () => { st.introDone = true; save(); applyTheme(); };
+    $('fTipX').onclick = () => { st.fieldTipDone = true; save(); $('fTip').hidden = true; };
     ['recName', 'recContact'].forEach(id => $(id).addEventListener('change', e => { st[id] = e.target.value.trim(); save(); }));
     document.addEventListener('click', stabilize, true); document.addEventListener('change', stabilize, true);
     $('fontSize').onchange = e => { st.fontSize = +e.target.value; save(); applyTheme(); repaintAll(); };
@@ -6271,7 +6493,7 @@ var qrcode = function() {
     $('fLoc').onclick = () => autoLocate(true, true);
     $('smClose').onclick = () => { try { $('smDlg').close(); } catch (e) { $('smDlg').removeAttribute('open'); } };
     ['smFace', 'smLines', 'smNames', 'smCons', 'smEcl'].forEach(id => $(id).addEventListener('change', () => drawSM()));
-    $('smPrint').onclick = () => printPages(['sky']); $('smJpg').onclick = () => exportJpg(['sky']);
+    $('smPrint').onclick = () => printPages(['sky']); $('smJpg').onclick = () => exportJpg(['sky']); $('smEve').onclick = () => printPages(['skyEve']);
     window.addEventListener('online', () => { renderBar(); renderWx(true); }); window.addEventListener('offline', () => { renderBar(); renderWx(); });
   }
   function prefsChanged() {
@@ -6943,7 +7165,7 @@ var qrcode = function() {
     const city = CITIES.find(c => c.id === st.city);
     // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
-    const fShow = sunUp && !st.safetyOff && sightPossible(eveningCached(loc, todayYmd(st.tz))); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = !compassOn;
+    const fShow = sunUp && !st.safetyOff && sightPossible(eveningCached(loc, todayYmd(st.tz))); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = true;
     $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
@@ -6982,8 +7204,8 @@ var qrcode = function() {
       $('fGuides').innerHTML = guidesHtml(now, loc);
       $('fWx').innerHTML = WX.data && FR ? wxMini(FR) : '';
     }
-    if (compassOn) $('fHeading').textContent = heading == null ? t.compassFail : `${t.heading}: ${Math.round(heading)}° · ${t.turn(((fieldTick.moonAz - heading + 540) % 360) - 180)}`;
-    else $('fHeading').textContent = '';
+    $('fHeading').textContent = '';
+    if (compassOn) paintCompass(true);
     renderRecords();
   }
   async function toggleWake() {
@@ -6993,18 +7215,110 @@ var qrcode = function() {
       wakeLock.addEventListener('release', () => { wakeLock = null; $('fWake').setAttribute('aria-pressed', 'false'); });
     } catch (e) { $('fMsg').textContent = t.wakeFail; }
   }
+  // ---- Pusula: algılayıcıdan yön, eğim düzeltmesi, Güneş'le ayar, hilâle yönlendirme ----
+  // Yön: Android/Chrome 'deviceorientationabsolute' (alpha, beta, gamma; W3C dönüş matrisi), iOS 'webkitCompassHeading'.
+  // Telefon düzken üst kenarın, dik tutulunca arka kameranın baktığı yön alınır. Manyetik sapma ve yakındaki demirin
+  // etkisi, Güneş'e (veya gurûb noktasına) çevirip ayarlamakla giderilir: düzeltme = gerçek semt − ölçülen yön.
+  const CP = { status: 'off', mode: null, acc: null, sx: 0, sy: 0, n: 0, last: 0, raf: 0, timer: 0 };
+  const nrm = d => ((d % 360) + 540) % 360 - 180;
+  function rawHeading(e) {
+    if (typeof e.webkitCompassHeading === 'number' && !isNaN(e.webkitCompassHeading)) {
+      CP.acc = typeof e.webkitCompassAccuracy === 'number' ? e.webkitCompassAccuracy : null; CP.mode = e.beta != null && Math.abs(e.beta) > 50 ? 'up' : 'flat';
+      return e.webkitCompassHeading;
+    }
+    if (!(e.absolute === true || e.type === 'deviceorientationabsolute') || e.alpha == null || e.beta == null || e.gamma == null) return null;
+    const r = Math.PI / 180, a = e.alpha * r, b = e.beta * r, g = e.gamma * r;
+    const cA = Math.cos(a), sA = Math.sin(a), cB = Math.cos(b), sB = Math.sin(b), cG = Math.cos(g), sG = Math.sin(g);
+    CP.acc = null;
+    if (Math.abs(e.beta) > 45 && Math.abs(e.beta) < 135) {   // dik: arka kamera (−z) yönü
+      CP.mode = 'up';
+      return (Math.atan2(-cG * sA * sB - cA * sG, cA * cG * sB - sA * sG) / r + 360) % 360;
+    }
+    CP.mode = 'flat';   // düz: üst kenar (+y) yönü, ekran yatay çevrilmişse ekranın üstü
+    const ang = (screen.orientation && typeof screen.orientation.angle === 'number') ? screen.orientation.angle : (window.orientation || 0);
+    return ((Math.atan2(-cB * sA, cA * cB) / r) + ang + 720) % 360;
+  }
   function onOrient(e) {
-    if (typeof e.webkitCompassHeading === 'number') heading = e.webkitCompassHeading;
-    else if (e.absolute && e.alpha != null) heading = (360 - e.alpha) % 360;
+    const h = rawHeading(e); if (h == null) return;
+    // dairesel ortalama ile yumuşatma
+    const k = CP.n ? 0.25 : 1, r = Math.PI / 180;
+    CP.sx = CP.sx * (1 - k) + Math.sin(h * r) * k; CP.sy = CP.sy * (1 - k) + Math.cos(h * r) * k; CP.n++;
+    heading = (Math.atan2(CP.sx, CP.sy) / r + 360) % 360; CP.status = 'ok';
+    if (!CP.raf) CP.raf = requestAnimationFrame(() => { CP.raf = 0; if (Date.now() - CP.last > 90) paintCompass(); });
+  }
+  const cpOffset = () => st.cpOff != null && Date.now() - (st.cpOffAt || 0) < 6 * 3600000 ? st.cpOff : null;
+  function cpTargets() {
+    const loc = locObj(), now = A.MakeTime(new Date()), p = C.at(now, loc);
+    const gz = FR && FR.ok ? FR.sunAz : null;
+    let key, az, alt = null;
+    if (p.sun.alt > -0.8) { key = 'gurub'; az = gz != null ? gz : p.sun.az; }
+    else if (p.moon.alt > 0) { key = 'moon'; az = p.moon.az; alt = p.moon.alt; }
+    else { key = 'gurub'; az = gz != null ? gz : p.sun.az; }
+    return { p, gz, key, az, alt };
+  }
+  function dialSvg(H, tg) {
+    const W = 240, c = W / 2, R = 100, tr = st.lang === 'tr', cardL = tr ? ['K', 'D', 'G', 'B'] : ['N', 'E', 'S', 'W'];
+    const pos = (az, rr) => { const a = (az - H) * Math.PI / 180; return [c + rr * Math.sin(a), c - rr * Math.cos(a)]; };
+    let s = `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="${esc(t.cpTitle)}"><circle cx="${c}" cy="${c}" r="${R + 14}" fill="var(--surface)" stroke="var(--line)"/>`;
+    for (let a = 0; a < 360; a += 10) { const [x1, y1] = pos(a, R + 12), [x2, y2] = pos(a, a % 30 ? R + 6 : R + 1); s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--ink)" stroke-opacity="${a % 30 ? .35 : .7}"/>`; }
+    for (let i = 0; i < 4; i++) { const [x, y] = pos(i * 90, R - 12); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" text-anchor="middle" font-size="15" font-weight="700" fill="${i === 0 ? 'var(--bad, #c0392b)' : 'var(--ink)'}">${cardL[i]}</text>`; }
+    for (let a = 30; a < 360; a += 30) { if (a % 90 === 0) continue; const [x, y] = pos(a, R - 12); s += `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="middle" font-size="10" fill="var(--muted)">${a}</text>`; }
+    // gurûb noktası, Güneş ve hilâl
+    // iç halka: gurûb noktası (yarım daire) ve Güneş; dış halka: hilâl (aydınlık yüzü Güneş'e dönük)
+    if (tg.gz != null) { const [x, y] = pos(tg.gz, R - 58); s += `<path d="M${(x - 9).toFixed(1)} ${(y + 3).toFixed(1)} A9 9 0 0 1 ${(x + 9).toFixed(1)} ${(y + 3).toFixed(1)}Z" fill="var(--accent)"/><line x1="${(x - 11).toFixed(1)}" x2="${(x + 11).toFixed(1)}" y1="${(y + 3).toFixed(1)}" y2="${(y + 3).toFixed(1)}" stroke="var(--accent)" stroke-width="1.5"/>`; }
+    if (tg.p.sun.alt > -18) { const [x, y] = pos(tg.p.sun.az, R - 58); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${tg.p.sun.alt > -0.8 ? 'var(--accent)' : 'none'}" stroke="var(--accent)" stroke-width="1.5"/>`; }
+    if (tg.p.moon.alt > -1) {
+      const [x, y] = pos(tg.p.moon.az, R - 32), [sx, sy] = pos(tg.p.sun.az, R - 32), dx = x - sx, dy = y - sy, dl = Math.hypot(dx, dy) || 1;
+      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9" fill="#fbf3d6" stroke="#b8a76a"/><circle cx="${(x + 5 * dx / dl).toFixed(1)}" cy="${(y + 5 * dy / dl).toFixed(1)}" r="8.6" fill="#1b2433"/>`;
+    }
+    // hedefe yay ve sabit gösterge (baktığınız yön)
+    if (heading != null) {
+      const d = nrm(tg.az - H), a0 = -Math.PI / 2, a1 = a0 + d * Math.PI / 180, rr = R + 20, big = Math.abs(d) > 180 ? 1 : 0;
+      if (Math.abs(d) > 2) s += `<path d="M${(c + rr * Math.cos(a0)).toFixed(1)} ${(c + rr * Math.sin(a0)).toFixed(1)} A${rr} ${rr} 0 ${big} ${d > 0 ? 1 : 0} ${(c + rr * Math.cos(a1)).toFixed(1)} ${(c + rr * Math.sin(a1)).toFixed(1)}" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" opacity=".8"/>`;
+      s += `<path d="M${c} 4 L${c - 9} 22 L${c + 9} 22Z" fill="var(--accent)"/><line x1="${c}" y1="22" x2="${c}" y2="${c}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 4"/>`;
+    }
+    return s + `<circle cx="${c}" cy="${c}" r="3" fill="var(--ink)"/></svg>`;
+  }
+  function paintCompass(force) {
+    if (!compassOn) return; CP.last = Date.now();
+    const tg = cpTargets(), off = cpOffset(), H = heading != null ? (heading + (off || 0) + 360) % 360 : 0;
+    $('cDial').innerHTML = dialSvg(H, tg);
+    const name = t.cpTarget[tg.key], card = az => G.HRSky.card(az, st.lang);
+    const altTxt = tg.alt != null ? ' · ' + t.cpUpAlt(num(tg.alt, 1), t.smEveFist(num(Math.max(0, tg.alt) / 10, 1))) : '';
+    if (heading != null) {
+      const d = Math.round(nrm(tg.az - H));
+      $('cRead').textContent = (Math.abs(d) <= 3 ? t.cpAhead(name) : t.cpTurn(name, d)) + altTxt;
+      $('cSub').textContent = `${t.cpHead(Math.round(H), card(H))} · ${off != null ? t.cpCalDone(Math.round(off)) : t.cpRaw}`;
+    } else {
+      const fromG = tg.key === 'moon' && tg.gz != null ? ` · ${(tg.gz - tg.az) > 0 ? t.smEveLeft(num(Math.abs(tg.gz - tg.az), 1)) : t.smEveRight(num(Math.abs(tg.gz - tg.az), 1))} (${t.cpTarget.gurub.toLowerCase()})` : '';
+      $('cRead').textContent = `${name}: ${Math.round(tg.az)}° (${card(tg.az)})${fromG}${altTxt}`;
+      $('cSub').textContent = '';
+    }
+    const below = tg.key === 'gurub' && tg.p.sun.alt <= -0.8 ? t.cpBelow + ' ' : '';
+    const stat = CP.status === 'wait' ? t.cpWait : CP.status === 'none' ? t.cpNone + (location.protocol === 'file:' ? ' ' + t.cpNoneFile : '') : CP.status === 'denied' ? t.cpDenied
+      : (CP.mode === 'up' ? t.cpUp : t.cpFlat) + (CP.acc != null && (CP.acc < 0 || CP.acc > 15) ? ' ' + t.cpAcc(Math.round(Math.abs(CP.acc))) : '');
+    $('cStat').textContent = below + stat;
+    const sunVis = tg.p.sun.alt > -0.8;
+    $('cCal').textContent = sunVis ? t.cpCal : t.cpCalGurub; $('cCal').disabled = heading == null || (!sunVis && tg.gz == null);
+    $('cCalReset').hidden = off == null;
+  }
+  function calibrateCompass() {
+    if (heading == null) return;
+    const tg = cpTargets(), az = tg.p.sun.alt > -0.8 ? tg.p.sun.az : tg.gz; if (az == null) return;
+    st.cpOff = Math.round(nrm(az - heading) * 10) / 10; st.cpOffAt = Date.now(); save();
+    toast(t.cpCalDone(Math.round(st.cpOff))); paintCompass(true);
   }
   async function toggleCompass() {
-    compassOn = !compassOn; $('fCompass').setAttribute('aria-pressed', String(compassOn));
-    if (!compassOn) { window.removeEventListener('deviceorientationabsolute', onOrient); window.removeEventListener('deviceorientation', onOrient); return; }
-    try {
-      if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') { const p = await DeviceOrientationEvent.requestPermission(); if (p !== 'granted') throw new Error('denied'); }
-      window.addEventListener('deviceorientationabsolute', onOrient); window.addEventListener('deviceorientation', onOrient);
-      setTimeout(() => { if (heading == null) $('fHeading').textContent = t.compassFail; }, 2500);
-    } catch (e) { $('fHeading').textContent = t.compassFail; }
+    compassOn = !compassOn; $('fCompass').setAttribute('aria-pressed', String(compassOn)); $('cBox').hidden = !compassOn;
+    window.removeEventListener('deviceorientationabsolute', onOrient); window.removeEventListener('deviceorientation', onOrient); clearTimeout(CP.timer);
+    if (!compassOn) { CP.status = 'off'; return; }
+    heading = null; CP.n = 0; CP.status = 'wait';
+    let perm = null;   // iOS izin ister; izin sonucu ne olursa olsun olaylar dinlenir, 3 saniyede yön gelmezse sebebi yazılır
+    try { if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') perm = await DeviceOrientationEvent.requestPermission(); } catch (e) { perm = 'error'; }
+    if (!('DeviceOrientationEvent' in window)) CP.status = 'none';
+    else { window.addEventListener('deviceorientationabsolute', onOrient); window.addEventListener('deviceorientation', onOrient); CP.timer = setTimeout(() => { if (heading == null) { CP.status = perm === 'denied' ? 'denied' : 'none'; paintCompass(true); } }, 3000); }
+    paintCompass(true);
+    $('cBox').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
   // Kayıt zamanı (seçili saat diliminde) ve ait olduğu akşam
   function resetRecAt() {
@@ -7096,6 +7410,35 @@ var qrcode = function() {
     $('recEval').innerHTML = `<span class="pill ${ev.cls}">${esc(t.recRes[result])}</span> ${esc(ev.txt)}${sealed.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}${sealed.photo && sealed.photo.thumbDropped ? `<br><span class="small">${esc(t.recThumbDropped)}</span>` : ''}<br><span class="hash">${esc(t.recHash)}: ${esc(sealed.hash || t.none)}${sealed.signer ? ` · ${esc(t.recSig)}: ${esc(sealed.signer.fp)}` : ` · ${esc(t.recNoSig)}`}</span>`;
     toast(t.recSaved); renderRecords(true); resetRecAt();
   }
+  // ---- Bildirim ekleri: "kime, ne zaman" (kayıt mühürlü kalır; ek, kaydın özetine bağlı ve ayrıca imzalıdır) ----
+  let ntIdx = -1;
+  function noticeLine(n, x, bare) {
+    const tz = (x && x.place && x.place.tz) || st.tz;
+    const at = n.at ? new Intl.DateTimeFormat(locale(), { timeZone: tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(n.at)) : '—';
+    const to = `${t.ntToKinds[n.to && n.to.kind] || ''}${n.to && n.to.name ? ': ' + n.to.name : ''}`;
+    const ch = t.ntChannels[n.channel] || n.channel || '';
+    return (bare ? `${to} · ${at} · ${ch}` : t.ntLine(to, at, ch)) + (n.ref ? ` · ${n.ref}` : '');
+  }
+  function openNotice(i) {
+    ntIdx = i; $('ntMsg').textContent = ''; $('ntName').value = ''; $('ntRef').value = ''; $('ntNote').value = '';
+    const p = new Intl.DateTimeFormat('en-CA', { timeZone: st.tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()), g = k => p.find(x => x.type === k).value;
+    $('ntAt').value = `${g('year')}-${g('month')}-${g('day')}T${g('hour')}:${g('minute')}`;
+    try { $('ntDlg').showModal(); } catch (e) { $('ntDlg').setAttribute('open', ''); }
+  }
+  async function saveNotice() {
+    const x = records[ntIdx]; if (!x || !x.hash) return;
+    const name = $('ntName').value.trim(); if (!name) { $('ntMsg').textContent = t.ntNeed; return; }
+    let at = new Date();
+    if ($('ntAt').value) { const [d, hm] = $('ntAt').value.split('T'), [hh, mm] = hm.split(':').map(Number); at = new Date(C.localToUT(d, hh * 60 + mm, st.tz)); }
+    const n = { schema: 'hilal-bildirim/1', id: (G.crypto && G.crypto.randomUUID ? G.crypto.randomUUID() : 'n' + Date.now().toString(36)), created: new Date().toISOString(),
+      record: x.id, recordHash: x.hash, to: { kind: $('ntKind').value, name }, at: at.toISOString(), channel: $('ntCh').value, ref: $('ntRef').value.trim(), note: $('ntNote').value.trim(),
+      app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME, official: OFFICIAL !== false } };
+    let sealed = n; try { sealed = await G.HRSig.seal(n); } catch (e) { sealed = n; }
+    const prev = x.notices; x.notices = [...(x.notices || []), sealed];
+    if (!saveRec()) { x.notices = prev; $('ntMsg').textContent = t.recStoreFail; return; }
+    try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); }
+    toast(t.ntSaved); renderRecords(true);
+  }
   function recText(x) {
     const o = x.observation, c = x.computed, pl = x.place;
     const tz = pl.tz || st.tz, at = new Date(o.at), f = d => d ? new Intl.DateTimeFormat(locale(), { timeZone: tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(d)) : t.none;
@@ -7105,6 +7448,7 @@ var qrcode = function() {
     if (o.firstSeen || o.lastSeen) L.push(`${t.recFirst}: ${o.firstSeen || '—'} · ${t.recLast}: ${o.lastSeen || '—'}`);
     if (c) L.push(`${t.tutCalc}: ${t.gurub} ${f(c.gurub)} · ${t.beyn.split(' ')[0]} ${c.beynunet.toFixed(2)}° · ${t.alt.split(' ')[0]} ${c.atObs.moonAlt.toFixed(2)}° · ${t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls}`);
     if (o.note) L.push(`${t.notes}: ${o.note}`);
+    for (const n of (x.notices || [])) L.push(noticeLine(n, x) + (n.hash ? ` (${n.hash.slice(0, 16)}…)` : ''));
     if (!x.observer.name) L.push(t.recAnon);
     L.push(`SHA-256: ${x.hash || '—'}${x.signer ? ' · key ' + x.signer.fp : ''}`, `${t.appTitle} v${(x.app && x.app.version) || ''}${x.app && x.app.rules ? ' · ' + t.traceRules + ' ' + x.app.rules : ''}${x.app && x.app.official === false ? ' · ' + t.tamperShort : ''}`);
     return L.join('\n');
@@ -7125,7 +7469,16 @@ var qrcode = function() {
     try { const j = JSON.parse(await f.text()); list = Array.isArray(j) ? j : j && Array.isArray(j.records) ? j.records : j && j.schema === 'hilal-ruyet-kaydi/1' ? [j] : null; } catch (e) { list = null; }
     if (!list) { toast(t.recImportBad); return; }
     const have = new Set(records.map(x => x.id || x.ts)); let add = 0, dup = 0;
-    for (const x of list) { if (!x || !(x.schema || x.ts)) continue; const k = x.id || x.ts; if (have.has(k)) { dup++; continue; } have.add(k); records.push(x); add++; }
+    for (const x of list) {
+      if (!x || !(x.schema || x.ts)) continue; const k = x.id || x.ts;
+      if (have.has(k)) {   // aynı kayıt: yalnız yeni bildirim eklerini al
+        const cur = records.find(r => (r.id || r.ts) === k), ids = new Set(((cur && cur.notices) || []).map(n => n.id));
+        const extra = (x.notices || []).filter(n => n && n.id && !ids.has(n.id) && cur && n.recordHash === cur.hash);
+        if (extra.length) cur.notices = [...(cur.notices || []), ...extra];
+        dup++; continue;
+      }
+      have.add(k); records.push(x); add++;
+    }
     records.sort((a, b) => String((b.observation && b.observation.at) || b.ts).localeCompare(String((a.observation && a.observation.at) || a.ts)));
     if (saveRec()) toast(t.recImported(add, dup)); renderRecords(true);
   }
@@ -7163,12 +7516,18 @@ var qrcode = function() {
         <dl class="kv">${kv(t.recAt, esc(new Intl.DateTimeFormat(locale(), { timeZone: pl.tz || st.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at))) + ' · ' + esc(pl.name || ''), esc(t.recRes[o.result] || ''), 'txt')}
         ${kv(t.recHash, esc(v.hash ? t.vfHashOk : t.vfHashBad), `<span class="hash">${esc(x.hash)}</span>`, 'txt')}
         ${kv(t.recSig, x.sig ? esc(!v.hash ? t.vfSigNA : v.sig ? t.vfSigOk : t.vfSigBad) : esc(t.recNoSig), x.signer ? `<span class="hash">${esc(x.signer.fp)}</span>` : '', 'txt')}
-        ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}</dl></div>`);
+        ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}
+        ${(x.notices || []).length ? kv(t.ntRow, (await Promise.all(x.notices.map(async n => `${(await noticeOk(n, x)) ? '✓' : '✗'} ${esc(noticeLine(n, x))}`))).join('<br>'), '', 'txt') : ''}</dl></div>`);
     }
     out.innerHTML = rows.join('');
   }
   // Kayıt listesinde her kaydın özeti ve imzası yeniden doğrulanır
+  async function noticeOk(n, x) { try { const v = await G.HRSig.verify(n); return v.hash && (!n.sig || v.sig) && n.record === x.id && n.recordHash === x.hash; } catch (e) { return false; } }
   async function verifyBadges() {
+    for (const el of $('recList').querySelectorAll('[data-ntv]')) {
+      const [i, j] = el.dataset.ntv.split(':').map(Number), x = records[i], n = x && x.notices && x.notices[j]; if (!n) continue;
+      const ok = await noticeOk(n, x); el.innerHTML = `<span class="pill ${ok ? 'p-ok' : 'p-bad'}">${ok ? '✓' : '✗'} ${esc(ok ? t.ntOk : t.ntBad)}</span>`;
+    }
     const els = $('recList').querySelectorAll('[data-ver]');
     for (const el of els) {
       const x = records[+el.dataset.ver]; if (!x || !x.hash) continue;
@@ -7185,13 +7544,14 @@ var qrcode = function() {
       const o = x.observation;
       return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.place.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at)))}<br><span class="small">${esc(t.recEvening(fmtCivil(civil(o.evening), true)))}</span></td>
         <td><span class="pill ${x.computed ? x.computed.evalClass : (o.result === 'not' ? 'p-info' : 'p-warn')}">${esc(t.recRes[o.result])}</span>${x.observer.name ? `<br><span class="small">${esc(x.observer.name)}</span>` : ''}</td>
-        <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
-        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
+        <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${(x.notices || []).map((n, j) => `<span class="small ntl">✉ ${esc(noticeLine(n, x))} <span data-ntv="${i}:${j}"></span></span>`).join('')}${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
+        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-nt="${i}">✉ ${esc(t.ntBtn)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
     }).join('')}</tbody></table>`;
     const L = $('recList');
     L.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { records.splice(+b.dataset.del, 1); saveRec(); renderRecords(true); });
     verifyBadges();
     L.querySelectorAll('[data-tut]').forEach(b => b.onclick = () => printPages(['tut'], records[+b.dataset.tut]));
+    L.querySelectorAll('[data-nt]').forEach(b => b.onclick = () => openNotice(+b.dataset.nt));
     L.querySelectorAll('[data-tutjpg]').forEach(b => b.onclick = () => exportJpg(['tut'], records[+b.dataset.tutjpg]));
     L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(recBase(x, 'record') + '.json', JSON.stringify(x, null, 2), 'application/json'); });
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
@@ -7443,7 +7803,7 @@ var qrcode = function() {
   function openPrint() {
     const def = view === 'harita' ? ['map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
     const has = records.some(x => x.schema);
-    $('prOpts').innerHTML = ['plan', 'sky', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
+    $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
     try { $('prDlg').showModal(); } catch (e) { $('prDlg').setAttribute('open', ''); }
   }
   const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : (st.locAuto ? t.myPlace : (st.lang === 'tr' ? 'Seçilen konum' : 'Selected location')); };
@@ -7477,6 +7837,38 @@ var qrcode = function() {
     const hj = hijriAt(at);
     return `<section class="a4">${pgHead(t.smTitle, `${locLine()}<br><strong>${esc(fmtDT(at))}</strong>${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}`)}
       <div class="psky">${svg}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
+  }
+  // Seçili akşamın gökyüzü haritası: hilâlin gurûbdan ay batımına kadar izi ve akşam çizelgesi
+  function eveTrack(r) {
+    const g = r.gurub, end = r.moonUp && r.moonset ? r.moonset : g.AddDays(60 / 1440);
+    const span = Math.min(150, (end.ut - g.ut) * 1440), step = span <= 70 ? 10 : span <= 140 ? 15 : 20;
+    const ev = [{ t: g, note: t.smEveGurub, mark: true }];
+    if (r.windowEnd && r.windowEnd.ut > g.ut) ev.push({ t: r.windowEnd, note: t.smEve5, mark: true });
+    if (r.moonUp && r.moonset) ev.push({ t: r.moonset, note: t.smEveSet, mark: true });
+    const rows = ev.slice();
+    for (let m = step; m < span - 2; m += step) { const tt = g.AddDays(m / 1440); if (!ev.some(e => Math.abs(e.t.ut - tt.ut) * 1440 < 4)) rows.push({ t: tt }); }
+    rows.sort((a, b) => a.t.ut - b.t.ut);
+    let at, why;
+    if (r.windowEnd && r.windowEnd.ut > g.ut) { at = A.MakeTime(new Date((g.date.getTime() + r.windowEnd.date.getTime()) / 2)); why = t.smEveWhyWin; }
+    else if (r.moonUp && r.moonset) { at = A.MakeTime(new Date((g.date.getTime() + r.moonset.date.getTime()) / 2)); why = t.smEveWhyLag; }
+    else { at = g.AddDays(30 / 1440); why = t.smEveWhyNone; }
+    return { rows, at, why };
+  }
+  function pageSkyEve() {
+    const r = eveningCached(LOC, st.date);
+    if (!r.ok) return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>`)}<p>${esc(t.none)}</p>${pgFoot()}</section>`;
+    const { rows, at, why } = eveTrack(r);
+    const track = rows.map(x => ({ t: x.t, label: hhmm(x.t), mark: !!x.mark }));
+    const svg = withTheme('light', () => G.HRStarMap.drawWest(LOC, at, st.lang, { w: 900, h: 560, track, gurubAz: r.sunAz, span: 80, center: (r.sunAz + C.at(at, LOC).moon.az) / 2 }).svg);
+    const fist = a => num(Math.max(0, a) / 10, 1);
+    const body = rows.map(x => {
+      const p = C.at(x.t, LOC), up = p.moon.alt > -0.5, d = r.sunAz - p.moon.az, dd = Math.abs(d).toFixed(1).replace('.', st.lang === 'tr' ? ',' : '.');
+      return `<tr${x.mark ? ' class="sel"' : ''}><td>${hhmm(x.t)}</td><td>${degf(p.sun.alt, 1)}</td><td>${up ? `${degf(p.moon.alt, 1)} <span class="small">${esc(t.smEveFist(fist(p.moon.alt)))}</span>` : '—'}</td><td>${up ? degf(p.moon.az, 1) : '—'}</td><td>${up ? esc(d > 0 ? t.smEveLeft(dd) : t.smEveRight(dd)) : '—'}</td><td>${esc(x.note || (up ? '' : t.smEveDown))}</td></tr>`;
+    }).join('');
+    const hj = hijriAt(at);
+    return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>${hj ? ' · ' + (hj.local ? hj.html2 : hj.html) : ''}<br>${esc(t.smEveAt(hhmm(at), why))}`)}
+      <div class="psky eve">${svg}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
+      <table class="mt eve"><thead><tr>${t.smEveCols.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>${pgFoot()}</section>`;
   }
   function pageMonth() {
     const conj = C.nearestNewMoon(C.solarNoon(st.date, LOC.lon));
@@ -7530,6 +7922,7 @@ var qrcode = function() {
       <h3>${esc(t.tutPeople)}</h3>
       <table class="sig"><tr><th>${esc(t.recName)}</th><td>${v(ob.name, 70)}</td><th>${esc(t.tutSign)}</th><td><span class="blank" style="min-width:45mm"></span></td></tr>
         <tr><th>${esc(t.recContact)}</th><td colspan="3">${v(ob.contact, 90)}</td></tr>
+        <tr><th>${esc(t.ntRow)}</th><td colspan="3">${!blank && x.notices && x.notices.length ? x.notices.slice(0, 2).map(n => `<span class="small">${esc(noticeLine(n, x, true))}${n.hash ? ` · <span class="hash">${esc(n.hash.slice(0, 16))}</span>` : ''}</span>`).join('<br>') : '<span class="blank" style="min-width:120mm"></span>'}</td></tr>
         ${[1, 2, 3].map(i => `<tr><th>${esc(t.tutWitness)} ${i}</th><td colspan="3"><span class="blank" style="min-width:120mm"></span></td></tr>`).join('')}</table>
       <div class="fiqh"><h3>${esc(t.tutFiqh)}</h3><p>${esc(t.tutFiqhTxt)}</p></div>
       <div class="integ">${qr ? `<div class="qr">${qr}</div>` : ''}<div><p class="hash">${esc(t.recHash)}: ${esc(blank ? '' : x.hash || t.none)}</p><p class="hash">${blank ? '' : x.signer ? `${esc(t.recSig)}: ${esc(x.signer.fp)}` : esc(t.recNoSig)}</p>${blank ? '' : `<p class="vfline">${esc(t.vfPrint)}</p>`}</div></div>
@@ -7549,7 +7942,7 @@ var qrcode = function() {
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; } .tcols { grid-template-columns: 1.05fr 1fr; }
     table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
     .pfig { height: 68mm; } .pfig svg { width: 100%; height: 100%; display: block; }
-    .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; }
+    .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; } .psky.eve { width: 178mm; height: auto; } table.mt.eve { margin-top: 2mm; } table.mt.eve td, table.mt.eve th { padding: 1.2mm 2mm; }
     .pmap img { width: 100%; max-height: 140mm; object-fit: contain; display: block; }
     ol.pl { margin: 0; padding-left: 5mm; font-size: 8.6pt; } ol.pl li { margin: .6mm 0; } .guides { font-size: 8.6pt; margin: 0; }
     .lines { margin-top: auto; } .lines i { display: block; border-bottom: .5pt solid #999; height: 6mm; }
@@ -7570,8 +7963,8 @@ var qrcode = function() {
   const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
   function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
   const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : ''; };
-  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
-    en: { plan: 'watch-plan', sky: 'sky-chart', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
+    en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
@@ -7584,7 +7977,7 @@ var qrcode = function() {
   const printAt = kinds => SM_AT && kinds.length === 1 && kinds[0] === 'sky' && $('smDlg').open ? SM_AT : (st.live && !st.frozen ? A.MakeTime(new Date()) : selT());
   function pagesBase(kinds, rec) {
     if (kinds.length === 1 && kinds[0] === 'tut') { const x = rec || records.find(r => r.schema); if (x) return recBase(x, 'tut'); }
-    return fileBase(kinds.length === 1 ? kinds[0] : 'pages', { hhmm: kinds.every(k => k === 'blank' || k === 'month') ? '' : hhmmTz(printAt(kinds).date, st.tz) });
+    return fileBase(kinds.length === 1 ? kinds[0] : 'pages', { hhmm: kinds.every(k => k === 'blank' || k === 'month' || k === 'skyEve') ? '' : hhmmTz(printAt(kinds).date, st.tz) });
   }
   // A4 sayfalarının tek HTML belgesi (yazdırma ve JPG çıktısı aynı belgeyi kullanır)
   async function buildPrint(kinds, rec) {
@@ -7593,6 +7986,7 @@ var qrcode = function() {
     for (const k of kinds) {
       if (k === 'plan') parts.push(pagePlan());
       else if (k === 'sky') parts.push(pageSky(at));
+      else if (k === 'skyEve') parts.push(pageSkyEve());
       else if (k === 'month') parts.push(pageMonth());
       else if (k === 'map') parts.push(await pageMap());
       else if (k === 'tut') parts.push(pageTut(rec || records.find(x => x.schema)));

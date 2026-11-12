@@ -75,6 +75,10 @@ Plan sekmesindeki değerlendirme kartında, Saha sekmesinde ve "Yaklaşan ay ba�
 
 Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili makamca verilir (s. 315–316). Deliller için Rehber'de **Naklî deliller** konusuna bakın.
 
+## Büyük ekran ve PDF
+
+Hazırlık için büyük bir ekran (bilgisayar veya tablet) tavsiye edilir. Sahada telefon ekranı küçük kalır. Rasad planını ve akşamın gökyüzü haritasını önceden **⎙ Yazdır → PDF** ile kaydedip yanınıza alın; internetsiz ve tek bakışta okunur.
+
 ## Kâdîhân kontrolü ve şafak
 
 - Kâdîhân kuralına göre hilâl şafaktan sonra batarsa ikinci gecenin, önce batarsa birinci gecenin hilâlidir (s. 316).
@@ -93,6 +97,9 @@ Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili mak
 - **Geri sayımlar:** gurûb, en iyi an, 5° anı, ay batışı.
 - **Gök görünümü her zaman şimdi içindir;** bakılacak yer yazıyla da verilir.
 - **Araçlar:** gece modu (kırmızı), ekranı açık tutma, pusula, gökyüzü haritası, "Konumum", yazı büyütme.
+- **Pusula:** Dokununca bir kadran açılır. Kadranın üstü baktığınız yöndür; hilâl, Güneş ve gurûb noktası kadranda gösterilir. Yazı, hedefe kaç derece sola veya sağa döneceğinizi ve hilâlin ufuktan kaç derece (kaç yumruk) yukarıda olduğunu söyler. Gurûbdan önce hedef gurûb noktasıdır, sonra hilâldir. Telefon düzken üst kenarın, dik tutulunca arka kameranın yönü alınır.
+- **Pusulayı ayarlama:** Manyetik pusula gerçek kuzeyden birkaç derece sapar; araç ve demir yakınında daha çok şaşar. Güneş batarken telefonu Güneş'e (battıktan sonra gurûb noktasına) çevirip **Güneşle ayarla** düğmesine dokunun; program farkı hesaplayıp düzeltir. Ayar altı saat geçerlidir. Güneşe dürbün veya kamerayla bakmayın.
+- Algılayıcı çalışmıyorsa (masaüstü tarayıcı, bazı tarayıcılarda dosyadan açılan sayfa) kadran kuzeyi yukarıda gösterir ve yönler yazıyla verilir. Programı çevrimiçi adresinden açmak çoğu zaman sorunu giderir.
 - Ayarlar'daki **Güneş altı** teması parlak ışıkta en yüksek kontrastı verir.
 
 ## Rü'yet kaydı ve tutanak
@@ -106,8 +113,9 @@ Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili mak
    - hesâbî karşılaştırma verilerini ekler;
    - SHA-256 özetini hesaplar;
    - ortam izin veriyorsa kaydı cihaz anahtarıyla imzalar.
-3. Listede her kayıt için dört düğme vardır:
+3. Listede her kayıt için şu düğmeler vardır:
    - **Tutanak (A4):** basın; gözlemci ve birlikte gözleyenler imzalasın; yetkili kişiye elden verin.
+   - **✉ Bildirim ekle:** kaydı kime, ne zaman ve nasıl bildirdiğinizi yazın (gören kimsenin bildirmesi vâcibdir). Kayıt mühürlü kalır; bildirim kayda bağlı, ayrıca imzalı bir ek olarak saklanır ve tutanakta "Bildirildi" satırına yazılır. İleride bir hilâl gözlem bildirim ağı kurulursa bildirimler bu biçimle oraya gönderilebilecek.
    - **JSON:** ağlara ve heyetlere gönderilecek dosya.
    - **Metni kopyala:** WhatsApp veya e-posta ile hızlı ilk haber.
    - **Sil.**
@@ -118,7 +126,8 @@ Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili mak
 An çubuğundaki "⎙ Yazdır / PDF" düğmesi bir seçim penceresi açar. Her seçenek **tek A4 sayfasına** göre hazırlanır:
 
 - rasad planı;
-- gökyüzü haritası;
+- gökyüzü haritası (seçili an): bütün gök;
+- gökyüzü haritası (seçili akşam): batı göğü, hilâlin gurûbdan ay batımına kadar yeri ve akşam çizelgesi (saat, Güneş'in ve hilâlin irtifâı, gurûb noktasına göre yön);
 - aylık çizelge;
 - dünya haritası (yatay);
 - tutanak veya boş tutanak formu.

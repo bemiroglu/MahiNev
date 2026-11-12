@@ -44,7 +44,7 @@
   }
   // Kaydı mühürler: hash = SHA-256(kanonik kayıt, hash ve sig hariç); sig = ECDSA(hash)
   async function seal(rec) {
-    const body = Object.assign({}, rec); delete body.hash; delete body.sig;
+    const body = Object.assign({}, rec); delete body.hash; delete body.sig; delete body.notices;   // bildirim ekleri kendi mühürlerini taşır
     const k = await ensureKey();
     if (k) body.signer = { pub: k.pub, fp: k.fp };
     const h = await sha256(canon(body));
@@ -54,7 +54,7 @@
   }
   async function verify(rec) {
     if (!subtle || !rec || !rec.hash) return { hash: false, sig: false };
-    const body = Object.assign({}, rec); delete body.hash; delete body.sig;
+    const body = Object.assign({}, rec); delete body.hash; delete body.sig; delete body.notices;   // bildirim ekleri kendi mühürlerini taşır
     const okHash = (await sha256(canon(body))) === rec.hash;
     let okSig = false;
     if (rec.sig && rec.signer && rec.signer.pub) {

@@ -15,7 +15,26 @@ Saha sekmesindeki "Rü'yet kaydı ve tutanak" formu her gözlem için bir JSON k
 | `app` | Programın adı ve sürümü; `source` yayın adresi, `official` bütünlük denetiminin sonucu (dosya özgün mü), `engine` astronomi çekirdeği, `rules` kural kümesi (ör. `TI-360/1`), `models` modern ölçütlerin tanımı. |
 | `photo` | Fotoğrafın SHA-256 özeti ve küçük bir önizlemesi. Asıl dosya cihazda kalır; programdaki "Fotoğrafı doğrula" düğmesi, seçilen dosyanın özetinin bir kayıtla eşleşip eşleşmediğini gösterir. Depolama yetersizse önizleme saklanmaz (`thumbDropped: true`); bu durumda kayıt önizlemesiz içerikle yeniden mühürlenir. |
 | `signer`, `sig` | Cihaz imzası. Biçim ECDSA P-256 / SHA-256, imza IEEE P1363 (r‖s) olarak base64 ile kodlanır. İmzalanan veri `hash` metnidir. |
-| `hash` | `hash` ve `sig` hariç kaydın kanonik JSON'unun SHA-256 özeti. |
+| `hash` | `hash`, `sig` ve `notices` hariç kaydın kanonik JSON'unun SHA-256 özeti. |
+| `notices` | Bildirim ekleri: kayıt kime, ne zaman, nasıl bildirildi (aşağıda). Kaydın özetine katılmaz. |
+
+## Bildirim ekleri: `hilal-bildirim/1`
+
+Gören kimsenin gördüğünü yetkili makama bildirmesi vâcibdir (Redd-ül-muhtâr; Kongre tebliği, s. 7). Bildirim çoğu zaman kayıt mühürlendikten sonra yapılır. Bu yüzden kayıt değiştirilmez; bildirim, kayda bağlı ve ayrıca mühürlü bir ek olarak `notices` dizisine eklenir.
+
+| Alan | Açıklama |
+|---|---|
+| `record`, `recordHash` | Bağlı olduğu kaydın `id`'si ve SHA-256 özeti. Ek başka bir kayda taşınamaz. |
+| `to.kind` | `authority` yetkili makam (müftülük vb.), `committee` rasad veya takvim heyeti, `person` kişi, `network` hilâl gözlem bildirim ağı, `other` diğer. |
+| `to.name` | Bildirilen kişinin veya makamın adı. |
+| `at` | Bildirim anı (UTC). |
+| `channel` | `inPerson` yüz yüze, `phone` telefon, `message` mesaj veya e-posta, `paper` basılı tutanak, `network` bildirim ağı, `other` diğer. |
+| `ref`, `note` | İsteğe bağlı evrak numarası ve not. |
+| `hash`, `signer`, `sig` | Ekin kendi özeti (`hash` ve `sig` hariç) ve cihaz imzası; kayıttaki ile aynı yöntem. |
+
+Ek doğrulanırken üç şeye bakılır: ekin özeti, imzası ve `recordHash` değerinin kaydın özetiyle aynı olması. Program bunları kayıt listesinde ve "Kayıt doğrula" penceresinde gösterir; `tools/verify_record.py` her eki ayrı satırda yazar. Yedekten geri yüklemede, aynı kaydın yeni ekleri mevcut kayda eklenir.
+
+**Bildirim ağına hazırlık.** İleride bir hilâl gözlem bildirim ve paylaşma ağı kurulduğunda gönderilecek bilgi, kayıt ile `channel: "network"` olan bildirim ekidir. Kaydın ve ekin özetleri ile imzaları, alıcının kaydı değiştirilmeden ve hangi cihazdan geldiğini bilerek almasını sağlar.
 
 ## Kanonik JSON
 

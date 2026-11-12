@@ -404,7 +404,21 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 .extab .lnk { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
 .exbasis select { max-width: 100%; }
 .btn.exbtn { margin-left: 8px; padding: 3px 10px; font-size: .85rem; }
-@media print { #exDlg { display: none; } }
+@media print { #exDlg, #ntDlg { display: none; } }
+.ntl { display: block; margin-top: 3px; }
+
+/* saha ipucu */
+.ftip { margin: 0 0 10px; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); font-size: .88rem; display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; }
+.ftip .btn { padding: 2px 10px; font-size: .8rem; flex: none; }
+body:not(.explain) #fTip { display: none !important; }
+
+/* pusula */
+.cbox { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 14px; align-items: center; margin: 10px 0 4px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.cbox[hidden] { display: none; }
+.cdial svg { width: 100%; height: auto; display: block; }
+.cbig { font-size: 1.15rem; font-weight: 700; margin: 0 0 4px; }
+.cbox .btns { margin-top: 6px; }
+@media (max-width: 560px) { .cbox { grid-template-columns: minmax(0, 1fr); } .cdial { max-width: 230px; margin: 0 auto; width: 100%; } }
 </style>
 </head>
 <body>
@@ -470,7 +484,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
         </section>
       </aside>
       <div class="stack">
-        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
+        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><p class="cap" id="introTip"></p><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
         <section class="card" id="upCard"><h2 id="hUp"></h2><div class="up" id="upBody"></div></section>
         <section class="status" id="status" aria-live="polite"><div class="bar"></div><div id="statusBody"></div></section>
         <section class="card" id="tbCard"><h2 id="hTb"></h2>
@@ -518,6 +532,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 
   <main id="view-saha" hidden>
     <section class="card fhero">
+      <p class="ftip" id="fTip" hidden><span id="fTipTxt"></span> <button class="btn" type="button" id="fTipX"></button></p>
       <div class="fnow"><div class="clock" id="fClock">--:--:--</div><div><p class="small" id="fDate" style="margin:0"></p><p class="small" id="fHijri" style="margin:0"></p></div></div>
       <div class="fbig" id="fBig" role="status"></div>
       <div id="fTrack"></div>
@@ -526,6 +541,12 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
       <div id="fSky"></div>
       <div id="fGuides"></div>
       <div class="ftools"><button class="btn" type="button" id="fNight" aria-pressed="false"></button><button class="btn" type="button" id="fWake" aria-pressed="false"></button><button class="btn" type="button" id="fCompass" aria-pressed="false"></button><button class="btn" type="button" id="fSM"></button><button class="btn" type="button" id="fLoc"></button><button class="btn" type="button" id="fFont">A+</button></div>
+      <div class="cbox" id="cBox" hidden>
+        <div class="cdial" id="cDial"></div>
+        <div class="ctext"><p class="cbig" id="cRead" role="status" aria-live="polite"></p><p class="small" id="cSub"></p><p class="small" id="cStat"></p>
+          <div class="btns"><button class="btn" type="button" id="cCal"></button><button class="btn" type="button" id="cCalReset" hidden></button></div>
+          <p class="cap" id="cHelp"></p></div>
+      </div>
       <p class="msg" id="fMsg"></p>
       <div id="fStatus"></div><div id="fWx"></div><p class="small" id="fMorning"></p>
     </section>
@@ -606,6 +627,21 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <div id="vfOut" role="status" style="margin-top:10px"></div>
     <p class="cap" id="vfNote"></p>
   </dialog>
+  <dialog id="ntDlg" aria-labelledby="hNt" class="setdlg">
+    <div class="cardhead"><h2 id="hNt" style="font:600 1.1rem var(--font-display)"></h2></div>
+    <p class="small" id="ntIntro"></p>
+    <div class="grid2">
+      <div class="field"><label for="ntKind" id="lNtKind"></label><select id="ntKind"></select></div>
+      <div class="field"><label for="ntName" id="lNtName"></label><input id="ntName" type="text" maxlength="120" autocomplete="off"></div>
+      <div class="field"><label for="ntAt" id="lNtAt"></label><input id="ntAt" type="datetime-local"></div>
+      <div class="field"><label for="ntCh" id="lNtCh"></label><select id="ntCh"></select></div>
+      <div class="field"><label for="ntRef" id="lNtRef"></label><input id="ntRef" type="text" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label for="ntNote" id="lNtNote"></label><input id="ntNote" type="text" maxlength="200" autocomplete="off"></div>
+    </div>
+    <p class="msg" id="ntMsg"></p>
+    <div class="btns"><button class="btn primary" type="button" id="ntSave"></button><button class="btn" type="button" id="ntCancel"></button></div>
+    <p class="cap" id="ntNet"></p>
+  </dialog>
   <dialog id="exDlg" aria-labelledby="hEx" class="setdlg exdlg">
     <div class="cardhead"><h2 id="hEx" style="font:600 1.15rem var(--font-display)"></h2><button class="btn" type="button" id="exClose"></button></div>
     <div id="exBody"></div>
@@ -618,7 +654,7 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
     <p class="cap" id="prNote"></p>
   </dialog>
   <dialog id="smDlg" class="full" aria-labelledby="smTitle">
-    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smJpg"></button><button class="btn" type="button" id="smClose"></button></div></div>
+    <div class="cardhead"><h2 id="smTitle" style="font:600 1.1rem var(--font-display)"></h2><div class="btns"><button class="btn" type="button" id="smPrint"></button><button class="btn" type="button" id="smEve"></button><button class="btn" type="button" id="smJpg"></button><button class="btn" type="button" id="smClose"></button></div></div>
     <p class="small" id="smWhen" style="margin:0"></p>
     <div class="smctl"><label for="smFace" id="lSmFace"></label><select id="smFace" class="compact"></select>
       <label class="chk"><input type="checkbox" id="smLines" checked><span id="lSmLines"></span></label>

@@ -46,7 +46,23 @@
     },
     "photo": { "type": ["object", "null"], "properties": { "sha256": { "type": "string" }, "name": { "type": "string" }, "thumb": { "type": ["string", "null"] } } },
     "signer": { "type": "object", "properties": { "pub": { "type": "object", "description": "ECDSA P-256 açık anahtar (JWK: kty, crv, x, y)" }, "fp": { "type": "string", "description": "SHA-256(kanonik JWK) ilk 16 onaltılık" } } },
-    "hash": { "type": "string", "description": "SHA-256(kanonik JSON; hash ve sig hariç), onaltılık" },
-    "sig": { "type": "object", "properties": { "alg": { "const": "ECDSA-P256-SHA256" }, "value": { "type": "string", "description": "base64; imzalanan veri: hash metninin UTF-8 baytları; biçim IEEE P1363 (r||s)" } } }
+    "hash": { "type": "string", "description": "SHA-256(kanonik JSON; hash, sig ve notices hariç), onaltılık" },
+    "sig": { "type": "object", "properties": { "alg": { "const": "ECDSA-P256-SHA256" }, "value": { "type": "string", "description": "base64; imzalanan veri: hash metninin UTF-8 baytları; biçim IEEE P1363 (r||s)" } } },
+    "notices": {
+      "type": "array",
+      "description": "Bildirim ekleri (hilal-bildirim/1): kayıt kime, ne zaman bildirildi. Kaydın özetine katılmaz; her ek kendi özetini (hash ve sig hariç) ve imzasını taşır, recordHash ile kayda bağlanır.",
+      "items": {
+        "type": "object",
+        "required": ["schema", "id", "record", "recordHash", "to", "at"],
+        "properties": {
+          "schema": { "const": "hilal-bildirim/1" }, "id": { "type": "string" }, "created": { "type": "string", "format": "date-time" },
+          "record": { "type": "string", "description": "Bağlı olduğu kaydın id'si" }, "recordHash": { "type": "string", "description": "Bağlı olduğu kaydın SHA-256 özeti" },
+          "to": { "type": "object", "properties": { "kind": { "enum": ["authority", "committee", "person", "network", "other"] }, "name": { "type": "string" } } },
+          "at": { "type": "string", "format": "date-time", "description": "Bildirim anı (UTC)" },
+          "channel": { "enum": ["inPerson", "phone", "message", "paper", "network", "other"] }, "ref": { "type": "string" }, "note": { "type": "string" },
+          "app": { "type": "object" }, "signer": { "type": "object" }, "hash": { "type": "string" }, "sig": { "type": "object" }
+        }
+      }
+    }
   }
 }
