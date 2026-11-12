@@ -1,13 +1,30 @@
 /* Metinler: 0.10 (açıklama penceresi, ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.11.0';
+  G.HR_VERSION = '0.12.0-deneme.1';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
+    // Kullanım düzeyi
+    lvlLbl: 'Kullanım düzeyi', lvlQuick: 'Düzey',
+    lvlOpts: { all: 'Tüm düzeyler', basic: 'Başlangıç', mid: 'Deneyimli', expert: 'Uzman' },
+    lvlNote: 'Düzey yalnız neyin açık başlayacağını ve ne kadar ayrıntı gösterileceğini değiştirir; hesap aynıdır. Tam İlmihâl’in hükmü (sınıf, kesin red, arama penceresi, rü’yet beyanı) her düzeyde görünür. Katlı kartlar başlığa dokununca açılır. A4 çıktıları her düzeyde tamdır. “Tüm düzeyler”de kartların açık/katlı başlaması “Görünüm” ayarına göredir.',
+    lvlHelp: { all: 'Her şey; kartlar Görünüm ayarına göre.', basic: 'Bu akşam bakılacak mı, ne zaman, nereye, kaç yumruk yukarı, ne zamana kadar.', mid: 'Ek olarak irtifâ, semt, beynûnet, hilâl yaşı, Kâdîhân kontrolü, aylık şerit.', expert: 'Ek olarak toposentrik/jeosentrik değerler, Yallop/Odeh parametreleri, ham veri (JSON/CSV).' },
+    lvlIntro: 'Kullanım düzeyinizi seçin (sonra üst çubuktan değiştirebilirsiniz):',
+    qaTitle: 'Kısa cevap',
+    qaNo: (why, nx) => `Bu akşam bakılmaz: ${why}${nx ? ` Sıradaki rasad gecesi: ${nx}.` : ''}`,
+    qaMid: nx => `Bu akşam ay başı rasadı yoktur.${nx ? ` Sıradaki rasad gecesi: ${nx}.` : ''}`,
+    qaYes: (a, b) => `Bakılır: gurûbdan (${a}) hilâl ufka 5° yaklaşana kadar (${b}).`,
+    qaWhere: (tm, dir, az, d, df, side, h, hf) => `Nereye: ${tm} sularında ${dir} yönünde (semt ${az}°), gurûb noktasının ${d}° (≈ ${df} yumruk) ${side}, ufkun ${h}° (≈ ${hf} yumruk) üstünde.`,
+    qaHow: 'Çıplak gözle arayın; Güneş batmadan dürbün veya kamerayla batıya bakmayın.',
+    rawTitle: 'Ham veri', rawJson: '⬇ Bu akşam (JSON)', rawCsv: '⬇ Ayın akşamları (CSV)', rawNote: 'Sayılar ondalık noktalı, vakitler UTC (ISO 8601). Açılar derece; W yay dakikası.',
+    // Yallop'un önerdiği an: modern ek bilgidir; kitabın penceresi esastır
+    stBest: 'Yallop önerisi (ek bilgi)', cdBest: 'Yallop önerisi (ek bilgi)', skyAtBest: 'Yallop önerisi',
+    stBestNote: 'Modern ölçüt; Tam İlmihâl’in arama penceresi esastır.', cdBestLate: 'pencereden sonra; Tam İlmihâl’e göre hilâl o anda 5°’nin altında',
+    guideTxt: (d, side, h) => `Yallop’un önerdiği anda (ek bilgi) hilâl, güneşin battığı noktanın ${d}° ${side}, ufkun ${h}° üstündedir.`,
     // ay başı gezintisi ve rasad geceleri listesi
     mPrev: '◀ Önceki ay başı', mNext: 'Sonraki ay başı ▶', mList: '☰ Rasad geceleri',
     mSelA: m => `Seçili akşam: ${m} için rasad gecesi (ilk mümkün akşam, bu yer)`, mSelB: m => `Seçili akşam: ${m} için en elverişli akşam (bu yer)`,
-    rnTitle: 'Kamerî ay başı rasad geceleri', rnIntro: 'Her satır bir kamerî ayın başıdır. Tarihler bu yer için hesâbîdir: hilâlin hesâben ilk görülebileceği akşam ve en elverişli akşam. Ay başı rü’yetle kesinleşir; “dünyada en erken 1. gün”den önce olamaz (s. 360). Bir satırdaki tarihe dokununca o akşam planlanır.',
+    rnTitle: 'Kamerî ay başı rasad geceleri', rnIntro: 'Her satır bir kamerî ayın başıdır. Tarihler bu yer için hesâbîdir: hilâlin hesâben ilk görülebileceği akşam ve en elverişli akşam. Ay başı rü’yetle kesinleşir; “dünyada en erken 1. gün”den önce olamaz (s. 315, 360). Bir satırdaki tarihe dokununca o akşam planlanır.',
     rnPrev: '◀ Önceki 12 ay', rnNext: 'Sonraki 12 ay ▶', rnNow: 'Bugüne dön', rnCalc: 'Hesaplanıyor…',
     rnCols: ['Kamerî ay (hesâbî)', 'İctimâ', 'Rasad gecesi (bu yer)', 'En elverişli akşam (bu yer)', 'Dünyada en erken 1. gün', ''],
     rnNone: 'bu yerde uygun akşam yok', rnSel: 'seçili',
@@ -57,9 +74,24 @@
     ntNetNote: 'İleride bir hilâl gözlem bildirim ağı kurulduğunda, bildirimler bu biçimde (kayıt + imzalı bildirim eki) oraya gönderilebilecek.'
   });
   Object.assign(T.en, {
+    lvlLbl: 'Level of use', lvlQuick: 'Level',
+    lvlOpts: { all: 'All levels', basic: 'Beginner', mid: 'Experienced', expert: 'Expert' },
+    lvlNote: 'The level only changes what starts open and how much detail is shown; the calculation is the same. The ruling of Tam İlmihâl (class, definite rejection, search window, sighting claim) is visible at every level. Folded cards open when you tap their title. A4 outputs are always complete. With “All levels”, cards start open or folded according to the “Layout” setting.',
+    lvlHelp: { all: 'Everything; cards per the Layout setting.', basic: 'Should I look tonight, when, where, how many fists up, until when.', mid: 'Also altitude, azimuth, elongation, crescent age, Qadikhan check, monthly strip.', expert: 'Also topocentric/geocentric values, Yallop/Odeh parameters, raw data (JSON/CSV).' },
+    lvlIntro: 'Choose your level (you can change it later in the top bar):',
+    qaTitle: 'Short answer',
+    qaNo: (why, nx) => `No watch this evening: ${why}${nx ? ` Next observation night: ${nx}.` : ''}`,
+    qaMid: nx => `No month-start watch this evening.${nx ? ` Next observation night: ${nx}.` : ''}`,
+    qaYes: (a, b) => `Look: from sunset (${a}) until the crescent comes down to 5° (${b}).`,
+    qaWhere: (tm, dir, az, d, df, side, h, hf) => `Where: around ${tm}, towards ${dir} (azimuth ${az}°), ${d}° (≈ ${df} fist) ${side} of the sunset point, ${h}° (≈ ${hf} fist) above the horizon.`,
+    qaHow: 'Search with the naked eye; never look west through binoculars or a camera before the Sun has set.',
+    rawTitle: 'Raw data', rawJson: '⬇ This evening (JSON)', rawCsv: '⬇ Evenings of the month (CSV)', rawNote: 'Decimal point; times in UTC (ISO 8601). Angles in degrees; W in arcminutes.',
+    stBest: 'Yallop suggestion (additional)', cdBest: 'Yallop suggestion (additional)', skyAtBest: 'Yallop suggestion',
+    stBestNote: 'Modern criterion; the Tam İlmihâl search window is the basis.', cdBestLate: 'after the window; per Tam İlmihâl the crescent is then below 5°',
+    guideTxt: (d, side, h) => `At the time Yallop suggests (additional information) the crescent is ${d}° ${side} of where the Sun set, ${h}° above the horizon.`,
     mPrev: '◀ Previous month start', mNext: 'Next month start ▶', mList: '☰ Observation nights',
     mSelA: m => `Selected evening: observation night for ${m} (first possible evening, this location)`, mSelB: m => `Selected evening: best evening for ${m} (this location)`,
-    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (p. 360). Tap a date to plan that evening.',
+    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (pp. 315, 360). Tap a date to plan that evening.',
     rnPrev: '◀ Previous 12 months', rnNext: 'Next 12 months ▶', rnNow: 'Back to today', rnCalc: 'Calculating…',
     rnCols: ['Lunar month (calculated)', 'Conjunction', 'Observation night (here)', 'Best evening (here)', 'Earliest day 1 worldwide', ''],
     rnNone: 'no suitable evening here', rnSel: 'selected',

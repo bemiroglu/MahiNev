@@ -3,7 +3,7 @@
 <!--
   Mâh-ı Nev — Hilâl Rasad Yardımcısı v@@VERSION@@
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
-  Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
+  Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; Tam İlmihâl’e uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
   Değiştirilmiş kopyalar dağıtılamaz. Modified copies may not be distributed.
   Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir (THIRD_PARTY_NOTICES.md).
@@ -252,6 +252,9 @@ button.chip { cursor: pointer; font-size: .8rem; }
 .chip.off { color: var(--muted); }
 .mbar .acts { display: flex; gap: 6px; margin-left: auto; }
 .mbar .acts .btn { min-height: 32px; padding: 4px 10px; font-size: .85rem; }
+.mbar .acts { flex-wrap: wrap; justify-content: flex-end; }
+.mbnav button { min-height: 32px; padding: 4px 10px; font-size: .95rem; color: var(--ink); } .mbnav button:disabled { opacity: .35; cursor: default; }
+body.planning .mbar .mbnav { background: var(--accent-ink); border-color: var(--accent-ink); } body.planning .mbar .mbnav button { color: var(--accent); font-weight: 700; }
 body.planning .mbar { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 body.planning .mbar .mode { background: var(--accent-ink); color: var(--accent); }
 body.planning .mbar .mode::before { content: '◆ '; }
@@ -338,7 +341,7 @@ body:not(.explain) .hint, body:not(.explain) #introCard, body.introDone #introCa
 /* dar ekranda “Nasıl kullanılır?” başlığa tıklanınca açılır; başlıktaki düğmeler yalnız simge */
 #hIntro { cursor: pointer; }
 @media (max-width: 700px) {
-  body:not(.introOpen) #introCard ol, body:not(.introOpen) #introCard .btns { display: none; }
+  body:not(.introOpen) #introCard ol, body:not(.introOpen) #introCard .btns:not(#lvlIntroBtns) { display: none; }
   #hIntro::after { content: " ▾"; font-size: .8em; color: var(--muted); }
   body.introOpen #hIntro::after { content: " ▴"; }
   .tools .btn .lbl { display: none; }
@@ -402,7 +405,30 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 .extab tr.now td { background: var(--surface-2); }
 .extab .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
 .extab .lnk { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
-.exbasis select { max-width: 100%; }
+.extwo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.extwo > div { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--surface-2); }
+.extwo b { display: block; font-size: 1.02rem; margin-bottom: 3px; } .extwo span { display: block; font-size: .88rem; color: var(--muted); }
+@media (max-width: 560px) { .extwo { grid-template-columns: 1fr; } }
+.extoday { padding: 8px 10px; border-left: 3px solid var(--accent); background: var(--surface-2); border-radius: 0 8px 8px 0; }
+.exprev { margin: 6px 0; } .exprev p { margin: 4px 0 0; }
+.hjwhy { display: block; color: var(--muted); }
+/* gök cisimleri aracı */
+.gok { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 8px; }
+.gok > summary { cursor: pointer; font-weight: 600; padding: 4px 0; }
+.gokctl { display: flex; gap: 8px; align-items: center; margin: 6px 0; } .gokctl select { font: inherit; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.goknight { margin: 6px 0; font-size: .9rem; } .goknight .gch { display: inline-block; margin: 2px 6px 2px 0; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); font: inherit; font-size: .85rem; color: var(--ink); cursor: pointer; }
+.gokwrap { overflow-x: auto; }
+.goktab { border-collapse: collapse; width: 100%; font-size: .88rem; }
+.goktab th, .goktab td { border-bottom: 1px solid var(--line); padding: 5px 7px; text-align: left; vertical-align: top; white-space: nowrap; }
+.goktab th { font-size: .76rem; color: var(--muted); font-weight: 600; }
+.goktab td:first-child { white-space: normal; min-width: 9em; }
+.goktab tr.g-down td, .goktab tr.g-bright td { color: var(--muted); }
+.goktab .n { font-family: var(--font-mono); font-size: .84rem; }
+.fprev { margin: 0 0 10px; padding: 8px 12px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 600; } .fprev .btn { margin-left: 6px; background: var(--accent-ink); color: var(--accent); border-color: var(--accent-ink); font-weight: 700; }
+@media (max-width: 560px) { .mbar .acts .lbl { display: none; } .mbar .acts { margin-left: 0; width: 100%; justify-content: flex-start; gap: 4px; } .mbar .acts .seg button { padding: 4px 8px; min-height: 30px; font-size: .85rem; } .mbar .acts .btn { padding: 4px 8px; min-height: 30px; } }
+.mnk { font: inherit; font-size: .85rem; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); max-width: 100%; }
+.goktab .gmob { display: none; } .goknight .gch { text-align: left; }
+@media (max-width: 560px) { .goktab .gmob { display: inline-block; margin-top: 3px; } .goktab tr > :nth-child(3) { display: none; } .goktab td:first-child { min-width: 7.5em; } }
 .btn.exbtn { margin-left: 8px; padding: 3px 10px; font-size: .85rem; }
 @media print { #exDlg, #ntDlg { display: none; } }
 .ntl { display: block; margin-top: 3px; }
@@ -431,6 +457,26 @@ body:not(.explain) #fTip { display: none !important; }
 @media (max-width: 560px) { .btn.uplist { position: static; margin: 0 0 8px; } }
 #rnBody td .btn { padding: 3px 9px; font-size: .82rem; margin: 2px 4px 2px 0; }
 @media print { #rnDlg { display: none; } }
+
+/* modern ek bilgi: kitabın vakitlerinden sonra, küçük ve sönük */
+.st-row.ek { font-size: .88rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 6px; margin-top: 8px; }
+.cd div.ek { background: transparent; border: 1px dashed var(--line); }
+.cd div.ek b { font-size: .72rem; } .cd div.ek span { font-size: 1.05rem; color: var(--muted); } .cd div.ek i { display: block; font-style: normal; font-size: .72rem; color: var(--muted); margin-top: 2px; }
+
+/* kullanım düzeyi */
+.lvlq { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--muted); }
+.lvlq select { font: inherit; font-size: .85rem; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+body.lvl-basic [data-lvl="2"], body.lvl-basic [data-lvl="3"], body.lvl-mid [data-lvl="3"] { display: none !important; }
+.lvl-only-basic { display: none; } body.lvl-basic .lvl-only-basic { display: block; }
+.quick { margin: 10px 0 4px; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); }
+.quick b { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 4px; }
+.quick p { margin: 3px 0; }
+.raw { margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 8px; }
+@media (max-width: 560px) { .lvlq span { display: none; } }
+
+/* Başlangıç düzeyinde kısa cevap öne gelir: seçili akşamın değerlendirmesi, ay başı kartından önce */
+body.lvl-basic #view-plan .stack > #mNav { order: 1; } body.lvl-basic #view-plan .stack > #status { order: 2; }
+body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .stack > #introCard { order: 0; }
 </style>
 </head>
 <body>
@@ -443,6 +489,7 @@ body:not(.explain) #fTip { display: none !important; }
     </div>
     <div class="tools">
       <span class="ver" id="ver" title="Sürüm / Version"></span>
+      <label class="lvlq"><span id="lLvlQuick"></span><select id="lvlQuick"></select></label>
       <button class="btn" type="button" id="dlHtml"></button>
       <button class="btn" type="button" id="openSet"></button>
       <div class="seg" role="group" aria-label="Dil / Language"><button id="langTr" type="button">TR</button><button id="langEn" type="button">EN</button></div>
@@ -457,7 +504,7 @@ body:not(.explain) #fTip { display: none !important; }
     <div class="when"><span class="d" id="mbDate"></span><span class="tm" id="mbTime"></span><span class="hj" id="mbHijri"></span></div>
     <span class="mbstate" id="mbState"></span>
     <div class="chips" id="mbChips"></div>
-    <div class="acts"><div class="seg" role="group" id="mbLive"><button type="button" id="mbPlay"></button><button type="button" id="mbFreeze"></button></div><button class="btn" type="button" id="mbNow"></button><button class="btn" type="button" id="mbPrint"></button></div>
+    <div class="acts"><div class="seg mbnav" role="group" id="mbNav"><button type="button" id="mbBack" disabled>↶</button><button type="button" id="mbPrevD">◀</button><button type="button" id="mbNextD">▶</button><button type="button" id="mbFwd" disabled>↷</button></div><div class="seg" role="group" id="mbLive"><button type="button" id="mbPlay"></button><button type="button" id="mbFreeze"></button></div><button class="btn" type="button" id="mbNow"></button><button class="btn" type="button" id="mbPrint"></button></div>
   </div>
   <div class="fstrip" id="fStrip" hidden><span id="fsTxt"></span><div id="fsBar"></div></div>
   </div>
@@ -490,22 +537,25 @@ body:not(.explain) #fTip { display: none !important; }
             <button class="btn" type="button" id="today"></button>
             <button class="btn" type="button" id="nextDay"></button>
           </div>
-          <div class="field" style="margin-top:12px"><label for="nightKind" id="lNightKind"></label><select id="nightKind"></select></div>
-          <div class="btns"><button class="btn" type="button" id="prevNight"></button><button class="btn primary" type="button" id="nextNight"></button></div>
-          <p class="msg" id="nightMsg" role="status"></p>
+          <p class="cap" id="dateNote" hidden></p>
         </section>
       </aside>
       <div class="stack">
-        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><p class="cap" id="introTip"></p><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
+        <section class="card intro" id="introCard"><h2 id="hIntro"></h2><ol id="introList"></ol><p class="cap" id="introTip"></p><p class="small" id="lvlIntro"></p><div class="btns" id="lvlIntroBtns"></div><div class="btns"><button class="btn" type="button" id="introClose"></button></div></section>
         <section class="card" id="upCard"><h2 id="hUp"></h2><button class="btn uplist" type="button" id="upList"></button><div class="up" id="upBody"></div></section>
-        <nav class="mnav card" id="mNav" aria-label="Ay başı"><button class="btn" type="button" id="mPrev"></button><button class="btn" type="button" id="mList"></button><button class="btn" type="button" id="mNext"></button><span class="small" id="mSel"></span></nav>
+        <nav class="mnav card" id="mNav" aria-label="Ay başı"><button class="btn" type="button" id="mPrev"></button><button class="btn" type="button" id="mList"></button><button class="btn" type="button" id="mNext"></button><select id="nightKind" class="mnk"></select><span class="small" id="mSel"></span></nav>
         <section class="status" id="status" aria-live="polite"><div class="bar"></div><div id="statusBody"></div></section>
         <section class="card" id="tbCard"><h2 id="hTb"></h2>
           <div class="tbhead"><span class="tval" id="tbVal">--:--</span><span class="utc" id="tbUtc"></span><span class="livepill" id="tbLive" hidden></span></div>
           <div class="tb"><div id="tbTrack"></div><input type="range" id="tb" min="0" max="1620" step="1" aria-labelledby="hTb"></div>
-          <div class="btns" style="margin-top:6px"><button class="btn" type="button" data-jump="gurub" id="jGurub"></button><button class="btn" type="button" data-jump="best" id="jBest"></button><button class="btn" type="button" data-jump="win" id="jWin"></button><button class="btn" type="button" data-jump="now" id="jNow"></button></div>
+          <div class="btns" style="margin-top:6px"><button class="btn" type="button" data-jump="gurub" id="jGurub"></button><button class="btn" type="button" data-jump="win" id="jWin"></button><button class="btn" type="button" data-jump="best" id="jBest"></button><button class="btn" type="button" data-jump="now" id="jNow"></button></div>
           <div id="tbLegend" class="legend"></div>
           <div id="moment"></div>
+          <details class="gok" id="gokBox"><summary id="hGok"></summary>
+            <div class="gokctl"><label for="gokF" id="lGokF"></label><select id="gokF"></select></div>
+            <p class="small" id="gokTw"></p><div class="goknight" id="gokNight"></div>
+            <div class="gokwrap"><table class="goktab" id="gokTab"></table></div><p class="cap" id="gokCap"></p>
+          </details>
         </section>
         <section class="card" id="wxCard"><h2 id="hWx"></h2><div id="wxBody"></div></section>
         <section class="card" id="skyCard"><div class="cardhead"><h2 id="hSky"></h2><div class="btns"><button class="btn" type="button" id="openSM"></button></div></div><div id="sky"></div><div class="skytime"><button class="btn" type="button" id="skyMinus" aria-label="−10 min">−10′</button><input type="range" id="skyT" min="0" max="1620" step="1"><button class="btn" type="button" id="skyPlus" aria-label="+10 min">+10′</button><span class="tv" id="skyTVal"></span></div><div id="guides"></div>
@@ -515,7 +565,7 @@ body:not(.explain) #fTip { display: none !important; }
           <section class="card" id="detailCard"><h2 id="hDetail"></h2><dl class="kv" id="detail"></dl></section>
           <section class="card" id="monthCard"><h2 id="hMonth"></h2><dl class="kv" id="month1"></dl><div class="minimap" id="miniMap"></div><div class="legend" id="miniLegend"></div><p class="cap" id="miniHow"></p><dl class="kv" id="month2"></dl></section>
         </div>
-        <details class="card extra" id="extraBox"><summary id="hExtra"></summary><p class="note" id="extraNote"></p><dl class="kv" id="extra"></dl></details>
+        <details class="card extra" id="extraBox"><summary id="hExtra"></summary><p class="note" id="extraNote"></p><dl class="kv" id="extra"></dl><div class="raw" id="rawBox"><h3 id="hRaw"></h3><div class="btns"><button class="btn" type="button" id="rawJson"></button><button class="btn" type="button" id="rawCsv"></button></div><p class="cap" id="rawNote"></p></div></details>
       </div>
     </div>
   </main>
@@ -525,7 +575,7 @@ body:not(.explain) #fTip { display: none !important; }
       <div class="mapctl">
         <div class="field"><label for="mMode" id="lMMode"></label><select id="mMode"></select></div>
         <div class="field"><label for="mDate" id="lMDate"></label><input id="mDate" type="date"></div>
-        <div class="btns"><button class="btn" type="button" id="mPrev">◀</button><button class="btn" type="button" id="mNext">▶</button></div>
+        <div class="btns"><button class="btn" type="button" id="mapPrev">◀</button><button class="btn" type="button" id="mapNext">▶</button></div>
         <div class="field"><label for="mLayer" id="lMLayer"></label><select id="mLayer"></select></div>
         <div class="field"><label for="mRes" id="lMRes"></label><select id="mRes"><option value="4">4°</option><option value="3">3°</option><option value="2">2°</option></select></div>
         <label class="chk"><input type="checkbox" id="mAge"><span id="lMAge"></span></label>
@@ -546,6 +596,7 @@ body:not(.explain) #fTip { display: none !important; }
   <main id="view-saha" hidden>
     <section class="card fhero">
       <p class="ftip" id="fTip" hidden><span id="fTipTxt"></span> <button class="btn" type="button" id="fTipX"></button></p>
+      <p class="fprev" id="fPrev" hidden><span id="fPrevTxt"></span> <button class="btn" type="button" id="fPrevNow"></button></p>
       <div class="fnow"><div class="clock" id="fClock">--:--:--</div><div><p class="small" id="fDate" style="margin:0"></p><p class="small" id="fHijri" style="margin:0"></p></div></div>
       <div class="fbig" id="fBig" role="status"></div>
       <div id="fTrack"></div>
@@ -605,6 +656,7 @@ body:not(.explain) #fTip { display: none !important; }
       </div>
       <div>
         <h3 id="hHelp"></h3>
+        <div class="field"><label for="lvlSel" id="lLvl"></label><select id="lvlSel"></select></div><p class="cap" id="lvlNote"></p>
         <div class="field"><label for="layoutSel" id="lLayout"></label><select id="layoutSel"></select></div><p class="cap" id="layoutNote"></p>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>

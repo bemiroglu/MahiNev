@@ -50,7 +50,7 @@
     hjGlobal: 'Worldwide', hjLocal: 'Here', hjShort: 'The lunar day begins at the legal sunset (p. 188).',
     upTitle: 'Upcoming month-start observation',
     stWindow: 'Search per Tam İlmihâl', stBest: 'Best time (Yallop)', stAfterWin: 'after the window; per Tam İlmihâl the crescent is then below 5°',
-    stNoWindow: 'No book window this evening', liveTag: 'Now', thisEvening: d => `Evening of ${d}`,
+    stNoWindow: 'No Tam İlmihâl window this evening', liveTag: 'Now', thisEvening: d => `Evening of ${d}`,
     fNowOk: 'The crescent can be searched for now', fNowWait: m => `${m} until the search starts`, fNowAfter: 'This evening’s search window is over', fNowNo: 'No crescent observation this evening',
     fNowWin: (a, b) => `Search per Tam İlmihâl: ${a} – ${b}`, fNowLook: 'Where to look', fTonight: 'This evening’s computed assessment',
     fTrackNote: 'Evening chart: yellow band Tam İlmihâl’s window, green band the search interval, vertical line the current moment.',

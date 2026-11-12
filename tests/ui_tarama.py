@@ -63,6 +63,32 @@ async def main():
                         await pg.click('#' + dlg, timeout=3000); await pg.wait_for_timeout(400)
                         await pg.keyboard.press('Escape'); await pg.wait_for_timeout(200)
                     except Exception as e: issues.append(f'{vp} {lang} diyalog {dlg}: {str(e)[:80]}')
+                # her pencere kendi Kapat düğmesiyle kapanmalı (Esc'e gerek kalmadan)
+                for opener, dlg, closer in [('[data-topic]', 'dlg', 'dlgClose'), ('#statusBody [data-ex]', 'exDlg', 'exClose'), ('#mList', 'rnDlg', 'rnClose'),
+                                            ('#openSet', 'setDlg', 'setClose'), ('#mbPrint', 'prDlg', 'prClose'), ('#openSM', 'smDlg', 'smClose')]:
+                    try:
+                        await pg.evaluate("location.hash = '#plan'"); await pg.wait_for_timeout(300)
+                        await pg.evaluate(f"document.querySelector('{opener}').click()"); await pg.wait_for_timeout(500)
+                        if not await pg.evaluate(f"document.getElementById('{dlg}').open"): issues.append(f'{vp} {lang} {dlg}: açılmadı'); continue
+                        await pg.click('#' + closer, timeout=3000); await pg.wait_for_timeout(300)
+                        if await pg.evaluate(f"document.getElementById('{dlg}').open"):
+                            issues.append(f'{vp} {lang} {dlg}: Kapat düğmesi pencereyi kapatmıyor'); await pg.keyboard.press('Escape')
+                    except Exception as e: issues.append(f'{vp} {lang} {dlg}: {str(e)[:80]}')
+                # gezinme: planla → Şimdi → ↶ önceki seçime döner; planlamada Saha seçili akşamı gösterir
+                try:
+                    await pg.evaluate("location.hash = '#plan'"); await pg.wait_for_timeout(300)
+                    await pg.evaluate("HRUI.goNow(); HRUI.setDate('2026-12-10', { anchor: 'auto' })"); await pg.wait_for_timeout(600)
+                    await pg.evaluate("location.hash = '#saha'"); await pg.wait_for_timeout(800)
+                    fd = await pg.evaluate("document.getElementById('fPrev').hidden ? 'gizli' : document.getElementById('fDate').textContent")
+                    if '2026' not in fd or ('10' not in fd): issues.append(f'{vp} {lang} Saha planlanan akşamı göstermiyor: {fd}')
+                    await pg.evaluate("document.getElementById('mbNow').click()"); await pg.wait_for_timeout(500)
+                    await pg.evaluate("document.getElementById('mbBack').click()"); await pg.wait_for_timeout(800)
+                    d = await pg.evaluate("HRUI.st.date + (HRUI.st.live ? ' canlı' : '')")
+                    if d != '2026-12-10': issues.append(f'{vp} {lang} ↶ önceki seçime dönmedi: {d}')
+                    await pg.evaluate("location.hash = '#plan'")
+                except Exception as e: issues.append(f'{vp} {lang} gezinme: {str(e)[:80]}')
+                dup = await pg.evaluate("""() => { const c = {}; document.querySelectorAll('[id]').forEach(e => { c[e.id] = (c[e.id] || 0) + 1; }); return Object.keys(c).filter(k => c[k] > 1); }""")
+                if dup: issues.append(f'{vp} {lang}: yinelenen id: {dup}')
                 if lang == 'tr' and vp[0] == 1280:
                     miss = await pg.evaluate("""() => { const T = HRI18N.T; const a = Object.keys(T.tr), bk = Object.keys(T.en); return { enMissing: a.filter(k => !(k in T.en)), trMissing: bk.filter(k => !(k in T.tr)) }; }""")
                     if miss['enMissing'] or miss['trMissing']: issues.append('i18n eksik anahtar: ' + json.dumps(miss, ensure_ascii=False))

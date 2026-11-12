@@ -34,21 +34,27 @@ Rakım için `40`, `40,5`, `40 m` veya `1.054` yazılabilir; sonuncusu 1054 m ol
 | **Şimdi · donduruldu** | An çubuğunda "❚❚ Dondur" | Şimdiki an sabitlenir; ekran değişmez. "▶ Canlı" ile devam edilir. |
 | **Rü'yet planlaması** | Bir tarih, saat, gece veya şerit kutusu seçilince | An çubuğu turuncuya döner, kartlarda "Planlama" etiketi görünür. "↺ Şimdiye dön" ile çıkılır. |
 
+**Üst banttaki gezinme düğmeleri** her sekmede görünür:
+
+- **◀ ▶** bir gün geri veya ileri gider (planlama kipine geçilir).
+- **↶ Geri** önceki seçime döner; **İleri ↷** geri alınanı yeniden getirir. Gün ve gece düğmeleri, şerit, "Bu geceyi planla", gurûb ve en iyi an düğmeleri ve **Şimdi** dahil her atlama geri alınabilir. Örneğin bir akşamı planlarken "Şimdi"ye dokunduysanız ↶ ile planladığınız akşama dönersiniz.
+- Zaman çubuğu gece yarısından sonra ertesi sabah 03:00'e kadar sürer. Bu saatlerde seçili an ertesi günün sabahıdır, fakat gece önceki akşamın gecesi olarak gösterilir; Akşam kartında bu ayrıca yazılır. Ufuk kartındaki −10′ / +10′ düğmeleri gece yarısında (ve 03:00'te) güne geçer.
+
 Sayfada bir şeye dokunduğunuzda okuduğunuz kart yerinde kalır; yeni bilgiler sayfayı kaydırmaz.
 
 ## Plan sekmesi
 
-1. **Konum** ve **Akşam** kartları (solda):
-   - "◀ Önceki ay" ve "Sonraki ay ▶" düğmeleri, seçili tarihten önceki veya sonraki ilk **ay başı rasad gecesine** gider.
-   - "Ay başı rasadı" seçimiyle rasad gecesi (ilk mümkün akşam) veya en elverişli akşam (≥ 18°) seçilir.
+1. **Konum** ve **Akşam** kartları (solda): yer, akşamın tarihi, "◀ Önceki gün", "Bugünün akşamı", "Sonraki gün ▶".
 2. **Durum kartı:**
-   - kitabın sınıfı ve rü'yet beyanı;
-   - kitaba göre arama penceresi (gurûb → hilâl 5°);
-   - Yallop'un en iyi anı. Bu an pencereden sonraya düşüyorsa kartta açıkça yazılır.
+   - Tam İlmihâl'e göre sınıf ve rü'yet beyanı;
+   - **Ay başı:** ayın 1. gününün iki ihtimali (örneğin "1 Receb: 10 Ara Per veya 11 Ara Cum"), birinci ve ikinci gecenin tarihleriyle;
+   - Tam İlmihâl'e göre arama penceresi (gurûb → hilâl 5°);
+   - Yallop önerisi (ek bilgi). Bu an pencereden sonraya düşüyorsa kartta açıkça yazılır.
 3. **Seçili an:**
    - 00:00'dan ertesi gün 03:00'e kadar süren zaman çubuğu;
    - "bu anda hilâl aranabilir mi, neden?" sorusunun cevabı;
-   - güneş ve ay konumu, evre, sabah hilâli.
+   - güneş ve ay konumu, evre, sabah hilâli;
+   - **Gök cisimleri** (bkz. aşağıda).
 4. **Batı ufku / bütün ufuk:**
    - Seçili an batı penceresindeyse hilâlin yeri yumruk ölçeğiyle çizilir; değilse 360° ufuk gösterilir. Telefonda ufuk yana kaydırılabilir.
    - "✦ Gökyüzü haritası" bütün gökyüzünü açar.
@@ -59,31 +65,59 @@ Sayfada bir şeye dokunduğunuzda okuduğunuz kart yerinde kalır; yeni bilgiler
 ## Hicrî tarih nasıl okunur?
 
 - Kamerî gün **şer'î gurûbda** değişir (s. 188).
-- İki ihtimalin bulunduğu günler birlikte yazılır, örneğin "1 Receb 1448 veya 29/30 Cemâziyelâhir 1448". Yeni hicrî yıl da Muharrem hilâli görülünce başladığından, o gün eski ve yeni yıl yan yana yazılır.
-- Esas alınan kapsam **dünya genelidir**, çünkü bir şehirde görülünce her yerde lâzım olur (s. 315). Zilhicce'de kapsam yereldir (Mekke ve bulunulan yer).
-- Bulunduğunuz yerin yerel hesabı farklıysa **"Burada"** satırı ayrıca gösterilir.
+- Tam İlmihâl'e göre hilâl, hesâbın bildirdiği gecede doğar; o gece görülmeyip bir gece sonra görülebilir (s. 360). Rü'yetle başlama hesapla anlaşılandan bir gün sonra olabilir, önce olamaz (s. 315). Bu yüzden her ayın 1. günü iki günden biridir ve hicrî gün iki sayıyla yazılır: "3 Receb 1448 (veya 2)". Ayın ilk gününde "1 Receb 1448 veya 29/30 Cemâziyelâhır 1448" yazılır.
+- **Neden iki sayı:** Hangi sayının hangi güne bağlı olduğu yanında yazar: "1 Receb 10 Ara Per ise 3, 11 Ara Cum ise 2".
+- Yeni hicrî yıl da Muharrem hilâli görülünce başladığından, o gün eski ve yeni yıl yan yana yazılır.
+- Esas alınan kapsam **dünya genelidir**, çünkü bir şehirde görülünce her yerde lâzım olur (s. 315). Zilhiccede şahitle sabit olmayan yerlerde Işık usulü esastır (s. 326).
+
+## Kullanım düzeyi
+
+Üst çubuktaki **Düzey** seçimi (Ayarlar'da da var) programın yoğunluğunu değiştirir; hesap aynıdır:
+
+- **Başlangıç:** Seçili akşamın değerlendirmesi öne gelir ve bir **kısa cevap** verir: bu akşam bakılacak mı, saat kaçtan kaça, hangi yöne, gurûb noktasının kaç yumruk sağında veya solunda, ufkun kaç yumruk üstünde. Diğer kartlar katlı başlar.
+- **Deneyimli:** Ayrıca irtifâ, semt, beynûnet, hilâl yaşı, Kâdîhân kontrolü ve aylık şerit açık başlar.
+- **Uzman:** Bütün kartlar açık başlar; "Ek bilgiler" kutusunda toposentrik ve jeosentrik değerler, Yallop ve Odeh parametreleri ve **ham veri** dışa aktarımı (bu akşam için JSON, ayın akşamları için CSV) bulunur.
+- **Tüm düzeyler** (varsayılan): her şey görünür; kartların açık veya katlı başlaması "Görünüm" (sade/tam) ayarına göredir.
+
+Hiçbir düzeyde kart gizlenmez; katlı kart başlığına dokununca açılır. Tam İlmihâl'in hükmü (sınıf, kesin red, arama penceresi, rü'yet beyanı) her düzeyde görünür. A4 çıktıları düzeyden etkilenmez.
+
+**Yallop önerisi:** Yallop ölçütünün önerdiği an modern ek bilgidir. Tam İlmihâl'in vakitlerinden sonra, küçük olarak "Yallop önerisi (ek bilgi)" adıyla gösterilir; Tam İlmihâl penceresinden sonraysa bu ayrıca yazılır. Başlangıç ve Deneyimli düzeylerde Saha ve değerlendirme kartında görünmez; "Ek bilgiler" kutusunda her zaman bulunur.
 
 ## Ay başından ay başına geçmek
 
 Plan sekmesinde, seçili akşamın değerlendirmesinin hemen üstünde üç düğme vardır:
 
-- **◀ Önceki ay başı** ve **Sonraki ay başı ▶:** seçili akşamı bir önceki veya bir sonraki kamerî ayın rasad gecesine götürür. Düğmelerin altında seçili akşamın hangi ayın rasad gecesi olduğu yazar.
-- **☰ Rasad geceleri:** 13 kamerî ayın listesini açar. Her satırda ayın hesâbî adı, ictimâ anı, bu yer için rasad gecesi (hesâben ilk mümkün akşam) ve en elverişli akşam, dünyada en erken 1. gün bulunur. Tarihe dokununca o akşam planlanır; "Açıkla" o akşamın açıklama penceresini açar. "Önceki/Sonraki 12 ay" ile listede ilerlenir. Aynı liste "Yaklaşan ay başı rasadı" kartından da açılır.
+- **◀ Önceki ay başı** ve **Sonraki ay başı ▶:** seçili akşamı bir önceki veya bir sonraki kamerî ayın rasad gecesine götürür. Yanındaki seçimle rasad gecesi (ilk mümkün akşam) veya en elverişli akşam (≥ 18°) seçilir. Altında seçili akşamın hangi ayın rasad gecesi olduğu yazar.
+- **☰ Rasad geceleri:** 13 kamerî ayın listesini açar. Her satırda ayın hesâbî adı, ictimâ anı, bu yer için rasad gecesi (hesâben ilk mümkün akşam) ve en elverişli akşam, ayın 1. gününün iki ihtimali bulunur. Tarihe dokununca o akşam planlanır; "Açıkla" o akşamın açıklama penceresini açar. "Önceki/Sonraki 12 ay" ile listede ilerlenir. Aynı liste "Yaklaşan ay başı rasadı" kartından da açılır.
 
-Listedeki tarihler hesâbîdir; ay başı rü'yetle kesinleşir ve "dünyada en erken 1. gün"den önce olamaz (s. 360).
+Listedeki tarihler hesâbîdir; ay başı rü'yetle kesinleşir ve hesapla bulunan günden önce olamaz (s. 315).
 
 ## "Bu akşam ne demek?" açıklama penceresi
 
-Plan sekmesindeki değerlendirme kartında, Saha sekmesinde ve "Yaklaşan ay başı rasadı" kartında **ⓘ Bu akşam ne demek?** düğmesi bulunur. Pencere, seçili akşam ve yer için şunları kitabın sayfalarıyla açıklar:
+Plan sekmesindeki değerlendirme kartında, Saha sekmesinde ve "Yaklaşan ay başı rasadı" kartında **ⓘ Bu akşam ne demek?** düğmesi bulunur. Pencere, seçili akşam ve yer için şunları Tam İlmihâl'in sayfalarıyla açıklar:
 
 - **Bu akşam burada:** hilâlin Tam İlmihâl'e göre sınıfı ve "gördüm" beyanının durumu.
-- **Bu akşam dünyada:** hilâlin hesâben mümkün ve görülebilir olduğu bölgeler (kaba tarama).
-- **Ay başı ne olur?** İki kesin sınır vardır: rü'yetle başlama hesapla anlaşılandan önce olamaz (s. 360) ve ay otuz günü aşmaz (s. 314–315). Gerisi önceki ayın başına bağlıdır.
-- **Önceki ayın başı:** Önceki ayın başı da rü'yetle veya otuza tamamlamayla sabit olur; program bunu bilemez ve varsaymaz. Bir tablo her ihtimali ayrı gösterir: önceki ay hesâbî en erken gün mü, bir gün sonra mı başladı (rü'yet kaydınız varsa o da); her biri için 29. gün akşamı, o akşam görülürse ve görülmezse yeni ayın 1. günü. Bugünün kamerî günü de her ihtimal için "önceki ay … günü başladıysa" diye yazılır. Yetkili makamca sabit olan başlangıcı biliyorsanız seçin; gösterim ona göre daralır. Seçim hüküm değildir.
-- **Akşam akşam:** Hilâl ilk kez o akşam görülüp sabit olursa yeni ayın 1. günü ertesi gündür; bunun şartı (önceki ayın hangi gün başlamış olması gerektiği) yanında yazılır. Tarihe dokununca o akşam planlanır.
-- **Kapsam ve hüküm:** ayın adına göre (Ramezân, Şevvâl, Zilhicce) kitabın hükümleri. Zilhiccede önce Işık usulü, sonra ek bilgi olarak bu yerin astronomik hesabı gelir.
+- **Ay başı: iki gece.** Hilâl, hesâbın bildirdiği gecede doğar; o gece görülmeyip bir gece sonra görülebilir (s. 360). Rü'yetle başlama hesapla anlaşılandan bir gün sonra olabilir, önce olamaz (s. 315). Pencere ayın 1. günü için iki kutu gösterir: "1 Receb = 10 Aralık" (birinci gece, 9 Aralık akşamı görülüp sabit olursa) ve "1 Receb = 11 Aralık" (ikinci gece). Zilhiccede iki gün Işık usulüyle bulunan gün ve bir gün sonrasıdır (s. 326); Kurban bayramının iki ihtimali de yazılır.
+- **Bugün:** seçili günün kamerî günü, tarihlerle: "3 Receb (1 Receb 10 Aralık ise) veya 2 Receb (11 Aralık ise)".
+- **Önceki ay:** Ay 29 günden kısa, 30 günden uzun olmaz (s. 315). Önceki ayın iki ihtimalinden biri bu ayın 1. gününü kesinleştirir, diğeri rü'yete bırakır; pencere bunu iki kısa cümleyle yazar.
+- **Akşam tablosu:** önceki akşam (görülemez; beyan kabul edilmez), birinci gece ve ikinci gece; her biri için bu yerdeki sınıf, dünyada mümkün ve görülebilir olduğu bölgeler, hilâl o akşam görülüp sabit olursa ayın 1. günü. Tarihe dokununca o akşam planlanır.
+- **Sizin rü'yetiniz:** Birinci veya ikinci gece için "gördüm" kaydınız varsa bu rü'yete göre ayın 1. günü tek cümleyle yazılır. Kayıt şahitlik yerine geçmez (s. 315).
+- **Kapsam ve hüküm:** ayın adına göre (Ramezân, Şevvâl, Zilhicce) Tam İlmihâl'in hükümleri. Kâdîhân ölçüsü (s. 316) "bu akşam hilâl görülürse … gecenin hilâlidir" diye bilgi olarak verilir; program ay başını buna göre seçmez.
 
-Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili makamca verilir (s. 315–316). Deliller için Rehber'de **Naklî deliller** konusuna bakın.
+Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili makamca verilir (s. 315). Deliller için Rehber'de **Naklî deliller** konusuna bakın.
+
+## Gök cisimleri (seçili an)
+
+"Seçili an" kartının altındaki bu bölüm, rasad günleri dışında da gökyüzünü incelemek için bir gözlem aracıdır. Zaman çubuğu, gün okları ve ↶ / ↷ ile birlikte çalışır.
+
+- **Gösterilenler:** Güneş, Ay, yedi gezegen ve 32 parlak yıldız. "Göster" seçimiyle şu an görülebilenler, Güneş–Ay–gezegenler veya hepsi listelenir.
+- **Sütunlar:** yön ve yükseklik, durum (görülebilir, gökyüzü aydınlık, ufka çok yakın, ufkun altında, Güneş'e çok yakın), seçili günün doğuş–tepe–batış saatleri, kadir. Deneyimli düzeyde takımyıldız; Uzman düzeyde sağ açıklık ve dik açıklık, Güneş'e açı ve uzaklık da görünür.
+- **Alacakaranlık:** güneş doğuşu ve batışı, sivil, denizci ve astronomik alacakaranlık sınırları.
+- **Bu gece:** Ay ve gezegenlerin çıplak gözle görülebileceği aralık ve en yüksek oldukları an. Bir öğeye dokununca seçili an o saate gider.
+- **Görünürlük temkinli bir tahmindir:** güneşin yüksekliğine, cismin parlaklığına ve ufka yakınlıkta sönükleşmeye göre hesaplanır; hava, ışık kirliliği ve gözün karanlığa alışması hesaba katılmaz.
+- Ay başı rasad akşamlarında kart hilâle odaklanır ve bu bölüm kapalı başlar; diğer günlerde kartın adı "Seçili an: gökyüzü ve gök cisimleri" olur ve bölüm açık başlar.
+
+Güneş'e asla doğrudan veya dürbünle bakmayın.
 
 ## Büyük ekran ve PDF
 
@@ -95,7 +129,7 @@ Hazırlık için büyük bir ekran (bilgisayar veya tablet) tavsiye edilir. Saha
 - Tam İlmihâl yatsı vakti için iki kavli bildirir (s. 178):
   - İmâmeyn: kırmızılığın kayboluşu, −17°;
   - İmâm-ı a'zam: beyâzlığın kayboluşu, −19°.
-- Kitap, İmâm-ı a'zam kavline göre kılmanın ihtiyâtlı olduğunu söyler (s. 194). Bu yüzden program −19°'yi esas alır ve −17° sonucunu yanında gösterir.
+- Tam İlmihâl, İmâm-ı a'zam kavline göre kılmanın ihtiyâtlı olduğunu söyler (s. 194). Bu yüzden program −19°'yi esas alır ve −17° sonucunu yanında gösterir.
 - Şafak vakti, hakîkî vakte temkin eklenerek bulunur (s. 197).
 
 ## Saha sekmesi (telefon)
@@ -105,7 +139,8 @@ Hazırlık için büyük bir ekran (bilgisayar veya tablet) tavsiye edilir. Saha
 - **Büyük satır:** "Aramaya 1 sa 12 dk kaldı", "Hilâl şimdi aranabilir" veya "Bu akşamın arama penceresi bitti".
 - **Akşam çizelgesi:** gurûb, pencere, aranabilir aralık ve şimdiki an.
 - **Geri sayımlar:** gurûb, en iyi an, 5° anı, ay batışı.
-- **Gök görünümü her zaman şimdi içindir;** bakılacak yer yazıyla da verilir.
+- **Gök görünümü** canlı kipte şimdiki an içindir; bakılacak yer yazıyla da verilir.
+- **Önizleme:** Plan'da bir akşam planladıysanız (örneğin "Bu geceyi planla"), Saha o akşamın seçili anını **önizleme** olarak gösterir; üstte "Önizleme (planlama)" şeridi ve **Şimdiye dön** düğmesi bulunur. Rü'yet kaydı formu her zaman gerçek saati kullanır.
 - **Araçlar:** gece modu (kırmızı), ekranı açık tutma, pusula, gökyüzü haritası, "Konumum", yazı büyütme.
 - **Pusula:** Dokununca bir kadran açılır. Kadranın üstü baktığınız yöndür; hilâl, Güneş ve gurûb noktası kadranda gösterilir. Yazı, hedefe kaç derece sola veya sağa döneceğinizi ve hilâlin ufuktan kaç derece (kaç yumruk) yukarıda olduğunu söyler. Gurûbdan önce hedef gurûb noktasıdır, sonra hilâldir. Telefon düzken üst kenarın, dik tutulunca arka kameranın yönü alınır.
 - **Pusulayı ayarlama:** Manyetik pusula gerçek kuzeyden birkaç derece sapar; araç ve demir yakınında daha çok şaşar. Güneş batarken telefonu Güneş'e (battıktan sonra gurûb noktasına) çevirip **Güneşle ayarla** düğmesine dokunun; program farkı hesaplayıp düzeltir. Ayar altı saat geçerlidir. Güneşe dürbün veya kamerayla bakmayın.
@@ -150,15 +185,15 @@ Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir; sayfalar
 - **Yazı boyutu.**
 - **Saat gösterimi:** yerel veya yerel + UTC.
 - **Canlı kipte yenileme aralığı.**
-- **Karanlık eşiği:** gurûb, −3° veya −6°. Yalnızca aranabilir aralığı değiştirir; kitabın sınıflarını değiştirmez.
+- **Karanlık eşiği:** gurûb, −3° veya −6°. Yalnızca aranabilir aralığı değiştirir; Tam İlmihâl'in sınıflarını değiştirmez.
 - **Hava tahmini ve otomatik konum.**
 
 ## Kaynak, lisans ve indirme
 
-- Sayfanın altında ve **Ayarlar → Bu araç, kaynak ve lisans** bölümünde kaynak kitap bağlantıları, telif, lisans (CC BY-NC-ND 4.0) ve yayın adresi (github.com/bemiroglu/MahiNev) yazar.
+- Sayfanın altında ve **Ayarlar → Bu araç, kaynak ve lisans** bölümünde Tam İlmihâl bağlantıları, telif, lisans (CC BY-NC-ND 4.0) ve yayın adresi (github.com/bemiroglu/MahiNev) yazar.
 - **⬇ HTML'yi indir** düğmesi, kullandığınız sürümü tek dosya olarak indirir. Bu dosyayı internetsiz kullanabilir ve değiştirmeden paylaşabilirsiniz.
 - Ekranın üstünde kırmızı **"değiştirilmiş kopya"** uyarısı görürseniz, dosya değiştirilmiş olabilir. Hesap sonuçlarına güvenmeden önce özgün dosyayı yayın adresinden indirin.
-- Programın bir fıkıh kaynağı olmadığını, kitaba uymayan her bilginin geçersiz olduğunu unutmayın. Kitabın bağlantıları sayfanın altında ve Rehber sekmesinin başındadır. Sayfa numaraları kitabın Ocak 2026 baskısına göredir.
+- Programın bir fıkıh kaynağı olmadığını, Tam İlmihâl'e uymayan her bilginin geçersiz olduğunu unutmayın. Tam İlmihâl'in bağlantıları sayfanın altında ve Rehber sekmesinin başındadır. Sayfa numaraları kitabın Ocak 2026 baskısına göredir.
 
 ## Rü'yet kaydı: sonuç türleri, denetimler ve yedekleme
 

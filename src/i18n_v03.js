@@ -74,7 +74,7 @@
   const T = G.HRGuide && G.HRGuide.TOPICS;
   if (T) {
     T.tr.karanlik = ['Güneş ne kadar alçalmalı?',
-      'Kitap, hilâlin gurûbdan sonra arandığını ve ufka 5° yaklaşınca görülemeyeceğini bildirir (s. 360); aramaya başlamak için güneşin ayrıca kaç derece alçalması gerektiğine dair bir sınır koymaz. Bu sebeple program Tam İlmihâl’in sınıflarını ve kesin red hükmünü bu seçime bağlamaz.',
+      'Tam İlmihâl, hilâlin gurûbdan sonra arandığını ve ufka 5° yaklaşınca görülemeyeceğini bildirir (s. 360); aramaya başlamak için güneşin ayrıca kaç derece alçalması gerektiğine dair bir sınır koymaz. Bu sebeple program Tam İlmihâl’in sınıflarını ve kesin red hükmünü bu seçime bağlamaz.',
       'Gurûbdan hemen sonra gök hâlâ parlaktır; ince hilâlin gökle zıtlığı (kontrastı) güneş birkaç derece alçaldıkça artar, hilâl ise bu arada ufka yaklaşır. En iyi denge çoğu zaman gurûbdan birkaç dakika sonradır (Yallop: gurûb + farkın 4/9’u). Güneş −6°’de sivil alacakaranlık biter. Bu seçim, zaman çubuğundaki yeşil “aranabilir aralık” bandını, seçili an kartını, anlık haritayı ve saha modunu birlikte değiştirir.'];
     T.en.karanlik = ['How far should the Sun be below the horizon?',
       'Tam İlmihâl states that the crescent is sought after sunset and cannot be seen once it is within 5° of the horizon (p. 360); it sets no separate limit for how far the Sun must have sunk before searching. The programme therefore does not tie Tam İlmihâl’s classes or the rejection rule to this choice.',

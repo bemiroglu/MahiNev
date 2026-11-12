@@ -1,5 +1,27 @@
 # Sürümler
 
+## 0.12.0 — 13 Kasım 2026
+
+- **İki gece esası:** Tam İlmihâl'e göre hilâl, hesâbın bildirdiği gecede doğar; o gece görülmeyip bir gece sonra görülebilir (s. 360). Rü'yetle başlama hesapla anlaşılandan bir gün sonra olabilir, önce olamaz (s. 315); bayram, Işık usulüyle bulunan gün yâhud bir gün sonradır (s. 326). Her ayın 1. günü bu iki günden biridir.
+  - **Açıklama penceresi:** Ayın 1. günü için iki kutu (birinci gece görülürse / ikinci gece), bugünün kamerî günü tarihlerle, önceki akşam–birinci gece–ikinci gece tablosu. Ayın 29–30 gün çekmesi (s. 315) iki kısa cümleyle yazılır: önceki ayın iki ihtimalinden biri bu ayın 1. gününü kesinleştirir, diğeri rü'yete bırakır.
+  - **Durum kartı ve kısa cevap:** "Ay başı" satırı, örneğin "1 Receb: 10 Ara Per veya 11 Ara Cum". Aynı bilgi rasad planı çıktısında da var.
+  - **Neden iki sayı:** Hicrî günün iki sayısının hangi güne bağlı olduğu yazılır: "1 Receb 10 Ara Per ise 3, 11 Ara Cum ise 2".
+  - **Rasad geceleri listesi:** Ayın 1. gününün iki ihtimali.
+  - Hicrî tarih Tam İlmihâl'in kapsamıyla tek satırdır: Zilhicce dışında dünya geneli (s. 315), Zilhiccede Işık usulü (s. 326).
+  - 2026–2030 arasındaki 60 kamerî ayın hepsinde dünyanın bir yerinde beynûnet en geç ikinci gece 18°'yi geçer (Osmanlı kabulü, s. 360).
+- **Rasıdın kendi rü'yeti:** Birinci veya ikinci gece "gördüm" kaydı varsa açıklama penceresi ve Saha, bu rü'yete göre ayın 1. gününü tek cümleyle yazar. Kayıt şahitlik yerine geçmez (s. 315).
+- **Kâdîhân ölçüsü** (s. 316) bilgi olarak verilir: "Bu akşam hilâl görülürse, Kâdîhân'a göre … gecenin hilâlidir." Program ay başını buna göre seçmez.
+- **Gök cisimleri aracı:** "Seçili an" kartında Güneş, Ay, yedi gezegen ve 32 parlak yıldız; yön ve yükseklik, doğuş–tepe–batış, kadir, takımyıldız, alacakaranlık evreleri ve bu gece çıplak gözle görülebilecekler. Uzman düzeyde sağ açıklık, dik açıklık, Güneş'e açı ve uzaklık. Görünürlük temkinli bir çıplak göz tahminidir. Ay başı akşamlarında kapalı, diğer günlerde açık başlar.
+- **Gezinme:**
+  - Üst bantta ◀ ▶ gün okları ve **↶ Geri / İleri ↷**; "Şimdi" dahil her atlama geri alınabilir.
+  - Ay başı gezintisi tek yerde: "◀ Önceki ay başı / Sonraki ay başı ▶" ve gece türü seçimi. Akşam kartında "Bugünün akşamı".
+  - Ufuk kartındaki −10′ / +10′ gece yarısında güne geçer; gece yarısından sonraki saatler Akşam kartında açıklanır.
+  - Planlama kipinde Saha sekmesi seçili anı "önizleme" olarak gösterir; rü'yet kaydı gerçek saati kullanır.
+  - Haritadaki ◀ ▶ okları gün veya ay değiştirir.
+- **Pencereler:** Her açıklama penceresi kendi "Kapat" düğmesiyle kapanır.
+- **Metinler:** Kaynak program metinlerinde "Tam İlmihâl" adıyla anılır. "Bir gün sonra olabilir, önce olamaz" hükmü s. 315 ile gösterilir. Rehber → Kaynaklar'da Kongre tebliğinin tam adı ve bağlantısı.
+- **Doğrulama:** 60 test (iki gece esası, Zilhiccede Işık usulü, gök cisimleri). Arayüz taraması her pencereyi Kapat düğmesiyle kapatır, kimlik çakışmasını ve gezinmeyi (↶, Saha önizlemesi) denetler.
+
 ## 0.11.0 — 12 Kasım 2026
 
 - **Ay başından ay başına geçiş:** Plan sekmesinde değerlendirmenin üstünde "◀ Önceki ay başı", "☰ Rasad geceleri" ve "Sonraki ay başı ▶" düğmeleri. Seçili akşamın hangi ayın rasad gecesi olduğu yazar.

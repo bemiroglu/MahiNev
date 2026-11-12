@@ -31,7 +31,7 @@
     recThumbDropped: 'önizleme depolama yetersizliği yüzünden saklanmadı',
     recBackupNote: 'Kayıtlar yalnız bu tarayıcıda durur; tarayıcı verisi silinirse kaybolur. Düzenli yedek alın.',
     // Hicrî tarih ve kapsam
-    hjBook: 'Hesâbî tarihtir; ay başı rü’yetle kesinleşir. Tam İlmihâl: “Hilâli görmekle Ramezânın başlaması, hesâbla anlaşılandan bir gün sonra olabilir. Fekat bir gün önce olamaz” (s. 360).',
+    hjBook: 'Hesâbî tarihtir; ay başı rü’yetle kesinleşir. Tam İlmihâl: “Hilâli görmekle Ramezânın başlaması, hesâbla anlaşılandan bir gün sonra olabilir. Fekat bir gün önce olamaz” (s. 315).',
     globalScope: 'Dünya geneli: aynı takvim gününün en geç gurûbu tarih çizgisinin hemen doğusunda olduğundan arama orada, kutup daireleri arasında (±66°) yapılır. Bütün dünya taramasıyla aynı günü verdiği doğrulanmıştır.',
     // Yükseklik
     hMaxUnset: 'Şehrin en yüksek yeri girilmedi (0 m alındı); şer’î gurûb ve temkin bu yükseklik olmadan hesaplandı (s. 176, 186). Biliyorsanız girin.',
@@ -67,7 +67,7 @@
     recPhotoKeep: 'Keep the original photo file separately. The record holds only its digest (SHA-256) and a small preview; the original can be linked back with “Verify a photo”.',
     recThumbDropped: 'preview not stored for lack of storage space',
     recBackupNote: 'Records live only in this browser and are lost if browser data is cleared. Back up regularly.',
-    hjBook: 'A computed date; the month is established by sighting. Tam İlmihâl: beginning Ramadan by sighting the crescent may be one day later than what is known by calculation, but it cannot be one day earlier (p. 360).',
+    hjBook: 'A computed date; the month is established by sighting. Tam İlmihâl: beginning Ramadan by sighting the crescent may be one day later than what is known by calculation, but it cannot be one day earlier (p. 315).',
     globalScope: 'Worldwide: the latest sunset of a given calendar day is just east of the date line, so the search is made there, between the polar circles (±66°). Verified to give the same day as a whole-world scan.',
     hMaxUnset: 'The city’s highest point was not entered (0 m used); the legal sunset and temkin were computed without it (pp. 176, 186). Enter it if known.',
     compassNote: 'The compass is approximate: it is the phone’s magnetic reading, not corrected for magnetic variation, and misleads near vehicles, ships and steel structures. Confirm the direction with the guide stars.',
