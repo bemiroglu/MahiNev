@@ -69,8 +69,9 @@ Plan sekmesindeki değerlendirme kartında, Saha sekmesinde ve "Yaklaşan ay ba�
 
 - **Bu akşam burada:** hilâlin Tam İlmihâl'e göre sınıfı ve "gördüm" beyanının durumu.
 - **Bu akşam dünyada:** hilâlin hesâben mümkün ve görülebilir olduğu bölgeler (kaba tarama).
-- **Ay başı ne olur?** Önceki ayın 1. gününe göre 29. gün akşamı, görülürse ve görülmezse yeni ayın 1. günü, "bir gün sonra olabilir, önce olamaz" alt sınırı (s. 360). Bir tablo, ay başı akşamlarını tek tek gösterir; tarihe dokununca o akşam planlanır.
-- **Önceki ayın başı:** Otuza tamamlama önceki ayın başına bağlıdır. Program hesâbî en erken günü esas alır. O ay için çıplak gözle "gördüm" kaydınız varsa kayıt esas alınır. "Bir gün sonra" veya bildiğiniz sabit başlangıcı da seçebilirsiniz; seçim yalnız bu açıklamayı etkiler.
+- **Ay başı ne olur?** İki kesin sınır vardır: rü'yetle başlama hesapla anlaşılandan önce olamaz (s. 360) ve ay otuz günü aşmaz (s. 314–315). Gerisi önceki ayın başına bağlıdır.
+- **Önceki ayın başı:** Önceki ayın başı da rü'yetle veya otuza tamamlamayla sabit olur; program bunu bilemez ve varsaymaz. Bir tablo her ihtimali ayrı gösterir: önceki ay hesâbî en erken gün mü, bir gün sonra mı başladı (rü'yet kaydınız varsa o da); her biri için 29. gün akşamı, o akşam görülürse ve görülmezse yeni ayın 1. günü. Bugünün kamerî günü de her ihtimal için "önceki ay … günü başladıysa" diye yazılır. Yetkili makamca sabit olan başlangıcı biliyorsanız seçin; gösterim ona göre daralır. Seçim hüküm değildir.
+- **Akşam akşam:** Hilâl ilk kez o akşam görülüp sabit olursa yeni ayın 1. günü ertesi gündür; bunun şartı (önceki ayın hangi gün başlamış olması gerektiği) yanında yazılır. Tarihe dokununca o akşam planlanır.
 - **Kapsam ve hüküm:** ayın adına göre (Ramezân, Şevvâl, Zilhicce) kitabın hükümleri. Zilhiccede önce Işık usulü, sonra ek bilgi olarak bu yerin astronomik hesabı gelir.
 
 Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili makamca verilir (s. 315–316). Deliller için Rehber'de **Naklî deliller** konusuna bakın.

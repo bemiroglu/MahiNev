@@ -1,7 +1,7 @@
 /* Metinler: 0.10 (açıklama penceresi, ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.10.0';
+  G.HR_VERSION = '0.10.1';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Ekran ve PDF tavsiyesi

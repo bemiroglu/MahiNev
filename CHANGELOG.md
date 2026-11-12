@@ -1,5 +1,14 @@
 # Sürümler
 
+## 0.10.1 — 12 Kasım 2026
+
+- **Açıklama penceresi, kanonik düzeltme:** Önceki ayın başı rü'yetle veya otuza tamamlamayla sabit olur; program bunu bilemez. Pencere artık hiçbir başlangıcı varsaymaz ve "başlamıştır" gibi kesin hüküm kurmaz:
+  - Her ihtimal (hesâbî en erken gün, bir gün sonrası, rü'yet kaydı) ayrı satırda ve şartlı gösterilir: 29. gün akşamı, görülürse ve görülmezse yeni ayın 1. günü.
+  - Bugünün kamerî günü her ihtimal için "önceki ay … günü başladıysa" diye yazılır.
+  - Akşam tablosunda her akşamın yanında şart yazar: hilâl ilk kez o akşam görülürse 1. gün ertesi gündür; bunun için önceki ayın hangi gün başlamış olması gerektiği.
+  - Kesin olan yalnız iki sınırdır: alt sınır (s. 360) ve ayın otuz günü aşmaması (s. 314–315).
+  - "Bu yerde" sütununda sınıfın gerekçesi de yazar (ör. "Ay güneşten önce batıyor").
+
 ## 0.10.0 — 12 Kasım 2026
 
 - **"Bu akşam ne demek?" açıklama penceresi:**

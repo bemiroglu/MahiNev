@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.10.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.10.1
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; kitaba uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -2489,7 +2489,7 @@ window.HR_CANON_EN = [
 /* Metinler: 0.10 (açıklama penceresi, ekran tavsiyesi, akşam gökyüzü haritası, pusula, bildirim ekleri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.10.0';
+  G.HR_VERSION = '0.10.1';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Ekran ve PDF tavsiyesi
@@ -5937,32 +5937,32 @@ var qrcode = function() {
       worldNote: 'Bölgeler kaba bir taramayla bulunur (deniz seviyesi, standart gurûb). Ayrıntı için Harita sekmesine bakın.',
       th: ['Akşam', 'Bu yerde', 'Dünyada', 'Hilâl ilk kez bu akşam görülüp sabit olursa'],
       wNone: 'hiçbir yerde mümkün değil', wFirst: 'ilk kez mümkün', wYes: 'mümkün',
-      fReject: 'kabul edilmez (s. 360)', fDay: d => `1. gün ${d}`, fDone: d => `1. gün ${d}; görülmese de ay otuza tamamlanır`,
-      fOver: d => `seçilen başlangıca göre ay ${d} günü otuza tamamlanarak başlamıştır`,
+      bMax: 'Ay otuz günü aşmaz: hilâl görülmezse ay otuza tamamlanır ve yeni ay, önceki ayın sabit olan 1. gününden 30 gün sonra başlar (s. 314–315).',
+      bUnknown: 'Önceki ayın başı da rü’yetle veya otuza tamamlamayla sabit olur. Program hangisinin sabit olduğunu bilemez; bu yüzden her ihtimal aşağıda şartlı olarak gösterilir. Hangisinin doğru olduğuna yetkili makam hükmeder.',
+      thP: ['Önceki ay bu gün başladıysa', '29. gün akşamı (rasad)', 'O akşam görülüp sabit olursa 1. gün', 'Görülmezse 1. gün (otuza tamamlama)'],
+      kind: { comp: () => 'hesâbî en erken gün', isik: () => 'Işık usulü (s. 326)', plus: () => 'rü’yetle bir gün sonra', rec: e => `rü’yet kaydınıza göre (${e} akşamı)`, user: () => 'sizin seçiminiz' },
+      no29: 'o akşam hilâl hiçbir yerde hesâben görülemez', no29Here: 'o akşam hilâl bu yerde hesâben görülemez',
+      bAll: 'Bilinmiyor: bütün ihtimalleri göster',
+      today: 'Bugünün kamerî günü, önceki ayın başına bağlıdır:',
+      ifP: p => `Önceki ay ${p} günü başladıysa`,
+      dN: (m, n) => `bugün ${m} ayının ${n}. günüdür.`,
+      d29: ' Bu akşam rasad akşamıdır.', d29no: ' Bu akşam hilâl hiçbir yerde görülemez; ay otuza tamamlanır.', d29noHere: ' Bu akşam hilâl bu yerde görülemez; ay otuza tamamlanır.',
+      d30: m => ` Dün akşam hilâl görülüp sabit olduysa bugün ${m} ayının 1. günüdür.`, d30x: ' Ay otuza tamamlanır; yeni ay bu akşam başlar.',
+      dNew2: (m, a, b) => `bugün ${m} ayının ${a}. günüdür (29. gün akşamı hilâl görülmediyse ${b}. günü).`,
+      dNew1: (m, a) => `bugün ${m} ayının ${a}. günüdür (29. gün akşamı hilâl görülemeyeceği için ay otuza tamamlanmıştır).`,
+      rowsLead: 'Akşam akşam: hilâl ilk kez o akşam görülüp sabit olursa',
+      cond: (a, b) => `şart: önceki ay ${a} veya ${b} günü başlamış olmalı (ay 29 veya 30 gündür)`,
+      fEarly: 'seçtiğiniz başlangıçla bu akşam ayın 29. gününden öncedir',
+      fReject: 'kabul edilmez (s. 360)', fDay: d => `1. gün ${d}`,
+      fOver: d => `seçtiğiniz başlangıç sabitse ay otuz günü aşmaz; yeni ay en geç ${d} günü başlar`,
       tonight: 'bu akşam', recSeen: 'kaydınız: görüldü', recNot: 'kaydınız: görülmedi',
-      basis: m => `Önceki ayın (${m}) 1. günü`,
-      bComp: d => `${d}: hesâbî en erken gün (programın gösterimi)`, bPlus: d => `${d}: rü’yetle bir gün sonra başlamışsa`,
-      bIsik: d => `${d}: Işık usulü (s. 326)`, bRec: (d, e) => `${d}: rü’yet kaydınıza göre (${e} akşamı görüldü)`, bUser: d => `${d}: sizin seçiminiz`,
-      basisNote: 'Önceki ayın başı da rü’yete bağlıdır. Sabit olan başlangıcı biliyorsanız buradan seçin; seçim yalnız bu açıklamayı etkiler.',
+      basis: m => `Önceki ayın (${m}) sabit olan 1. günü`,
+      basisNote: 'Yetkili makamca sabit olan başlangıcı biliyorsanız seçin; tablo ve bugünün kamerî günü ona göre daraltılır. Seçim yalnız bu açıklamayı etkiler, hüküm değildir.',
       recNote: 'Kayıt şahitlik değildir; esas olan yetkili makamın ilanıdır (s. 315–316).',
-      b29: (x, f) => `Rasad akşamı ayın 29. gününün akşamıdır: <b>${x}</b>. O akşam hilâl görülüp sabit olursa yeni ayın 1. günü <b>${f}</b> olur.`,
-      b29no: x => `<b>${x}</b> (29. gün) akşamı hilâl hiçbir yerde hesâben görülemez; görüldü denirse kabul edilmez (s. 360).`,
-      b29noHere: x => `<b>${x}</b> (29. gün) akşamı hilâl bu yerde hesâben görülemez; burada görüldü denirse kabul edilmez (s. 360).`,
       zhLead: (a, k) => `Şahitle sabit olmayan yerlerde Zilhiccenin 1. günü Işık usulüyle bulunur: <b>${a}</b>; Kurban bayramının 1. günü <b>${k}</b> (s. 326). Bayram bu hesapla bulunan gündür yahut bir gün sonradır; bir gün evvel olamaz (s. 326, 360).`,
       zhAstro: 'Ek bilgi: bu yerin astronomik hesabı (Zilhicce mahallîdir)',
       thHere: 'Hilâl ilk kez bu akşam burada görülüp sabit olursa',
-      b30: f => `Görülmezse ay otuza tamamlanır; yeni ayın 1. günü <b>${f}</b> olur (s. 314–315).`,
       bMin: f => `Rü’yetle başlama hesapla anlaşılandan bir gün sonra olabilir, önce olamaz: 1. gün <b>${f}</b> tarihinden önce olamaz (s. 360).`,
-      bConflict: (f30, fmin) => `Seçilen başlangıçla ay otuza tamamlandığında 1. gün (${f30}), hesâben mümkün en erken günden (${fmin}) önce kalıyor. Önceki ayın başı muhtemelen daha geçtir; yukarıdan değiştirin.`,
-      rel: (n, m) => `Seçilen başlangıca göre bu gün ${m} ayının <b>${n}.</b> günüdür; bu akşam ${n + 1}. gecesi başlar.`,
-      relDay: (n, m) => `Seçilen başlangıca göre bu gün ${m} ayının <b>${n}.</b> günüdür.`,
-      rel29: ' Bu akşam rasad akşamıdır.',
-      rel30: ' Dün akşam hilâl görülüp sabit olduysa bugün yeni ayın 1. günüdür; görülmediyse bugün otuzuncu gündür ve yeni ay bu akşam başlar.',
-      rel30x: ' Dün akşam (29. gün) hilâl hiçbir yerde görülemeyeceği için ay otuza tamamlanır; yeni ay bu akşam başlar.',
-      rel30xHere: ' Dün akşam (29. gün) hilâl bu yerde görülemeyeceği için ay otuza tamamlanır; yeni ay bu akşam başlar.',
-      relNew: (a, b, m) => `Seçilen başlangıca göre bu gün ${m} ayının <b>${a}.</b> günüdür (29. akşam görülmediyse ${b}. günü).`,
-      relNew1: (a, m) => `Seçilen başlangıca göre bu gün ${m} ayının <b>${a}.</b> günüdür: 29. akşam hilâl hiçbir yerde görülemeyeceği için önceki ay otuza tamamlanmıştır.`,
-      relNew1Here: (a, m) => `Seçilen başlangıca göre bu gün ${m} ayının <b>${a}.</b> günüdür: 29. akşam hilâl bu yerde görülemeyeceği için önceki ay otuza tamamlanmıştır.`,
       sGlobal: 'Bir yerde rü’yet sabit olunca dünyanın her yerinde geçerli olur; kitap bunu Ramezân için açıkça bildirir (s. 315). Program Zilhicce dışındaki aylarda bu kapsamı kullanır.',
       sRamazan: 'Ramezân hilâlini aramak vâcib-i kifâyedir (s. 314–315). Bulutlu havada bir âdil müslimânın, açık havada çok kimsenin haberiyle sabit olur (s. 315–316).',
       sSevval: 'Bayram hilâli için iki âdil şahit gerekir (s. 315–316). Şevvâl hilâlini yalnız gören kimse bayram yapamaz (Mecmû’a-i Zühdiyye; Kongre tebliği, s. 4).',
@@ -5989,32 +5989,32 @@ var qrcode = function() {
       worldNote: 'Regions come from a coarse scan (sea level, standard sunset). See the Map tab for detail.',
       th: ['Evening', 'Here', 'Worldwide', 'If the crescent is first seen and established this evening'],
       wNone: 'not possible anywhere', wFirst: 'first possible', wYes: 'possible',
-      fReject: 'not accepted (p. 360)', fDay: d => `day 1: ${d}`, fDone: d => `day 1: ${d}; even if not seen, the month is completed to thirty`,
-      fOver: d => `with the chosen start, the month has already begun on ${d} by completing thirty days`,
+      bMax: 'A month never exceeds thirty days: if the crescent is not seen, the month is completed to thirty and the new month begins 30 days after the established day 1 of the previous month (pp. 314–315).',
+      bUnknown: 'The start of the previous month is itself established by sighting or by completing thirty days. The program cannot know which one was established, so every possibility is shown below as a condition. The competent authority decides which holds.',
+      thP: ['If the previous month began on', 'Evening of the 29th (watch)', 'If seen and established that evening, day 1', 'If not seen, day 1 (thirty completed)'],
+      kind: { comp: () => 'computed earliest day', isik: () => 'Işık method (p. 326)', plus: () => 'one day later by sighting', rec: e => `from your sighting record (evening of ${e})`, user: () => 'your choice' },
+      no29: 'the crescent cannot be seen anywhere that evening by calculation', no29Here: 'the crescent cannot be seen at this location that evening by calculation',
+      bAll: 'Unknown: show every possibility',
+      today: 'Today’s lunar day depends on when the previous month began:',
+      ifP: p => `If the previous month began on ${p},`,
+      dN: (m, n) => `today is day ${n} of ${m}.`,
+      d29: ' This evening is the watch evening.', d29no: ' This evening the crescent cannot be seen anywhere; the month is completed to thirty.', d29noHere: ' This evening the crescent cannot be seen here; the month is completed to thirty.',
+      d30: m => ` If the crescent was seen and established last evening, today is day 1 of ${m}.`, d30x: ' The month is completed to thirty; the new month begins this evening.',
+      dNew2: (m, a, b) => `today is day ${a} of ${m} (day ${b} if the crescent was not seen on the evening of the 29th).`,
+      dNew1: (m, a) => `today is day ${a} of ${m} (the crescent could not be seen on the evening of the 29th, so the month was completed to thirty).`,
+      rowsLead: 'Evening by evening: if the crescent is first seen and established that evening',
+      cond: (a, b) => `condition: the previous month began on ${a} or ${b} (a month has 29 or 30 days)`,
+      fEarly: 'with your chosen start, this evening is before the 29th',
+      fReject: 'not accepted (p. 360)', fDay: d => `day 1: ${d}`,
+      fOver: d => `if your chosen start is established, the month cannot exceed thirty days; the new month begins on ${d} at the latest`,
       tonight: 'this evening', recSeen: 'your record: seen', recNot: 'your record: not seen',
-      basis: m => `Day 1 of the previous month (${m})`,
-      bComp: d => `${d}: computed earliest day (shown by the program)`, bPlus: d => `${d}: if it began by sighting one day later`,
-      bIsik: d => `${d}: Işık method (p. 326)`, bRec: (d, e) => `${d}: from your sighting record (seen on the evening of ${e})`, bUser: d => `${d}: your choice`,
-      basisNote: 'The start of the previous month also depends on sighting. If you know the established start, choose it here; the choice affects only this explanation.',
+      basis: m => `Established day 1 of the previous month (${m})`,
+      basisNote: 'If you know the start established by the competent authority, choose it; the table and today’s lunar day are narrowed to it. The choice affects only this explanation and is not a ruling.',
       recNote: 'A record is not testimony; what counts is the announcement of the competent authority (pp. 315–316).',
-      b29: (x, f) => `The watch evening is the evening of the 29th: <b>${x}</b>. If the crescent is seen and established that evening, day 1 of the new month is <b>${f}</b>.`,
-      b29no: x => `On the evening of <b>${x}</b> (the 29th) the crescent cannot be seen anywhere by calculation; a claim to have seen it is not accepted (p. 360).`,
-      b29noHere: x => `On the evening of <b>${x}</b> (the 29th) the crescent cannot be seen at this location by calculation; a claim to have seen it here is not accepted (p. 360).`,
       zhLead: (a, k) => `Where it is not established by witnesses, day 1 of Dhu al-Hijja is found by the Işık method: <b>${a}</b>; the first day of ʿId al-Adha is <b>${k}</b> (p. 326). The ʿId is the calculated day or one day later, never a day earlier (pp. 326, 360).`,
       zhAstro: 'Additional information: astronomical calculation for this location (Dhu al-Hijja is local)',
       thHere: 'If the crescent is first seen and established here this evening',
-      b30: f => `If it is not seen, the month is completed to thirty days; day 1 of the new month is <b>${f}</b> (pp. 314–315).`,
       bMin: f => `Beginning by sighting may be one day later than what calculation shows, never earlier: day 1 cannot be before <b>${f}</b> (p. 360).`,
-      bConflict: (f30, fmin) => `With the chosen start, completing the month to thirty gives day 1 = ${f30}, which is before the earliest possible day by calculation (${fmin}). The previous month probably began later; change it above.`,
-      rel: (n, m) => `With the chosen start, today is day <b>${n}</b> of ${m}; this evening night ${n + 1} begins.`,
-      relDay: (n, m) => `With the chosen start, today is day <b>${n}</b> of ${m}.`,
-      rel29: ' This evening is the watch evening.',
-      rel30: ' If the crescent was seen and established last evening, today is day 1 of the new month; if not, today is the thirtieth and the new month begins this evening.',
-      rel30x: ' Since the crescent could not be seen anywhere last evening (the 29th), the month is completed to thirty; the new month begins this evening.',
-      rel30xHere: ' Since the crescent could not be seen here last evening (the 29th), the month is completed to thirty; the new month begins this evening.',
-      relNew: (a, b, m) => `With the chosen start, today is day <b>${a}</b> of ${m} (day ${b} if it was not seen on the 29th evening).`,
-      relNew1: (a, m) => `With the chosen start, today is day <b>${a}</b> of ${m}: the crescent could not be seen anywhere on the 29th evening, so the previous month was completed to thirty.`,
-      relNew1Here: (a, m) => `With the chosen start, today is day <b>${a}</b> of ${m}: the crescent could not be seen here on the 29th evening, so the previous month was completed to thirty.`,
       sGlobal: 'Once a sighting is established in one place, it holds everywhere in the world; the book states this explicitly for Ramadan (p. 315). The program uses this scope in every month except Dhu al-Hijja.',
       sRamazan: 'Searching for the Ramadan crescent is a communal obligation (pp. 314–315). In cloudy weather the report of one upright Muslim suffices; in clear weather many people are needed (pp. 315–316).',
       sSevval: 'The ʿId crescent needs two upright witnesses (pp. 315–316). Someone who alone sees the Shawwal crescent may not celebrate ʿId (Majmuʿa-i Zuhdiyya; congress paper, p. 4).',
@@ -6071,27 +6071,36 @@ var qrcode = function() {
     const prevRec = pE ? seen.map(r => r.observation.evening).filter(e => e >= X.addDays(pE, -1) && e <= X.addDays(pE, 3)).sort()[0] : null;
     if (prevRec) { const v = X.addDays(prevRec, 1); const o = opts.find(x => x.v === v); if (o) Object.assign(o, { k: 'rec', ev: prevRec }); else opts.push({ v, k: 'rec', ev: prevRec }); }
     if (baseYmd && !opts.some(o => o.v === baseYmd)) opts.push({ v: baseYmd, k: 'user' });
-    const P = baseYmd || (prevRec ? X.addDays(prevRec, 1) : P0);
+    // Önceki ayın başı rü'yetle veya otuza tamamlamayla sabit olur; program bunu bilemez. Hiçbir başlangıç varsayılmaz:
+    // her aday (hesâbî en erken gün, bir gün sonrası, kullanıcının kaydı, kullanıcının seçimi) şartlı olarak gösterilir.
+    const P = baseYmd || null;
+    const cands = opts.map(o => { const X29 = X.addDays(o.v, 28); return Object.assign({}, o, { X29, F29: X.addDays(o.v, 29), F30: X.addDays(o.v, 30), can29: !!E && E <= X29 }); });
     const X29 = P ? X.addDays(P, 28) : null, F29 = P ? X.addDays(P, 29) : null, F30 = P ? X.addDays(P, 30) : null;
+    const lastF30 = cands.reduce((m, c) => c.F30 > m ? c.F30 : m, F30 || X.addDays(conjYmd, 4));
     // ay başı dönemi mi?
-    const lo = X.addDays(conjYmd, -1), hi = F30 || X.addDays(conjYmd, 4);
+    const lo = X.addDays(conjYmd, -1), hi = lastF30;
     const inWin = ymd >= lo && ymd <= hi;
-    // akşam tablosu: E−1 … P+29 (ve seçili akşam)
+    // akşam tablosu: hilâl ilk kez o akşam görülüp sabit olursa 1. gün ertesi gündür; bunun şartı önceki ayın
+    // o akşamdan 28 veya 29 gün önce başlamış olmasıdır (ay 29 veya 30 gündür).
     const rows = [];
     if (inWin && E) {
       let y0 = X.addDays(E, -1); if (y0 < lo) y0 = lo; if (ymd < y0) y0 = ymd;
-      let y1 = F29 && F29 > E ? F29 : X.addDays(E, 1); if (ymd > y1) y1 = ymd;
+      let y1 = X.addDays(E, 2); for (const c of cands) if (c.F29 > y1) y1 = c.F29; if (ymd > y1) y1 = ymd;
       for (let y = y0, i = 0; y <= y1 && i < 6; y = X.addDays(y, 1), i++) {
         const r = X.evening(y);
         const recs = (X.records || []).filter(x => x && x.observation && x.observation.evening === y);
         const rec = recs.some(x => ['naked', 'aidedNaked'].includes(x.observation.result)) ? 'seen' : recs.some(x => x.observation.result === 'not') ? 'not' : null;
         const world = !Ew || y < Ew ? 'none' : y === Ew ? 'first' : 'yes';
-        const first = y < E ? 'reject' : (F29 && y === F29) ? 'done' : (F29 && y > F29) ? 'over' : 'day';
-        rows.push({ ymd: y, r, world, first, firstDay: X.addDays(y, 1), rec, tonight: y === ymd });
+        const pA = X.addDays(y, -29), pB = X.addDays(y, -28);   // bu akşam 30. veya 29. gün akşamı olacak başlangıçlar
+        let first = y < E ? 'reject' : 'day';
+        if (first === 'day' && P) first = P < pA ? 'over' : P > pB ? 'early' : 'day';
+        rows.push({ ymd: y, r, world, first, firstDay: X.addDays(y, 1), pA, pB, rec, tonight: y === ymd });
       }
     }
-    const n = P ? Math.round((X.civil(ymd) - X.civil(P)) / 86400000) + 1 : null;
-    return { ymd, conj, conjYmd, hm, hajj, E, Fmin, eG, eL, P, P0, opts, prevRec, phm, X29, F29, F30, rows, inWin, n, isikZh: hajj ? CAL.methods(hm.y, 12).isik : null };
+    const nOf = v => Math.round((X.civil(ymd) - X.civil(v)) / 86400000) + 1;
+    const n = P ? nOf(P) : null;
+    for (const c of cands) c.n = nOf(c.v);
+    return { ymd, conj, conjYmd, hm, hajj, E, Fmin, eG, eL, P, P0, opts, cands, prevRec, phm, X29, F29, F30, rows, inWin, n, isikZh: hajj ? CAL.methods(hm.y, 12).isik : null };
   }
 
   function html(X, d, L) {
@@ -6112,34 +6121,43 @@ var qrcode = function() {
     }
     // 2. dünyada (sonradan doldurulur)
     h += `<h3>${esc(s.world)}</h3><div id="exWorld"><p class="small">${esc(s.worldCalc)}</p></div>`;
-    // 3. ay başı
+    // 3. ay başı: alt sınır (s. 360), üst sınır (otuza tamamlama, s. 314–315), önceki ayın başına göre şartlı ihtimaller
     h += `<h3>${esc(s.start)}</h3>`;
-    if (d.opts.length) {
-      const lab = o => o.k === 'comp' ? s.bComp(X.fmtCivil(X.civil(o.v))) : o.k === 'plus' ? s.bPlus(X.fmtCivil(X.civil(o.v))) : o.k === 'isik' ? s.bIsik(X.fmtCivil(X.civil(o.v))) : o.k === 'rec' ? s.bRec(X.fmtCivil(X.civil(o.v)), X.fmtCivil(X.civil(o.ev))) : s.bUser(X.fmtCivil(X.civil(o.v)));
-      h += `<div class="field exbasis"><label for="exBase">${esc(s.basis(`${mn(d.phm.m)} ${d.phm.y}`))}</label><select id="exBase">${d.opts.map(o => `<option value="${o.v}"${o.v === d.P ? ' selected' : ''}>${esc(lab(o))}</option>`).join('')}</select><p class="cap">${esc(s.basisNote)}${d.prevRec ? ' ' + esc(s.recNote) : ''}</p></div>`;
-    }
     if (d.hajj && d.isikZh) h += `<p>${s.zhLead(f(X.ymdOf(d.isikZh)), f(X.ymdOf(new Date(d.isikZh.getTime() + 9 * 86400000))))}</p><p class="lab">${esc(s.zhAstro)}</p>`;
-    if (d.n != null && d.n >= 1) {
-      const pm = esc(mn(d.phm.m)), nm = esc(mn(d.hm.m)), can29 = d.E && d.X29 && d.E <= d.X29;
-      if (d.n <= 28) h += `<p>${s.rel(d.n, pm)}</p>`;
-      else if (d.n === 29) h += `<p>${s.rel(29, pm)}${can29 ? s.rel29 : ''}</p>`;
-      else if (d.n === 30) h += `<p>${s.relDay(30, pm)}${can29 ? s.rel30 : d.hajj ? s.rel30xHere : s.rel30x}</p>`;
-      else h += `<p>${can29 ? s.relNew(d.n - 29, d.n - 30, nm) : (d.hajj ? s.relNew1Here : s.relNew1)(d.n - 30, nm)}</p>`;
-    }
     const li = [];
-    if (d.X29 && d.E) {
-      if (d.E <= d.X29) li.push(s.b29(f(d.X29), f(d.F29))); else li.push((d.hajj ? s.b29noHere : s.b29no)(f(d.X29)));
-      li.push(s.b30(f(d.F30)));
-    }
     if (d.Fmin) li.push(s.bMin(f(d.Fmin)));
-    if (d.F30 && d.Fmin && d.F30 < d.Fmin) li.push(`<span class="flag">${esc(s.bConflict(X.fmtCivil(X.civil(d.F30)), X.fmtCivil(X.civil(d.Fmin))))}</span>`);
+    li.push(esc(s.bMax));
+    li.push(esc(s.bUnknown));
     h += `<ul class="exlist">${li.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    const kindL = o => esc(s.kind[o.k] ? s.kind[o.k](o.ev ? X.fmtCivil(X.civil(o.ev)) : '') : '');
+    if (d.cands.length) {
+      const no29 = d.hajj ? s.no29Here : s.no29;
+      h += `<div class="extab"><table><thead><tr>${s.thP.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>` + d.cands.map(c =>
+        `<tr${c.v === d.P ? ' class="now"' : ''}><td><b>${f(c.v)}</b><br><span class="small">${kindL(c)}</span></td><td>${f(c.X29)}${c.can29 ? '' : `<br><span class="small">${esc(no29)}</span>`}</td><td>${c.can29 ? `<b>${f(c.F29)}</b>` : `<span class="pill p-bad">${esc(s.fReject)}</span>`}</td><td><b>${f(c.F30)}</b></td></tr>`).join('') + `</tbody></table></div>`;
+      const ok = d.P && d.cands.find(c => c.v === d.P);
+      h += `<div class="field exbasis"><label for="exBase">${esc(s.basis(`${mn(d.phm.m)} ${d.phm.y}`))}</label><select id="exBase"><option value=""${d.P ? '' : ' selected'}>${esc(s.bAll)}</option>${d.cands.map(c => `<option value="${c.v}"${c.v === d.P ? ' selected' : ''}>${esc(X.fmtCivil(X.civil(c.v)))}: ${kindL(c)}</option>`).join('')}</select><p class="cap">${esc(s.basisNote)}${d.prevRec ? ' ' + esc(s.recNote) : ''}</p></div>`;
+      // bugünün kamerî günü: her başlangıca göre şartlı
+      const pm = esc(mn(d.phm.m)), nm = esc(mn(d.hm.m));
+      const dayTxt = c => {
+        const n = c.n; if (n < 1) return null;
+        if (n <= 28) return s.dN(pm, n);
+        if (n === 29) return s.dN(pm, 29) + (c.can29 ? s.d29 : (d.hajj ? s.d29noHere : s.d29no));
+        if (n === 30) return s.dN(pm, 30) + (c.can29 ? s.d30(nm) : s.d30x);
+        return c.can29 ? s.dNew2(nm, n - 29, n - 30) : s.dNew1(nm, n - 30);
+      };
+      const list = (ok ? [ok] : d.cands).map(c => { const tx = dayTxt(c); return tx ? `<li>${s.ifP(f(c.v))} ${tx}</li>` : ''; }).join('');
+      if (list) h += `<p>${esc(s.today)}</p><ul class="exlist">${list}</ul>`;
+    }
     if (d.rows.length) {
-      const cls = rw => rw.r && rw.r.ok ? esc(X.clsText(rw.r)[0]) : '—';
+      const cls = rw => rw.r && rw.r.ok ? `${esc(X.clsText(rw.r)[0])}<br><span class="small">${esc(X.clsText(rw.r)[1])}</span>` : '—';
       const wtx = { none: s.wNone, first: s.wFirst, yes: s.wYes };
       const th = d.hajj ? [s.th[0], s.th[1], s.th[2], s.thHere] : s.th;
-      h += `<div class="extab"><table><thead><tr>${th.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>` + d.rows.map(rw => {
-        const ft = rw.first === 'reject' ? `<span class="pill p-bad">${esc(s.fReject)}</span>` : rw.first === 'done' ? `<b>${esc(s.fDone(X.fmtCivil(X.civil(rw.firstDay))))}</b>` : rw.first === 'over' ? `<span class="small">${esc(s.fOver(X.fmtCivil(X.civil(d.F30))))}</span>` : `<b>${esc(s.fDay(X.fmtCivil(X.civil(rw.firstDay))))}</b>`;
+      h += `<p class="lab">${esc(s.rowsLead)}</p><div class="extab"><table><thead><tr>${th.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>` + d.rows.map(rw => {
+        const cond = `<br><span class="small">${esc(s.cond(X.fmtCivil(X.civil(rw.pA)), X.fmtCivil(X.civil(rw.pB))))}</span>`;
+        const ft = rw.first === 'reject' ? `<span class="pill p-bad">${esc(s.fReject)}</span>`
+          : rw.first === 'over' ? `<span class="small">${esc(s.fOver(X.fmtCivil(X.civil(d.F30))))}</span>`
+          : rw.first === 'early' ? `<span class="small">${esc(s.fEarly)}</span>`
+          : `<b>${esc(s.fDay(X.fmtCivil(X.civil(rw.firstDay))))}</b>${d.P ? '' : cond}`;
         const rec = rw.rec ? `<br><span class="small">${esc(rw.rec === 'seen' ? s.recSeen : s.recNot)}</span>` : '';
         return `<tr${rw.tonight ? ' class="now"' : ''}><td><button class="lnk" type="button" data-explan="${rw.ymd}">${esc(X.fmtCivil(X.civil(rw.ymd), true))}</button>${rw.tonight ? `<br><span class="small">${esc(s.tonight)}</span>` : ''}${rec}</td><td><span class="dot" style="background:${X.clsColor(rw.r)}"></span>${cls(rw)}</td><td>${esc(wtx[rw.world])}</td><td>${ft}</td></tr>`;
       }).join('') + `</tbody></table></div>`;
@@ -6183,7 +6201,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDcb6bbfc91fef892a';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDf021653e3176cfc3';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -8142,6 +8160,9 @@ var qrcode = function() {
     add('Açıklama', 'Receb 1437: 7 Nisan akşamı görülürse / 8 Nisan akşamı görülürse', '2016-04-08 / 2016-04-09', `${r37 && r37.firstDay} / ${r38 && r38.firstDay}`, '—', r37 && r37.firstDay === '2016-04-08' && r37.world === 'first' && r38 && r38.firstDay === '2016-04-09');
     const xk = G.HRExplain.data(XE, '2026-11-09', '2026-10-12');
     add('Açıklama', 'Cemâziyelâhır 1448, önceki ay 12 Ekim: rasad akşamı / görülürse / otuza tamamlanırsa', '2026-11-09 / 2026-11-10 / 2026-11-11', `${xk.X29} / ${xk.F29} / ${xk.F30}`, '—', xk.X29 === '2026-11-09' && xk.F29 === '2026-11-10' && xk.F30 === '2026-11-11' && xk.Fmin === '2026-11-10');
+    // Önceki ayın başı bilinmiyorsa hüküm kurulmaz: 10 Kasım akşamı ilk rü'yet → 1. gün 11 Kasım, şartı önceki ayın 12 veya 13 Ekim'de başlamış olması
+    const xu = G.HRExplain.data(XE, '2026-11-10', null), r10 = xu.rows.find(x => x.ymd === '2026-11-10');
+    add('Açıklama', 'Cemâziyelâhır 1448, önceki ayın başı bilinmiyor: 10 Kasım akşamı ilk rü’yet', '1. gün 2026-11-11 · şart 2026-10-12 / 2026-10-13 · “başlamıştır” yok', r10 ? `${r10.firstDay} · ${r10.pA} / ${r10.pB} · ${r10.first}` : '—', '—', !!r10 && r10.first === 'day' && r10.firstDay === '2026-11-11' && r10.pA === '2026-10-12' && r10.pB === '2026-10-13' && xu.P === null && !xu.rows.some(x => x.first === 'over'));
     const fe = C.firstEvening(41.0, 29.0, c26);
     add('Harita', 'İlk görünürlük, İstanbul', '10 Aralık akşamı (k = 1)', fe ? 'k = ' + fe.k : '—', '—', fe && fe.k === 1);
     const ce = C.cell(41.0, 29.0, Date.UTC(2026, 10, 12), A.SearchMoonPhase(0, TT('2026-11-05T00:00Z'), 10), false);

@@ -1969,6 +1969,9 @@
     add('Açıklama', 'Receb 1437: 7 Nisan akşamı görülürse / 8 Nisan akşamı görülürse', '2016-04-08 / 2016-04-09', `${r37 && r37.firstDay} / ${r38 && r38.firstDay}`, '—', r37 && r37.firstDay === '2016-04-08' && r37.world === 'first' && r38 && r38.firstDay === '2016-04-09');
     const xk = G.HRExplain.data(XE, '2026-11-09', '2026-10-12');
     add('Açıklama', 'Cemâziyelâhır 1448, önceki ay 12 Ekim: rasad akşamı / görülürse / otuza tamamlanırsa', '2026-11-09 / 2026-11-10 / 2026-11-11', `${xk.X29} / ${xk.F29} / ${xk.F30}`, '—', xk.X29 === '2026-11-09' && xk.F29 === '2026-11-10' && xk.F30 === '2026-11-11' && xk.Fmin === '2026-11-10');
+    // Önceki ayın başı bilinmiyorsa hüküm kurulmaz: 10 Kasım akşamı ilk rü'yet → 1. gün 11 Kasım, şartı önceki ayın 12 veya 13 Ekim'de başlamış olması
+    const xu = G.HRExplain.data(XE, '2026-11-10', null), r10 = xu.rows.find(x => x.ymd === '2026-11-10');
+    add('Açıklama', 'Cemâziyelâhır 1448, önceki ayın başı bilinmiyor: 10 Kasım akşamı ilk rü’yet', '1. gün 2026-11-11 · şart 2026-10-12 / 2026-10-13 · “başlamıştır” yok', r10 ? `${r10.firstDay} · ${r10.pA} / ${r10.pB} · ${r10.first}` : '—', '—', !!r10 && r10.first === 'day' && r10.firstDay === '2026-11-11' && r10.pA === '2026-10-12' && r10.pB === '2026-10-13' && xu.P === null && !xu.rows.some(x => x.first === 'over'));
     const fe = C.firstEvening(41.0, 29.0, c26);
     add('Harita', 'İlk görünürlük, İstanbul', '10 Aralık akşamı (k = 1)', fe ? 'k = ' + fe.k : '—', '—', fe && fe.k === 1);
     const ce = C.cell(41.0, 29.0, Date.UTC(2026, 10, 12), A.SearchMoonPhase(0, TT('2026-11-05T00:00Z'), 10), false);
