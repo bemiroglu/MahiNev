@@ -51,6 +51,7 @@
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
   st.date = todayYmd(st.tz); // açılışta her zaman içinde bulunulan an
+  const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang] || !I.T[st.lang]) st.lang = 'tr';
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
   let records = load('hr-records') || [];
@@ -62,7 +63,8 @@
   function storeRecs(list) { try { localStorage.setItem('hr-records', JSON.stringify(list)); return true; } catch (e) { return false; } }
   function saveRec() { const ok = storeRecs(records); if (!ok && typeof toast === 'function') toast(t.recStoreFail, 8000); return ok; }
   function todayYmd(tz) { try { return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } }
-  const locale = () => st.lang === 'tr' ? 'tr-TR' : 'en-GB';
+  const locale = () => LG.get(st.lang).locale;
+  const decSep = () => (1.5).toLocaleString(locale()).charAt(1);
   function fmtTime(at) { if (!at) return t.none; return new Intl.DateTimeFormat(locale(), { timeZone: st.tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).format(at.date); }
   const hhmm = at => at ? fmtTime(at).slice(0, 5) : t.none;
   function fmtDT(at) { if (!at) return t.none; return new Intl.DateTimeFormat(locale(), { timeZone: st.tz, day: 'numeric', month: 'short', year: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(at.date); }
@@ -76,7 +78,7 @@
   const ymdOf = d => d.toISOString().slice(0, 10);
   const civil = ymd => new Date(ymd + 'T00:00:00Z');
   const addDays = (ymd, k) => { const d = civil(ymd); d.setUTCDate(d.getUTCDate() + k); return ymdOf(d); };
-  const monthName = m => I.MONTHS[st.lang][m - 1];
+  const monthName = m => (I.MONTHS[st.lang] || I.MONTHS.en)[m - 1];
   const q = id => `<button class="q" type="button" data-topic="${id}" aria-label="${esc(t.help)}">?</button>`;
   const dayStart = () => C.tzMidnight(st.date, st.tz);
   const selT = () => A.MakeTime(new Date(dayStart() + (st.tmin || 0) * 60000));
@@ -101,7 +103,7 @@
     set('lGokF', t.gokF); $('gokF').innerHTML = Object.entries(t.gokFOpts).map(([v, l]) => `<option value="${v}"${(st.gokF || 'vis') === v ? ' selected' : ''}>${esc(l)}</option>`).join(''); $('gokCap').textContent = t.gokCap;
     set('jGurub', t.skyAtGurub); set('jBest', t.skyAtBest); set('jWin', t.skyAtWinEnd); set('jNow', t.nowBtn); set('tbLive', t.live);
     set('hStrip', t.stripTitle); set('stripNote', t.stripNote);
-    set('hDetail', st.lang === 'tr' ? 'Gurûb ve hilâl' : 'Sunset and crescent');
+    set('hDetail', t.hDetail);
     $('hMonth').innerHTML = esc(t.month) + ' ' + q('enerken'); set('miniHow', t.miniHow);
     set('hExtra', t.extra); set('extraNote', t.extraNote); set('hTests', t.testsTitle); set('testsIntro', t.testsIntro); $('footer').innerHTML = noticeHtml(); paintTamper();
     $('aboutOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('aboutCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
@@ -111,9 +113,10 @@
     set('hPick', t.pick); set('pickUse', t.pickUse);
     set('hRec', t.record); set('lRecNote', t.notes); set('lRecAt', t.recAt); set('recSaw', t.saw); set('recNot', t.notSaw); set('hRecList', t.records); set('recInfo', t.recNote); set('hCheck', t.checklist);
     set('fNight', t.nightMode); set('fWake', t.wake); set('fCompass', t.compass); set('dlgClose', t.close);
-    $('langTr').setAttribute('aria-pressed', st.lang === 'tr'); $('langEn').setAttribute('aria-pressed', st.lang === 'en');
+    document.documentElement.lang = st.lang; document.documentElement.dir = LG.get(st.lang).dir;
+    $('langSeg').innerHTML = LG.ORDER.filter(c => I.T[c]).map(c => `<button id="lang${c[0].toUpperCase() + c.slice(1)}" type="button" data-lang="${c}" lang="${c}" title="${esc(LG.LANGS[c].name)}" aria-pressed="${st.lang === c}">${esc(LG.LANGS[c].short)}</button>`).join('');
     $('theme').innerHTML = [['auto', t.thAuto], ['light', t.thLight], ['dark', t.thDark], ['sun', t.thSun], ['night', t.thNight]].map(([v, l]) => `<option value="${v}"${st.theme === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
-    $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc(c[st.lang])}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
+    $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc((c[st.lang] || c.en))}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
     $('city').value = st.city;
     fillTz();
     showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('date').value = st.date; $('mDate').value = st.date;
@@ -161,13 +164,14 @@
     $('recName').value = st.recName || ''; $('recContact').value = st.recContact || '';
     $('netsBody').innerHTML = `<ul class="guides"><li><a href="https://www.astronomycenter.net/icop.html?l=en" target="_blank" rel="noopener">ICOP — Islamic Crescents’ Observation Project</a> (International Astronomical Center)</li><li><a href="https://www.moonsighting.org.uk" target="_blank" rel="noopener">ICOUK — moonsighting.org.uk</a></li><li><a href="https://www.moonsighting.com" target="_blank" rel="noopener">moonsighting.com</a></li></ul><p class="cap">${esc(t.recNetsNote)}</p>`;
     set('lDetail', t.detailLvl); $('detailLvl').innerHTML = [['short', t.detailShort], ['long', t.detailLong]].map(([v, l]) => `<option value="${v}"${st.detail === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
-    set('hHelp', st.lang === 'tr' ? 'Rehberlik' : 'Guidance'); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
+    set('hHelp', t.hHelp); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
     $('introTip').innerHTML = t.introTip; $('fTipTxt').textContent = t.fieldTip; set('fTipX', t.fieldTipClose); $('fTip').hidden = !!st.fieldTipDone; set('smEve', '⎙ ' + t.smEveBtn);
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
     const lvOpts = ['all', 'basic', 'mid', 'expert'].map(v => `<option value="${v}"${(st.level || 'all') === v ? ' selected' : ''} title="${esc(t.lvlHelp[v])}">${esc(t.lvlOpts[v])}</option>`).join('');
     set('lLvlQuick', t.lvlQuick); $('lvlQuick').innerHTML = lvOpts; $('lvlQuick').title = t.lvlLbl; $('lvlQuick').setAttribute('aria-label', t.lvlLbl);
+    set('lDateFmt', t.dateFmtLbl); $('dateFmt').innerHTML = DATE_FMTS.map(f => `<option value="${f}"${dateFmt() === f ? ' selected' : ''}>${esc(t.dateFmtOpts[f])}</option>`).join(''); if (typeof paintDateBoxes === 'function') paintDateBoxes();
     set('lLvl', t.lvlLbl); $('lvlSel').innerHTML = lvOpts; $('lvlNote').textContent = t.lvlNote;
     $('lvlIntro').textContent = t.lvlIntro;
     $('lvlIntroBtns').innerHTML = ['basic', 'mid', 'expert', 'all'].map(v => `<button class="btn${(st.level || 'all') === v ? ' primary' : ''}" type="button" data-lvlset="${v}" title="${esc(t.lvlHelp[v])}">${esc(t.lvlOpts[v])}</button>`).join('');
@@ -182,7 +186,7 @@
       if (!h) { h = document.createElement('p'); h.className = 'hint'; const anchor = id === 'fBig' ? el : (el.closest('.cardhead') || el); anchor.insertAdjacentElement(id === 'fBig' ? 'beforebegin' : 'afterend', h); }
       h.textContent = 'ⓘ ' + t.hints[k];
     });
-    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(st.lang === 'tr' ? 'Hesap ve gözlem hassasiyeti' : 'Calculation and observation accuracy')}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
+    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(t.accTitle)}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
     $('checkBody').innerHTML = G.HRGuide.planHtml(st.lang);
     applyTheme();
   }
@@ -194,7 +198,7 @@
     $('fNight').setAttribute('aria-pressed', st.theme === 'night');
   }
   // Konum girişi: kullanıcının yazdığı her yaygın biçim anlaşılır ve standart biçime çevrilir (coords.js)
-  const numTxt = v => String(Math.round((v || 0) * 10) / 10).replace('.', st.lang === 'tr' ? ',' : '.');
+  const numTxt = v => String(Math.round((v || 0) * 10) / 10).replace('.', decSep());
   function showCoords(note) {
     $('lat').value = G.HRCoord.format(st.lat, 'lat', st.lang); $('lon').value = G.HRCoord.format(st.lon, 'lon', st.lang);
     const n = $('coordNote'); n.className = 'coordnote' + (note && note.err ? ' err' : '');
@@ -286,9 +290,9 @@
   }
   function setTmin(m, anchor) { st.tmin = Math.max(0, Math.min(TB_MAX, Math.round(m))); st.anchor = anchor || null; if (!anchor || anchor !== 'now') setLive(false); renderTime(); if (view === 'harita' && st.mapMode === 'instant') renderBigMap(); }
 
+  function setLang(c) { if (!I.T[c] || !LG.LANGS[c]) return; st.lang = c; t = I.T[c]; save(); fillStatic(); update(); }
   function bind() {
-    $('langTr').onclick = () => { st.lang = 'tr'; t = I.T.tr; save(); fillStatic(); update(); };
-    $('langEn').onclick = () => { st.lang = 'en'; t = I.T.en; save(); fillStatic(); update(); };
+    $('langSeg').onclick = e => { const b = e.target.closest('[data-lang]'); if (b) setLang(b.dataset.lang); };
     $('theme').onchange = e => { st.theme = e.target.value; save(); applyTheme(); repaintAll(); };
     $('city').onchange = e => { st.city = e.target.value; const c = CITIES.find(x => x.id === st.city); if (c) { Object.assign(st, { lat: c.lat, lon: c.lon, elev: c.elev, hMax: c.hMax, tz: c.tz }); fillStatic(); } save(); update(); };
     $('tzOff').addEventListener('change', setTzOff);
@@ -349,6 +353,7 @@
     $('fFont').onclick = () => { st.fontSize = st.fontSize >= 1.3 ? 1 : st.fontSize >= 1.15 ? 1.3 : 1.15; save(); fillStatic(); repaintAll(); };
     $('optWx').onchange = e => { st.wx = e.target.checked; save(); paintNet(); renderWx(true); };
     $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); paintNet(); if (st.autoLoc) autoLocate(true); };
+    $('dateFmt').onchange = e => { st.dateFmt = e.target.value; save(); paintDateBoxes(); };
     $('lvlQuick').onchange = e => setLevel(e.target.value); $('lvlSel').onchange = e => setLevel(e.target.value);
     $('lvlIntroBtns').onclick = e => { const b = e.target.closest('[data-lvlset]'); if (b) setLevel(b.dataset.lvlset); };
     $('rawJson').onclick = exportRawJson; $('rawCsv').onclick = exportRawCsv;
@@ -475,7 +480,7 @@
   function paintFoldSums() {
     const S = (id, txt) => { const c = $(id); const f = c && c.querySelector(':scope > .foldsum'); if (f) f.textContent = txt || ''; };
     const city = CITIES.find(c => c.id === st.city);
-    S('locCard', `${city ? city[st.lang] : `${num(st.lat, 3)}, ${num(st.lon, 3)}`} · UTC${fmtOff(offAt(st.tz, st.date))} — ${t.foldOpen}`);
+    S('locCard', `${city ? (city[st.lang] || city.en) : `${num(st.lat, 3)}, ${num(st.lon, 3)}`} · UTC${fmtOff(offAt(st.tz, st.date))} — ${t.foldOpen}`);
     S('dateCard', fmtCivil(civil(st.date)));
     S('tbCard', `${hhmm(selT())} — ${t.foldOpen}`);
     S('wxCard', st.wx ? (WX.ass ? t.wxLevel[WX.ass.level] : t.wxLoading) : t.netNone);
@@ -498,7 +503,7 @@
     if (!R.ok) {
       const noonAlt = C.at(C.solarNoon(st.date, LOC.lon), LOC).sun.alt, polarNight = noonAlt < 0;
       // Kutup bölgeleri: güneş batmıyor (yaz) veya doğmuyor (kış). Tam İlmihâl s. 315: gündüzü uzun olmayan en yakın şehrin zamanına uyulur.
-      $('statusBody').innerHTML = `<h2>${esc(st.lang === 'tr' ? (polarNight ? 'Bu tarihte bu yerde güneş doğmuyor (kutup gecesi).' : 'Bu tarihte bu yerde güneş batmıyor.') : (polarNight ? 'The Sun does not rise here on this date (polar night).' : 'The Sun does not set here on this date.'))}</h2><p class="sub">${esc(st.lang === 'tr' ? 'Gurûb olmadığı için hilâl rasadı yapılamaz. Tam İlmihâl, yirmidört saatten uzun günlerde oruç için gündüzü böyle uzun olmayan bir şehrin zamanına uyulacağını bildirir (s. 315); en yakın böyle bir yerin konumunu girerek planlayabilirsiniz.' : 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (p. 315); enter the nearest such place to plan.')}</p>`; R = null;
+      $('statusBody').innerHTML = `<h2>${esc(polarNight ? t.polarNightH : t.polarDayH)}</h2><p class="sub">${esc(t.polarSub)}</p>`; R = null;
     } else { renderStatus(R); renderDetail(R); renderMonth(R, LOC); renderExtra(R); }
     computeDay();
     if (st.live) st.tmin = Math.max(0, Math.min(TB_MAX, tminOf(A.MakeTime(new Date()))));
@@ -612,7 +617,7 @@
   function startRow() {
     const d = startInfo(); if (!d) return '';
     const fs = y => fmtCivil(civil(y), true);
-    return `<p class="st-row"><b>${esc(t.stStart)}</b><span>${esc(t.stStartVal(monthName(d.hm.m), fs(d.H), fs(d.H2)))}</span> ${q('hicri')}<br><span class="small">${esc(d.hajj && d.isik ? t.stStartSubZh : t.stStartSub(fs(d.E1), fs(d.E2)))}</span></p>`;
+    return `<p class="st-row"><b>${esc(t.stStart)}</b><span>${esc(t.stStartVal(monthName(d.hm.m), fs(d.H), fs(d.H2)))}</span> ${q('hicri')}<br><span class="small">${esc(d.hajj && d.isik ? t.stStartSubZh : t.stStartSub(fs(d.E1), fs(d.E2)))}${d.hajj && d.isik ? ' ' + q('isik') : ''}</span></p>`;
   }
   function quickAnswer(r) {
     let h = '';
@@ -655,7 +660,7 @@
     return `<div class="kd" data-lvl="2"><p class="st-row"><b>${esc(t.kdTitle)}</b> ${q('safak')}</p>
       <p>● ${esc(t.kdA)}: <strong>${esc(v(r.kadihan19))}</strong> <span class="small">(${esc(t.kdSafak)} ${hhmm(r.safak19)}, ${esc(t.moonset.replace(/\s*\(.*\)/, ''))} ${hhmm(r.moonset)})</span></p>
       <p>○ ${esc(t.kdB)}: ${esc(v(r.kadihan17))} <span class="small">(${esc(t.kdSafak)} ${hhmm(r.safak17)})</span></p>
-      ${compact ? '' : `<p class="small ${r.kadihanDiffer ? 'diff' : ''}">${esc(r.kadihanDiffer ? t.kdDiffer : t.kdSame)} ${esc(G.HRExplain.S[st.lang].kInfo)}</p>`}</div>`;
+      ${compact ? '' : `<p class="small ${r.kadihanDiffer ? 'diff' : ''}">${esc(r.kadihanDiffer ? t.kdDiffer : t.kdSame)} ${esc(LG.pick(G.HRExplain.S, st.lang).kInfo)}</p>`}</div>`;
   }
   function renderDetail(r) {
     let h = '';
@@ -806,13 +811,21 @@
         <td class="n">${o.alt > -1 ? `${G.HRSky.card(o.az, st.lang)} ${num(o.az, 0)}° · ${num(o.alt, 1)}°` : `<span class="small">${num(o.alt, 0)}°</span>`}</td>
         <td><span class="pill ${pill[o.state]}">${esc(t.gokSt[o.state])}</span></td><td class="n">${rts(o.id)}</td><td class="n">${o.mag != null ? num(o.mag, 1) : '—'}</td>
         <td data-lvl="2">${esc(o.con || '—')}</td><td data-lvl="3" class="n">${raDec(o)}</td><td data-lvl="3" class="n">${o.elong != null ? num(o.elong, 1) + '°' : '—'}</td><td data-lvl="3" class="n">${distTxt(o)}</td></tr>`).join('') + '</tbody>';
-    // alacakaranlık evreleri (seçili gün)
+    // alacakaranlık evreleri (seçili gün); kutup gecesi ve gündüzünde güneşin en yüksek / en alçak yüksekliği
     try {
       const obs = new A.Observer(LOC.lat, LOC.lon, LOC.elev || 0), sa = (dir, from, h) => { try { return A.SearchAltitude('Sun', obs, dir, from, 1, h); } catch (e) { return null; } };
       const ss = R ? R.gurub : (DAY && DAY.ev && DAY.ev.sunset), sr = DAY && DAY.ev && DAY.ev.sunrise;
-      const from = ss || t0, civ = sa(-1, from, -6), nau = sa(-1, from, -12), ast = sa(-1, from, -18);
-      const mf = ast || nau || from, ast2 = sa(+1, mf, -18), nau2 = sa(+1, mf, -12), civ2 = sa(+1, mf, -6);
-      $('gokTw').textContent = t.gokTw(hhmm(sr), hhmm(ss), hhmm(civ), hhmm(nau), hhmm(ast), hhmm(ast2), hhmm(nau2), hhmm(civ2));
+      if (!ss && !sr) {
+        let mx = -90, mn = 90; for (let i = 0; i <= 48; i++) { const tt = t0.AddDays(i / 48), e = A.Equator('Sun', tt, obs, true, true), h = A.Horizon(tt, obs, e.ra, e.dec, 'normal').altitude; mx = Math.max(mx, h); mn = Math.min(mn, h); }
+        $('gokTw').textContent = mx < 0 ? t.gokPolarN(num(mx, 1).replace('-', '−')) : t.gokPolarD(num(mn, 1).replace('-', '−'));
+      } else {
+        let nsr = null; try { nsr = ss ? A.SearchRiseSet('Sun', obs, +1, ss, 1) : null; } catch (e) { nsr = null; }
+        const inN = x => x && (!ss || x.ut > ss.ut) && (!nsr || x.ut < nsr.ut) ? x : null;
+        const from = ss || t0, civ = inN(sa(-1, from, -6)), nau = inN(sa(-1, from, -12)), ast = inN(sa(-1, from, -18));
+        const ast2 = ast ? inN(sa(+1, ast, -18)) : null, nau2 = nau ? inN(sa(+1, nau, -12)) : null, civ2 = civ ? inN(sa(+1, civ, -6)) : null;
+        const h = x => x ? hhmm(x) : null;
+        $('gokTw').textContent = t.gokTw2({ sr: h(sr), ss: h(ss), civ: h(civ), nau: h(nau), ast: h(ast), ast2: h(ast2), nau2: h(nau2), civ2: h(civ2) });
+      }
     } catch (e) { $('gokTw').textContent = ''; }
     // bu gece: arka planda taranır
     const nk = dk + '|' + st.darkKey;
@@ -821,13 +834,15 @@
       setTimeout(() => {
         if (gokNightKey !== nk || !LOC) return;
         try {
-          const obs = new A.Observer(LOC.lat, LOC.lon, LOC.elev || 0), ss = R ? R.gurub : (DAY && DAY.ev && DAY.ev.sunset);
-          const sr = ss ? A.SearchRiseSet('Sun', obs, +1, ss, 1) : null;
+          const obs = new A.Observer(LOC.lat, LOC.lon, LOC.elev || 0), ss0 = R ? R.gurub : (DAY && DAY.ev && DAY.ev.sunset);
+          let sr0 = null; try { sr0 = ss0 ? A.SearchRiseSet('Sun', obs, +1, ss0, 1) : null; } catch (e) { sr0 = null; }
+          // gurûb veya ertesi doğuş yoksa (kutup gecesi / gündüzü) bütün gün taranır
+          const whole = !ss0 || !sr0, ss = whole ? t0 : ss0, sr = whole ? t0.AddDays(1) : sr0;
           const ni = G.HRGok.night(LOC, ss, sr, nk);
           const ids = ['Moon', ...G.HRGok.PLANETS].filter(id => ni[id] && ni[id].from);
           const stars = G.HRGok.STARS.filter(x => ni[x[0]] && ni[x[0]].from).length;
-          const chip = id => { const x = ni[id], m = tminOf(x.best), ok = m >= 0 && m <= TB_MAX; return `<button type="button" class="gch" ${ok ? `data-gok="${m}" title="${esc(t.gokGo)}"` : 'disabled'}><b>${esc(G.HRGok.nameOf(id, st.lang))}</b> ${esc(t.gokBest(hhmm(x.from), hhmm(x.to), hhmm(x.best), G.HRSky.card(x.bestAz, st.lang), num(x.bestAlt, 0)))}</button>`; };
-          $('gokNight').innerHTML = `<p class="small" style="margin:0 0 4px">${esc(t.gokNight(hhmm(ss), hhmm(sr)))}</p>` + (ids.length ? ids.map(chip).join('') : `<span class="small">${esc(t.gokNone)}</span>`) + (stars ? ` <span class="small">· ${esc(t.gokStars(stars))}</span>` : '');
+          const chip = id => { const x = ni[id], m = tminOf(x.best), ok = m >= 0 && m <= TB_MAX; return `<button type="button" class="gch" ${ok ? `data-gok="${m}" title="${esc(t.gokGo)}"` : 'disabled'}><b>${esc(G.HRGok.nameOf(id, st.lang))}</b> ${esc(x.from.ut - ss.ut < 0.01 && sr.ut - x.to.ut < 0.01 ? t.gokBestAll(hhmm(x.best), G.HRSky.card(x.bestAz, st.lang), num(x.bestAlt, 0)) : t.gokBest(hhmm(x.from), hhmm(x.to), hhmm(x.best), G.HRSky.card(x.bestAz, st.lang), num(x.bestAlt, 0)))}</button>`; };
+          $('gokNight').innerHTML = `<p class="small" style="margin:0 0 4px">${esc(whole ? t.gokWhole : t.gokNight(hhmm(ss), hhmm(sr)))}</p>` + (ids.length ? ids.map(chip).join('') : `<span class="small">${esc(t.gokNone)}</span>`) + (stars ? ` <span class="small">· ${esc(t.gokStars(stars))}</span>` : '');
           $('gokNight').querySelectorAll('[data-gok]').forEach(b => b.onclick = () => { remember(); setTmin(+b.dataset.gok); });
         } catch (e) { $('gokNight').textContent = ''; }
       }, 60);
@@ -933,7 +948,7 @@
       const a = ok ? o.a : null, b = ok ? o.b : null;
       const cell = x => x ? `<button class="lnk" type="button" data-rnplan="${x.ymd}">${fd(x.ymd)}</button><br><span class="small"><span class="dot" style="background:var(${CLS_COLOR[x.r.cls.code] || '--c-notborn'})"></span>${esc(clsText(x.r)[0])}</span>` : `<span class="small">${esc(t.rnNone)}</span>`;
       const sel = (a && a.ymd === st.date) || (b && b.ymd === st.date);
-      rows.push(`<tr${sel ? ' class="now"' : ''}><td><b>${esc(monthName(hm.m))} ${hm.y}</b>${sel ? `<br><span class="small">${esc(t.rnSel)}</span>` : ''}</td><td>${esc(fmtDT(c))}</td><td>${cell(a)}</td><td>${cell(b)}</td><td>${(() => { const f1 = G.HRExplain.firstDayOf(exCtx(), c, hm); return f1 ? `${fd(f1.H)} / ${fd(addDays(f1.H, 1))}` : '—'; })()}</td><td>${a ? `<button class="btn" type="button" data-rnex="${a.ymd}">ⓘ ${esc(G.HRExplain.S[st.lang].btnShort)}</button>` : ''}</td></tr>`);
+      rows.push(`<tr${sel ? ' class="now"' : ''}><td><b>${esc(monthName(hm.m))} ${hm.y}</b>${sel ? `<br><span class="small">${esc(t.rnSel)}</span>` : ''}</td><td>${esc(fmtDT(c))}</td><td>${cell(a)}</td><td>${cell(b)}</td><td>${(() => { const f1 = G.HRExplain.firstDayOf(exCtx(), c, hm); return f1 ? `${fd(f1.H)} / ${fd(addDays(f1.H, 1))}` : '—'; })()}</td><td>${a ? `<button class="btn" type="button" data-rnex="${a.ymd}">ⓘ ${esc(LG.pick(G.HRExplain.S, st.lang).btnShort)}</button>` : ''}</td></tr>`);
       c = C.nextNewMoonAfter(c.AddDays(1));
       setTimeout(step, 0);
     };
@@ -982,7 +997,7 @@
       const code = r.ok ? r.cls.code : 'none';
       const col = CLS_COLOR[code];
       const tag = nights && nights.a && nights.a.ymd === ymd ? (nights.b && nights.b.ymd === ymd ? 'A·B' : 'A') : nights && nights.b && nights.b.ymd === ymd ? 'B' : '';
-      const mtag = mo && mo.code === 'possible' ? (st.lang === 'tr' ? 's' : 'm') : '';
+      const mtag = mo && mo.code === 'possible' ? t.mtagPossible : '';
       const d = civil(ymd), dn = d.getUTCDate(), first = k++ === 0;
       const amb = h && h.dayTxt.startsWith('1 |');
       const hd = h ? (amb ? '1?' : h.dayTxt.split(' | ')[0]) : '';
@@ -1028,19 +1043,19 @@
       b += kv(t.zhKurban, `<strong>${esc(fmtCivil(kb))}</strong>`, t.zhKurbanSub, 'txt');
       b += kv(t.zhAstro, eL ? esc(fmtCivil(eL.first)) : t.none, t.zhAstroSub, 'txt');
     }
-    if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), st.lang === 'tr' ? 'veya ertesi gün (s. 360)' : 'or the next day (p. 360)', 'txt'); }
-    if (!isHajj) b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
+    if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), t.arefeSub, 'txt'); }
+    if (!isHajj) b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : t.isikRef, 'txt');
     const hj = hijriOf(st.date);
     if (hj) b += kv(t.lunarDay + ' ' + q('hicri'), `<span class="lunar">${esc(hj.dayTxt)}</span><small>${esc(hj.monthTxt)}</small>`, (hijriWhy(st.date) ? t.hjWhyLead + ' ' + hijriWhy(st.date) + '. ' : '') + t.lunarDayNote, 'txt');
     $('month2').innerHTML = b;
-    let o = kv(t.ulugbey, fmtCivil(meth.ulugbey), '', 'txt') + kv(t.kindi, fmtCivil(meth.kindi), '', 'txt') + kv(t.tabular, fmtCivil(meth.tabular), '', 'txt');
-    if (meth.madde88) o += kv(t.madde88, fmtCivil(meth.madde88.value), meth.madde88.undefinedInBook ? t.undefinedInBook : '', 'txt');
+    let o = kv(t.ulugbey + ' ' + q('ulugbey'), fmtCivil(meth.ulugbey), '', 'txt') + kv(t.kindi + ' ' + q('kindi'), fmtCivil(meth.kindi), '', 'txt') + kv(t.tabular + ' ' + q('tabular'), fmtCivil(meth.tabular), '', 'txt');
+    if (meth.madde88) o += kv(t.madde88 + ' ' + q('madde88'), fmtCivil(meth.madde88.value), meth.madde88.undefinedInBook ? t.undefinedInBook : '', 'txt');
     renderMonth.other = `<dt style="grid-column:1/-1;border:0;padding-top:14px;font-weight:600;color:var(--ink)">${t.otherMethods}</dt>` + o;
   }
   function firstLegend(conj) {
     const cd = conj.date, base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
     const cols = ['--c-visible', '--c-possible', '--c-below5', '--c-below8'];
-    return cols.map((c, k) => `<span><i style="background:var(${c})"></i>${esc(fmtCivil(new Date(base + k * 86400000), true))} ${st.lang === 'tr' ? 'akşamı' : 'evening'}</span>`).join('') +
+    return cols.map((c, k) => `<span><i style="background:var(${c})"></i>${esc(fmtCivil(new Date(base + k * 86400000), true))} ${esc(t.eveningAt)}</span>`).join('') +
       `<span><i style="background:var(--c-notborn)"></i>${esc(t.lgLater)}</span><span><i style="background:var(--c-nosun)"></i>${esc(t.lgNoSun)}</span>`;
   }
   let mini = null;
@@ -1055,8 +1070,8 @@
     mini.onPick(() => { st.mapLayer = 'first'; st.mapMode = 'evening'; save(); fillStatic(); location.hash = '#harita'; });
     $('miniLegend').innerHTML = firstLegend(conj);
     const f1 = (() => { try { return G.HRExplain.firstDayOf(exCtx(), conj, MONTH.hmn); } catch (e) { return null; } })(), sh = d => esc(fmtCivil(d, true));
-    const facts = `<div class="facts"><div><b>${esc(t.miniGlobal)}</b><strong>${f1 ? `${sh(civil(f1.H))} ${esc(t.hjOr)} ${sh(civil(addDays(f1.H, 1)))}` : t.none}</strong><br><span class="small">${f1 && f1.isik ? esc(t.miniIsik) : eG ? esc(t.miniFirstEve(fmtCivil(eG.evening, true), degf(eG.where.lat, 1) + ', ' + degf(eG.where.lon, 1))) : ''}</span></div>
-      <div><b>${esc(t.miniLocal)}</b><strong>${eL ? sh(eL.evening) + ' ' + (st.lang === 'tr' ? 'akşamı' : 'evening') : t.none}</strong><br><span class="small">${esc(t.miniLocalSub)}</span></div></div>
+    const facts = `<div class="facts"><div><b>${esc(t.miniGlobal)}</b><strong>${f1 ? `${sh(civil(f1.H))} ${esc(t.hjOr)} ${sh(civil(addDays(f1.H, 1)))}` : t.none}</strong><br><span class="small">${f1 && f1.isik ? esc(t.miniIsik) + ' ' + q('isik') : eG ? esc(t.miniFirstEve(fmtCivil(eG.evening, true), degf(eG.where.lat, 1) + ', ' + degf(eG.where.lon, 1))) : ''}</span></div>
+      <div><b>${esc(t.miniLocal)}</b><strong>${eL ? sh(eL.evening) + ' ' + esc(t.eveningAt) : t.none}</strong><br><span class="small">${esc(t.miniLocalSub)}</span></div></div>
       <div class="btns" style="margin-top:8px"><a class="btn" href="#harita" id="openFirstMap">${esc(t.mapOpen)}</a></div>`;
     $('miniHow').innerHTML = esc(t.miniHow) + facts;
     const ofm = $('openFirstMap'); if (ofm) ofm.onclick = () => { st.mapLayer = 'first'; st.mapMode = 'evening'; save(); fillStatic(); };
@@ -1197,7 +1212,7 @@
     // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
     const fShow = !pv && sunUp && !st.safetyOff && sightPossible(eveningCached(loc, today)); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = true;
-    $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
+    $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
     const mid = FR.cls.code === 'midMonth', rng = FRange;
@@ -1291,7 +1306,7 @@
     return { p, gz, key, az, alt };
   }
   function dialSvg(H, tg) {
-    const W = 240, c = W / 2, R = 100, tr = st.lang === 'tr', cardL = tr ? ['K', 'D', 'G', 'B'] : ['N', 'E', 'S', 'W'];
+    const W = 240, c = W / 2, R = 100, cardL = t.card4;
     const pos = (az, rr) => { const a = (az - H) * Math.PI / 180; return [c + rr * Math.sin(a), c - rr * Math.cos(a)]; };
     let s = `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="${esc(t.cpTitle)}"><circle cx="${c}" cy="${c}" r="${R + 14}" fill="var(--surface)" stroke="var(--line)"/>`;
     for (let a = 0; a < 360; a += 10) { const [x1, y1] = pos(a, R + 12), [x2, y2] = pos(a, a % 30 ? R + 6 : R + 1); s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--ink)" stroke-opacity="${a % 30 ? .35 : .7}"/>`; }
@@ -1419,7 +1434,7 @@
       schema: 'hilal-ruyet-kaydi/1', id: (G.crypto && G.crypto.randomUUID ? G.crypto.randomUUID() : 'r' + Date.now().toString(36)), created: new Date().toISOString(),
       app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME, official: OFFICIAL !== false, engine: 'Astronomy Engine 2.1.19', rules: G.HR_RULES, models: 'Yallop 1997 (geo ARCL); Odeh 2004 (topo)' },
       observer: { name: $('recName').value.trim(), contact: $('recContact').value.trim() },
-      place: { name: city ? city[st.lang] : (st.locAuto ? t.myPlace : ''), lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, tz: st.tz, site: $('recPlace').value },
+      place: { name: city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : ''), lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, tz: st.tz, site: $('recPlace').value },
       observation: { at: at.date.toISOString(), evening: ev.ymd, result, firstSeen: $('recFirst').value || null, lastSeen: $('recLast').value || null, sky: $('recSky').value, companions: +$('recWith').value || 0, seers: +$('recSeers').value || 0, note: $('recNote').value.trim() },
       computed: r && r.ok ? { ictima: isoT(r.ictimaPrev), gurub: isoT(r.gurub), seriGurub: r.seri && r.seri.seri ? isoT(r.seri.seri) : null, moonset: isoT(r.moonset), windowEnd: isoT(r.windowEnd),
         beynunet: +r.beynunet.toFixed(3), moonAltGurub: +r.moonAlt.toFixed(3), lagMin: r.lagMin != null ? +r.lagMin.toFixed(1) : null, ageH: r.ageH != null ? +r.ageH.toFixed(2) : null, cls: r.cls.code, kadihan: r.kadihan19 || null,
@@ -1449,7 +1464,7 @@
   function ownSightingTxt(result, ev) {
     if (!['naked', 'aidedNaked'].includes(result) || !ev || ev.cls === 'p-bad' || (ev.e && ev.e.day)) return '';
     try {
-      const X = exCtx(), d = G.HRExplain.data(X, ev.ymd), s = G.HRExplain.S[st.lang], m = monthName(d.hm.m), f = y => fmtCivil(civil(y), true);
+      const X = exCtx(), d = G.HRExplain.data(X, ev.ymd), s = LG.pick(G.HRExplain.S, st.lang), m = monthName(d.hm.m), f = y => fmtCivil(civil(y), true);
       if (ev.ymd === d.E1) return s.recSeenA(f(d.E1), m, fmtCivil(civil(d.H)));
       if (ev.ymd === d.E2) return s.recSeenB(f(d.E2), m, fmtCivil(civil(d.H2)), f(d.E1), fmtCivil(civil(d.H)));
     } catch (e) { /* açıklama hesaplanamadı */ }
@@ -1653,7 +1668,7 @@
     const hj = hijriAt(at);
     $('mbHijri').innerHTML = hj ? `${hj.local ? hj.html2 : hj.html} <span class="note" title="${esc(t.hjNote + (hj.why ? '\n' + t.hjWhyLead + ' ' + hj.why : ''))}">· ${esc(t.hjHesabi)}${hj.after ? ' · ' + esc(t.hjAfter) : ''}</span> ${q('hicri')}` : '';
     const city = CITIES.find(c => c.id === st.city);
-    const chips = [`<button type="button" class="chip loc" id="mbLoc" title="${esc((st.locAuto ? t.chipLocAuto : t.chipLocMan) + ' · ' + t.location)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? city[st.lang] : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))} ✎</button>`];
+    const chips = [`<button type="button" class="chip loc" id="mbLoc" title="${esc((st.locAuto ? t.chipLocAuto : t.chipLocMan) + ' · ' + t.location)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))} ✎</button>`];
     if (ON.sandboxed) chips.push(`<span class="chip off" title="${esc(t.sandboxNote)}">${esc(t.chipSandbox)}</span>`);
     else if (!ON.online()) chips.push(`<span class="chip off">${esc(t.chipOffline)}</span>`);
     if (WX.ass) chips.push(`<span class="chip" title="${esc(t.wxTitle)}">${{ good: '☀', fair: '⛅', poor: '☁' }[WX.ass.level]} ${esc(t.wxLevel[WX.ass.level])}</span>`);
@@ -1703,7 +1718,7 @@
     }, 30);
   }
   // ---- “Bu akşam ne demek?” açıklama penceresi ----
-  const exBtn = (ymd, short) => `<button class="btn exbtn" type="button" data-ex="${ymd}" title="${esc(G.HRExplain.S[st.lang].btn)}">ⓘ ${esc(G.HRExplain.S[st.lang][short ? 'btnShort' : 'btn'])}</button>`;
+  const exBtn = (ymd, short) => `<button class="btn exbtn" type="button" data-ex="${ymd}" title="${esc(LG.pick(G.HRExplain.S, st.lang).btn)}">ⓘ ${esc(LG.pick(G.HRExplain.S, st.lang)[short ? 'btnShort' : 'btn'])}</button>`;
   function exCtx() {
     return { C, CAL, A, loc: LOC || locObj(), records, esc, q, fmtCivil, fmtDT, civil, ymdOf, addDays, monthName, placeName, hijriOf, hijriWhy, nextRasad,
       earliest, evening: y => eveningCached(LOC || locObj(), y), clsText, claimOf, clsTopic: r => CLS_TOPIC[r.cls.code] || 'hesap',
@@ -1721,7 +1736,7 @@
     setTimeout(run, 30);
   }
   function openExplain(ymd) {
-    exYmd = ymd; $('hEx').textContent = G.HRExplain.S[st.lang].title; $('exClose').textContent = t.close;
+    exYmd = ymd; $('hEx').textContent = LG.pick(G.HRExplain.S, st.lang).title; $('exClose').textContent = t.close;
     paintExplain();
     const dl = $('exDlg'); try { if (!dl.open) dl.showModal(); } catch (e) { dl.setAttribute('open', ''); }
   }
@@ -1737,7 +1752,7 @@
     if (d.b && (!d.a || d.b.ymd !== d.a.ymd)) h += box(t.upB, d.b);
     if (d.prev) {
       const pr = d.prev, ph = CAL.monthForConjunction(pr.r.ictimaPrev.date), ago = Math.round((civil(d.today) - civil(pr.ymd)) / 86400000);
-      h += `<div class="prev"><b>${esc(t.upPrev)}</b><strong>${esc(fmtCivil(civil(pr.ymd)))}</strong><span class="small">${esc(t.upMonth(monthName(ph.m) + ' ' + ph.y))}${ago > 0 ? ' · ' + esc(st.lang === 'tr' ? `${ago} gün önce` : `${ago} days ago`) : ''}</span><br><span class="small">${esc(clsText(pr.r)[0])}</span><br><button class="btn" type="button" data-up="${pr.ymd}">◀ ${esc(t.upPrevGo)}</button></div>`;
+      h += `<div class="prev"><b>${esc(t.upPrev)}</b><strong>${esc(fmtCivil(civil(pr.ymd)))}</strong><span class="small">${esc(t.upMonth(monthName(ph.m) + ' ' + ph.y))}${ago > 0 ? ' · ' + esc(t.daysAgo(ago)) : ''}</span><br><span class="small">${esc(clsText(pr.r)[0])}</span><br><button class="btn" type="button" data-up="${pr.ymd}">◀ ${esc(t.upPrevGo)}</button></div>`;
     }
     if (d.passedTonight) h += `<p class="small" style="grid-column:1/-1;margin:0">${esc(t.upNextNote)}</p>`;
     $('upBody').innerHTML = h;
@@ -1746,7 +1761,7 @@
   // Yönelim yardımcıları
   function guidesHtml(at, loc) {
     let g = []; try { g = G.HRStarMap.guides(loc || LOC, at, st.lang, 3); } catch (e) { g = []; }
-    return `<h3>${esc(t.guidesTitle)}</h3>` + (g.length ? `<ul class="guides">${g.map(o => `<li><strong>${esc(o.name)}</strong> (${num(o.mag, 1)} ${st.lang === 'tr' ? 'kadir' : 'mag'}): ${esc(o.text)}</li>`).join('')}</ul>` : `<p class="small">${esc(t.guidesNone)}</p>`);
+    return `<h3>${esc(t.guidesTitle)}</h3>` + (g.length ? `<ul class="guides">${g.map(o => `<li><strong>${esc(o.name)}</strong> (${num(o.mag, 1)} ${esc(t.magUnit)}): ${esc(o.text)}</li>`).join('')}</ul>` : `<p class="small">${esc(t.guidesNone)}</p>`);
   }
   // ---- Hava ve görüş ----
   const WX = { key: null, data: null, err: null, loading: false, ass: null };
@@ -1787,7 +1802,7 @@
     for (const k of [-1, 0, 1]) { const v = ON.pick(d.here, g + k * 3600e3); h += wxRow(v ? fmtH(v.t) : '–', v); }
     h += `<tr><th colspan="5" style="text-align:left">${esc(t.wxWest(Math.round(R.moonAz || R.sunAz)))}</th></tr>` + wxRow(westG ? fmtH(westG.t) : '–', westG);
     h += '</tbody></table></div>';
-    if (aq && aq.aerosol_optical_depth != null) h += `<p class="small" style="margin:6px 0 0">${esc(t.wxAod)}: ${num(aq.aerosol_optical_depth, 2)}${aq.dust != null ? ` · ${st.lang === 'tr' ? 'toz' : 'dust'} ${num(aq.dust, 0)} µg/m³` : ''}</p>`;
+    if (aq && aq.aerosol_optical_depth != null) h += `<p class="small" style="margin:6px 0 0">${esc(t.wxAod)}: ${num(aq.aerosol_optical_depth, 2)}${aq.dust != null ? ` · ${esc(t.dustLbl)} ${num(aq.dust, 0)} µg/m³` : ''}</p>`;
     h += `<p class="cap">${esc(t.wxFiqh)}</p><p class="cap">${esc(t.wxSrc)}</p>`;
     $('wxBody').innerHTML = h; renderBar();
   }
@@ -1809,7 +1824,7 @@
     const out = G.HRStarMap.draw(LOC, SM_AT, st.lang, smOpts());
     $('smBody').innerHTML = out.svg;
     const hj = hijriAt(SM_AT), city = CITIES.find(c => c.id === st.city);
-    $('smWhen').innerHTML = `${esc(fmtDT(SM_AT))} · ${esc(city ? city[st.lang] : `${num(st.lat, 2)}, ${num(st.lon, 2)}`)}${hj ? ' · ' + hj.html : ''}`;
+    $('smWhen').innerHTML = `${esc(fmtDT(SM_AT))} · ${esc(city ? (city[st.lang] || city.en) : `${num(st.lat, 2)}, ${num(st.lon, 2)}`)}${hj ? ' · ' + hj.html : ''}`;
   }
   // ---- Baskı / PDF ----
   async function getDownloads() { try { return G.claude && G.claude.use ? await G.claude.use('downloads') : null; } catch (e) { return null; } }
@@ -1831,14 +1846,16 @@
   const extLink = (u, s) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s)}</a>` : esc(s);
   const bare = u => String(u || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
   // Kaynak kitap: Hakîkat Kitâbevi’nin kendi sayfaları
-  const BOOK_PAGE = 'https://www.hakikatkitabevi.net/book.php?bookCode=001', BOOK_PDF = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
-  const bookLinksHtml = () => `${esc(t.bookLinks)} ${extLink(BOOK_PAGE, t.bookPage)} · ${extLink(BOOK_PDF, t.bookPdf)}`;
+  // Türkçe: Tam İlmihâl (001); İngilizce: kitabın İngilizcesi Endless Bliss (025)
+  // Her dilde Tam İlmihâl’in kendi adı ve bağlantıları dil kaydından gelir (langs.js)
+  const bookOf = () => LG.get(st.lang).book;
+  const bookLinksHtml = () => { const b = bookOf(); return `${esc(t.bookLinks)} ${extLink(b.page, t.bookPage)}${b.pdf ? ' · ' + extLink(b.pdf, t.bookPdf) : ''}`; };
   function aboutHtml() {
     return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>`;
   }
   function noticeHtml() {
     const n = NOTICE || {};
-    return `<span class="src">${extLink(BOOK_PAGE, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
+    return `<span class="src">${extLink(bookOf().page, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
       (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>`;
   }
   function licHtml() {
@@ -1864,7 +1881,7 @@
     $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
     try { $('prDlg').showModal(); } catch (e) { $('prDlg').setAttribute('open', ''); }
   }
-  const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : (st.locAuto ? t.myPlace : (st.lang === 'tr' ? 'Seçilen konum' : 'Selected location')); };
+  const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : (st.locAuto ? t.myPlace : t.selLoc); };
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
@@ -1920,7 +1937,7 @@
     const svg = withTheme('light', () => G.HRStarMap.drawWest(LOC, at, st.lang, { w: 900, h: 560, track, gurubAz: r.sunAz, span: 80, center: (r.sunAz + C.at(at, LOC).moon.az) / 2 }).svg);
     const fist = a => num(Math.max(0, a) / 10, 1);
     const body = rows.map(x => {
-      const p = C.at(x.t, LOC), up = p.moon.alt > -0.5, d = r.sunAz - p.moon.az, dd = Math.abs(d).toFixed(1).replace('.', st.lang === 'tr' ? ',' : '.');
+      const p = C.at(x.t, LOC), up = p.moon.alt > -0.5, d = r.sunAz - p.moon.az, dd = Math.abs(d).toFixed(1).replace('.', decSep());
       return `<tr${x.mark ? ' class="sel"' : ''}><td>${hhmm(x.t)}</td><td>${degf(p.sun.alt, 1)}</td><td>${up ? `${degf(p.moon.alt, 1)} <span class="small">${esc(t.smEveFist(fist(p.moon.alt)))}</span>` : '—'}</td><td>${up ? degf(p.moon.az, 1) : '—'}</td><td>${up ? esc(d > 0 ? t.smEveLeft(dd) : t.smEveRight(dd)) : '—'}</td><td>${esc(x.note || (up ? '' : t.smEveDown))}</td></tr>`;
     }).join('');
     const hj = hijriAt(at);
@@ -1971,8 +1988,8 @@
       row(t.notes, blank ? `${v('', 78)}<br>${v('', 78)}` : (o.note && o.note.length > 240 ? `<span class="clamp">${esc(o.note.slice(0, 240))}…</span> <span class="small">(${esc(t.noteFull)})</span>` : esc(o.note || '—')) + (!blank && !x.observer.name ? `<br><span class="small">${esc(t.recAnon)}</span>` : ''));
     const comp = c ? row(t.lastConj.replace(/\(.*\)/, ''), esc(f(c.ictima))) + row(t.gurub.replace(/\(.*\)/, ''), tm(c.gurub) + (c.seriGurub ? ` · ${esc(t.seri.replace(/\(.*\)/, ''))} ${tm(c.seriGurub)}` : '')) +
       row(t.stWindow, c.windowEnd ? `${tm(c.gurub)} – ${tm(c.windowEnd)}` : t.none) + row(t.moonset.replace(/\(.*\)/, ''), tm(c.moonset)) +
-      row(t.beyn.replace(/\(.*\)/, ''), degf(c.beynunet)) + row(`${t.alt.replace(/\(.*\)/, '')} (${st.lang === 'tr' ? 'gözlem anında' : 'at observation'})`, `${degf(c.atObs.moonAlt)} · ${t.az.split(' ')[0]} ${degf(c.atObs.moonAz, 1)}`) +
-      row(t.age.replace(/\(.*\)/, ''), ageTxt(c.ageH)) + row(t.tutCalc, `<strong>${esc(t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls)}</strong><br><span class="small">${esc(c.evaluation)}</span>`) : `<tr><td colspan="2" class="small">${esc(blank ? (st.lang === 'tr' ? 'Hesâbî veriler kayıt oluşturulunca program tarafından doldurulur.' : 'Computed data are filled in by the programme when a record is created.') : t.none)}</td></tr>`;
+      row(t.beyn.replace(/\(.*\)/, ''), degf(c.beynunet)) + row(`${t.alt.replace(/\(.*\)/, '')} (${esc(t.atObs)})`, `${degf(c.atObs.moonAlt)} · ${t.az.split(' ')[0]} ${degf(c.atObs.moonAz, 1)}`) +
+      row(t.age.replace(/\(.*\)/, ''), ageTxt(c.ageH)) + row(t.tutCalc, `<strong>${esc(t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls)}</strong><br><span class="small">${esc(c.evaluation)}</span>`) : `<tr><td colspan="2" class="small">${esc(blank ? t.tutBlankCalc : t.none)}</td></tr>`;
     const photo = !blank && x.photo && x.photo.thumb ? `<figure class="pph"><img src="${x.photo.thumb}" alt=""><figcaption class="hash">SHA-256 ${esc(x.photo.sha256)}</figcaption></figure>` : '';
     const qr = !blank && x.hash ? qrSvg(`HRK1|${x.id}|${x.hash}`) : '';
     return `<section class="a4 tut">${pgHead(t.tutTitle, esc(t.tutSub) + (blank ? '' : ` · ${esc(t.tutRecId)}: ${esc(x.id)}`))}
@@ -2020,13 +2037,13 @@
   const slug = s => String(s || '').replace(/[ıİşŞğĞüÜöÖçÇâÂîû]/g, c => TRMAP[c]).normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
   function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
-  const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : ''; };
+  const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : ''; };
   const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
     en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
-    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.tr)[kind] || kind, o.suffix].filter(Boolean).join('_');
+    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.en)[kind] || kind, o.suffix].filter(Boolean).join('_');
   }
   // Kayda ait dosya adı: gözlemin akşamı, yerel saati ve yeri
   function recBase(x, kind) {
@@ -2200,6 +2217,10 @@
     add('Açıklama', 'Receb 1437: birinci gece 7 Nisan → 8 Nisan / ikinci gece 8 Nisan → 9 Nisan (rü’yetle başladığı gün)', '2016-04-08 / 2016-04-09', `${rA && rA.firstDay} / ${rB && rB.firstDay}`, '—', x37.H === '2016-04-08' && rA && rA.ymd === '2016-04-07' && rA.world === 'first' && rB && rB.firstDay === '2016-04-09');
     const xk = G.HRExplain.data(XE, '2026-11-10'), hk = G.HRExplain.html(XE, xk, 'tr');
     add('Açıklama', 'Cemâziyelâhır 1448: 1. gün iki ihtimal; önceki ayla arası 29 veya 30 gün; “başlamıştır” yok', '2026-11-10 / 2026-11-11 · 29–30 · yok', `${xk.H} / ${xk.H2} · ${xk.gap} · ${/başlamıştır/.test(hk) ? 'var' : 'yok'}`, '—', xk.H === '2026-11-10' && xk.H2 === '2026-11-11' && (xk.gap === 29 || xk.gap === 30) && !/başlamıştır/.test(hk) && xk.rows.length === 3);
+    // Çok dilli altyapı: her dilde aynı anahtarlar ve aynı türler (metin / işlev / liste) bulunmalı
+    const parity = (a, b) => { const out = []; for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (!(k in a) || !(k in b)) out.push(k); else if (typeof a[k] !== typeof b[k] || Array.isArray(a[k]) !== Array.isArray(b[k])) out.push(k + ':tür'); } return out; };
+    const pT = parity(I.T.tr, I.T.en), pS = parity(G.HRExplain.S.tr, G.HRExplain.S.en), pG = parity(G.HRGuide.TOPICS ? G.HRGuide.TOPICS.tr : {}, G.HRGuide.TOPICS ? G.HRGuide.TOPICS.en : {});
+    add('çok dilli', 'Türkçe ve İngilizce metinlerde aynı anahtarlar (arayüz · açıklama · rehber konuları) ve dil kaydında her dilin Tam İlmihâl bağlantısı', '0 · 0 · 0 · tam', `${pT.length} · ${pS.length} · ${pG.length} · ${LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page) ? 'tam' : 'eksik'}`, pT.concat(pS, pG).slice(0, 6).join(', ') || '—', !pT.length && !pS.length && !pG.length && LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page));
     const xz = G.HRExplain.data(XE, '2027-05-07');
     add('Açıklama', 'Zilhicce 1448: 1. gün Işık usulüyle bulunan gün veya bir gün sonrası (s. 326)', `${ymdOf(CAL.methods(1448, 12).isik)} / +1 gün`, `${xz.H} / ${xz.H2}`, '—', xz.isik && xz.H === ymdOf(CAL.methods(1448, 12).isik) && xz.H2 === addDays(xz.H, 1));
     const gk = G.HRGok.at({ lat: 41.0, lon: 29.0, elev: 0 }, TT('2026-12-10T18:00Z')), pol2 = gk.list.find(o => o.id === 'Polaris'), jup = gk.list.find(o => o.id === 'Jupiter');
@@ -2294,8 +2315,50 @@
   }
 
   let rzT; window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (DAY && view === 'plan') renderTime(); }, 200); });
+  // ---- Tarih alanları: tarayıcının yerel biçimi yerine seçilen biçim (varsayılan gün/ay/yıl) ----
+  // Asıl <input type="date|datetime-local"> değeri ISO olarak kalır (kod onu okur); görünen alan seçilen biçimdedir.
+  const DATE_FMTS = ['dmy/', 'dmy.', 'ymd-', 'mdy/'];
+  const dateFmt = () => DATE_FMTS.includes(st.dateFmt) ? st.dateFmt : 'dmy/';
+  function fmtYmdNum(ymd) {
+    if (!ymd) return '';
+    const [y, m, d] = ymd.split('-'), f = dateFmt(), sep = f[3];
+    return f.startsWith('dmy') ? [d, m, y].join(sep) : f.startsWith('ymd') ? [y, m, d].join(sep) : [m, d, y].join(sep);
+  }
+  function parseDateTxt(txt, withTime) {
+    const n = (txt || '').match(/\d+/g); if (!n || n.length < 3) return null;
+    let y, m, d; const f = dateFmt();
+    if (n[0].length === 4) [y, m, d] = n; else if (f.startsWith('mdy')) [m, d, y] = n; else [d, m, y] = n;
+    y = +y; m = +m; d = +d; if (y < 100) y += 2000;
+    const dt = new Date(Date.UTC(y, m - 1, d)); if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m - 1 || dt.getUTCDate() !== d) return null;
+    let out = `${String(y).padStart(4, '0')}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    if (withTime) { const hh = n.length > 3 ? +n[3] : 0, mm = n.length > 4 ? +n[4] : 0; if (hh > 23 || mm > 59) return null; out += `T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`; }
+    return out;
+  }
+  const DATE_BOXES = [];
+  function enhanceDate(id) {
+    const nat = $(id); if (!nat || nat.dataset.dbox) return;
+    const withTime = nat.type === 'datetime-local', desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+    nat.dataset.dbox = '1'; nat.classList.add('dnat'); nat.tabIndex = -1; nat.setAttribute('aria-hidden', 'true');
+    const box = document.createElement('span'); box.className = 'dbox';
+    box.innerHTML = `<input type="text" id="${id}Txt" inputmode="numeric" autocomplete="off" spellcheck="false"><button type="button" class="dpick" aria-label="📅">📅</button>`;
+    nat.parentNode.insertBefore(box, nat); box.appendChild(nat);
+    const txt = box.querySelector('input'), lbl = document.querySelector(`label[for="${id}"]`); if (lbl) lbl.htmlFor = id + 'Txt';
+    const paint = () => { const v = desc.get.call(nat); txt.value = v ? (withTime ? `${fmtYmdNum(v.slice(0, 10))} ${v.slice(11, 16)}` : fmtYmdNum(v)) : ''; txt.placeholder = t.datePh(dateFmt(), withTime); txt.classList.remove('bad'); };
+    Object.defineProperty(nat, 'value', { configurable: true, get() { return desc.get.call(this); }, set(v) { desc.set.call(this, v); paint(); } });
+    nat.addEventListener('input', paint); nat.addEventListener('change', paint);
+    txt.addEventListener('change', () => {
+      const iso = parseDateTxt(txt.value, withTime);
+      if (!iso) { txt.classList.add('bad'); toast(t.dateBad(t.datePh(dateFmt(), withTime))); return; }
+      if (iso === nat.value) { paint(); return; }
+      nat.value = iso; nat.dispatchEvent(new Event('input', { bubbles: true })); nat.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    box.querySelector('.dpick').onclick = () => { try { nat.showPicker(); } catch (e) { try { nat.focus(); nat.click(); } catch (e2) { txt.focus(); } } };
+    DATE_BOXES.push({ paint, btn: box.querySelector('.dpick') }); paint();
+  }
+  function paintDateBoxes() { DATE_BOXES.forEach(b => { b.paint(); b.btn.title = t.datePick; b.btn.setAttribute('aria-label', t.datePick); }); }
+  ['date', 'mDate', 'recAt', 'ntAt'].forEach(enhanceDate);
   fillStatic(); bind(); route(); setLive(true); update();
   applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
-  G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, official: () => OFFICIAL, notice: () => NOTICE };
+  G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, buildPrint, official: () => OFFICIAL, notice: () => NOTICE };
 })(window);

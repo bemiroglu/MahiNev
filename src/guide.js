@@ -1,6 +1,8 @@
 /* Rehber: konu açıklamaları (fıkhî esas + bilimsel açıklama), gözlem planı, teknikler, kurallar, kanonik metin. */
 (function (G) {
   'use strict';
+  // dile göre sözlük seçimi: istenen dil, yoksa İngilizce
+  const PK = (d, L) => (G.HRLangs ? G.HRLangs.pick(d, L) : (d[L] || d.en));
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   // Her konu: [başlık, fıkhî esas / kitap, bilimsel açıklama]
   const TOPICS = {
@@ -35,9 +37,21 @@
       enerken: ['Hesâbî en erken gün',
         'Ay başı, hesapla bulunan gün veya ertesi gündür; bir gün önce olamaz (s. 315, 360). Ramezân’da dünya geneli, kurbanda bulunduğunuz yer, hacda Mekke esas alınır.',
         'Program, beynûnet ≥ 8° ve görünen irtifâ ≥ 5° şartının ilk sağlandığı akşamı arar; en erken gün o akşamın ertesi günüdür. Bir tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olduğundan, dünya geneli en erken akşam çoğunlukla Pasifik’te bulunur.'],
-      isik: ['Işık Usulü ve takvim usulleri',
-        'Işık Usulü bir arabî ayın ilk gününü hesapla bulur. Şahitle sabit olmayan yerlerde kurban bayramı bu hesapla bulunan gün veya ertesidir (s. 326, 359). Uluğ Beğ ve Kindî cetvelleri de takvim usulleridir (s. 361–362).',
-        'Bu usuller, ay hareketinin ortalamasına dayanan, akılda kalıcı ve zarif hesap kurallarıdır. Gerçek ictimâyı ve atmosferi ayrıca hesaba katmadıkları için bazı aylarda astronomik hesaptan bir gün ayrılabilirler.'],
+      isik: ['Işık Usulü',
+        'Hüseyn Hilmi Işık’ın bulduğu bu usul, herhangi bir arabî ayın birinci gününü birkaç adımda verir: sene sayısından bir eksiği 4,367 ile çarpılır, tam kısmına ayın rakamı eklenir, toplam yediye bölünür; kalan, Cuma’dan itibaren günü gösterir. On iki ayın rakamları, Ebced hesabıyla bir beytin kelimelerinin ilk harflerinde saklıdır: “Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle.” Tam İlmihâl bu usulün pek kat’î ve hassâs olduğunu bildirir (s. 359). Şahitle sabit olmayan yerlerde Kurban bayramı bu hesapla bulunan gün yâhud bir gün sonrasıdır (s. 326).',
+        '4,367 sayısı, kamerî yılın 354,367 günlük uzunluğunun (s. 358) haftalık artığıdır: 354,367 gün = 50 hafta + 4,367 gün. Her yıl ay başları haftanın günlerinde bu kadar ileri kayar; ayların rakamları da 29 ve 30 günlük ayların doğurduğu kaymayı verir. Böylece tek bir çarpma ve bölmeyle, asırlar boyunca ay başlarının haftanın hangi gününe düştüğü bulunur. Program Zilhiccenin 1. gününü ve Kurban bayramını bu usulle gösterir.'],
+      ulugbey: ['Uluğ Beğ cetveli',
+        'Semerkand rasathânesiyle tanınan Uluğ Beğ’in kamerî ay cetvelleri, Ahmed Ziyâ Beğ’in kitabından Tam İlmihâl’e alınmıştır. Tam İlmihâl, ay başını bulan usullerin en sahîhinin Uluğ Beğ’in usulü olduğunu bildirir (s. 361–362). Hicrî sene 210’a bölünür, kalanla birinci cetvelden Muharremin ilk günü bulunur; ikinci cetvelden istenen ayın ilk günü okunur.',
+        '210 kamerî yıl, aritmetik takvimin 30 yıllık devrinin yedi katıdır. 30 yıl 10.631 gün sürer ve haftada 5 gün artırır; yedi devirde bu artık tam haftaya tamamlanır ve haftanın günleri aynı sıraya döner. Bu sayede iki küçük cetvel, her hicrî yılın her ayı için haftanın gününü verir.'],
+      kindi: ['Ebüzziyâ / Kindî cetveli',
+        'Ebüzziyâ takviminde (1310 [m. 1893]) bildirilen ve İbni İshak Ya’kûb Kindî’nin cetveline dayanan bu usulde hicrî sene sekize bölünür. Kalan cetvelin sütununu, ay satırını gösterir; kesiştikleri rakam Cuma’dan itibaren günü verir (s. 361).',
+        'Sekiz kamerî yıl (üçü 355, beşi 354 gün) 2.835 gündür; bu da tam 405 haftadır. Bu yüzden haftanın günleri her sekiz yılda aynı sıraya döner ve bütün ay başları 8 sütunluk tek bir cetvele sığar. Hesap yapmadan, bir bakışta sonuç veren pratik bir araçtır.'],
+      tabular: ['Aritmetik (tabular) takvim',
+        'Hicrî kamerî yılın başlangıcı 1 Muharrem 1’dir: 16 Temmuz 622, Cuma (s. 358). Aritmetik takvim ayları sırayla 30 ve 29 gün sayar; her 30 yılın 11’ini 355 gün, diğerlerini 354 gün kabul eder.',
+        'Bu düzende ortalama ay 29,530556 gündür; gerçek ortalama aydan (29,530589 gün) yalnızca yaklaşık üç saniye farklıdır. Bu yüzden asırlar boyunca ay başlarını gerçek aya çok yakın tutar. Tarih çevirmede ve takvimlerde yaygın olarak kullanılır; program onu karşılaştırma bilgisi olarak gösterir.'],
+      madde88: ['Madde 88: hicrî sene başı',
+        'Muharremin birinci gününü bulmak için sene sayısı beşle çarpılır ve sekize bölünür; kalan, Perşembe’den itibaren günü gösterir. Örnek: 1357 × 5 = 6785; sekize bölününce 1 kalır, Muharremin başı Perşembedir (s. 359).',
+        'Usul, Kindî cetveli gibi sekiz yıllık devre dayanır: sekiz kamerî yıl tam 405 haftadır. Kalanın sıfır çıktığı yıllar için program Uluğ Beğ sonucunu gösterir.'],
       modern: ['Modern modeller (Yallop, Odeh)',
         'Ek bilgidir; hüküm vermez. Yalnızca en iyi gözlem anı (gurûb + 4/9 × fark) ana panelde gösterilir.',
         'Yallop (1997) ve Odeh (2004), yüzlerce kayıtlı gözlemden çıkarılmış ölçütlerdir. İkisi de ay ile güneş arasındaki irtifâ farkını (ARCV) hilâlin kalınlığıyla (W) karşılaştırır. Sınıflar "çıplak gözle kolayca görülür"den "teleskopla da görülemez"e kadar uzanır.']
@@ -73,9 +87,21 @@
       enerken: ['Earliest possible day',
         'The month begins on the day found by calculation or the next day; never a day before (pp. 315, 360). Ramadan uses the whole world, Qurban your location, Hajj Mecca.',
         'The program looks for the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°; the earliest day is the day after it. A date’s latest sunset is just east of the date line, so the worldwide earliest evening is usually in the Pacific.'],
-      isik: ['Işık method and calendar methods',
-        'The Işık method calculates the first day of an Arabic month. Where it is not established by witnesses, Eid al-Adha is the day so found or the next (pp. 326, 359). The Ulugh Beg and Kindî tables are calendar methods too (pp. 361–362).',
-        'These are elegant, memorable rules based on the Moon’s mean motion. Since they do not separately account for the actual conjunction and the atmosphere, in some months they may differ by a day from the astronomical calculation.'],
+      isik: ['Işık method',
+        'Found by Hüseyn Hilmi Işık, this method gives the first day of any Arabic month in a few steps: multiply the year number minus one by 4.367, add the month’s number to the whole part, divide the sum by seven; the remainder counts the day from Friday. The numbers of the twelve months are hidden, by the Abjad reckoning, in the first letters of the words of a couplet: “Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle.” Tam İlmihâl states that the method is very definite and precise (p. 359). Where it is not established by witnesses, ʿId al-Adha is the day so found or one day later (p. 326).',
+        '4.367 is the weekly remainder of the lunar year of 354.367 days (p. 358): 354.367 days = 50 weeks + 4.367 days. Each year the month starts move that far through the week; the month numbers carry the shift produced by months of 29 and 30 days. So a single multiplication and division find, across centuries, the weekday of any month start. The program shows day 1 of Dhu al-Hijja and ʿId al-Adha by this method.'],
+      ulugbey: ['Ulugh Beg table',
+        'The lunar month tables of Ulugh Beg, known for his observatory in Samarkand, are taken into Tam İlmihâl from the book of Ahmed Ziyâ Beg. Tam İlmihâl states that among the methods for finding a month start, Ulugh Beg’s is the most correct (pp. 361–362). The Hijri year is divided by 210; the remainder gives the first day of Muharram from the first table, and the second table gives the first day of the month sought.',
+        '210 lunar years are seven of the arithmetic calendar’s 30-year cycles. Thirty years last 10,631 days and leave a remainder of 5 days in the week; over seven cycles this completes whole weeks and the weekdays return to the same order. So two small tables give the weekday for every month of every Hijri year.'],
+      kindi: ['Ebüzziyâ / Kindî table',
+        'In this method, given in the Ebüzziyâ calendar (1310 [1893 CE]) and based on the table of Ibn Ishaq Yaʿqub al-Kindi, the Hijri year is divided by eight. The remainder chooses the column and the month the row; the number where they meet counts the day from Friday (p. 361).',
+        'Eight lunar years (three of 355 days, five of 354) are 2,835 days, exactly 405 weeks. So the weekdays return to the same order every eight years and all month starts fit in one table of eight columns. It is a practical tool that gives the answer at a glance, without arithmetic.'],
+      tabular: ['Arithmetic (tabular) calendar',
+        'The Hijri lunar era begins on 1 Muharram 1: Friday 16 July 622 (p. 358). The arithmetic calendar counts months alternately as 30 and 29 days and takes 11 years of every 30 as 355 days, the others as 354.',
+        'In this scheme the mean month is 29.530556 days, only about three seconds away from the true mean month (29.530589 days). So it keeps month starts very close to the real Moon for centuries. It is widely used for date conversion and in calendars; the program shows it for comparison.'],
+      madde88: ['Article 88: start of the Hijri year',
+        'To find the first day of Muharram, multiply the year number by five and divide by eight; the remainder counts the day from Thursday. Example: 1357 × 5 = 6785; dividing by eight leaves 1, so Muharram begins on a Thursday (p. 359).',
+        'Like the Kindî table, the method rests on the eight-year cycle: eight lunar years are exactly 405 weeks. For years where the remainder is zero the program shows the Ulugh Beg result.'],
       modern: ['Modern models (Yallop, Odeh)',
         'Additional information only; no ruling. Only the best observation time (sunset + 4/9 × lag) is shown on the main panel.',
         'Yallop (1997) and Odeh (2004) are criteria fitted to hundreds of recorded observations. Both compare the altitude difference between Moon and Sun (ARCV) with the crescent width (W). Classes range from "easily visible to the naked eye" to "not visible even with a telescope".']
@@ -139,11 +165,11 @@
 
   // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
   function topicHtml(L, id, mode) {
-    const t = TOPICS[L][id]; if (!t) return '';
+    const t = PK(TOPICS, L)[id]; if (!t) return '';
     const lb = t[3] || [];   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
     const fk = lb[0] || (L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)'), bl = lb[1] || (L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation');
     let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
-    const lg = G.HRGuide.LONG && G.HRGuide.LONG[L] && G.HRGuide.LONG[L][id];
+    const lg = G.HRGuide.LONG && PK(G.HRGuide.LONG, L)[id];
     if (lg && mode && mode !== 'short') {
       const body = `<p class="lab">${lb[2] || (L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail')}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || (L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail')}</p><p>${esc(lg[1])}</p>`;
       h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
@@ -151,7 +177,7 @@
     return h;
   }
   function planHtml(L) {
-    return PLAN[L].map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
+    return PK(PLAN, L).map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
   }
   function rulesHtml(L) {
     const tr = L === 'tr';
@@ -171,12 +197,14 @@
     const head = tr ? ['Gurûbdaki durum (sırayla denetlenir)', 'Ana görünüm', 'Rü’yet beyanına karşılık'] : ['Condition at sunset (checked in order)', 'Main label', 'Response to a sighting claim'];
     return `<div class="scroll"><table class="t"><thead><tr>${head.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
+  // Kayıttaki dil için Tam İlmihâl’in adı ve bağlantısı (langs.js); sayfa numaraları Türkçe baskıya göredir
+  function bookLine(L) { const b = G.HRLangs ? G.HRLangs.get(L).book : null; return b ? `<em>${esc(b.title)}</em>: <a href="${b.page}" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>${b.pdf ? ` (<a href="${b.pdf}" target="_blank" rel="noopener">PDF</a>)` : ''}.` : ''; }
   function sourcesHtml(L) {
     const tr = L === 'tr';
     return '<ul>' + [
       tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
          : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
-      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : 'Read or download Tam İlmihâl: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).',
+      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : L === 'en' ? 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. Page numbers in the program refer to the Turkish Tam İlmihâl (January 2026 printing); Endless Bliss has its own pagination.' : bookLine(L),
       tr ? 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.'
          : 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
       tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibn Abidin, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
@@ -193,10 +221,10 @@
     return note + canon.map(p => `<p>${esc(p)}</p>`).join('');
   }
   function render(L, t, mode) {
-    const ids = Object.keys(TOPICS[L]);
+    const ids = Object.keys(PK(TOPICS, L));
     return `<div class="guide-grid">
       <section class="card prose"><h2>${t.gPlan}</h2>${planHtml(L)}</section>
-      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(TOPICS[L][id][0])}</summary>${topicHtml(L, id, mode || 'more').replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
+      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(PK(TOPICS, L)[id][0])}</summary>${topicHtml(L, id, mode || 'more').replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
       <section class="card prose"><h2>${t.helpRules}</h2>${rulesHtml(L)}</section>
       <section class="card prose"><h2>${t.helpCanon}</h2>${canonHtml(L)}</section>
       <section class="card prose"><h2>${t.helpSources}</h2>${sourcesHtml(L)}</section>

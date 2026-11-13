@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.12.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.13.0
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; Tam İlmihâl’e uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -426,6 +426,10 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 .goktab .n { font-family: var(--font-mono); font-size: .84rem; }
 .fprev { margin: 0 0 10px; padding: 8px 12px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 600; } .fprev .btn { margin-left: 6px; background: var(--accent-ink); color: var(--accent); border-color: var(--accent-ink); font-weight: 700; }
 @media (max-width: 560px) { .mbar .acts .lbl { display: none; } .mbar .acts { margin-left: 0; width: 100%; justify-content: flex-start; gap: 4px; } .mbar .acts .seg button { padding: 4px 8px; min-height: 30px; font-size: .85rem; } .mbar .acts .btn { padding: 4px 8px; min-height: 30px; } }
+.dbox { position: relative; display: flex; gap: 6px; align-items: stretch; }
+.dbox input[type="text"] { flex: 1; min-width: 0; font-variant-numeric: tabular-nums; } .dbox input.bad { border-color: var(--bad, #c0392b); }
+.dbox .dpick { flex: none; padding: 0 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; font-size: 1rem; }
+.dbox .dnat { position: absolute; right: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: 0; padding: 0; }
 .mnk { font: inherit; font-size: .85rem; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); max-width: 100%; }
 .goktab .gmob { display: none; } .goknight .gch { text-align: left; }
 @media (max-width: 560px) { .goktab .gmob { display: inline-block; margin-top: 3px; } .goktab tr > :nth-child(3) { display: none; } .goktab td:first-child { min-width: 7.5em; } }
@@ -492,7 +496,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
       <label class="lvlq"><span id="lLvlQuick"></span><select id="lvlQuick"></select></label>
       <button class="btn" type="button" id="dlHtml"></button>
       <button class="btn" type="button" id="openSet"></button>
-      <div class="seg" role="group" aria-label="Dil / Language"><button id="langTr" type="button">TR</button><button id="langEn" type="button">EN</button></div>
+      <div class="seg" role="group" aria-label="Dil / Language" id="langSeg"><button id="langTr" type="button" data-lang="tr">TR</button><button id="langEn" type="button" data-lang="en">EN</button></div>
     </div>
   </header>
   <div class="stick">
@@ -657,6 +661,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
       <div>
         <h3 id="hHelp"></h3>
         <div class="field"><label for="lvlSel" id="lLvl"></label><select id="lvlSel"></select></div><p class="cap" id="lvlNote"></p>
+        <div class="field"><label for="dateFmt" id="lDateFmt"></label><select id="dateFmt"></select></div>
         <div class="field"><label for="layoutSel" id="lLayout"></label><select id="layoutSel"></select></div><p class="cap" id="layoutNote"></p>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
@@ -999,6 +1004,32 @@ return new kd(this.curr.time,a,b)};$jscomp.global.Object.defineProperties(H.prot
 </script>
 <script>
 window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+/* Dil kaydı: arayüz dilleri, yerel biçimler, yazı yönü ve her dilde Tam İlmihâl’in adı ve bağlantıları.
+ * Yeni bir dil eklemek için: buraya bir kayıt, i18n dosyalarına T[kod] ve MONTHS[kod], explain.js / guide.js / sky.js /
+ * starmap.js / gok.js sözlüklerine birer bölüm eklenir (bkz. docs/coklu-dil.md). Eksik metinler İngilizceden gelir.
+ * Program içindeki sayfa numaraları Türkçe Tam İlmihâl’in Ocak 2026 baskısına göredir. */
+(function (G) {
+  'use strict';
+  const HK = 'https://www.hakikatkitabevi.net/';
+  const LANGS = {
+    tr: { code: 'tr', name: 'Türkçe', short: 'TR', locale: 'tr-TR', dir: 'ltr', fallback: null,
+      book: { title: 'Tam İlmihâl Se’âdet-i Ebediyye', page: HK + 'book.php?bookCode=001', pdf: HK + 'downloads/001.pdf', pages: 'tr-2026-01' } },
+    en: { code: 'en', name: 'English', short: 'EN', locale: 'en-GB', dir: 'ltr', fallback: 'tr',
+      // Endless Bliss dört fasikül hâlinde ayrı ayrı indirilir; bu yüzden yalnız kitap sayfası verilir.
+      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: null } }
+  };
+  const ORDER = ['tr', 'en'];
+  const get = L => LANGS[L] || LANGS.en;
+  // Dile göre sözlükten seçim: önce istenen dil, sonra İngilizce, sonra Türkçe
+  const pick = (dict, L) => (dict && (dict[L] || dict.en || dict.tr)) || {};
+  // Eksik anahtarlar için yedek zinciri: dil → İngilizce (İngilizce ve Türkçe kendileri tamdır)
+  function chain(T) {
+    for (const L of Object.keys(T)) if (L !== 'en' && L !== 'tr' && T.en && Object.getPrototypeOf(T[L]) !== T.en) Object.setPrototypeOf(T[L], T.en);
+    return T;
+  }
+  G.HRLangs = { LANGS, ORDER, get, pick, chain };
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
 /* Mâh-ı Nev — hesap çekirdeği
  * Kanonik dayanak: Se'âdet-i Ebediyye (Hakîkat Kitâbevi), s. 175–186, 314–316, 326, 344, 358–362.
  * Astronomik motor: Astronomy Engine (Don Cross, MIT).
@@ -1779,6 +1810,8 @@ window.HR_CANON_EN = [
 /* Rehber: konu açıklamaları (fıkhî esas + bilimsel açıklama), gözlem planı, teknikler, kurallar, kanonik metin. */
 (function (G) {
   'use strict';
+  // dile göre sözlük seçimi: istenen dil, yoksa İngilizce
+  const PK = (d, L) => (G.HRLangs ? G.HRLangs.pick(d, L) : (d[L] || d.en));
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   // Her konu: [başlık, fıkhî esas / kitap, bilimsel açıklama]
   const TOPICS = {
@@ -1813,9 +1846,21 @@ window.HR_CANON_EN = [
       enerken: ['Hesâbî en erken gün',
         'Ay başı, hesapla bulunan gün veya ertesi gündür; bir gün önce olamaz (s. 315, 360). Ramezân’da dünya geneli, kurbanda bulunduğunuz yer, hacda Mekke esas alınır.',
         'Program, beynûnet ≥ 8° ve görünen irtifâ ≥ 5° şartının ilk sağlandığı akşamı arar; en erken gün o akşamın ertesi günüdür. Bir tarihin en geç gurûbu tarih çizgisinin hemen doğusunda olduğundan, dünya geneli en erken akşam çoğunlukla Pasifik’te bulunur.'],
-      isik: ['Işık Usulü ve takvim usulleri',
-        'Işık Usulü bir arabî ayın ilk gününü hesapla bulur. Şahitle sabit olmayan yerlerde kurban bayramı bu hesapla bulunan gün veya ertesidir (s. 326, 359). Uluğ Beğ ve Kindî cetvelleri de takvim usulleridir (s. 361–362).',
-        'Bu usuller, ay hareketinin ortalamasına dayanan, akılda kalıcı ve zarif hesap kurallarıdır. Gerçek ictimâyı ve atmosferi ayrıca hesaba katmadıkları için bazı aylarda astronomik hesaptan bir gün ayrılabilirler.'],
+      isik: ['Işık Usulü',
+        'Hüseyn Hilmi Işık’ın bulduğu bu usul, herhangi bir arabî ayın birinci gününü birkaç adımda verir: sene sayısından bir eksiği 4,367 ile çarpılır, tam kısmına ayın rakamı eklenir, toplam yediye bölünür; kalan, Cuma’dan itibaren günü gösterir. On iki ayın rakamları, Ebced hesabıyla bir beytin kelimelerinin ilk harflerinde saklıdır: “Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle.” Tam İlmihâl bu usulün pek kat’î ve hassâs olduğunu bildirir (s. 359). Şahitle sabit olmayan yerlerde Kurban bayramı bu hesapla bulunan gün yâhud bir gün sonrasıdır (s. 326).',
+        '4,367 sayısı, kamerî yılın 354,367 günlük uzunluğunun (s. 358) haftalık artığıdır: 354,367 gün = 50 hafta + 4,367 gün. Her yıl ay başları haftanın günlerinde bu kadar ileri kayar; ayların rakamları da 29 ve 30 günlük ayların doğurduğu kaymayı verir. Böylece tek bir çarpma ve bölmeyle, asırlar boyunca ay başlarının haftanın hangi gününe düştüğü bulunur. Program Zilhiccenin 1. gününü ve Kurban bayramını bu usulle gösterir.'],
+      ulugbey: ['Uluğ Beğ cetveli',
+        'Semerkand rasathânesiyle tanınan Uluğ Beğ’in kamerî ay cetvelleri, Ahmed Ziyâ Beğ’in kitabından Tam İlmihâl’e alınmıştır. Tam İlmihâl, ay başını bulan usullerin en sahîhinin Uluğ Beğ’in usulü olduğunu bildirir (s. 361–362). Hicrî sene 210’a bölünür, kalanla birinci cetvelden Muharremin ilk günü bulunur; ikinci cetvelden istenen ayın ilk günü okunur.',
+        '210 kamerî yıl, aritmetik takvimin 30 yıllık devrinin yedi katıdır. 30 yıl 10.631 gün sürer ve haftada 5 gün artırır; yedi devirde bu artık tam haftaya tamamlanır ve haftanın günleri aynı sıraya döner. Bu sayede iki küçük cetvel, her hicrî yılın her ayı için haftanın gününü verir.'],
+      kindi: ['Ebüzziyâ / Kindî cetveli',
+        'Ebüzziyâ takviminde (1310 [m. 1893]) bildirilen ve İbni İshak Ya’kûb Kindî’nin cetveline dayanan bu usulde hicrî sene sekize bölünür. Kalan cetvelin sütununu, ay satırını gösterir; kesiştikleri rakam Cuma’dan itibaren günü verir (s. 361).',
+        'Sekiz kamerî yıl (üçü 355, beşi 354 gün) 2.835 gündür; bu da tam 405 haftadır. Bu yüzden haftanın günleri her sekiz yılda aynı sıraya döner ve bütün ay başları 8 sütunluk tek bir cetvele sığar. Hesap yapmadan, bir bakışta sonuç veren pratik bir araçtır.'],
+      tabular: ['Aritmetik (tabular) takvim',
+        'Hicrî kamerî yılın başlangıcı 1 Muharrem 1’dir: 16 Temmuz 622, Cuma (s. 358). Aritmetik takvim ayları sırayla 30 ve 29 gün sayar; her 30 yılın 11’ini 355 gün, diğerlerini 354 gün kabul eder.',
+        'Bu düzende ortalama ay 29,530556 gündür; gerçek ortalama aydan (29,530589 gün) yalnızca yaklaşık üç saniye farklıdır. Bu yüzden asırlar boyunca ay başlarını gerçek aya çok yakın tutar. Tarih çevirmede ve takvimlerde yaygın olarak kullanılır; program onu karşılaştırma bilgisi olarak gösterir.'],
+      madde88: ['Madde 88: hicrî sene başı',
+        'Muharremin birinci gününü bulmak için sene sayısı beşle çarpılır ve sekize bölünür; kalan, Perşembe’den itibaren günü gösterir. Örnek: 1357 × 5 = 6785; sekize bölününce 1 kalır, Muharremin başı Perşembedir (s. 359).',
+        'Usul, Kindî cetveli gibi sekiz yıllık devre dayanır: sekiz kamerî yıl tam 405 haftadır. Kalanın sıfır çıktığı yıllar için program Uluğ Beğ sonucunu gösterir.'],
       modern: ['Modern modeller (Yallop, Odeh)',
         'Ek bilgidir; hüküm vermez. Yalnızca en iyi gözlem anı (gurûb + 4/9 × fark) ana panelde gösterilir.',
         'Yallop (1997) ve Odeh (2004), yüzlerce kayıtlı gözlemden çıkarılmış ölçütlerdir. İkisi de ay ile güneş arasındaki irtifâ farkını (ARCV) hilâlin kalınlığıyla (W) karşılaştırır. Sınıflar "çıplak gözle kolayca görülür"den "teleskopla da görülemez"e kadar uzanır.']
@@ -1851,9 +1896,21 @@ window.HR_CANON_EN = [
       enerken: ['Earliest possible day',
         'The month begins on the day found by calculation or the next day; never a day before (pp. 315, 360). Ramadan uses the whole world, Qurban your location, Hajj Mecca.',
         'The program looks for the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°; the earliest day is the day after it. A date’s latest sunset is just east of the date line, so the worldwide earliest evening is usually in the Pacific.'],
-      isik: ['Işık method and calendar methods',
-        'The Işık method calculates the first day of an Arabic month. Where it is not established by witnesses, Eid al-Adha is the day so found or the next (pp. 326, 359). The Ulugh Beg and Kindî tables are calendar methods too (pp. 361–362).',
-        'These are elegant, memorable rules based on the Moon’s mean motion. Since they do not separately account for the actual conjunction and the atmosphere, in some months they may differ by a day from the astronomical calculation.'],
+      isik: ['Işık method',
+        'Found by Hüseyn Hilmi Işık, this method gives the first day of any Arabic month in a few steps: multiply the year number minus one by 4.367, add the month’s number to the whole part, divide the sum by seven; the remainder counts the day from Friday. The numbers of the twelve months are hidden, by the Abjad reckoning, in the first letters of the words of a couplet: “Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle.” Tam İlmihâl states that the method is very definite and precise (p. 359). Where it is not established by witnesses, ʿId al-Adha is the day so found or one day later (p. 326).',
+        '4.367 is the weekly remainder of the lunar year of 354.367 days (p. 358): 354.367 days = 50 weeks + 4.367 days. Each year the month starts move that far through the week; the month numbers carry the shift produced by months of 29 and 30 days. So a single multiplication and division find, across centuries, the weekday of any month start. The program shows day 1 of Dhu al-Hijja and ʿId al-Adha by this method.'],
+      ulugbey: ['Ulugh Beg table',
+        'The lunar month tables of Ulugh Beg, known for his observatory in Samarkand, are taken into Tam İlmihâl from the book of Ahmed Ziyâ Beg. Tam İlmihâl states that among the methods for finding a month start, Ulugh Beg’s is the most correct (pp. 361–362). The Hijri year is divided by 210; the remainder gives the first day of Muharram from the first table, and the second table gives the first day of the month sought.',
+        '210 lunar years are seven of the arithmetic calendar’s 30-year cycles. Thirty years last 10,631 days and leave a remainder of 5 days in the week; over seven cycles this completes whole weeks and the weekdays return to the same order. So two small tables give the weekday for every month of every Hijri year.'],
+      kindi: ['Ebüzziyâ / Kindî table',
+        'In this method, given in the Ebüzziyâ calendar (1310 [1893 CE]) and based on the table of Ibn Ishaq Yaʿqub al-Kindi, the Hijri year is divided by eight. The remainder chooses the column and the month the row; the number where they meet counts the day from Friday (p. 361).',
+        'Eight lunar years (three of 355 days, five of 354) are 2,835 days, exactly 405 weeks. So the weekdays return to the same order every eight years and all month starts fit in one table of eight columns. It is a practical tool that gives the answer at a glance, without arithmetic.'],
+      tabular: ['Arithmetic (tabular) calendar',
+        'The Hijri lunar era begins on 1 Muharram 1: Friday 16 July 622 (p. 358). The arithmetic calendar counts months alternately as 30 and 29 days and takes 11 years of every 30 as 355 days, the others as 354.',
+        'In this scheme the mean month is 29.530556 days, only about three seconds away from the true mean month (29.530589 days). So it keeps month starts very close to the real Moon for centuries. It is widely used for date conversion and in calendars; the program shows it for comparison.'],
+      madde88: ['Article 88: start of the Hijri year',
+        'To find the first day of Muharram, multiply the year number by five and divide by eight; the remainder counts the day from Thursday. Example: 1357 × 5 = 6785; dividing by eight leaves 1, so Muharram begins on a Thursday (p. 359).',
+        'Like the Kindî table, the method rests on the eight-year cycle: eight lunar years are exactly 405 weeks. For years where the remainder is zero the program shows the Ulugh Beg result.'],
       modern: ['Modern models (Yallop, Odeh)',
         'Additional information only; no ruling. Only the best observation time (sunset + 4/9 × lag) is shown on the main panel.',
         'Yallop (1997) and Odeh (2004) are criteria fitted to hundreds of recorded observations. Both compare the altitude difference between Moon and Sun (ARCV) with the crescent width (W). Classes range from "easily visible to the naked eye" to "not visible even with a telescope".']
@@ -1917,11 +1974,11 @@ window.HR_CANON_EN = [
 
   // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
   function topicHtml(L, id, mode) {
-    const t = TOPICS[L][id]; if (!t) return '';
+    const t = PK(TOPICS, L)[id]; if (!t) return '';
     const lb = t[3] || [];   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
     const fk = lb[0] || (L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)'), bl = lb[1] || (L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation');
     let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
-    const lg = G.HRGuide.LONG && G.HRGuide.LONG[L] && G.HRGuide.LONG[L][id];
+    const lg = G.HRGuide.LONG && PK(G.HRGuide.LONG, L)[id];
     if (lg && mode && mode !== 'short') {
       const body = `<p class="lab">${lb[2] || (L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail')}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || (L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail')}</p><p>${esc(lg[1])}</p>`;
       h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
@@ -1929,7 +1986,7 @@ window.HR_CANON_EN = [
     return h;
   }
   function planHtml(L) {
-    return PLAN[L].map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
+    return PK(PLAN, L).map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
   }
   function rulesHtml(L) {
     const tr = L === 'tr';
@@ -1949,12 +2006,14 @@ window.HR_CANON_EN = [
     const head = tr ? ['Gurûbdaki durum (sırayla denetlenir)', 'Ana görünüm', 'Rü’yet beyanına karşılık'] : ['Condition at sunset (checked in order)', 'Main label', 'Response to a sighting claim'];
     return `<div class="scroll"><table class="t"><thead><tr>${head.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
+  // Kayıttaki dil için Tam İlmihâl’in adı ve bağlantısı (langs.js); sayfa numaraları Türkçe baskıya göredir
+  function bookLine(L) { const b = G.HRLangs ? G.HRLangs.get(L).book : null; return b ? `<em>${esc(b.title)}</em>: <a href="${b.page}" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>${b.pdf ? ` (<a href="${b.pdf}" target="_blank" rel="noopener">PDF</a>)` : ''}.` : ''; }
   function sourcesHtml(L) {
     const tr = L === 'tr';
     return '<ul>' + [
       tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
          : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
-      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : 'Read or download Tam İlmihâl: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).',
+      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : L === 'en' ? 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. Page numbers in the program refer to the Turkish Tam İlmihâl (January 2026 printing); Endless Bliss has its own pagination.' : bookLine(L),
       tr ? 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.'
          : 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
       tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibn Abidin, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
@@ -1971,10 +2030,10 @@ window.HR_CANON_EN = [
     return note + canon.map(p => `<p>${esc(p)}</p>`).join('');
   }
   function render(L, t, mode) {
-    const ids = Object.keys(TOPICS[L]);
+    const ids = Object.keys(PK(TOPICS, L));
     return `<div class="guide-grid">
       <section class="card prose"><h2>${t.gPlan}</h2>${planHtml(L)}</section>
-      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(TOPICS[L][id][0])}</summary>${topicHtml(L, id, mode || 'more').replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
+      <section class="card prose"><h2>${t.gTopics}</h2>${ids.map(id => `<details class="topic" id="topic-${id}"><summary>${esc(PK(TOPICS, L)[id][0])}</summary>${topicHtml(L, id, mode || 'more').replace(/^<h3>.*?<\/h3>/, '')}</details>`).join('')}</section>
       <section class="card prose"><h2>${t.helpRules}</h2>${rulesHtml(L)}</section>
       <section class="card prose"><h2>${t.helpCanon}</h2>${canonHtml(L)}</section>
       <section class="card prose"><h2>${t.helpSources}</h2>${sourcesHtml(L)}</section>
@@ -2708,7 +2767,7 @@ window.HR_CANON_EN = [
 /* Metinler: 0.12 (iki gece esası, hicrî günün gerekçesi, gök cisimleri aracı) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.12.0';
+  G.HR_VERSION = '0.13.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Hicrî günün iki sayısı: ayın 1. günü hesapla bulunan gün veya bir gün sonrasıdır (s. 315, 326, 360)
@@ -2717,6 +2776,17 @@ window.HR_CANON_EN = [
     hjWhyLead: 'Neden iki sayı:',
     hjBook: 'Hesâbî tarihtir. Ayın 1. günü, hesapla bulunan gün veya bir gün sonrasıdır; bir gün önce olamaz (s. 315). Hangisi olduğu rü’yetle kesinleşir.',
     rnIntro: 'Her satır bir kamerî ayın başıdır. Rasad gecesi ve en elverişli akşam bu yer için hesâbîdir. Ayın 1. günü, Tam İlmihâl’e göre hesapla bulunan gün veya bir gün sonrasıdır; önce olamaz (s. 315, 326, 360). Hangisi olduğu rü’yetle kesinleşir. Bir satırdaki tarihe dokununca o akşam planlanır.',
+    // Dile bağlı küçük metinler (çok dilli altyapı)
+    hDetail: 'Gurûb ve hilâl', hHelp: 'Rehberlik', accTitle: 'Hesap ve gözlem hassasiyeti',
+    polarNightH: 'Bu tarihte bu yerde güneş doğmuyor (kutup gecesi).', polarDayH: 'Bu tarihte bu yerde güneş batmıyor.',
+    polarSub: 'Gurûb olmadığı için hilâl rasadı yapılamaz. Tam İlmihâl, yirmidört saatten uzun günlerde oruç için gündüzü böyle uzun olmayan bir şehrin zamanına uyulacağını bildirir (s. 315); en yakın böyle bir yerin konumunu girerek planlayabilirsiniz.',
+    mtagPossible: 's', arefeSub: 'veya ertesi gün (s. 360)', isikRef: 'Tam İlmihâl s. 326, 359', card4: ['K', 'D', 'G', 'B'],
+    daysAgo: n => `${n} gün önce`, magUnit: 'kadir', dustLbl: 'toz', selLoc: 'Seçilen konum', atObs: 'gözlem anında',
+    tutBlankCalc: 'Hesâbî veriler kayıt oluşturulunca program tarafından doldurulur.',
+    // Tarih biçimi
+    dateFmtLbl: 'Tarih biçimi (giriş alanları)', dateFmtOpts: { 'dmy/': 'gün/ay/yıl (13/11/2026)', 'dmy.': 'gün.ay.yıl (13.11.2026)', 'ymd-': 'yıl-ay-gün (2026-11-13)', 'mdy/': 'ay/gün/yıl (11/13/2026)' },
+    datePh: (f, tm) => ({ 'dmy/': 'gg/aa/yyyy', 'dmy.': 'gg.aa.yyyy', 'ymd-': 'yyyy-aa-gg', 'mdy/': 'aa/gg/yyyy' }[f] + (tm ? ' ss:dd' : '')),
+    dateBad: ph => `Tarih okunamadı. Biçim: ${ph}`, datePick: 'Takvimden seç',
     // Gezinme
     todayEve: 'Bugünün akşamı', navBack: 'Geri: önceki seçime dön', navFwd: 'İleri', navToNow: 'Şimdiye dön',
     navNowToast: 'Şimdiki ana geçildi. Önceki seçime dönmek için üst banttaki ↶ düğmesine dokunun.',
@@ -2731,9 +2801,15 @@ window.HR_CANON_EN = [
     gokAlways: 'batmaz', gokNever: 'bu yerden görünmez',
     gokNight: (a, b) => `Bu gece çıplak gözle (gurûb ${a} – güneş doğuşu ${b}):`,
     gokBest: (f, to, b, dir, alt) => `${f}–${to}, en yüksek ${b} (${dir}, ${alt}°)`,
+    gokBestAll: (b, dir, alt) => `bütün gece, en yüksek ${b} (${dir}, ${alt}°)`,
     gokStars: n => `ayrıca ${n} parlak yıldız`, gokNone: 'gezegen yok', gokCalc: 'Gece taraması yapılıyor…',
     gokTw: (r, s, c, n, a, a2, n2, c2) => `Güneş doğuşu ${r} · batışı ${s} · sivil alacakaranlık sonu ${c} · denizci ${n} · astronomik gece ${a}–${a2} · sabah denizci ${n2} · sivil ${c2}`,
     gokGo: 'Seçili anı buraya getir',
+    gokTw2: x => [x.sr ? `Güneş doğuşu ${x.sr}` : 'Güneş bugün doğmuyor', x.ss ? `batışı ${x.ss}` : 'bugün batmıyor',
+      x.ss ? (x.civ ? `sivil alacakaranlık sonu ${x.civ}` : 'sivil alacakaranlık bütün gece sürer') : '', x.civ ? (x.nau ? `denizci ${x.nau}` : 'denizci alacakaranlığı bütün gece sürer') : '',
+      x.nau ? (x.ast ? `astronomik gece ${x.ast}–${x.ast2 || '…'}` : 'astronomik gece olmuyor') : '', x.nau2 ? `sabah denizci ${x.nau2}` : '', x.civ2 ? `sivil ${x.civ2}` : ''].filter(Boolean).join(' · '),
+    gokPolarN: a => `Güneş bugün doğmuyor (kutup gecesi); en yüksek ${a}°.`, gokPolarD: a => `Güneş bugün batmıyor (kutup gündüzü); en alçak ${a}°.`,
+    gokWhole: 'Bugün çıplak gözle (bütün gün tarandı; gurûb yok):',
     gokCap: 'Ek bilgi (Astronomy Engine). Durum sütunu; güneşin yüksekliğine, cismin parlaklığına ve ufka yakınlığına göre kaba bir çıplak göz tahminidir; hava, ışık kirliliği ve göz alışkanlığı hesaba katılmaz. Hilâlin rü’yeti için yukarıdaki değerlendirme (Tam İlmihâl s. 360) esastır. Güneş’e asla doğrudan veya dürbünle bakmayın.',
     miniGlobal: 'Ayın 1. günü (iki ihtimal)', miniLocal: 'Burada ilk mümkün akşam',
     miniFirstEve: (e, w) => `Dünyada ilk mümkün akşam: ${e} (${w})`, miniIsik: 'Işık usulü (s. 326)',
@@ -2750,6 +2826,18 @@ window.HR_CANON_EN = [
     hjWhyLead: 'Why two numbers:',
     hjBook: 'A computed date. Day 1 of the month is the calculated day or one day later; never a day earlier (p. 315). Which one is established by sighting.',
     rnIntro: 'Each row is the start of a lunar month. The observation night and the best evening are calculated for this location. According to Tam İlmihâl, day 1 of the month is the calculated day or one day later, never earlier (pp. 315, 326, 360). Which one is established by sighting. Tap a date to plan that evening.',
+    hDetail: 'Sunset and crescent', hHelp: 'Guidance', accTitle: 'Calculation and observation accuracy',
+    polarNightH: 'The Sun does not rise here on this date (polar night).', polarDayH: 'The Sun does not set here on this date.',
+    polarSub: 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (p. 315); enter the nearest such place to plan.',
+    mtagPossible: 'm', arefeSub: 'or the next day (p. 360)', isikRef: 'Tam İlmihâl pp. 326, 359', card4: ['N', 'E', 'S', 'W'],
+    daysAgo: n => `${n} days ago`, magUnit: 'mag', dustLbl: 'dust', selLoc: 'Selected location', atObs: 'at observation',
+    tutBlankCalc: 'Computed data are filled in by the program when a record is created.',
+    dateFmtLbl: 'Date format (input fields)', dateFmtOpts: { 'dmy/': 'day/month/year (13/11/2026)', 'dmy.': 'day.month.year (13.11.2026)', 'ymd-': 'year-month-day (2026-11-13)', 'mdy/': 'month/day/year (11/13/2026)' },
+    datePh: (f, tm) => ({ 'dmy/': 'dd/mm/yyyy', 'dmy.': 'dd.mm.yyyy', 'ymd-': 'yyyy-mm-dd', 'mdy/': 'mm/dd/yyyy' }[f] + (tm ? ' hh:mm' : '')),
+    dateBad: ph => `Could not read the date. Format: ${ph}`, datePick: 'Pick from calendar',
+    srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (in English: Endless Bliss, Hakîkat Kitâbevi)',
+    bookLinks: 'Read or download Endless Bliss, the English version of Tam İlmihâl (Hakîkat Kitâbevi):', bookPage: 'Endless Bliss page',
+    editionNote: 'Page numbers refer to the Turkish Tam İlmihâl, January 2026 printing; Endless Bliss has its own pagination.',
     todayEve: 'This evening', navBack: 'Back: return to the previous selection', navFwd: 'Forward', navToNow: 'Back to now',
     navNowToast: 'Switched to the present moment. Tap ↶ in the top bar to return to the previous selection.',
     dateNoteNext: (a, b) => `The selected moment is the morning of ${b}; the night is shown as the night of the evening of ${a}.`,
@@ -2762,9 +2850,15 @@ window.HR_CANON_EN = [
     gokAlways: 'never sets', gokNever: 'never rises here',
     gokNight: (a, b) => `Tonight with the naked eye (sunset ${a} – sunrise ${b}):`,
     gokBest: (f, to, b, dir, alt) => `${f}–${to}, highest ${b} (${dir}, ${alt}°)`,
+    gokBestAll: (b, dir, alt) => `all night, highest ${b} (${dir}, ${alt}°)`,
     gokStars: n => `also ${n} bright stars`, gokNone: 'no planets', gokCalc: 'Scanning the night…',
     gokTw: (r, s, c, n, a, a2, n2, c2) => `Sunrise ${r} · sunset ${s} · end of civil twilight ${c} · nautical ${n} · astronomical night ${a}–${a2} · morning nautical ${n2} · civil ${c2}`,
     gokGo: 'Move the selected moment here',
+    gokTw2: x => [x.sr ? `Sunrise ${x.sr}` : 'The Sun does not rise today', x.ss ? `sunset ${x.ss}` : 'it does not set today',
+      x.ss ? (x.civ ? `end of civil twilight ${x.civ}` : 'civil twilight lasts all night') : '', x.civ ? (x.nau ? `nautical ${x.nau}` : 'nautical twilight lasts all night') : '',
+      x.nau ? (x.ast ? `astronomical night ${x.ast}–${x.ast2 || '…'}` : 'no astronomical night') : '', x.nau2 ? `morning nautical ${x.nau2}` : '', x.civ2 ? `civil ${x.civ2}` : ''].filter(Boolean).join(' · '),
+    gokPolarN: a => `The Sun does not rise today (polar night); highest ${a}°.`, gokPolarD: a => `The Sun does not set today (polar day); lowest ${a}°.`,
+    gokWhole: 'Today with the naked eye (whole day scanned; no sunset):',
     gokCap: 'Additional information (Astronomy Engine). The State column is a rough naked-eye estimate from the Sun’s altitude, the object’s brightness and its height above the horizon; weather, light pollution and dark adaptation are not included. For the crescent, the evaluation above (Tam İlmihâl p. 360) prevails. Never look at the Sun directly or through binoculars.',
     miniGlobal: 'Day 1 of the month (two possibilities)', miniLocal: 'First possible evening here',
     miniFirstEve: (e, w) => `First possible evening worldwide: ${e} (${w})`, miniIsik: 'Işık method (p. 326)',
@@ -5463,34 +5557,51 @@ var qrcode = function() {
   };
   const objName = (id, L) => (NAMES[L] && NAMES[L][id]) || id;
   const CARD = { tr: ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD', 'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'], en: ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'] };
-  const card = (az, L) => CARD[L][Math.round(((az % 360) + 360) % 360 / 22.5) % 16];
+  const card = (az, L) => (CARD[L] || CARD.en)[Math.round(((az % 360) + 360) % 360 / 22.5) % 16];
+  // Dile bağlı metinler (yeni dil: buraya bir bölüm; eksik anahtar İngilizceden gelir)
+  const SX = {
+    tr: { dec: ',', finger: n => `${n} parmak`, fist: (v, f) => `≈ ${v} yumruk`, twUp: 'Güneş ufkun üstünde', twCivil: 'Sivil alacakaranlık', twNaut: 'Denizci alacakaranlığı',
+      twRed: 'Kızıllık sürüyor', twWhite: 'Kızıllık bitti, beyazlık sürüyor', twNight: 'Gece (şafak bitti)', west: 'Batı ufku', lim5: 'Tam İlmihâl’in sınırı (s. 360)',
+      sunsetPt: 'gurûb noktası', left: 'sol', right: 'sağ', up: 'yukarı', fistScale: '1 yumruk (kol uzatılmış)', toLeft: 'solunda', toRight: 'sağında',
+      below: 'Hilâl ufkun altında', below5: 'Hilâl 5°’nin altında: Tam İlmihâl’e göre görülemez', notSet: 'Güneş henüz batmadı',
+      where: (dx, side, fx, up, fu) => `Hilâl, gurûb noktasının ${dx}° ${side} (${fx}), ufkun ${up}° üstünde (${fu}).`,
+      full: 'Bütün ufuk', sun: 'Güneş', moon: 'Ay', moonBelow: a => `Ay ufkun ${a}° altında`, sunUp: 'Güneş ufkun üstünde' },
+    en: { dec: '.', finger: n => `${n} finger(s)`, fist: (v, f) => `≈ ${v} ${f === 1 ? 'fist' : 'fists'}`, twUp: 'Sun above horizon', twCivil: 'Civil twilight', twNaut: 'Nautical twilight',
+      twRed: 'Red glow persists', twWhite: 'Red gone, white glow persists', twNight: 'Night (twilight over)', west: 'Western horizon', lim5: 'Tam İlmihâl limit (p. 360)',
+      sunsetPt: 'sunset point', left: 'left', right: 'right', up: 'up', fistScale: '1 fist at arm’s length', toLeft: 'to the left', toRight: 'to the right',
+      below: 'Crescent below the horizon', below5: 'Crescent below 5°: not visible per Tam İlmihâl', notSet: 'The Sun has not set yet',
+      where: (dx, side, fx, up, fu) => `The crescent is ${dx}° ${side} of the sunset point (${fx}), ${up}° above the horizon (${fu}).`,
+      full: 'Full horizon', sun: 'Sun', moon: 'Moon', moonBelow: a => `Moon ${a}° below the horizon`, sunUp: 'Sun above the horizon' }
+  };
+  const skyTx = L => (G.HRLangs ? G.HRLangs.pick(SX, L) : (SX[L] || SX.en));
+  const n1 = (v, L) => v.toFixed(1).replace('.', skyTx(L).dec);
   // Yön etiketinin yanında küçük derece değeri (semt; kuzeyden saat yönünde)
-  const degTxt = (az, L) => { const v = ((Math.round(az * 10) / 10 % 360) + 360) % 360; return (Number.isInteger(v) ? String(v) : (L === 'tr' ? String(v).replace('.', ',') : String(v))) + '°'; };
+  const degTxt = (az, L) => { const v = ((Math.round(az * 10) / 10 % 360) + 360) % 360; return (Number.isInteger(v) ? String(v) : String(v).replace('.', skyTx(L).dec)) + '°'; };
   const cardDeg = (az, L) => `${card(az, L)}<tspan font-size="0.72em" font-weight="500" dx="3" opacity=".75">${degTxt(az, L)}</tspan>`;
   function col(name) { return getComputedStyle(document.body).getPropertyValue(name).trim() || '#888'; }
   function hex(c) { const m = c.match(/^#?([0-9a-f]{6})$/i); if (!m) return [128, 128, 128]; const n = parseInt(m[1], 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
   function mix(a, b, f) { const x = hex(a), y = hex(b); f = Math.max(0, Math.min(1, f)); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * f)).join(',')})`; }
   function fists(d) { const f = Math.abs(d) / 10; if (f < 0.2) return null; return Math.round(f * 4) / 4; }
   function fistTxt(d, L) {
-    const f = fists(d); if (f == null) return L === 'tr' ? `${Math.round(Math.abs(d))} parmak` : `${Math.round(Math.abs(d))} finger(s)`;
+    const f = fists(d); if (f == null) return skyTx(L).finger(Math.round(Math.abs(d)));
     const w = Math.floor(f), r = f - w, fr = r === 0.25 ? '¼' : r === 0.5 ? '½' : r === 0.75 ? '¾' : '';
-    return (L === 'tr' ? '≈ ' : '≈ ') + `${w || ''}${fr}` + (L === 'tr' ? ' yumruk' : (f === 1 ? ' fist' : ' fists'));
+    return skyTx(L).fist(`${w || ''}${fr}`, f);
   }
   function phase(alt, L) {
-    const tr = L === 'tr';
-    if (alt > -0.83) return tr ? 'Güneş ufkun üstünde' : 'Sun above horizon';
-    if (alt > -6) return tr ? 'Sivil alacakaranlık' : 'Civil twilight';
-    if (alt > -12) return tr ? 'Denizci alacakaranlığı' : 'Nautical twilight';
-    if (alt > -17) return tr ? 'Kızıllık sürüyor' : 'Red glow persists';
-    if (alt > -19) return tr ? 'Kızıllık bitti, beyazlık sürüyor' : 'Red gone, white glow persists';
-    return tr ? 'Gece (şafak bitti)' : 'Night (twilight over)';
+    const x = skyTx(L);
+    if (alt > -0.83) return x.twUp;
+    if (alt > -6) return x.twCivil;
+    if (alt > -12) return x.twNaut;
+    if (alt > -17) return x.twRed;
+    if (alt > -19) return x.twWhite;
+    return x.twNight;
   }
 
   // r: HRCore.evening sonucu; loc; t: seçili an (AstroTime); L: dil; opt: {compact}
   function draw(r, loc, t, L, opt = {}) {
     const core = C();
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
-    const tr = L === 'tr';
+    const x = skyTx(L);
     const end = r.moonUp && r.moonset && r.lagMin > 0 ? r.moonset : r.gurub.AddDays(70 / 1440);
     const pts = [];
     for (let m = -6; ; m += 2) { const tt = r.gurub.AddDays(m / 1440); if (tt.ut > end.ut + 1 / 1440) break; const p = core.topo('Moon', tt, obs); pts.push({ t: tt, az: p.az, alt: p.alt, m }); }
@@ -5516,7 +5627,7 @@ var qrcode = function() {
     const glowOp = Math.max(0, 0.9 - fDark * 1.1);
     const fmt = at => G.HRU.fmtTime(at).slice(0, 5);
     const u = ++UID;
-    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 34}" role="img" aria-label="${tr ? 'Batı ufku' : 'Western horizon'}">
+    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 34}" role="img" aria-label="${x.west}">
       <defs><linearGradient id="skyg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient>
       <radialGradient id="glow${u}" cx="0.5" cy="1" r="0.6"><stop offset="0" stop-color="${col('--sky-glow')}" stop-opacity="${glowOp.toFixed(2)}"/><stop offset="1" stop-color="${col('--sky-glow')}" stop-opacity="0"/></radialGradient><clipPath id="above${u}"><rect x="0" y="0" width="${W}" height="${y0}"/></clipPath></defs>
       <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyg${u})"/>
@@ -5531,7 +5642,7 @@ var qrcode = function() {
     }
     // 5° çizgisi (kitap)
     // yazı hilâlin üstüne binmesin: hilâl sol baştaysa yazı sağ başa geçer
-    const lim5 = `5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}`;
+    const lim5 = `5° · ${x.lim5}`;
     const lim5W = lim5.length * 12 * F * 0.56, mxl = X(now.moon.az);
     const lim5R = now.moon.alt > -1 && mxl > -20 && mxl < 6 + lim5W + 26;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.4"/>
@@ -5552,7 +5663,7 @@ var qrcode = function() {
     // yer
     s += `<rect x="0" y="${y0}" width="${W}" height="${H - y0}" fill="${col('--ground')}"/>`;
     // güneşin battığı nokta
-    s += `<path d="M${X(sunSetAz)} ${y0 - 1} l-6 9 h12z" fill="${col('--accent')}"/><text x="${X(sunSetAz)}" y="${y0 + 22}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${tr ? 'gurûb noktası' : 'sunset point'}</text>`;
+    s += `<path d="M${X(sunSetAz)} ${y0 - 1} l-6 9 h12z" fill="${col('--accent')}"/><text x="${X(sunSetAz)}" y="${y0 + 22}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${x.sunsetPt}</text>`;
     // seçili andaki güneş (ufkun altında)
     if (sunAlt < 0) s += `<circle cx="${X(now.sun.az)}" cy="${Math.min(H - 6, Y(sunAlt))}" r="6" fill="none" stroke="${col('--accent')}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
     // seçili andaki hilâl, yönü ve ölçüsü
@@ -5563,8 +5674,8 @@ var qrcode = function() {
       const dx = now.moon.az - sunSetAz;
       // gurûb noktasından L biçimli ölçü
       s += `<path d="M${X(sunSetAz)} ${y0} H${mx} V${my + 12}" fill="none" stroke="${col('--sky-label')}" stroke-opacity=".7" stroke-dasharray="3 4"/>`;
-      s += `<text x="${(X(sunSetAz) + mx) / 2}" y="${y0 - 6}" font-size="${12 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${Math.abs(dx).toFixed(1)}° ${dx < 0 ? (tr ? 'sol' : 'left') : (tr ? 'sağ' : 'right')}</text>`;
-      s += `<text x="${mx + (dx < 0 ? -8 : 8)}" y="${(y0 + my) / 2 + 10}" font-size="${12 * F}" text-anchor="${dx < 0 ? 'end' : 'start'}" fill="${col('--sky-label')}" font-weight="600">${now.moon.alt.toFixed(1)}° ${tr ? 'yukarı' : 'up'}</text>`;
+      s += `<text x="${(X(sunSetAz) + mx) / 2}" y="${y0 - 6}" font-size="${12 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${n1(Math.abs(dx), L)}° ${dx < 0 ? x.left : x.right}</text>`;
+      s += `<text x="${mx + (dx < 0 ? -8 : 8)}" y="${(y0 + my) / 2 + 10}" font-size="${12 * F}" text-anchor="${dx < 0 ? 'end' : 'start'}" fill="${col('--sky-label')}" font-weight="600">${n1(now.moon.alt, L)}° ${x.up}</text>`;
       s += `<g transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="11" fill="${col('--sky-night')}" stroke="${col('--sky-label')}" stroke-opacity=".35"/><path d="M0 -11 A11 11 0 0 1 0 11 A14 14 0 0 0 0 -11Z" fill="${col('--moon')}"/></g>`;
       if (r.best && Math.abs(t.ut - r.best.ut) < 1.5 / 1440) s += `<circle cx="${mx}" cy="${my}" r="17" fill="none" stroke="${col('--accent')}" stroke-width="2"/>`;
     }
@@ -5573,7 +5684,7 @@ var qrcode = function() {
     const fistW = 10 * ppd + 6 + 30 * 11 * F * 0.5, mUp = now.moon.alt > -1 && X(now.moon.az) < 14 + fistW + 16 && Y(now.moon.alt) < 16 * F + 26;
     const fx = 14, fy = mUp ? H - 14 : 16 * F;
     s += `<g><line x1="${fx}" x2="${fx + 10 * ppd}" y1="${fy}" y2="${fy}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx}" x2="${fx}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx + 10 * ppd}" x2="${fx + 10 * ppd}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/>
-      <text x="${fx + 10 * ppd + 6}" y="${fy + 4}" font-size="${11 * F}" fill="${col('--sky-label')}">10° ≈ ${tr ? '1 yumruk (kol uzatılmış)' : '1 fist at arm’s length'}</text></g>`;
+      <text x="${fx + 10 * ppd + 6}" y="${fy + 4}" font-size="${11 * F}" fill="${col('--sky-label')}">10° ≈ ${x.fistScale}</text></g>`;
     // semt ölçeği ve yönler
     s += `<rect x="0" y="${H}" width="${W}" height="34" fill="${col('--surface-2')}"/>`;
     for (let a = Math.ceil(a0 / 5) * 5; a <= a1; a += 5) {
@@ -5588,16 +5699,15 @@ var qrcode = function() {
     s += '</svg>';
     // okuma paneli
     const dx = now.moon.az - sunSetAz;
-    const side = dx < 0 ? (tr ? 'solunda' : 'to the left') : (tr ? 'sağında' : 'to the right');
+    const side = dx < 0 ? x.toLeft : x.toRight;
     const up = now.moon.alt;
     const flags = [];
-    if (up < 0) flags.push(tr ? 'Hilâl ufkun altında' : 'Crescent below the horizon');
-    else if (up < 5) flags.push(tr ? 'Hilâl 5°’nin altında: Tam İlmihâl’e göre görülemez' : 'Crescent below 5°: not visible per Tam İlmihâl');
-    if (sunAlt > -0.83) flags.push(tr ? 'Güneş henüz batmadı' : 'The Sun has not set yet');
+    if (up < 0) flags.push(x.below);
+    else if (up < 5) flags.push(x.below5);
+    if (sunAlt > -0.83) flags.push(x.notSet);
     const read = {
       time: G.HRU.fmtTime(t), phase: phase(sunAlt, L), moonAlt: up, moonAz: now.moon.az, card: card(now.moon.az, L), sunAlt,
-      where: up > -1 ? (tr ? `Hilâl, gurûb noktasının ${Math.abs(dx).toFixed(1)}° ${side} (${fistTxt(dx, L)}), ufkun ${up.toFixed(1)}° üstünde (${fistTxt(up, L)}).`
-        : `The crescent is ${Math.abs(dx).toFixed(1)}° ${side} of the sunset point (${fistTxt(dx, L)}), ${up.toFixed(1)}° above the horizon (${fistTxt(up, L)}).`) : '',
+      where: up > -1 ? x.where(n1(Math.abs(dx), L), side, fistTxt(dx, L), n1(up, L), fistTxt(up, L)) : '',
       flags, objs: objs.filter(o => o.kind === 'planet').map(o => ({ name: objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag }))
     };
     return { svg: s, read, range: [r.gurub.AddDays(-6 / 1440), end] };
@@ -5605,7 +5715,7 @@ var qrcode = function() {
 
   // 360° panorama: seçili an batı penceresi dışında kaldığında bütün ufuk; yatayda semt 0–360°, dikeyde irtifâ −12°…+62° (ölçek eşit değildir)
   function panorama(loc, t, L, opt = {}) {
-    const core = C(), tr = L === 'tr';
+    const core = C(), x = skyTx(L);
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
     const now = core.at(t, loc);
     const W = opt.W || (opt.compact ? 420 : 720), F = (opt.wide ? 1.25 : opt.compact ? 1.3 : 1) * (opt.scale || 1), H = opt.wide ? 290 : opt.compact ? 210 : 250;
@@ -5615,7 +5725,7 @@ var qrcode = function() {
     const fDark = Math.max(0, Math.min(1, -now.sun.alt / 18));
     const top = mix(col('--sky-day'), col('--sky-night'), fDark), low = mix(col('--sky-dusk'), col('--sky-night'), Math.max(0, fDark * 1.2 - 0.1));
     const u = ++UID;
-    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 30}" role="img" aria-label="${tr ? 'Bütün ufuk' : 'Full horizon'}">
+    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 30}" role="img" aria-label="${x.full}">
       <defs><linearGradient id="skyp${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient></defs>
       <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp${u})"/>`;
     for (let a = 10; a < aMax; a += 10) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22"/><text x="${W - 4}" y="${Y(a) - 3}" font-size="${10 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".7">${a}°</text>`;
@@ -5645,20 +5755,20 @@ var qrcode = function() {
     // güneş
     const sx = X(now.sun.az), sy = Y(now.sun.alt);
     s += now.sun.alt > -0.83 ? `<circle cx="${sx}" cy="${sy}" r="8" fill="${col('--accent')}"/>` : `<circle cx="${sx}" cy="${sy}" r="7" fill="none" stroke="${col('--accent')}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
-    s += `<text x="${sx}" y="${Math.min(H - 4, sy + 20)}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${tr ? 'Güneş' : 'Sun'} ${now.sun.alt.toFixed(0)}°</text>`;
+    s += `<text x="${sx}" y="${Math.min(H - 4, sy + 20)}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${x.sun} ${now.sun.alt.toFixed(0)}°</text>`;
     // ay (aydınlık kenar güneşe döner; aydınlanma oranına göre biçim)
     const mx = X(now.moon.az), my = Y(now.moon.alt), k = A.Illumination('Moon', t).phase_fraction;
     const ang = Math.atan2(sy - my, (((now.sun.az - now.moon.az + 540) % 360) - 180) / 360 * W) * 180 / Math.PI;
     const rx = Math.abs(1 - 2 * k) * 10, sweep = k > 0.5 ? 1 : 0;
     const op = now.moon.alt < 0 ? 0.45 : 1;
     s += `<g opacity="${op}" transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="10" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -10 A10 10 0 0 1 0 10 A${rx.toFixed(2)} 10 0 0 ${sweep} 0 -10Z" fill="${col('--moon')}"/></g>`;
-    s += `<text x="${mx}" y="${my - 15}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${tr ? 'Ay' : 'Moon'} ${now.moon.alt.toFixed(1)}°</text>`;
+    s += `<text x="${mx}" y="${my - 15}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${x.moon} ${n1(now.moon.alt, L)}°</text>`;
     s += `<rect x="0" y="${H}" width="${W}" height="30" fill="${col('--surface-2')}"/>`;
     for (let a = 0; a < 360; a += 45) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + 6}" stroke="${col('--muted')}"/><text class="nohalo" x="${a === 0 ? 3 : X(a)}" y="${H + 22}" font-size="${11 * F}" font-weight="700" text-anchor="${a === 0 ? 'start' : 'middle'}" fill="${col('--ink')}">${cardDeg(a, L)}</text>`;
     s += '</svg>';
     const flags = [];
-    if (now.moon.alt < 0) flags.push(tr ? `Ay ufkun ${Math.abs(now.moon.alt).toFixed(1)}° altında` : `Moon ${Math.abs(now.moon.alt).toFixed(1)}° below the horizon`);
-    if (now.sun.alt > -0.83) flags.push(tr ? 'Güneş ufkun üstünde' : 'Sun above the horizon');
+    if (now.moon.alt < 0) flags.push(x.moonBelow(n1(Math.abs(now.moon.alt), L)));
+    if (now.sun.alt > -0.83) flags.push(x.sunUp);
     return { svg: s, read: { phase: phase(now.sun.alt, L), moonAlt: now.moon.alt, moonAz: now.moon.az, card: card(now.moon.az, L), sunAlt: now.sun.alt, sunAz: now.sun.az, flags, mx: mx / W, objs: objs.filter(o => o.kind === 'planet').map(o => ({ name: objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag })) } };
   }
   G.HRSky = { draw, panorama, objName, card, fistTxt, phase };
@@ -5669,6 +5779,16 @@ var qrcode = function() {
  * Yıldızlar ve takımyıldız çizgileri: d3-celestial (BSD-3-Clause). Gezegenler, Ay ve Güneş: Astronomy Engine. */
 (function (G) {
   'use strict';
+  // Dile bağlı metinler (yeni dil: buraya bir bölüm; eksik anahtar İngilizceden gelir). Yıldız adları HR_STARS.n: [tr, en].
+  const STX = {
+    tr: { star: 0, chart: 'Gökyüzü haritası', sun: 'Güneş', moon: 'Ay ', crescent: 'Hilâl ', sunsetPt: 'gurûb noktası', card8: ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'],
+      lr: (n, r) => `${n}° ${r ? 'sağında' : 'solunda'}`, ud: (n, u) => `${n}° ${u ? 'yukarısında' : 'aşağısında'}`, refMoon: 'hilâlin', refSun: 'gurûb noktasının',
+      rel: (ref, parts) => `${ref} ${parts || 'hemen yanında'}`, west: 'Batı göğü, seçili akşam', lim5: 'Tam İlmihâl’in sınırı (s. 360)', fist: '1 yumruk', dec: ',' },
+    en: { star: 1, chart: 'Sky chart', sun: 'Sun', moon: 'Moon ', crescent: 'Crescent ', sunsetPt: 'sunset point', card8: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+      lr: (n, r) => `${n}° to the ${r ? 'right' : 'left'}`, ud: (n, u) => `${n}° ${u ? 'above' : 'below'}`, refMoon: 'the crescent', refSun: 'the sunset point',
+      rel: (ref, parts) => `${parts || 'right next to'} ${ref}`, west: 'Western sky, selected evening', lim5: 'Tam İlmihâl limit (p. 360)', fist: '1 fist', dec: '.' }
+  };
+  const smTx = L => (G.HRLangs ? G.HRLangs.pick(STX, L) : (STX[L] || STX.en));
   let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
   const A = G.Astronomy, C = () => G.HRCore;
   const col = n => getComputedStyle(document.body).getPropertyValue(n).trim() || '#888';
@@ -5682,7 +5802,7 @@ var qrcode = function() {
     return (raDeg, decDeg) => { const v = A.RotateVector(rot, A.VectorFromSphere(new A.Spherical(decDeg, raDeg, 1), t)); const h = A.HorizonFromVector(v, 'normal'); return { alt: h.lat, az: h.lon }; };
   }
   function draw(loc, t, L, opt = {}) {
-    const tr = L === 'tr';
+    const tx = smTx(L);
     const S = G.HR_STARS, core = C();
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
     const H = horizonOf(t, obs);
@@ -5694,7 +5814,7 @@ var qrcode = function() {
     const skyBg = dark > 0.5 ? col('--sky-night') : col('--sky-day');
     const lab = col('--sky-label') || '#fff', halo = col('--sky-halo') || '#000', star = col('--sky-star'), acc = col('--accent');
     const u = ++UID;
-    let s = `<svg class="sky starmap" viewBox="0 0 ${W} ${W}" width="100%" role="img" aria-label="${tr ? 'Gökyüzü haritası' : 'Sky chart'}" style="--lab:${lab};--halo:${halo}">`;
+    let s = `<svg class="sky starmap" viewBox="0 0 ${W} ${W}" width="100%" role="img" aria-label="${tx.chart}" style="--lab:${lab};--halo:${halo}">`;
     s += `<defs><clipPath id="smClip${u}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath><radialGradient id="smBg${u}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.5 ? col('--sky-night') : col('--sky-dusk')}"/></radialGradient></defs>`;
     s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#smBg${u})" stroke="${col('--line')}"/>`;
     s += `<g clip-path="url(#smClip${u})">`;
@@ -5722,21 +5842,21 @@ var qrcode = function() {
       const h = H(S.s[i] / 100, S.s[i + 1] / 100); if (h.alt < 0) continue;
       const [x, y] = P(h.alt, h.az), r = Math.max(0.7, 3.4 - m * 0.62);
       s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="${star}"/>`;
-      const nm = S.n[i / 3]; if (nm && opt.names !== false && m <= 1.6) names.push({ x, y, r, txt: tr ? nm[0] : nm[1] });
+      const nm = S.n[i / 3]; if (nm && opt.names !== false && m <= 1.6) names.push({ x, y, r, txt: nm[tx.star] || nm[1] });
     }
     // takımyıldız adları
-    if (opt.cons) for (const c of S.c) { const h = H(c[0] / 100, c[1] / 100); if (h.alt < 8) continue; const [x, y] = P(h.alt, h.az); s += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="${(10 * F).toFixed(1)}" text-anchor="middle" fill="${col('--sky-grid')}" fill-opacity=".75" font-style="italic" class="nohalo">${esc(nb(tr ? c[2] : c[3]))}</text>`; }
+    if (opt.cons) for (const c of S.c) { const h = H(c[0] / 100, c[1] / 100); if (h.alt < 8) continue; const [x, y] = P(h.alt, h.az); s += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="${(10 * F).toFixed(1)}" text-anchor="middle" fill="${col('--sky-grid')}" fill-opacity=".75" font-style="italic" class="nohalo">${esc(nb(tx.star === 0 ? c[2] : c[3]))}</text>`; }
     s += '</g>';
     // gezegenler, Ay, Güneş
     const objs = core.skyObjects(t, obs).filter(o => o.kind === 'planet' && o.alt > 0);
     for (const o of objs) { const [x, y] = P(o.alt, o.az); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(4.2 - Math.min(2, Math.max(-4, o.mag)) * 0.35).toFixed(1)}" fill="${acc}" stroke="${halo}" stroke-width="1"/>`; names.push({ x, y, r: 5, txt: G.HRSky.objName(o.id, L), strong: true }); }
-    if (now.sun.alt > -0.8) { const [x, y] = P(Math.max(0, now.sun.alt), now.sun.az); s += `<circle cx="${x}" cy="${y}" r="9" fill="${acc}"/>`; names.push({ x, y, r: 10, txt: tr ? 'Güneş' : 'Sun', strong: true }); }
+    if (now.sun.alt > -0.8) { const [x, y] = P(Math.max(0, now.sun.alt), now.sun.az); s += `<circle cx="${x}" cy="${y}" r="9" fill="${acc}"/>`; names.push({ x, y, r: 10, txt: tx.sun, strong: true }); }
     if (now.moon.alt > -0.5) {
       const [x, y] = P(Math.max(0, now.moon.alt), now.moon.az), k = A.Illumination('Moon', t).phase_fraction;
       let ang = 0; if (now.sun.alt > -30) { const [sx, sy] = P(Math.max(-20, now.sun.alt), now.sun.az); ang = Math.atan2(sy - y, sx - x) * 180 / Math.PI; }
       const rx = Math.abs(1 - 2 * k) * 9, sw = k > 0.5 ? 1 : 0;
       s += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="9" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -9 A9 9 0 0 1 0 9 A${rx.toFixed(2)} 9 0 0 ${sw} 0 -9Z" fill="${col('--moon')}"/></g>`;
-      names.push({ x, y, r: 12, txt: (tr ? 'Ay ' : 'Moon ') + now.moon.alt.toFixed(1) + '°', strong: true });
+      names.push({ x, y, r: 12, txt: tx.moon + now.moon.alt.toFixed(1).replace('.', tx.dec) + '°', strong: true });
     }
     // akşam izi: hilâlin seçili akşamdaki yerleri (zaman etiketli) ve gurûb noktası
     if (opt.track && opt.track.length) {
@@ -5751,7 +5871,7 @@ var qrcode = function() {
     if (opt.gurubAz != null) {
       const a = rad(opt.gurubAz - face), x = cx + (R - 2) * Math.sin(a), y = cy + (R - 2) * Math.cos(a);
       s += `<path d="M${(x - 7).toFixed(1)} ${y.toFixed(1)} A7 7 0 0 1 ${(x + 7).toFixed(1)} ${y.toFixed(1)}Z" fill="${acc}" fill-opacity=".85"/>`;
-      names.push({ x, y: y - 4, r: 8, txt: tr ? 'gurûb noktası' : 'sunset point', key: true });
+      names.push({ x, y: y - 4, r: 8, txt: tx.sunsetPt, key: true });
     }
     // etiketler: üst üste binmeyi önleyen basit yerleştirme
     const placed = [];
@@ -5771,7 +5891,7 @@ var qrcode = function() {
     }
     // ufuk çemberi, yönler, güneşin yönü
     s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${col('--ink')}" stroke-opacity=".5" stroke-width="1.5"/>`;
-    const card = tr ? ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'] : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const card = tx.card8;
     for (let i = 0; i < 8; i++) { const az = i * 45, a = rad(az - face), x = cx + (R + 16) * Math.sin(a), y = cy + (R + 16) * Math.cos(a); s += `<text x="${x.toFixed(1)}" y="${(y + 5).toFixed(1)}" font-size="${((i % 2 ? 11 : 14) * F).toFixed(1)}" font-weight="700" text-anchor="middle" fill="${col('--ink')}" class="nohalo">${card[i]}<tspan font-size="0.7em" font-weight="500" dx="2" opacity=".75">${az}°</tspan></text>`; }
     if (now.sun.alt <= -0.8 && now.sun.alt > -24) { const a = rad(now.sun.az - face), x1 = cx + R * Math.sin(a), y1 = cy + R * Math.cos(a), x2 = cx + (R - 12) * Math.sin(a), y2 = cy + (R - 12) * Math.cos(a); s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${acc}" stroke-width="3"/><text x="${x2 - 14 * Math.sin(a)}" y="${y2 - 14 * Math.cos(a) + 4}" font-size="${(11 * F).toFixed(1)}" text-anchor="middle" fill="${lab}">☀ ${now.sun.alt.toFixed(0)}°</text>`; }
     s += '</svg>';
@@ -5780,28 +5900,28 @@ var qrcode = function() {
 
   // Yönelim yardımcıları: ayın (ay ufkun altındaysa gurûb noktasının) çevresindeki en parlak cisimler ve aya göre konumları
   function guides(loc, t, L, max = 3) {
-    const tr = L === 'tr', core = C(), S = G.HR_STARS;
+    const tx = smTx(L), core = C(), S = G.HR_STARS;
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
     const now = core.at(t, loc), H = horizonOf(t, obs);
     const ref = now.moon.alt > 0 ? { alt: now.moon.alt, az: now.moon.az, moon: true } : { alt: 0, az: now.sun.az, moon: false };
     const list = [];
     for (const o of core.skyObjects(t, obs)) if (o.kind === 'planet' && o.alt > 2 && o.mag < 2) list.push({ name: G.HRSky.objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag });
-    for (let i = 0; i < S.s.length; i += 3) { const m = S.s[i + 2] / 100; if (m > 1.3) continue; const nm = S.n[i / 3]; if (!nm) continue; const h = H(S.s[i] / 100, S.s[i + 1] / 100); if (h.alt > 3) list.push({ name: tr ? nm[0] : nm[1], alt: h.alt, az: h.az, mag: m }); }
+    for (let i = 0; i < S.s.length; i += 3) { const m = S.s[i + 2] / 100; if (m > 1.3) continue; const nm = S.n[i / 3]; if (!nm) continue; const h = H(S.s[i] / 100, S.s[i + 1] / 100); if (h.alt > 3) list.push({ name: nm[tx.star] || nm[1], alt: h.alt, az: h.az, mag: m }); }
     const sep = o => { const a = rad(o.alt), b = rad(ref.alt); return Math.acos(Math.min(1, Math.sin(a) * Math.sin(b) + Math.cos(a) * Math.cos(b) * Math.cos(rad(o.az - ref.az)))) * 180 / Math.PI; };
     const dark = now.sun.alt < -4;
     return list.filter(o => sep(o) < 60 && (dark || o.mag < -1)).sort((a, b) => (a.mag + sep(a) / 25) - (b.mag + sep(b) / 25)).slice(0, max).map(o => {
       const daz = ((o.az - ref.az + 540) % 360) - 180, dalt = o.alt - ref.alt;
-      const lr = Math.abs(daz) < 1.5 ? '' : tr ? `${Math.abs(daz).toFixed(0)}° ${daz > 0 ? 'sağında' : 'solunda'}` : `${Math.abs(daz).toFixed(0)}° to the ${daz > 0 ? 'right' : 'left'}`;
-      const ud = Math.abs(dalt) < 1.5 ? '' : tr ? `${Math.abs(dalt).toFixed(0)}° ${dalt > 0 ? 'yukarısında' : 'aşağısında'}` : `${Math.abs(dalt).toFixed(0)}° ${dalt > 0 ? 'above' : 'below'}`;
-      const refTxt = ref.moon ? (tr ? 'hilâlin' : 'the crescent') : (tr ? 'gurûb noktasının' : 'the sunset point');
-      return { name: o.name, mag: o.mag, alt: o.alt, az: o.az, text: tr ? `${refTxt} ${[lr, ud].filter(Boolean).join(', ') || 'hemen yanında'}` : `${[lr, ud].filter(Boolean).join(', ') || 'right next to'} ${refTxt}` };
+      const lr = Math.abs(daz) < 1.5 ? '' : tx.lr(Math.abs(daz).toFixed(0), daz > 0);
+      const ud = Math.abs(dalt) < 1.5 ? '' : tx.ud(Math.abs(dalt).toFixed(0), dalt > 0);
+      const refTxt = ref.moon ? tx.refMoon : tx.refSun;
+      return { name: o.name, mag: o.mag, alt: o.alt, az: o.az, text: tx.rel(refTxt, [lr, ud].filter(Boolean).join(', ')) };
     });
   }
   const Q = '4WM+qbXyhFaIL9f1J9fP3E1V05nRsc93Lguo+edYthAqK9zc9U9gkCej9hiFsOrAe7gx/Fj/BDkU6+NiqB';
   // Seçili akşam: batı yarım göğü (semt 180°–360°, irtifâ −6°…54°), eşit aralıklı semt/irtifâ ızgarası.
   // Yıldızlar ve gezegenler harita anındadır; hilâlin akşam boyunca yeri zaman etiketli noktalarla gösterilir.
   function drawWest(loc, t, L, opt = {}) {
-    const tr = L === 'tr', S = G.HR_STARS, core = C();
+    const tx = smTx(L), S = G.HR_STARS, core = C();
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0)), H = horizonOf(t, obs);
     const W = opt.w || 900, Hh = opt.h || 470, padL = 34, padB = 26, padT = 8, F = opt.scale || 1;
     // semt aralığı: merkez (gurûb noktası ile hilâlin ortası), genişlik opt.span; irtifâ ölçeği semtle aynı (açılar bozulmaz)
@@ -5813,14 +5933,14 @@ var qrcode = function() {
     const now = core.at(t, loc), dark = Math.max(0, Math.min(1, -now.sun.alt / 15));
     const lab = col('--sky-label') || '#fff', halo = col('--sky-halo') || '#000', star = col('--sky-star'), acc = col('--accent'), grid = col('--sky-grid');
     const u = ++UID;
-    let s = `<svg class="sky starmap west" viewBox="0 0 ${W} ${Hh}" width="100%" role="img" aria-label="${tr ? 'Batı göğü, seçili akşam' : 'Western sky, selected evening'}" style="--lab:${lab};--halo:${halo}">`;
+    let s = `<svg class="sky starmap west" viewBox="0 0 ${W} ${Hh}" width="100%" role="img" aria-label="${tx.west}" style="--lab:${lab};--halo:${halo}">`;
     s += `<defs><linearGradient id="swg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col('--sky-night')}"/><stop offset="1" stop-color="${dark > 0.6 ? col('--sky-night') : col('--sky-dusk') || col('--sky-day')}"/></linearGradient><clipPath id="swc${u}"><rect x="${padL}" y="${padT}" width="${W - padL - 6}" height="${y0 - padT}"/></clipPath></defs>`;
     s += `<rect x="${padL}" y="${padT}" width="${W - padL - 6}" height="${(y0 - padT).toFixed(1)}" fill="url(#swg${u})"/>`;
     s += `<rect x="${padL}" y="${y0.toFixed(1)}" width="${W - padL - 6}" height="${(Hh - padB - y0).toFixed(1)}" fill="${col('--ground')}" opacity=".85"/>`;
     // ızgara
     for (let a = 10; a < altMax; a += 10) s += `<line x1="${padL}" x2="${W - 6}" y1="${Y(a).toFixed(1)}" y2="${Y(a).toFixed(1)}" stroke="${grid}" stroke-opacity=".22"/><text class="nohalo" x="${padL - 4}" y="${(Y(a) + 4).toFixed(1)}" font-size="${10 * F}" text-anchor="end" fill="${col('--ink')}">${a}°</text>`;
     for (let a = Math.ceil(az0 / 10) * 10; a <= az1; a += 10) { const x = X(a), maj = a % 30 === 0; s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${padT}" y2="${y0.toFixed(1)}" stroke="${grid}" stroke-opacity="${maj ? .22 : .1}"/>`; if (maj || span < 120) s += `<text class="nohalo" x="${x.toFixed(1)}" y="${(Hh - 8).toFixed(1)}" font-size="${10 * F}" text-anchor="middle" fill="${col('--ink')}">${((a % 360) + 360) % 360}°</text>`; }
-    const card = tr ? ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'] : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const card = tx.card8;
     for (let i = 0; i < 8; i++) { const a = i * 45; if (!inAz(a)) continue; s += `<text x="${X(a).toFixed(1)}" y="${(y0 + 15).toFixed(1)}" font-size="${(i % 2 ? 11 : 13) * F}" font-weight="700" text-anchor="middle" fill="${lab}">${card[i]}</text>`; }
     s += `<line x1="${padL}" x2="${W - 6}" y1="${Y(5).toFixed(1)}" y2="${Y(5).toFixed(1)}" stroke="${acc}" stroke-dasharray="7 5" stroke-width="1.3"/>`;
     s += `<g clip-path="url(#swc${u})">`;
@@ -5834,12 +5954,12 @@ var qrcode = function() {
       const h = H(S.s[i] / 100, S.s[i + 1] / 100); if (h.alt < -1 || !inAz(h.az)) continue;
       const x = X(h.az), y = Y(h.alt), r = Math.max(0.8, 3.6 - m * 0.65);
       s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="${star}"/>`;
-      const nm = S.n[i / 3]; if (nm && m <= 1.8 && h.alt > 0) names.push({ x, y, r, txt: tr ? nm[0] : nm[1] });
+      const nm = S.n[i / 3]; if (nm && m <= 1.8 && h.alt > 0) names.push({ x, y, r, txt: nm[tx.star] || nm[1] });
     }
     s += '</g>';
     for (const o of core.skyObjects(t, obs).filter(o => o.kind === 'planet' && o.alt > -1 && inAz(o.az))) { const x = X(o.az), y = Y(o.alt); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(4.4 - Math.min(2, Math.max(-4, o.mag)) * 0.35).toFixed(1)}" fill="${acc}" stroke="${halo}" stroke-width="1"/>`; names.push({ x, y, r: 6, txt: G.HRSky.objName(o.id, L), pri: 2 }); }
     // gurûb noktası ve Güneş (ufkun altında)
-    if (opt.gurubAz != null) { const x = X(opt.gurubAz); s += `<path d="M${(x - 8).toFixed(1)} ${y0.toFixed(1)} A8 8 0 0 1 ${(x + 8).toFixed(1)} ${y0.toFixed(1)}Z" fill="${acc}"/>`; names.push({ x, y: y0 - 6, r: 9, txt: tr ? 'gurûb noktası' : 'sunset point', pri: 2 }); }
+    if (opt.gurubAz != null) { const x = X(opt.gurubAz); s += `<path d="M${(x - 8).toFixed(1)} ${y0.toFixed(1)} A8 8 0 0 1 ${(x + 8).toFixed(1)} ${y0.toFixed(1)}Z" fill="${acc}"/>`; names.push({ x, y: y0 - 6, r: 9, txt: tx.sunsetPt, pri: 2 }); }
     if (now.sun.alt > altMin && inAz(now.sun.az)) { const x = X(now.sun.az), y = Y(now.sun.alt); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="none" stroke="${acc}" stroke-width="1.5" stroke-dasharray="2 2"/>`; }
     // hilâlin izi
     const pts = (opt.track || []).map(k => { const m = core.at(k.t, loc).moon; return { k, alt: m.alt, az: m.az }; }).filter(p => p.alt > altMin && inAz(p.az));
@@ -5849,7 +5969,7 @@ var qrcode = function() {
       const x = X(now.moon.az), y = Y(now.moon.alt), k = A.Illumination('Moon', t).phase_fraction, ang = Math.atan2(Y(now.sun.alt) - y, X(now.sun.az) - x) * 180 / Math.PI;
       const rx = Math.abs(1 - 2 * k) * 10, sw = k > 0.5 ? 1 : 0;
       s += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="10" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -10 A10 10 0 0 1 0 10 A${rx.toFixed(2)} 10 0 0 ${sw} 0 -10Z" fill="${col('--moon')}"/></g>`;
-      names.push({ x, y, r: 12, txt: (tr ? 'Hilâl ' : 'Crescent ') + now.moon.alt.toFixed(1) + '°', strong: true, pri: 4 });
+      names.push({ x, y, r: 12, txt: tx.crescent + now.moon.alt.toFixed(1).replace('.', tx.dec) + '°', strong: true, pri: 4 });
     }
     // etiketler: öncelik sırasıyla, çakışmadan
     const placed = [];
@@ -5868,9 +5988,9 @@ var qrcode = function() {
       }
     }
     // 5° yazısı ve yumruk ölçeği (sağ üst)
-    s += `<text x="${(W - 10).toFixed(1)}" y="${(Y(5) - 5).toFixed(1)}" font-size="${10.5 * F}" text-anchor="end" fill="${lab}" font-weight="600">5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}</text>`;
+    s += `<text x="${(W - 10).toFixed(1)}" y="${(Y(5) - 5).toFixed(1)}" font-size="${10.5 * F}" text-anchor="end" fill="${lab}" font-weight="600">5° · ${tx.lim5}</text>`;
     const ppd = (W - padL - 6) / (az1 - az0), fx = W - 16 - 10 * ppd, fy = padT + 16;
-    s += `<line x1="${fx.toFixed(1)}" x2="${(fx + 10 * ppd).toFixed(1)}" y1="${fy}" y2="${fy}" stroke="${lab}" stroke-width="2"/><text x="${(fx - 6).toFixed(1)}" y="${fy + 4}" font-size="${10 * F}" text-anchor="end" fill="${lab}">10° ≈ ${tr ? '1 yumruk' : '1 fist'}</text>`;
+    s += `<line x1="${fx.toFixed(1)}" x2="${(fx + 10 * ppd).toFixed(1)}" y1="${fy}" y2="${fy}" stroke="${lab}" stroke-width="2"/><text x="${(fx - 6).toFixed(1)}" y="${fy + 4}" font-size="${10 * F}" text-anchor="end" fill="${lab}">10° ≈ ${tx.fist}</text>`;
     s += `<rect x="${padL}" y="${padT}" width="${W - padL - 6}" height="${(Hh - padB - padT).toFixed(1)}" fill="none" stroke="${col('--line')}"/>`;
     return { svg: s + '</svg>' };
   }
@@ -6128,6 +6248,7 @@ var qrcode = function() {
   ];
   const S = {
     tr: {
+      pg: n => `s. ${n}`, recSeenShort: 'kaydınız: görüldü', recNotShort: 'kaydınız: görülmedi',
       btn: 'Bu akşam ne demek?', btnShort: 'Açıkla', title: 'Bu seçim için açıklama',
       head: (d, p) => `${d} akşamı · ${p}`, monthLine: (m, c) => `${m} ay başı · İctimâ: ${c}`,
       here: 'Bu akşam burada', world: 'Bu akşam dünyada', start: 'Ay başı: iki gece', scope: 'Kapsam ve hüküm', more: 'Ayrıntılı açıklama',
@@ -6185,6 +6306,7 @@ var qrcode = function() {
       plan: 'Bu geceyi planla'
     },
     en: {
+      pg: n => `p. ${n}`, recSeenShort: 'your record: seen', recNotShort: 'your record: not seen',
       btn: 'What does this evening mean?', btnShort: 'Explain', title: 'Explanation for this selection',
       head: (d, p) => `Evening of ${d} · ${p}`, monthLine: (m, c) => `Start of ${m} · Conjunction: ${c}`,
       here: 'This evening here', world: 'This evening worldwide', start: 'Start of the month: two nights', scope: 'Scope and ruling', more: 'Detailed explanation',
@@ -6298,7 +6420,7 @@ var qrcode = function() {
   }
 
   function html(X, d, L) {
-    const s = S[L] || S.tr, esc = X.esc, f = y => esc(X.fmtCivil(X.civil(y))), fs = y => esc(X.fmtCivil(X.civil(y), true));
+    const s = S[L] || S.en, esc = X.esc, f = y => esc(X.fmtCivil(X.civil(y))), fs = y => esc(X.fmtCivil(X.civil(y), true));
     const mn = m => X.monthName(m), M = esc(mn(d.hm.m)), PM = esc(mn(d.phm.m));
     const r = X.evening(d.ymd);
     let h = `<p class="exhead"><b>${esc(s.head(X.fmtCivil(X.civil(d.ymd)), X.placeName()))}</b><br><span class="small">${esc(s.monthLine(`${mn(d.hm.m)} ${d.hm.y}`, X.fmtDT(d.conj)))}</span></p>`;
@@ -6316,8 +6438,8 @@ var qrcode = function() {
     const inRows = d.rows.some(x => x.ymd === d.ymd);
     if (!inRows) h += `<h3>${esc(s.world)}</h3><div id="exWorld"><p class="small">${esc(s.worldCalc)}</p></div>`;
     // 2. ay başı: iki gece
-    const pg = d.hajj ? 's. 326' : 's. 315', pgE = L === 'tr' ? pg : pg.replace('s.', 'p.');
-    h += `<h3>${esc(s.start)}</h3><p>${esc(d.hajj && d.isik ? s.leadZh : s.lead)}</p>`;
+    const pgE = s.pg(d.hajj ? 326 : 315);
+    h += `<h3>${esc(s.start)}</h3><p>${esc(d.hajj && d.isik ? s.leadZh : s.lead)}${d.hajj && d.isik ? ' ' + X.q('isik') : ''}</p>`;
     const optA = d.hajj && d.isik ? s.optAZh : s.optA(X.fmtCivil(X.civil(d.E1), true)), optB = d.hajj && d.isik ? s.optBZh : s.optB(X.fmtCivil(X.civil(d.E1), true), X.fmtCivil(X.civil(d.E2), true));
     h += `<div class="extwo"><div><b>${esc(s.optEq(mn(d.hm.m), X.fmtCivil(X.civil(d.H))))}</b><span>${esc(optA)}</span></div><div><b>${esc(s.optEq(mn(d.hm.m), X.fmtCivil(X.civil(d.H2))))}</b><span>${esc(optB)}</span></div></div>`;
     const li = [esc(s.notBefore(mn(d.hm.m), X.fmtCivil(X.civil(d.H)), pgE))];
@@ -6344,8 +6466,8 @@ var qrcode = function() {
     const lbl = { prev: s.rPrev, A: s.rA, B: s.rB };
     h += `<div class="extab"><table><thead><tr>${th.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>` + d.rows.map((rw, i) => {
       const locRej = d.hajj && rw.k !== 'prev' && rw.r && rw.r.ok && rw.r.cls.reject;   // Zilhicce mahallîdir: bu yerde hesâben görülemiyorsa
-      const ft = rw.k === 'prev' ? `<span class="pill p-bad">${esc(s.fReject(pgE))}</span>` : locRej ? `<span class="pill p-bad">${esc(s.fReject(L === 'tr' ? 's. 360' : 'p. 360'))}</span>` : `<b>${esc(s.fDay(mn(d.hm.m), X.fmtCivil(X.civil(rw.firstDay), true)))}</b>`;
-      const rec = rw.rec ? `<br><span class="small">${esc(rw.rec === 'seen' ? (L === 'tr' ? 'kaydınız: görüldü' : 'your record: seen') : (L === 'tr' ? 'kaydınız: görülmedi' : 'your record: not seen'))}</span>` : '';
+      const ft = rw.k === 'prev' ? `<span class="pill p-bad">${esc(s.fReject(pgE))}</span>` : locRej ? `<span class="pill p-bad">${esc(s.fReject(s.pg(360)))}</span>` : `<b>${esc(s.fDay(mn(d.hm.m), X.fmtCivil(X.civil(rw.firstDay), true)))}</b>`;
+      const rec = rw.rec ? `<br><span class="small">${esc(rw.rec === 'seen' ? s.recSeenShort : s.recNotShort)}</span>` : '';
       const wc = rw.world === 'none' ? esc(s.wNone) : `<span id="exW${i}">${esc(s.wCalc)}</span>`;
       return `<tr${rw.tonight ? ' class="now"' : ''}><td><button class="lnk" type="button" data-explan="${rw.ymd}">${fs(rw.ymd)}</button><br><span class="small">${esc(lbl[rw.k])}${rw.tonight ? ' · ' + esc(s.tonight) : ''}</span>${rec}</td><td><span class="dot" style="background:${X.clsColor(rw.r)}"></span>${cls(rw)}</td><td>${wc}</td><td>${ft}</td></tr>`;
     }).join('') + `</tbody></table></div>`;
@@ -6375,19 +6497,20 @@ var qrcode = function() {
 
   // Dünya kısımları: tarama bitince doldurulur (seçili akşam ve tablodaki akşamlar)
   function worldHtml(X, d, L) {
-    const s = S[L] || S.tr, reg = regions(X.C, d.conj, d.ymd);
-    const nm = x => L === 'tr' ? x.tr : x.en;
+    const s = S[L] || S.en, reg = regions(X.C, d.conj, d.ymd);
+    const nm = x => x[L] || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return `<p>${X.esc(s.worldNone)}</p>`;
     return (poss.length ? `<p>${X.esc(s.worldPoss(poss.join(', ')))}</p>` : '') + (vis.length ? `<p>${X.esc(s.worldVis(vis.join(', ')))}</p>` : '') + `<p class="cap">${X.esc(s.worldNote)}</p>`;
   }
   function worldCell(X, d, ymd, L) {
-    const s = S[L] || S.tr, reg = regions(X.C, d.conj, ymd), nm = x => L === 'tr' ? x.tr : x.en;
+    const s = S[L] || S.en, reg = regions(X.C, d.conj, ymd), nm = x => x[L] || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return { txt: s.wNone, vis: false };
     return { txt: [vis.length ? s.wVis(vis.join(', ')) : '', poss.length ? s.wPoss(poss.join(', ')) : ''].filter(Boolean).join(' · '), vis: vis.length > 0 };
   }
 
+  if (G.HRLangs) G.HRLangs.chain(S);
   G.HRExplain = { S, data, html, worldHtml, worldCell, regions, firstDayOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
@@ -6539,7 +6662,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD61c08fa303fe0381';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD34b46907f6b0940e';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -6580,6 +6703,7 @@ var qrcode = function() {
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
   st.date = todayYmd(st.tz); // açılışta her zaman içinde bulunulan an
+  const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang] || !I.T[st.lang]) st.lang = 'tr';
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
   let records = load('hr-records') || [];
@@ -6591,7 +6715,8 @@ var qrcode = function() {
   function storeRecs(list) { try { localStorage.setItem('hr-records', JSON.stringify(list)); return true; } catch (e) { return false; } }
   function saveRec() { const ok = storeRecs(records); if (!ok && typeof toast === 'function') toast(t.recStoreFail, 8000); return ok; }
   function todayYmd(tz) { try { return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } }
-  const locale = () => st.lang === 'tr' ? 'tr-TR' : 'en-GB';
+  const locale = () => LG.get(st.lang).locale;
+  const decSep = () => (1.5).toLocaleString(locale()).charAt(1);
   function fmtTime(at) { if (!at) return t.none; return new Intl.DateTimeFormat(locale(), { timeZone: st.tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).format(at.date); }
   const hhmm = at => at ? fmtTime(at).slice(0, 5) : t.none;
   function fmtDT(at) { if (!at) return t.none; return new Intl.DateTimeFormat(locale(), { timeZone: st.tz, day: 'numeric', month: 'short', year: 'numeric', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(at.date); }
@@ -6605,7 +6730,7 @@ var qrcode = function() {
   const ymdOf = d => d.toISOString().slice(0, 10);
   const civil = ymd => new Date(ymd + 'T00:00:00Z');
   const addDays = (ymd, k) => { const d = civil(ymd); d.setUTCDate(d.getUTCDate() + k); return ymdOf(d); };
-  const monthName = m => I.MONTHS[st.lang][m - 1];
+  const monthName = m => (I.MONTHS[st.lang] || I.MONTHS.en)[m - 1];
   const q = id => `<button class="q" type="button" data-topic="${id}" aria-label="${esc(t.help)}">?</button>`;
   const dayStart = () => C.tzMidnight(st.date, st.tz);
   const selT = () => A.MakeTime(new Date(dayStart() + (st.tmin || 0) * 60000));
@@ -6630,7 +6755,7 @@ var qrcode = function() {
     set('lGokF', t.gokF); $('gokF').innerHTML = Object.entries(t.gokFOpts).map(([v, l]) => `<option value="${v}"${(st.gokF || 'vis') === v ? ' selected' : ''}>${esc(l)}</option>`).join(''); $('gokCap').textContent = t.gokCap;
     set('jGurub', t.skyAtGurub); set('jBest', t.skyAtBest); set('jWin', t.skyAtWinEnd); set('jNow', t.nowBtn); set('tbLive', t.live);
     set('hStrip', t.stripTitle); set('stripNote', t.stripNote);
-    set('hDetail', st.lang === 'tr' ? 'Gurûb ve hilâl' : 'Sunset and crescent');
+    set('hDetail', t.hDetail);
     $('hMonth').innerHTML = esc(t.month) + ' ' + q('enerken'); set('miniHow', t.miniHow);
     set('hExtra', t.extra); set('extraNote', t.extraNote); set('hTests', t.testsTitle); set('testsIntro', t.testsIntro); $('footer').innerHTML = noticeHtml(); paintTamper();
     $('aboutOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('aboutCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
@@ -6640,9 +6765,10 @@ var qrcode = function() {
     set('hPick', t.pick); set('pickUse', t.pickUse);
     set('hRec', t.record); set('lRecNote', t.notes); set('lRecAt', t.recAt); set('recSaw', t.saw); set('recNot', t.notSaw); set('hRecList', t.records); set('recInfo', t.recNote); set('hCheck', t.checklist);
     set('fNight', t.nightMode); set('fWake', t.wake); set('fCompass', t.compass); set('dlgClose', t.close);
-    $('langTr').setAttribute('aria-pressed', st.lang === 'tr'); $('langEn').setAttribute('aria-pressed', st.lang === 'en');
+    document.documentElement.lang = st.lang; document.documentElement.dir = LG.get(st.lang).dir;
+    $('langSeg').innerHTML = LG.ORDER.filter(c => I.T[c]).map(c => `<button id="lang${c[0].toUpperCase() + c.slice(1)}" type="button" data-lang="${c}" lang="${c}" title="${esc(LG.LANGS[c].name)}" aria-pressed="${st.lang === c}">${esc(LG.LANGS[c].short)}</button>`).join('');
     $('theme').innerHTML = [['auto', t.thAuto], ['light', t.thLight], ['dark', t.thDark], ['sun', t.thSun], ['night', t.thNight]].map(([v, l]) => `<option value="${v}"${st.theme === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
-    $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc(c[st.lang])}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
+    $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc((c[st.lang] || c.en))}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
     $('city').value = st.city;
     fillTz();
     showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('date').value = st.date; $('mDate').value = st.date;
@@ -6690,13 +6816,14 @@ var qrcode = function() {
     $('recName').value = st.recName || ''; $('recContact').value = st.recContact || '';
     $('netsBody').innerHTML = `<ul class="guides"><li><a href="https://www.astronomycenter.net/icop.html?l=en" target="_blank" rel="noopener">ICOP — Islamic Crescents’ Observation Project</a> (International Astronomical Center)</li><li><a href="https://www.moonsighting.org.uk" target="_blank" rel="noopener">ICOUK — moonsighting.org.uk</a></li><li><a href="https://www.moonsighting.com" target="_blank" rel="noopener">moonsighting.com</a></li></ul><p class="cap">${esc(t.recNetsNote)}</p>`;
     set('lDetail', t.detailLvl); $('detailLvl').innerHTML = [['short', t.detailShort], ['long', t.detailLong]].map(([v, l]) => `<option value="${v}"${st.detail === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
-    set('hHelp', st.lang === 'tr' ? 'Rehberlik' : 'Guidance'); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
+    set('hHelp', t.hHelp); set('lOptExplain', t.explain); set('explainNote', t.explainNote); $('optExplain').checked = !!st.explain;
     set('hIntro', t.introTitle); set('introClose', t.introClose); $('introList').innerHTML = t.introSteps.map(x => `<li>${x}</li>`).join('');
     $('introTip').innerHTML = t.introTip; $('fTipTxt').textContent = t.fieldTip; set('fTipX', t.fieldTipClose); $('fTip').hidden = !!st.fieldTipDone; set('smEve', '⎙ ' + t.smEveBtn);
     // Her kartın başına kısa açıklama (ne, neden, fıkhî dayanak); tecrübeli kullanıcı Ayarlar’dan kapatır
     [['hLoc', 'loc'], ['hDate', 'date'], ['hUp', 'up'], ['hTb', 'tb'], ['hWx', 'wx'], ['hSky', 'sky'], ['hStrip', 'strip'], ['hDetail', 'detail'], ['hMonth', 'month'], ['hMap', 'map'], ['fBig', 'fieldTop'], ['hRec', 'fieldRec']].forEach(([id, k]) => {
     const lvOpts = ['all', 'basic', 'mid', 'expert'].map(v => `<option value="${v}"${(st.level || 'all') === v ? ' selected' : ''} title="${esc(t.lvlHelp[v])}">${esc(t.lvlOpts[v])}</option>`).join('');
     set('lLvlQuick', t.lvlQuick); $('lvlQuick').innerHTML = lvOpts; $('lvlQuick').title = t.lvlLbl; $('lvlQuick').setAttribute('aria-label', t.lvlLbl);
+    set('lDateFmt', t.dateFmtLbl); $('dateFmt').innerHTML = DATE_FMTS.map(f => `<option value="${f}"${dateFmt() === f ? ' selected' : ''}>${esc(t.dateFmtOpts[f])}</option>`).join(''); if (typeof paintDateBoxes === 'function') paintDateBoxes();
     set('lLvl', t.lvlLbl); $('lvlSel').innerHTML = lvOpts; $('lvlNote').textContent = t.lvlNote;
     $('lvlIntro').textContent = t.lvlIntro;
     $('lvlIntroBtns').innerHTML = ['basic', 'mid', 'expert', 'all'].map(v => `<button class="btn${(st.level || 'all') === v ? ' primary' : ''}" type="button" data-lvlset="${v}" title="${esc(t.lvlHelp[v])}">${esc(t.lvlOpts[v])}</button>`).join('');
@@ -6711,7 +6838,7 @@ var qrcode = function() {
       if (!h) { h = document.createElement('p'); h.className = 'hint'; const anchor = id === 'fBig' ? el : (el.closest('.cardhead') || el); anchor.insertAdjacentElement(id === 'fBig' ? 'beforebegin' : 'afterend', h); }
       h.textContent = 'ⓘ ' + t.hints[k];
     });
-    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(st.lang === 'tr' ? 'Hesap ve gözlem hassasiyeti' : 'Calculation and observation accuracy')}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
+    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(t.accTitle)}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
     $('checkBody').innerHTML = G.HRGuide.planHtml(st.lang);
     applyTheme();
   }
@@ -6723,7 +6850,7 @@ var qrcode = function() {
     $('fNight').setAttribute('aria-pressed', st.theme === 'night');
   }
   // Konum girişi: kullanıcının yazdığı her yaygın biçim anlaşılır ve standart biçime çevrilir (coords.js)
-  const numTxt = v => String(Math.round((v || 0) * 10) / 10).replace('.', st.lang === 'tr' ? ',' : '.');
+  const numTxt = v => String(Math.round((v || 0) * 10) / 10).replace('.', decSep());
   function showCoords(note) {
     $('lat').value = G.HRCoord.format(st.lat, 'lat', st.lang); $('lon').value = G.HRCoord.format(st.lon, 'lon', st.lang);
     const n = $('coordNote'); n.className = 'coordnote' + (note && note.err ? ' err' : '');
@@ -6815,9 +6942,9 @@ var qrcode = function() {
   }
   function setTmin(m, anchor) { st.tmin = Math.max(0, Math.min(TB_MAX, Math.round(m))); st.anchor = anchor || null; if (!anchor || anchor !== 'now') setLive(false); renderTime(); if (view === 'harita' && st.mapMode === 'instant') renderBigMap(); }
 
+  function setLang(c) { if (!I.T[c] || !LG.LANGS[c]) return; st.lang = c; t = I.T[c]; save(); fillStatic(); update(); }
   function bind() {
-    $('langTr').onclick = () => { st.lang = 'tr'; t = I.T.tr; save(); fillStatic(); update(); };
-    $('langEn').onclick = () => { st.lang = 'en'; t = I.T.en; save(); fillStatic(); update(); };
+    $('langSeg').onclick = e => { const b = e.target.closest('[data-lang]'); if (b) setLang(b.dataset.lang); };
     $('theme').onchange = e => { st.theme = e.target.value; save(); applyTheme(); repaintAll(); };
     $('city').onchange = e => { st.city = e.target.value; const c = CITIES.find(x => x.id === st.city); if (c) { Object.assign(st, { lat: c.lat, lon: c.lon, elev: c.elev, hMax: c.hMax, tz: c.tz }); fillStatic(); } save(); update(); };
     $('tzOff').addEventListener('change', setTzOff);
@@ -6878,6 +7005,7 @@ var qrcode = function() {
     $('fFont').onclick = () => { st.fontSize = st.fontSize >= 1.3 ? 1 : st.fontSize >= 1.15 ? 1.3 : 1.15; save(); fillStatic(); repaintAll(); };
     $('optWx').onchange = e => { st.wx = e.target.checked; save(); paintNet(); renderWx(true); };
     $('optAutoLoc').onchange = e => { st.autoLoc = e.target.checked; save(); paintNet(); if (st.autoLoc) autoLocate(true); };
+    $('dateFmt').onchange = e => { st.dateFmt = e.target.value; save(); paintDateBoxes(); };
     $('lvlQuick').onchange = e => setLevel(e.target.value); $('lvlSel').onchange = e => setLevel(e.target.value);
     $('lvlIntroBtns').onclick = e => { const b = e.target.closest('[data-lvlset]'); if (b) setLevel(b.dataset.lvlset); };
     $('rawJson').onclick = exportRawJson; $('rawCsv').onclick = exportRawCsv;
@@ -7004,7 +7132,7 @@ var qrcode = function() {
   function paintFoldSums() {
     const S = (id, txt) => { const c = $(id); const f = c && c.querySelector(':scope > .foldsum'); if (f) f.textContent = txt || ''; };
     const city = CITIES.find(c => c.id === st.city);
-    S('locCard', `${city ? city[st.lang] : `${num(st.lat, 3)}, ${num(st.lon, 3)}`} · UTC${fmtOff(offAt(st.tz, st.date))} — ${t.foldOpen}`);
+    S('locCard', `${city ? (city[st.lang] || city.en) : `${num(st.lat, 3)}, ${num(st.lon, 3)}`} · UTC${fmtOff(offAt(st.tz, st.date))} — ${t.foldOpen}`);
     S('dateCard', fmtCivil(civil(st.date)));
     S('tbCard', `${hhmm(selT())} — ${t.foldOpen}`);
     S('wxCard', st.wx ? (WX.ass ? t.wxLevel[WX.ass.level] : t.wxLoading) : t.netNone);
@@ -7027,7 +7155,7 @@ var qrcode = function() {
     if (!R.ok) {
       const noonAlt = C.at(C.solarNoon(st.date, LOC.lon), LOC).sun.alt, polarNight = noonAlt < 0;
       // Kutup bölgeleri: güneş batmıyor (yaz) veya doğmuyor (kış). Tam İlmihâl s. 315: gündüzü uzun olmayan en yakın şehrin zamanına uyulur.
-      $('statusBody').innerHTML = `<h2>${esc(st.lang === 'tr' ? (polarNight ? 'Bu tarihte bu yerde güneş doğmuyor (kutup gecesi).' : 'Bu tarihte bu yerde güneş batmıyor.') : (polarNight ? 'The Sun does not rise here on this date (polar night).' : 'The Sun does not set here on this date.'))}</h2><p class="sub">${esc(st.lang === 'tr' ? 'Gurûb olmadığı için hilâl rasadı yapılamaz. Tam İlmihâl, yirmidört saatten uzun günlerde oruç için gündüzü böyle uzun olmayan bir şehrin zamanına uyulacağını bildirir (s. 315); en yakın böyle bir yerin konumunu girerek planlayabilirsiniz.' : 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (p. 315); enter the nearest such place to plan.')}</p>`; R = null;
+      $('statusBody').innerHTML = `<h2>${esc(polarNight ? t.polarNightH : t.polarDayH)}</h2><p class="sub">${esc(t.polarSub)}</p>`; R = null;
     } else { renderStatus(R); renderDetail(R); renderMonth(R, LOC); renderExtra(R); }
     computeDay();
     if (st.live) st.tmin = Math.max(0, Math.min(TB_MAX, tminOf(A.MakeTime(new Date()))));
@@ -7141,7 +7269,7 @@ var qrcode = function() {
   function startRow() {
     const d = startInfo(); if (!d) return '';
     const fs = y => fmtCivil(civil(y), true);
-    return `<p class="st-row"><b>${esc(t.stStart)}</b><span>${esc(t.stStartVal(monthName(d.hm.m), fs(d.H), fs(d.H2)))}</span> ${q('hicri')}<br><span class="small">${esc(d.hajj && d.isik ? t.stStartSubZh : t.stStartSub(fs(d.E1), fs(d.E2)))}</span></p>`;
+    return `<p class="st-row"><b>${esc(t.stStart)}</b><span>${esc(t.stStartVal(monthName(d.hm.m), fs(d.H), fs(d.H2)))}</span> ${q('hicri')}<br><span class="small">${esc(d.hajj && d.isik ? t.stStartSubZh : t.stStartSub(fs(d.E1), fs(d.E2)))}${d.hajj && d.isik ? ' ' + q('isik') : ''}</span></p>`;
   }
   function quickAnswer(r) {
     let h = '';
@@ -7184,7 +7312,7 @@ var qrcode = function() {
     return `<div class="kd" data-lvl="2"><p class="st-row"><b>${esc(t.kdTitle)}</b> ${q('safak')}</p>
       <p>● ${esc(t.kdA)}: <strong>${esc(v(r.kadihan19))}</strong> <span class="small">(${esc(t.kdSafak)} ${hhmm(r.safak19)}, ${esc(t.moonset.replace(/\s*\(.*\)/, ''))} ${hhmm(r.moonset)})</span></p>
       <p>○ ${esc(t.kdB)}: ${esc(v(r.kadihan17))} <span class="small">(${esc(t.kdSafak)} ${hhmm(r.safak17)})</span></p>
-      ${compact ? '' : `<p class="small ${r.kadihanDiffer ? 'diff' : ''}">${esc(r.kadihanDiffer ? t.kdDiffer : t.kdSame)} ${esc(G.HRExplain.S[st.lang].kInfo)}</p>`}</div>`;
+      ${compact ? '' : `<p class="small ${r.kadihanDiffer ? 'diff' : ''}">${esc(r.kadihanDiffer ? t.kdDiffer : t.kdSame)} ${esc(LG.pick(G.HRExplain.S, st.lang).kInfo)}</p>`}</div>`;
   }
   function renderDetail(r) {
     let h = '';
@@ -7335,13 +7463,21 @@ var qrcode = function() {
         <td class="n">${o.alt > -1 ? `${G.HRSky.card(o.az, st.lang)} ${num(o.az, 0)}° · ${num(o.alt, 1)}°` : `<span class="small">${num(o.alt, 0)}°</span>`}</td>
         <td><span class="pill ${pill[o.state]}">${esc(t.gokSt[o.state])}</span></td><td class="n">${rts(o.id)}</td><td class="n">${o.mag != null ? num(o.mag, 1) : '—'}</td>
         <td data-lvl="2">${esc(o.con || '—')}</td><td data-lvl="3" class="n">${raDec(o)}</td><td data-lvl="3" class="n">${o.elong != null ? num(o.elong, 1) + '°' : '—'}</td><td data-lvl="3" class="n">${distTxt(o)}</td></tr>`).join('') + '</tbody>';
-    // alacakaranlık evreleri (seçili gün)
+    // alacakaranlık evreleri (seçili gün); kutup gecesi ve gündüzünde güneşin en yüksek / en alçak yüksekliği
     try {
       const obs = new A.Observer(LOC.lat, LOC.lon, LOC.elev || 0), sa = (dir, from, h) => { try { return A.SearchAltitude('Sun', obs, dir, from, 1, h); } catch (e) { return null; } };
       const ss = R ? R.gurub : (DAY && DAY.ev && DAY.ev.sunset), sr = DAY && DAY.ev && DAY.ev.sunrise;
-      const from = ss || t0, civ = sa(-1, from, -6), nau = sa(-1, from, -12), ast = sa(-1, from, -18);
-      const mf = ast || nau || from, ast2 = sa(+1, mf, -18), nau2 = sa(+1, mf, -12), civ2 = sa(+1, mf, -6);
-      $('gokTw').textContent = t.gokTw(hhmm(sr), hhmm(ss), hhmm(civ), hhmm(nau), hhmm(ast), hhmm(ast2), hhmm(nau2), hhmm(civ2));
+      if (!ss && !sr) {
+        let mx = -90, mn = 90; for (let i = 0; i <= 48; i++) { const tt = t0.AddDays(i / 48), e = A.Equator('Sun', tt, obs, true, true), h = A.Horizon(tt, obs, e.ra, e.dec, 'normal').altitude; mx = Math.max(mx, h); mn = Math.min(mn, h); }
+        $('gokTw').textContent = mx < 0 ? t.gokPolarN(num(mx, 1).replace('-', '−')) : t.gokPolarD(num(mn, 1).replace('-', '−'));
+      } else {
+        let nsr = null; try { nsr = ss ? A.SearchRiseSet('Sun', obs, +1, ss, 1) : null; } catch (e) { nsr = null; }
+        const inN = x => x && (!ss || x.ut > ss.ut) && (!nsr || x.ut < nsr.ut) ? x : null;
+        const from = ss || t0, civ = inN(sa(-1, from, -6)), nau = inN(sa(-1, from, -12)), ast = inN(sa(-1, from, -18));
+        const ast2 = ast ? inN(sa(+1, ast, -18)) : null, nau2 = nau ? inN(sa(+1, nau, -12)) : null, civ2 = civ ? inN(sa(+1, civ, -6)) : null;
+        const h = x => x ? hhmm(x) : null;
+        $('gokTw').textContent = t.gokTw2({ sr: h(sr), ss: h(ss), civ: h(civ), nau: h(nau), ast: h(ast), ast2: h(ast2), nau2: h(nau2), civ2: h(civ2) });
+      }
     } catch (e) { $('gokTw').textContent = ''; }
     // bu gece: arka planda taranır
     const nk = dk + '|' + st.darkKey;
@@ -7350,13 +7486,15 @@ var qrcode = function() {
       setTimeout(() => {
         if (gokNightKey !== nk || !LOC) return;
         try {
-          const obs = new A.Observer(LOC.lat, LOC.lon, LOC.elev || 0), ss = R ? R.gurub : (DAY && DAY.ev && DAY.ev.sunset);
-          const sr = ss ? A.SearchRiseSet('Sun', obs, +1, ss, 1) : null;
+          const obs = new A.Observer(LOC.lat, LOC.lon, LOC.elev || 0), ss0 = R ? R.gurub : (DAY && DAY.ev && DAY.ev.sunset);
+          let sr0 = null; try { sr0 = ss0 ? A.SearchRiseSet('Sun', obs, +1, ss0, 1) : null; } catch (e) { sr0 = null; }
+          // gurûb veya ertesi doğuş yoksa (kutup gecesi / gündüzü) bütün gün taranır
+          const whole = !ss0 || !sr0, ss = whole ? t0 : ss0, sr = whole ? t0.AddDays(1) : sr0;
           const ni = G.HRGok.night(LOC, ss, sr, nk);
           const ids = ['Moon', ...G.HRGok.PLANETS].filter(id => ni[id] && ni[id].from);
           const stars = G.HRGok.STARS.filter(x => ni[x[0]] && ni[x[0]].from).length;
-          const chip = id => { const x = ni[id], m = tminOf(x.best), ok = m >= 0 && m <= TB_MAX; return `<button type="button" class="gch" ${ok ? `data-gok="${m}" title="${esc(t.gokGo)}"` : 'disabled'}><b>${esc(G.HRGok.nameOf(id, st.lang))}</b> ${esc(t.gokBest(hhmm(x.from), hhmm(x.to), hhmm(x.best), G.HRSky.card(x.bestAz, st.lang), num(x.bestAlt, 0)))}</button>`; };
-          $('gokNight').innerHTML = `<p class="small" style="margin:0 0 4px">${esc(t.gokNight(hhmm(ss), hhmm(sr)))}</p>` + (ids.length ? ids.map(chip).join('') : `<span class="small">${esc(t.gokNone)}</span>`) + (stars ? ` <span class="small">· ${esc(t.gokStars(stars))}</span>` : '');
+          const chip = id => { const x = ni[id], m = tminOf(x.best), ok = m >= 0 && m <= TB_MAX; return `<button type="button" class="gch" ${ok ? `data-gok="${m}" title="${esc(t.gokGo)}"` : 'disabled'}><b>${esc(G.HRGok.nameOf(id, st.lang))}</b> ${esc(x.from.ut - ss.ut < 0.01 && sr.ut - x.to.ut < 0.01 ? t.gokBestAll(hhmm(x.best), G.HRSky.card(x.bestAz, st.lang), num(x.bestAlt, 0)) : t.gokBest(hhmm(x.from), hhmm(x.to), hhmm(x.best), G.HRSky.card(x.bestAz, st.lang), num(x.bestAlt, 0)))}</button>`; };
+          $('gokNight').innerHTML = `<p class="small" style="margin:0 0 4px">${esc(whole ? t.gokWhole : t.gokNight(hhmm(ss), hhmm(sr)))}</p>` + (ids.length ? ids.map(chip).join('') : `<span class="small">${esc(t.gokNone)}</span>`) + (stars ? ` <span class="small">· ${esc(t.gokStars(stars))}</span>` : '');
           $('gokNight').querySelectorAll('[data-gok]').forEach(b => b.onclick = () => { remember(); setTmin(+b.dataset.gok); });
         } catch (e) { $('gokNight').textContent = ''; }
       }, 60);
@@ -7462,7 +7600,7 @@ var qrcode = function() {
       const a = ok ? o.a : null, b = ok ? o.b : null;
       const cell = x => x ? `<button class="lnk" type="button" data-rnplan="${x.ymd}">${fd(x.ymd)}</button><br><span class="small"><span class="dot" style="background:var(${CLS_COLOR[x.r.cls.code] || '--c-notborn'})"></span>${esc(clsText(x.r)[0])}</span>` : `<span class="small">${esc(t.rnNone)}</span>`;
       const sel = (a && a.ymd === st.date) || (b && b.ymd === st.date);
-      rows.push(`<tr${sel ? ' class="now"' : ''}><td><b>${esc(monthName(hm.m))} ${hm.y}</b>${sel ? `<br><span class="small">${esc(t.rnSel)}</span>` : ''}</td><td>${esc(fmtDT(c))}</td><td>${cell(a)}</td><td>${cell(b)}</td><td>${(() => { const f1 = G.HRExplain.firstDayOf(exCtx(), c, hm); return f1 ? `${fd(f1.H)} / ${fd(addDays(f1.H, 1))}` : '—'; })()}</td><td>${a ? `<button class="btn" type="button" data-rnex="${a.ymd}">ⓘ ${esc(G.HRExplain.S[st.lang].btnShort)}</button>` : ''}</td></tr>`);
+      rows.push(`<tr${sel ? ' class="now"' : ''}><td><b>${esc(monthName(hm.m))} ${hm.y}</b>${sel ? `<br><span class="small">${esc(t.rnSel)}</span>` : ''}</td><td>${esc(fmtDT(c))}</td><td>${cell(a)}</td><td>${cell(b)}</td><td>${(() => { const f1 = G.HRExplain.firstDayOf(exCtx(), c, hm); return f1 ? `${fd(f1.H)} / ${fd(addDays(f1.H, 1))}` : '—'; })()}</td><td>${a ? `<button class="btn" type="button" data-rnex="${a.ymd}">ⓘ ${esc(LG.pick(G.HRExplain.S, st.lang).btnShort)}</button>` : ''}</td></tr>`);
       c = C.nextNewMoonAfter(c.AddDays(1));
       setTimeout(step, 0);
     };
@@ -7511,7 +7649,7 @@ var qrcode = function() {
       const code = r.ok ? r.cls.code : 'none';
       const col = CLS_COLOR[code];
       const tag = nights && nights.a && nights.a.ymd === ymd ? (nights.b && nights.b.ymd === ymd ? 'A·B' : 'A') : nights && nights.b && nights.b.ymd === ymd ? 'B' : '';
-      const mtag = mo && mo.code === 'possible' ? (st.lang === 'tr' ? 's' : 'm') : '';
+      const mtag = mo && mo.code === 'possible' ? t.mtagPossible : '';
       const d = civil(ymd), dn = d.getUTCDate(), first = k++ === 0;
       const amb = h && h.dayTxt.startsWith('1 |');
       const hd = h ? (amb ? '1?' : h.dayTxt.split(' | ')[0]) : '';
@@ -7557,19 +7695,19 @@ var qrcode = function() {
       b += kv(t.zhKurban, `<strong>${esc(fmtCivil(kb))}</strong>`, t.zhKurbanSub, 'txt');
       b += kv(t.zhAstro, eL ? esc(fmtCivil(eL.first)) : t.none, t.zhAstroSub, 'txt');
     }
-    if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), st.lang === 'tr' ? 'veya ertesi gün (s. 360)' : 'or the next day (p. 360)', 'txt'); }
-    if (!isHajj) b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : (st.lang === 'tr' ? 'Tam İlmihâl s. 326, 359' : 'Tam İlmihâl pp. 326, 359'), 'txt');
+    if (eM) { b += kv(t.earliestMecca, fmtCivil(eM.first), '', 'txt'); b += kv(t.arefe, fmtCivil(new Date(eM.first.getTime() + 8 * 86400000)), t.arefeSub, 'txt'); }
+    if (!isHajj) b += kv(t.isikLabel + ' ' + q('isik'), fmtCivil(meth.isik), ref && meth.isik && ymdOf(meth.isik) !== ymdOf(ref.first) ? t.isikDiff : t.isikRef, 'txt');
     const hj = hijriOf(st.date);
     if (hj) b += kv(t.lunarDay + ' ' + q('hicri'), `<span class="lunar">${esc(hj.dayTxt)}</span><small>${esc(hj.monthTxt)}</small>`, (hijriWhy(st.date) ? t.hjWhyLead + ' ' + hijriWhy(st.date) + '. ' : '') + t.lunarDayNote, 'txt');
     $('month2').innerHTML = b;
-    let o = kv(t.ulugbey, fmtCivil(meth.ulugbey), '', 'txt') + kv(t.kindi, fmtCivil(meth.kindi), '', 'txt') + kv(t.tabular, fmtCivil(meth.tabular), '', 'txt');
-    if (meth.madde88) o += kv(t.madde88, fmtCivil(meth.madde88.value), meth.madde88.undefinedInBook ? t.undefinedInBook : '', 'txt');
+    let o = kv(t.ulugbey + ' ' + q('ulugbey'), fmtCivil(meth.ulugbey), '', 'txt') + kv(t.kindi + ' ' + q('kindi'), fmtCivil(meth.kindi), '', 'txt') + kv(t.tabular + ' ' + q('tabular'), fmtCivil(meth.tabular), '', 'txt');
+    if (meth.madde88) o += kv(t.madde88 + ' ' + q('madde88'), fmtCivil(meth.madde88.value), meth.madde88.undefinedInBook ? t.undefinedInBook : '', 'txt');
     renderMonth.other = `<dt style="grid-column:1/-1;border:0;padding-top:14px;font-weight:600;color:var(--ink)">${t.otherMethods}</dt>` + o;
   }
   function firstLegend(conj) {
     const cd = conj.date, base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
     const cols = ['--c-visible', '--c-possible', '--c-below5', '--c-below8'];
-    return cols.map((c, k) => `<span><i style="background:var(${c})"></i>${esc(fmtCivil(new Date(base + k * 86400000), true))} ${st.lang === 'tr' ? 'akşamı' : 'evening'}</span>`).join('') +
+    return cols.map((c, k) => `<span><i style="background:var(${c})"></i>${esc(fmtCivil(new Date(base + k * 86400000), true))} ${esc(t.eveningAt)}</span>`).join('') +
       `<span><i style="background:var(--c-notborn)"></i>${esc(t.lgLater)}</span><span><i style="background:var(--c-nosun)"></i>${esc(t.lgNoSun)}</span>`;
   }
   let mini = null;
@@ -7584,8 +7722,8 @@ var qrcode = function() {
     mini.onPick(() => { st.mapLayer = 'first'; st.mapMode = 'evening'; save(); fillStatic(); location.hash = '#harita'; });
     $('miniLegend').innerHTML = firstLegend(conj);
     const f1 = (() => { try { return G.HRExplain.firstDayOf(exCtx(), conj, MONTH.hmn); } catch (e) { return null; } })(), sh = d => esc(fmtCivil(d, true));
-    const facts = `<div class="facts"><div><b>${esc(t.miniGlobal)}</b><strong>${f1 ? `${sh(civil(f1.H))} ${esc(t.hjOr)} ${sh(civil(addDays(f1.H, 1)))}` : t.none}</strong><br><span class="small">${f1 && f1.isik ? esc(t.miniIsik) : eG ? esc(t.miniFirstEve(fmtCivil(eG.evening, true), degf(eG.where.lat, 1) + ', ' + degf(eG.where.lon, 1))) : ''}</span></div>
-      <div><b>${esc(t.miniLocal)}</b><strong>${eL ? sh(eL.evening) + ' ' + (st.lang === 'tr' ? 'akşamı' : 'evening') : t.none}</strong><br><span class="small">${esc(t.miniLocalSub)}</span></div></div>
+    const facts = `<div class="facts"><div><b>${esc(t.miniGlobal)}</b><strong>${f1 ? `${sh(civil(f1.H))} ${esc(t.hjOr)} ${sh(civil(addDays(f1.H, 1)))}` : t.none}</strong><br><span class="small">${f1 && f1.isik ? esc(t.miniIsik) + ' ' + q('isik') : eG ? esc(t.miniFirstEve(fmtCivil(eG.evening, true), degf(eG.where.lat, 1) + ', ' + degf(eG.where.lon, 1))) : ''}</span></div>
+      <div><b>${esc(t.miniLocal)}</b><strong>${eL ? sh(eL.evening) + ' ' + esc(t.eveningAt) : t.none}</strong><br><span class="small">${esc(t.miniLocalSub)}</span></div></div>
       <div class="btns" style="margin-top:8px"><a class="btn" href="#harita" id="openFirstMap">${esc(t.mapOpen)}</a></div>`;
     $('miniHow').innerHTML = esc(t.miniHow) + facts;
     const ofm = $('openFirstMap'); if (ofm) ofm.onclick = () => { st.mapLayer = 'first'; st.mapMode = 'evening'; save(); fillStatic(); };
@@ -7726,7 +7864,7 @@ var qrcode = function() {
     // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
     const fShow = !pv && sunUp && !st.safetyOff && sightPossible(eveningCached(loc, today)); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = true;
-    $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? city[st.lang] : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
+    $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
     const mid = FR.cls.code === 'midMonth', rng = FRange;
@@ -7820,7 +7958,7 @@ var qrcode = function() {
     return { p, gz, key, az, alt };
   }
   function dialSvg(H, tg) {
-    const W = 240, c = W / 2, R = 100, tr = st.lang === 'tr', cardL = tr ? ['K', 'D', 'G', 'B'] : ['N', 'E', 'S', 'W'];
+    const W = 240, c = W / 2, R = 100, cardL = t.card4;
     const pos = (az, rr) => { const a = (az - H) * Math.PI / 180; return [c + rr * Math.sin(a), c - rr * Math.cos(a)]; };
     let s = `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="${esc(t.cpTitle)}"><circle cx="${c}" cy="${c}" r="${R + 14}" fill="var(--surface)" stroke="var(--line)"/>`;
     for (let a = 0; a < 360; a += 10) { const [x1, y1] = pos(a, R + 12), [x2, y2] = pos(a, a % 30 ? R + 6 : R + 1); s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--ink)" stroke-opacity="${a % 30 ? .35 : .7}"/>`; }
@@ -7948,7 +8086,7 @@ var qrcode = function() {
       schema: 'hilal-ruyet-kaydi/1', id: (G.crypto && G.crypto.randomUUID ? G.crypto.randomUUID() : 'r' + Date.now().toString(36)), created: new Date().toISOString(),
       app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME, official: OFFICIAL !== false, engine: 'Astronomy Engine 2.1.19', rules: G.HR_RULES, models: 'Yallop 1997 (geo ARCL); Odeh 2004 (topo)' },
       observer: { name: $('recName').value.trim(), contact: $('recContact').value.trim() },
-      place: { name: city ? city[st.lang] : (st.locAuto ? t.myPlace : ''), lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, tz: st.tz, site: $('recPlace').value },
+      place: { name: city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : ''), lat: st.lat, lon: st.lon, elev: st.elev, hObs: st.hObs, tz: st.tz, site: $('recPlace').value },
       observation: { at: at.date.toISOString(), evening: ev.ymd, result, firstSeen: $('recFirst').value || null, lastSeen: $('recLast').value || null, sky: $('recSky').value, companions: +$('recWith').value || 0, seers: +$('recSeers').value || 0, note: $('recNote').value.trim() },
       computed: r && r.ok ? { ictima: isoT(r.ictimaPrev), gurub: isoT(r.gurub), seriGurub: r.seri && r.seri.seri ? isoT(r.seri.seri) : null, moonset: isoT(r.moonset), windowEnd: isoT(r.windowEnd),
         beynunet: +r.beynunet.toFixed(3), moonAltGurub: +r.moonAlt.toFixed(3), lagMin: r.lagMin != null ? +r.lagMin.toFixed(1) : null, ageH: r.ageH != null ? +r.ageH.toFixed(2) : null, cls: r.cls.code, kadihan: r.kadihan19 || null,
@@ -7978,7 +8116,7 @@ var qrcode = function() {
   function ownSightingTxt(result, ev) {
     if (!['naked', 'aidedNaked'].includes(result) || !ev || ev.cls === 'p-bad' || (ev.e && ev.e.day)) return '';
     try {
-      const X = exCtx(), d = G.HRExplain.data(X, ev.ymd), s = G.HRExplain.S[st.lang], m = monthName(d.hm.m), f = y => fmtCivil(civil(y), true);
+      const X = exCtx(), d = G.HRExplain.data(X, ev.ymd), s = LG.pick(G.HRExplain.S, st.lang), m = monthName(d.hm.m), f = y => fmtCivil(civil(y), true);
       if (ev.ymd === d.E1) return s.recSeenA(f(d.E1), m, fmtCivil(civil(d.H)));
       if (ev.ymd === d.E2) return s.recSeenB(f(d.E2), m, fmtCivil(civil(d.H2)), f(d.E1), fmtCivil(civil(d.H)));
     } catch (e) { /* açıklama hesaplanamadı */ }
@@ -8182,7 +8320,7 @@ var qrcode = function() {
     const hj = hijriAt(at);
     $('mbHijri').innerHTML = hj ? `${hj.local ? hj.html2 : hj.html} <span class="note" title="${esc(t.hjNote + (hj.why ? '\n' + t.hjWhyLead + ' ' + hj.why : ''))}">· ${esc(t.hjHesabi)}${hj.after ? ' · ' + esc(t.hjAfter) : ''}</span> ${q('hicri')}` : '';
     const city = CITIES.find(c => c.id === st.city);
-    const chips = [`<button type="button" class="chip loc" id="mbLoc" title="${esc((st.locAuto ? t.chipLocAuto : t.chipLocMan) + ' · ' + t.location)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? city[st.lang] : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))} ✎</button>`];
+    const chips = [`<button type="button" class="chip loc" id="mbLoc" title="${esc((st.locAuto ? t.chipLocAuto : t.chipLocMan) + ' · ' + t.location)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))} ✎</button>`];
     if (ON.sandboxed) chips.push(`<span class="chip off" title="${esc(t.sandboxNote)}">${esc(t.chipSandbox)}</span>`);
     else if (!ON.online()) chips.push(`<span class="chip off">${esc(t.chipOffline)}</span>`);
     if (WX.ass) chips.push(`<span class="chip" title="${esc(t.wxTitle)}">${{ good: '☀', fair: '⛅', poor: '☁' }[WX.ass.level]} ${esc(t.wxLevel[WX.ass.level])}</span>`);
@@ -8232,7 +8370,7 @@ var qrcode = function() {
     }, 30);
   }
   // ---- “Bu akşam ne demek?” açıklama penceresi ----
-  const exBtn = (ymd, short) => `<button class="btn exbtn" type="button" data-ex="${ymd}" title="${esc(G.HRExplain.S[st.lang].btn)}">ⓘ ${esc(G.HRExplain.S[st.lang][short ? 'btnShort' : 'btn'])}</button>`;
+  const exBtn = (ymd, short) => `<button class="btn exbtn" type="button" data-ex="${ymd}" title="${esc(LG.pick(G.HRExplain.S, st.lang).btn)}">ⓘ ${esc(LG.pick(G.HRExplain.S, st.lang)[short ? 'btnShort' : 'btn'])}</button>`;
   function exCtx() {
     return { C, CAL, A, loc: LOC || locObj(), records, esc, q, fmtCivil, fmtDT, civil, ymdOf, addDays, monthName, placeName, hijriOf, hijriWhy, nextRasad,
       earliest, evening: y => eveningCached(LOC || locObj(), y), clsText, claimOf, clsTopic: r => CLS_TOPIC[r.cls.code] || 'hesap',
@@ -8250,7 +8388,7 @@ var qrcode = function() {
     setTimeout(run, 30);
   }
   function openExplain(ymd) {
-    exYmd = ymd; $('hEx').textContent = G.HRExplain.S[st.lang].title; $('exClose').textContent = t.close;
+    exYmd = ymd; $('hEx').textContent = LG.pick(G.HRExplain.S, st.lang).title; $('exClose').textContent = t.close;
     paintExplain();
     const dl = $('exDlg'); try { if (!dl.open) dl.showModal(); } catch (e) { dl.setAttribute('open', ''); }
   }
@@ -8266,7 +8404,7 @@ var qrcode = function() {
     if (d.b && (!d.a || d.b.ymd !== d.a.ymd)) h += box(t.upB, d.b);
     if (d.prev) {
       const pr = d.prev, ph = CAL.monthForConjunction(pr.r.ictimaPrev.date), ago = Math.round((civil(d.today) - civil(pr.ymd)) / 86400000);
-      h += `<div class="prev"><b>${esc(t.upPrev)}</b><strong>${esc(fmtCivil(civil(pr.ymd)))}</strong><span class="small">${esc(t.upMonth(monthName(ph.m) + ' ' + ph.y))}${ago > 0 ? ' · ' + esc(st.lang === 'tr' ? `${ago} gün önce` : `${ago} days ago`) : ''}</span><br><span class="small">${esc(clsText(pr.r)[0])}</span><br><button class="btn" type="button" data-up="${pr.ymd}">◀ ${esc(t.upPrevGo)}</button></div>`;
+      h += `<div class="prev"><b>${esc(t.upPrev)}</b><strong>${esc(fmtCivil(civil(pr.ymd)))}</strong><span class="small">${esc(t.upMonth(monthName(ph.m) + ' ' + ph.y))}${ago > 0 ? ' · ' + esc(t.daysAgo(ago)) : ''}</span><br><span class="small">${esc(clsText(pr.r)[0])}</span><br><button class="btn" type="button" data-up="${pr.ymd}">◀ ${esc(t.upPrevGo)}</button></div>`;
     }
     if (d.passedTonight) h += `<p class="small" style="grid-column:1/-1;margin:0">${esc(t.upNextNote)}</p>`;
     $('upBody').innerHTML = h;
@@ -8275,7 +8413,7 @@ var qrcode = function() {
   // Yönelim yardımcıları
   function guidesHtml(at, loc) {
     let g = []; try { g = G.HRStarMap.guides(loc || LOC, at, st.lang, 3); } catch (e) { g = []; }
-    return `<h3>${esc(t.guidesTitle)}</h3>` + (g.length ? `<ul class="guides">${g.map(o => `<li><strong>${esc(o.name)}</strong> (${num(o.mag, 1)} ${st.lang === 'tr' ? 'kadir' : 'mag'}): ${esc(o.text)}</li>`).join('')}</ul>` : `<p class="small">${esc(t.guidesNone)}</p>`);
+    return `<h3>${esc(t.guidesTitle)}</h3>` + (g.length ? `<ul class="guides">${g.map(o => `<li><strong>${esc(o.name)}</strong> (${num(o.mag, 1)} ${esc(t.magUnit)}): ${esc(o.text)}</li>`).join('')}</ul>` : `<p class="small">${esc(t.guidesNone)}</p>`);
   }
   // ---- Hava ve görüş ----
   const WX = { key: null, data: null, err: null, loading: false, ass: null };
@@ -8316,7 +8454,7 @@ var qrcode = function() {
     for (const k of [-1, 0, 1]) { const v = ON.pick(d.here, g + k * 3600e3); h += wxRow(v ? fmtH(v.t) : '–', v); }
     h += `<tr><th colspan="5" style="text-align:left">${esc(t.wxWest(Math.round(R.moonAz || R.sunAz)))}</th></tr>` + wxRow(westG ? fmtH(westG.t) : '–', westG);
     h += '</tbody></table></div>';
-    if (aq && aq.aerosol_optical_depth != null) h += `<p class="small" style="margin:6px 0 0">${esc(t.wxAod)}: ${num(aq.aerosol_optical_depth, 2)}${aq.dust != null ? ` · ${st.lang === 'tr' ? 'toz' : 'dust'} ${num(aq.dust, 0)} µg/m³` : ''}</p>`;
+    if (aq && aq.aerosol_optical_depth != null) h += `<p class="small" style="margin:6px 0 0">${esc(t.wxAod)}: ${num(aq.aerosol_optical_depth, 2)}${aq.dust != null ? ` · ${esc(t.dustLbl)} ${num(aq.dust, 0)} µg/m³` : ''}</p>`;
     h += `<p class="cap">${esc(t.wxFiqh)}</p><p class="cap">${esc(t.wxSrc)}</p>`;
     $('wxBody').innerHTML = h; renderBar();
   }
@@ -8338,7 +8476,7 @@ var qrcode = function() {
     const out = G.HRStarMap.draw(LOC, SM_AT, st.lang, smOpts());
     $('smBody').innerHTML = out.svg;
     const hj = hijriAt(SM_AT), city = CITIES.find(c => c.id === st.city);
-    $('smWhen').innerHTML = `${esc(fmtDT(SM_AT))} · ${esc(city ? city[st.lang] : `${num(st.lat, 2)}, ${num(st.lon, 2)}`)}${hj ? ' · ' + hj.html : ''}`;
+    $('smWhen').innerHTML = `${esc(fmtDT(SM_AT))} · ${esc(city ? (city[st.lang] || city.en) : `${num(st.lat, 2)}, ${num(st.lon, 2)}`)}${hj ? ' · ' + hj.html : ''}`;
   }
   // ---- Baskı / PDF ----
   async function getDownloads() { try { return G.claude && G.claude.use ? await G.claude.use('downloads') : null; } catch (e) { return null; } }
@@ -8360,14 +8498,16 @@ var qrcode = function() {
   const extLink = (u, s) => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(s)}</a>` : esc(s);
   const bare = u => String(u || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
   // Kaynak kitap: Hakîkat Kitâbevi’nin kendi sayfaları
-  const BOOK_PAGE = 'https://www.hakikatkitabevi.net/book.php?bookCode=001', BOOK_PDF = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
-  const bookLinksHtml = () => `${esc(t.bookLinks)} ${extLink(BOOK_PAGE, t.bookPage)} · ${extLink(BOOK_PDF, t.bookPdf)}`;
+  // Türkçe: Tam İlmihâl (001); İngilizce: kitabın İngilizcesi Endless Bliss (025)
+  // Her dilde Tam İlmihâl’in kendi adı ve bağlantıları dil kaydından gelir (langs.js)
+  const bookOf = () => LG.get(st.lang).book;
+  const bookLinksHtml = () => { const b = bookOf(); return `${esc(t.bookLinks)} ${extLink(b.page, t.bookPage)}${b.pdf ? ' · ' + extLink(b.pdf, t.bookPdf) : ''}`; };
   function aboutHtml() {
     return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>`;
   }
   function noticeHtml() {
     const n = NOTICE || {};
-    return `<span class="src">${extLink(BOOK_PAGE, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
+    return `<span class="src">${extLink(bookOf().page, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
       (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>`;
   }
   function licHtml() {
@@ -8393,7 +8533,7 @@ var qrcode = function() {
     $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
     try { $('prDlg').showModal(); } catch (e) { $('prDlg').setAttribute('open', ''); }
   }
-  const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : (st.locAuto ? t.myPlace : (st.lang === 'tr' ? 'Seçilen konum' : 'Selected location')); };
+  const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : (st.locAuto ? t.myPlace : t.selLoc); };
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
@@ -8449,7 +8589,7 @@ var qrcode = function() {
     const svg = withTheme('light', () => G.HRStarMap.drawWest(LOC, at, st.lang, { w: 900, h: 560, track, gurubAz: r.sunAz, span: 80, center: (r.sunAz + C.at(at, LOC).moon.az) / 2 }).svg);
     const fist = a => num(Math.max(0, a) / 10, 1);
     const body = rows.map(x => {
-      const p = C.at(x.t, LOC), up = p.moon.alt > -0.5, d = r.sunAz - p.moon.az, dd = Math.abs(d).toFixed(1).replace('.', st.lang === 'tr' ? ',' : '.');
+      const p = C.at(x.t, LOC), up = p.moon.alt > -0.5, d = r.sunAz - p.moon.az, dd = Math.abs(d).toFixed(1).replace('.', decSep());
       return `<tr${x.mark ? ' class="sel"' : ''}><td>${hhmm(x.t)}</td><td>${degf(p.sun.alt, 1)}</td><td>${up ? `${degf(p.moon.alt, 1)} <span class="small">${esc(t.smEveFist(fist(p.moon.alt)))}</span>` : '—'}</td><td>${up ? degf(p.moon.az, 1) : '—'}</td><td>${up ? esc(d > 0 ? t.smEveLeft(dd) : t.smEveRight(dd)) : '—'}</td><td>${esc(x.note || (up ? '' : t.smEveDown))}</td></tr>`;
     }).join('');
     const hj = hijriAt(at);
@@ -8500,8 +8640,8 @@ var qrcode = function() {
       row(t.notes, blank ? `${v('', 78)}<br>${v('', 78)}` : (o.note && o.note.length > 240 ? `<span class="clamp">${esc(o.note.slice(0, 240))}…</span> <span class="small">(${esc(t.noteFull)})</span>` : esc(o.note || '—')) + (!blank && !x.observer.name ? `<br><span class="small">${esc(t.recAnon)}</span>` : ''));
     const comp = c ? row(t.lastConj.replace(/\(.*\)/, ''), esc(f(c.ictima))) + row(t.gurub.replace(/\(.*\)/, ''), tm(c.gurub) + (c.seriGurub ? ` · ${esc(t.seri.replace(/\(.*\)/, ''))} ${tm(c.seriGurub)}` : '')) +
       row(t.stWindow, c.windowEnd ? `${tm(c.gurub)} – ${tm(c.windowEnd)}` : t.none) + row(t.moonset.replace(/\(.*\)/, ''), tm(c.moonset)) +
-      row(t.beyn.replace(/\(.*\)/, ''), degf(c.beynunet)) + row(`${t.alt.replace(/\(.*\)/, '')} (${st.lang === 'tr' ? 'gözlem anında' : 'at observation'})`, `${degf(c.atObs.moonAlt)} · ${t.az.split(' ')[0]} ${degf(c.atObs.moonAz, 1)}`) +
-      row(t.age.replace(/\(.*\)/, ''), ageTxt(c.ageH)) + row(t.tutCalc, `<strong>${esc(t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls)}</strong><br><span class="small">${esc(c.evaluation)}</span>`) : `<tr><td colspan="2" class="small">${esc(blank ? (st.lang === 'tr' ? 'Hesâbî veriler kayıt oluşturulunca program tarafından doldurulur.' : 'Computed data are filled in by the programme when a record is created.') : t.none)}</td></tr>`;
+      row(t.beyn.replace(/\(.*\)/, ''), degf(c.beynunet)) + row(`${t.alt.replace(/\(.*\)/, '')} (${esc(t.atObs)})`, `${degf(c.atObs.moonAlt)} · ${t.az.split(' ')[0]} ${degf(c.atObs.moonAz, 1)}`) +
+      row(t.age.replace(/\(.*\)/, ''), ageTxt(c.ageH)) + row(t.tutCalc, `<strong>${esc(t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls] ? t.cls[c.cls === 'notBorn' ? 'notBorn_beforeConj' : c.cls][0] : c.cls)}</strong><br><span class="small">${esc(c.evaluation)}</span>`) : `<tr><td colspan="2" class="small">${esc(blank ? t.tutBlankCalc : t.none)}</td></tr>`;
     const photo = !blank && x.photo && x.photo.thumb ? `<figure class="pph"><img src="${x.photo.thumb}" alt=""><figcaption class="hash">SHA-256 ${esc(x.photo.sha256)}</figcaption></figure>` : '';
     const qr = !blank && x.hash ? qrSvg(`HRK1|${x.id}|${x.hash}`) : '';
     return `<section class="a4 tut">${pgHead(t.tutTitle, esc(t.tutSub) + (blank ? '' : ` · ${esc(t.tutRecId)}: ${esc(x.id)}`))}
@@ -8549,13 +8689,13 @@ var qrcode = function() {
   const slug = s => String(s || '').replace(/[ıİşŞğĞüÜöÖçÇâÂîû]/g, c => TRMAP[c]).normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
   function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
-  const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? c[st.lang] : ''; };
+  const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : ''; };
   const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
     en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
-    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.tr)[kind] || kind, o.suffix].filter(Boolean).join('_');
+    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.en)[kind] || kind, o.suffix].filter(Boolean).join('_');
   }
   // Kayda ait dosya adı: gözlemin akşamı, yerel saati ve yeri
   function recBase(x, kind) {
@@ -8729,6 +8869,10 @@ var qrcode = function() {
     add('Açıklama', 'Receb 1437: birinci gece 7 Nisan → 8 Nisan / ikinci gece 8 Nisan → 9 Nisan (rü’yetle başladığı gün)', '2016-04-08 / 2016-04-09', `${rA && rA.firstDay} / ${rB && rB.firstDay}`, '—', x37.H === '2016-04-08' && rA && rA.ymd === '2016-04-07' && rA.world === 'first' && rB && rB.firstDay === '2016-04-09');
     const xk = G.HRExplain.data(XE, '2026-11-10'), hk = G.HRExplain.html(XE, xk, 'tr');
     add('Açıklama', 'Cemâziyelâhır 1448: 1. gün iki ihtimal; önceki ayla arası 29 veya 30 gün; “başlamıştır” yok', '2026-11-10 / 2026-11-11 · 29–30 · yok', `${xk.H} / ${xk.H2} · ${xk.gap} · ${/başlamıştır/.test(hk) ? 'var' : 'yok'}`, '—', xk.H === '2026-11-10' && xk.H2 === '2026-11-11' && (xk.gap === 29 || xk.gap === 30) && !/başlamıştır/.test(hk) && xk.rows.length === 3);
+    // Çok dilli altyapı: her dilde aynı anahtarlar ve aynı türler (metin / işlev / liste) bulunmalı
+    const parity = (a, b) => { const out = []; for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (!(k in a) || !(k in b)) out.push(k); else if (typeof a[k] !== typeof b[k] || Array.isArray(a[k]) !== Array.isArray(b[k])) out.push(k + ':tür'); } return out; };
+    const pT = parity(I.T.tr, I.T.en), pS = parity(G.HRExplain.S.tr, G.HRExplain.S.en), pG = parity(G.HRGuide.TOPICS ? G.HRGuide.TOPICS.tr : {}, G.HRGuide.TOPICS ? G.HRGuide.TOPICS.en : {});
+    add('çok dilli', 'Türkçe ve İngilizce metinlerde aynı anahtarlar (arayüz · açıklama · rehber konuları) ve dil kaydında her dilin Tam İlmihâl bağlantısı', '0 · 0 · 0 · tam', `${pT.length} · ${pS.length} · ${pG.length} · ${LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page) ? 'tam' : 'eksik'}`, pT.concat(pS, pG).slice(0, 6).join(', ') || '—', !pT.length && !pS.length && !pG.length && LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page));
     const xz = G.HRExplain.data(XE, '2027-05-07');
     add('Açıklama', 'Zilhicce 1448: 1. gün Işık usulüyle bulunan gün veya bir gün sonrası (s. 326)', `${ymdOf(CAL.methods(1448, 12).isik)} / +1 gün`, `${xz.H} / ${xz.H2}`, '—', xz.isik && xz.H === ymdOf(CAL.methods(1448, 12).isik) && xz.H2 === addDays(xz.H, 1));
     const gk = G.HRGok.at({ lat: 41.0, lon: 29.0, elev: 0 }, TT('2026-12-10T18:00Z')), pol2 = gk.list.find(o => o.id === 'Polaris'), jup = gk.list.find(o => o.id === 'Jupiter');
@@ -8823,10 +8967,52 @@ var qrcode = function() {
   }
 
   let rzT; window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (DAY && view === 'plan') renderTime(); }, 200); });
+  // ---- Tarih alanları: tarayıcının yerel biçimi yerine seçilen biçim (varsayılan gün/ay/yıl) ----
+  // Asıl <input type="date|datetime-local"> değeri ISO olarak kalır (kod onu okur); görünen alan seçilen biçimdedir.
+  const DATE_FMTS = ['dmy/', 'dmy.', 'ymd-', 'mdy/'];
+  const dateFmt = () => DATE_FMTS.includes(st.dateFmt) ? st.dateFmt : 'dmy/';
+  function fmtYmdNum(ymd) {
+    if (!ymd) return '';
+    const [y, m, d] = ymd.split('-'), f = dateFmt(), sep = f[3];
+    return f.startsWith('dmy') ? [d, m, y].join(sep) : f.startsWith('ymd') ? [y, m, d].join(sep) : [m, d, y].join(sep);
+  }
+  function parseDateTxt(txt, withTime) {
+    const n = (txt || '').match(/\d+/g); if (!n || n.length < 3) return null;
+    let y, m, d; const f = dateFmt();
+    if (n[0].length === 4) [y, m, d] = n; else if (f.startsWith('mdy')) [m, d, y] = n; else [d, m, y] = n;
+    y = +y; m = +m; d = +d; if (y < 100) y += 2000;
+    const dt = new Date(Date.UTC(y, m - 1, d)); if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m - 1 || dt.getUTCDate() !== d) return null;
+    let out = `${String(y).padStart(4, '0')}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    if (withTime) { const hh = n.length > 3 ? +n[3] : 0, mm = n.length > 4 ? +n[4] : 0; if (hh > 23 || mm > 59) return null; out += `T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`; }
+    return out;
+  }
+  const DATE_BOXES = [];
+  function enhanceDate(id) {
+    const nat = $(id); if (!nat || nat.dataset.dbox) return;
+    const withTime = nat.type === 'datetime-local', desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+    nat.dataset.dbox = '1'; nat.classList.add('dnat'); nat.tabIndex = -1; nat.setAttribute('aria-hidden', 'true');
+    const box = document.createElement('span'); box.className = 'dbox';
+    box.innerHTML = `<input type="text" id="${id}Txt" inputmode="numeric" autocomplete="off" spellcheck="false"><button type="button" class="dpick" aria-label="📅">📅</button>`;
+    nat.parentNode.insertBefore(box, nat); box.appendChild(nat);
+    const txt = box.querySelector('input'), lbl = document.querySelector(`label[for="${id}"]`); if (lbl) lbl.htmlFor = id + 'Txt';
+    const paint = () => { const v = desc.get.call(nat); txt.value = v ? (withTime ? `${fmtYmdNum(v.slice(0, 10))} ${v.slice(11, 16)}` : fmtYmdNum(v)) : ''; txt.placeholder = t.datePh(dateFmt(), withTime); txt.classList.remove('bad'); };
+    Object.defineProperty(nat, 'value', { configurable: true, get() { return desc.get.call(this); }, set(v) { desc.set.call(this, v); paint(); } });
+    nat.addEventListener('input', paint); nat.addEventListener('change', paint);
+    txt.addEventListener('change', () => {
+      const iso = parseDateTxt(txt.value, withTime);
+      if (!iso) { txt.classList.add('bad'); toast(t.dateBad(t.datePh(dateFmt(), withTime))); return; }
+      if (iso === nat.value) { paint(); return; }
+      nat.value = iso; nat.dispatchEvent(new Event('input', { bubbles: true })); nat.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    box.querySelector('.dpick').onclick = () => { try { nat.showPicker(); } catch (e) { try { nat.focus(); nat.click(); } catch (e2) { txt.focus(); } } };
+    DATE_BOXES.push({ paint, btn: box.querySelector('.dpick') }); paint();
+  }
+  function paintDateBoxes() { DATE_BOXES.forEach(b => { b.paint(); b.btn.title = t.datePick; b.btn.setAttribute('aria-label', t.datePick); }); }
+  ['date', 'mDate', 'recAt', 'ntAt'].forEach(enhanceDate);
   fillStatic(); bind(); route(); setLive(true); update();
   applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
-  G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, official: () => OFFICIAL, notice: () => NOTICE };
+  G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, buildPrint, official: () => OFFICIAL, notice: () => NOTICE };
 })(window);
 
 </script>

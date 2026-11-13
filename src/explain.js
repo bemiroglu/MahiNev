@@ -17,6 +17,7 @@
   ];
   const S = {
     tr: {
+      pg: n => `s. ${n}`, recSeenShort: 'kaydınız: görüldü', recNotShort: 'kaydınız: görülmedi',
       btn: 'Bu akşam ne demek?', btnShort: 'Açıkla', title: 'Bu seçim için açıklama',
       head: (d, p) => `${d} akşamı · ${p}`, monthLine: (m, c) => `${m} ay başı · İctimâ: ${c}`,
       here: 'Bu akşam burada', world: 'Bu akşam dünyada', start: 'Ay başı: iki gece', scope: 'Kapsam ve hüküm', more: 'Ayrıntılı açıklama',
@@ -74,6 +75,7 @@
       plan: 'Bu geceyi planla'
     },
     en: {
+      pg: n => `p. ${n}`, recSeenShort: 'your record: seen', recNotShort: 'your record: not seen',
       btn: 'What does this evening mean?', btnShort: 'Explain', title: 'Explanation for this selection',
       head: (d, p) => `Evening of ${d} · ${p}`, monthLine: (m, c) => `Start of ${m} · Conjunction: ${c}`,
       here: 'This evening here', world: 'This evening worldwide', start: 'Start of the month: two nights', scope: 'Scope and ruling', more: 'Detailed explanation',
@@ -187,7 +189,7 @@
   }
 
   function html(X, d, L) {
-    const s = S[L] || S.tr, esc = X.esc, f = y => esc(X.fmtCivil(X.civil(y))), fs = y => esc(X.fmtCivil(X.civil(y), true));
+    const s = S[L] || S.en, esc = X.esc, f = y => esc(X.fmtCivil(X.civil(y))), fs = y => esc(X.fmtCivil(X.civil(y), true));
     const mn = m => X.monthName(m), M = esc(mn(d.hm.m)), PM = esc(mn(d.phm.m));
     const r = X.evening(d.ymd);
     let h = `<p class="exhead"><b>${esc(s.head(X.fmtCivil(X.civil(d.ymd)), X.placeName()))}</b><br><span class="small">${esc(s.monthLine(`${mn(d.hm.m)} ${d.hm.y}`, X.fmtDT(d.conj)))}</span></p>`;
@@ -205,8 +207,8 @@
     const inRows = d.rows.some(x => x.ymd === d.ymd);
     if (!inRows) h += `<h3>${esc(s.world)}</h3><div id="exWorld"><p class="small">${esc(s.worldCalc)}</p></div>`;
     // 2. ay başı: iki gece
-    const pg = d.hajj ? 's. 326' : 's. 315', pgE = L === 'tr' ? pg : pg.replace('s.', 'p.');
-    h += `<h3>${esc(s.start)}</h3><p>${esc(d.hajj && d.isik ? s.leadZh : s.lead)}</p>`;
+    const pgE = s.pg(d.hajj ? 326 : 315);
+    h += `<h3>${esc(s.start)}</h3><p>${esc(d.hajj && d.isik ? s.leadZh : s.lead)}${d.hajj && d.isik ? ' ' + X.q('isik') : ''}</p>`;
     const optA = d.hajj && d.isik ? s.optAZh : s.optA(X.fmtCivil(X.civil(d.E1), true)), optB = d.hajj && d.isik ? s.optBZh : s.optB(X.fmtCivil(X.civil(d.E1), true), X.fmtCivil(X.civil(d.E2), true));
     h += `<div class="extwo"><div><b>${esc(s.optEq(mn(d.hm.m), X.fmtCivil(X.civil(d.H))))}</b><span>${esc(optA)}</span></div><div><b>${esc(s.optEq(mn(d.hm.m), X.fmtCivil(X.civil(d.H2))))}</b><span>${esc(optB)}</span></div></div>`;
     const li = [esc(s.notBefore(mn(d.hm.m), X.fmtCivil(X.civil(d.H)), pgE))];
@@ -233,8 +235,8 @@
     const lbl = { prev: s.rPrev, A: s.rA, B: s.rB };
     h += `<div class="extab"><table><thead><tr>${th.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>` + d.rows.map((rw, i) => {
       const locRej = d.hajj && rw.k !== 'prev' && rw.r && rw.r.ok && rw.r.cls.reject;   // Zilhicce mahallîdir: bu yerde hesâben görülemiyorsa
-      const ft = rw.k === 'prev' ? `<span class="pill p-bad">${esc(s.fReject(pgE))}</span>` : locRej ? `<span class="pill p-bad">${esc(s.fReject(L === 'tr' ? 's. 360' : 'p. 360'))}</span>` : `<b>${esc(s.fDay(mn(d.hm.m), X.fmtCivil(X.civil(rw.firstDay), true)))}</b>`;
-      const rec = rw.rec ? `<br><span class="small">${esc(rw.rec === 'seen' ? (L === 'tr' ? 'kaydınız: görüldü' : 'your record: seen') : (L === 'tr' ? 'kaydınız: görülmedi' : 'your record: not seen'))}</span>` : '';
+      const ft = rw.k === 'prev' ? `<span class="pill p-bad">${esc(s.fReject(pgE))}</span>` : locRej ? `<span class="pill p-bad">${esc(s.fReject(s.pg(360)))}</span>` : `<b>${esc(s.fDay(mn(d.hm.m), X.fmtCivil(X.civil(rw.firstDay), true)))}</b>`;
+      const rec = rw.rec ? `<br><span class="small">${esc(rw.rec === 'seen' ? s.recSeenShort : s.recNotShort)}</span>` : '';
       const wc = rw.world === 'none' ? esc(s.wNone) : `<span id="exW${i}">${esc(s.wCalc)}</span>`;
       return `<tr${rw.tonight ? ' class="now"' : ''}><td><button class="lnk" type="button" data-explan="${rw.ymd}">${fs(rw.ymd)}</button><br><span class="small">${esc(lbl[rw.k])}${rw.tonight ? ' · ' + esc(s.tonight) : ''}</span>${rec}</td><td><span class="dot" style="background:${X.clsColor(rw.r)}"></span>${cls(rw)}</td><td>${wc}</td><td>${ft}</td></tr>`;
     }).join('') + `</tbody></table></div>`;
@@ -264,18 +266,19 @@
 
   // Dünya kısımları: tarama bitince doldurulur (seçili akşam ve tablodaki akşamlar)
   function worldHtml(X, d, L) {
-    const s = S[L] || S.tr, reg = regions(X.C, d.conj, d.ymd);
-    const nm = x => L === 'tr' ? x.tr : x.en;
+    const s = S[L] || S.en, reg = regions(X.C, d.conj, d.ymd);
+    const nm = x => x[L] || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return `<p>${X.esc(s.worldNone)}</p>`;
     return (poss.length ? `<p>${X.esc(s.worldPoss(poss.join(', ')))}</p>` : '') + (vis.length ? `<p>${X.esc(s.worldVis(vis.join(', ')))}</p>` : '') + `<p class="cap">${X.esc(s.worldNote)}</p>`;
   }
   function worldCell(X, d, ymd, L) {
-    const s = S[L] || S.tr, reg = regions(X.C, d.conj, ymd), nm = x => L === 'tr' ? x.tr : x.en;
+    const s = S[L] || S.en, reg = regions(X.C, d.conj, ymd), nm = x => x[L] || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return { txt: s.wNone, vis: false };
     return { txt: [vis.length ? s.wVis(vis.join(', ')) : '', poss.length ? s.wPoss(poss.join(', ')) : ''].filter(Boolean).join(' · '), vis: vis.length > 0 };
   }
 
+  if (G.HRLangs) G.HRLangs.chain(S);
   G.HRExplain = { S, data, html, worldHtml, worldCell, regions, firstDayOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

@@ -69,6 +69,7 @@ Sayfada bir şeye dokunduğunuzda okuduğunuz kart yerinde kalır; yeni bilgiler
 - **Neden iki sayı:** Hangi sayının hangi güne bağlı olduğu yanında yazar: "1 Receb 10 Ara Per ise 3, 11 Ara Cum ise 2".
 - Yeni hicrî yıl da Muharrem hilâli görülünce başladığından, o gün eski ve yeni yıl yan yana yazılır.
 - Esas alınan kapsam **dünya genelidir**, çünkü bir şehirde görülünce her yerde lâzım olur (s. 315). Zilhiccede şahitle sabit olmayan yerlerde Işık usulü esastır (s. 326).
+- **Takvim usulleri:** Ay kartında Işık usulü (s. 359), Uluğ Beğ cetveli (s. 361–362), Ebüzziyâ / Kindî cetveli (s. 361), Madde 88 (s. 359) ve aritmetik (tabular) takvimin (s. 358) sonuçları gösterilir. Her birinin yanındaki **?** düğmesi usulün nasıl çalıştığını kısaca anlatır. Bunlar takvim bilgisidir; ay başı rü'yetle kesinleşir.
 
 ## Kullanım düzeyi
 
@@ -115,6 +116,7 @@ Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili mak
 - **Alacakaranlık:** güneş doğuşu ve batışı, sivil, denizci ve astronomik alacakaranlık sınırları.
 - **Bu gece:** Ay ve gezegenlerin çıplak gözle görülebileceği aralık ve en yüksek oldukları an. Bir öğeye dokununca seçili an o saate gider.
 - **Görünürlük temkinli bir tahmindir:** güneşin yüksekliğine, cismin parlaklığına ve ufka yakınlıkta sönükleşmeye göre hesaplanır; hava, ışık kirliliği ve gözün karanlığa alışması hesaba katılmaz.
+- **Kutup bölgeleri:** Güneşin doğmadığı veya batmadığı günlerde araç bütün günü tarar ve güneşin en yüksek veya en alçak yüksekliğini yazar. Şafağın bitmediği yaz gecelerinde "astronomik gece olmuyor" yazılır.
 - Ay başı rasad akşamlarında kart hilâle odaklanır ve bu bölüm kapalı başlar; diğer günlerde kartın adı "Seçili an: gökyüzü ve gök cisimleri" olur ve bölüm açık başlar.
 
 Güneş'e asla doğrudan veya dürbünle bakmayın.
@@ -185,6 +187,8 @@ Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir; sayfalar
 - **Yazı boyutu.**
 - **Saat gösterimi:** yerel veya yerel + UTC.
 - **Canlı kipte yenileme aralığı.**
+- **Dil:** Üst bantta TR / EN. İngilizce arayüzde kaynak bağlantısı Tam İlmihâl'in İngilizcesi *Endless Bliss*'tir; sayfa numaraları Türkçe baskıya göredir.
+- **Tarih biçimi:** Tarih alanları varsayılan olarak gün/ay/yıl (13/11/2026) gösterilir; gün.ay.yıl, yıl-ay-gün veya ay/gün/yıl da seçilebilir. Tarih elle yazılabilir veya 📅 düğmesiyle takvimden seçilir.
 - **Karanlık eşiği:** gurûb, −3° veya −6°. Yalnızca aranabilir aralığı değiştirir; Tam İlmihâl'in sınıflarını değiştirmez.
 - **Hava tahmini ve otomatik konum.**
 

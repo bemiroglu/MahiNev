@@ -1,7 +1,7 @@
 /* Metinler: 0.12 (iki gece esası, hicrî günün gerekçesi, gök cisimleri aracı) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.12.0';
+  G.HR_VERSION = '0.13.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Hicrî günün iki sayısı: ayın 1. günü hesapla bulunan gün veya bir gün sonrasıdır (s. 315, 326, 360)
@@ -10,6 +10,17 @@
     hjWhyLead: 'Neden iki sayı:',
     hjBook: 'Hesâbî tarihtir. Ayın 1. günü, hesapla bulunan gün veya bir gün sonrasıdır; bir gün önce olamaz (s. 315). Hangisi olduğu rü’yetle kesinleşir.',
     rnIntro: 'Her satır bir kamerî ayın başıdır. Rasad gecesi ve en elverişli akşam bu yer için hesâbîdir. Ayın 1. günü, Tam İlmihâl’e göre hesapla bulunan gün veya bir gün sonrasıdır; önce olamaz (s. 315, 326, 360). Hangisi olduğu rü’yetle kesinleşir. Bir satırdaki tarihe dokununca o akşam planlanır.',
+    // Dile bağlı küçük metinler (çok dilli altyapı)
+    hDetail: 'Gurûb ve hilâl', hHelp: 'Rehberlik', accTitle: 'Hesap ve gözlem hassasiyeti',
+    polarNightH: 'Bu tarihte bu yerde güneş doğmuyor (kutup gecesi).', polarDayH: 'Bu tarihte bu yerde güneş batmıyor.',
+    polarSub: 'Gurûb olmadığı için hilâl rasadı yapılamaz. Tam İlmihâl, yirmidört saatten uzun günlerde oruç için gündüzü böyle uzun olmayan bir şehrin zamanına uyulacağını bildirir (s. 315); en yakın böyle bir yerin konumunu girerek planlayabilirsiniz.',
+    mtagPossible: 's', arefeSub: 'veya ertesi gün (s. 360)', isikRef: 'Tam İlmihâl s. 326, 359', card4: ['K', 'D', 'G', 'B'],
+    daysAgo: n => `${n} gün önce`, magUnit: 'kadir', dustLbl: 'toz', selLoc: 'Seçilen konum', atObs: 'gözlem anında',
+    tutBlankCalc: 'Hesâbî veriler kayıt oluşturulunca program tarafından doldurulur.',
+    // Tarih biçimi
+    dateFmtLbl: 'Tarih biçimi (giriş alanları)', dateFmtOpts: { 'dmy/': 'gün/ay/yıl (13/11/2026)', 'dmy.': 'gün.ay.yıl (13.11.2026)', 'ymd-': 'yıl-ay-gün (2026-11-13)', 'mdy/': 'ay/gün/yıl (11/13/2026)' },
+    datePh: (f, tm) => ({ 'dmy/': 'gg/aa/yyyy', 'dmy.': 'gg.aa.yyyy', 'ymd-': 'yyyy-aa-gg', 'mdy/': 'aa/gg/yyyy' }[f] + (tm ? ' ss:dd' : '')),
+    dateBad: ph => `Tarih okunamadı. Biçim: ${ph}`, datePick: 'Takvimden seç',
     // Gezinme
     todayEve: 'Bugünün akşamı', navBack: 'Geri: önceki seçime dön', navFwd: 'İleri', navToNow: 'Şimdiye dön',
     navNowToast: 'Şimdiki ana geçildi. Önceki seçime dönmek için üst banttaki ↶ düğmesine dokunun.',
@@ -24,9 +35,15 @@
     gokAlways: 'batmaz', gokNever: 'bu yerden görünmez',
     gokNight: (a, b) => `Bu gece çıplak gözle (gurûb ${a} – güneş doğuşu ${b}):`,
     gokBest: (f, to, b, dir, alt) => `${f}–${to}, en yüksek ${b} (${dir}, ${alt}°)`,
+    gokBestAll: (b, dir, alt) => `bütün gece, en yüksek ${b} (${dir}, ${alt}°)`,
     gokStars: n => `ayrıca ${n} parlak yıldız`, gokNone: 'gezegen yok', gokCalc: 'Gece taraması yapılıyor…',
     gokTw: (r, s, c, n, a, a2, n2, c2) => `Güneş doğuşu ${r} · batışı ${s} · sivil alacakaranlık sonu ${c} · denizci ${n} · astronomik gece ${a}–${a2} · sabah denizci ${n2} · sivil ${c2}`,
     gokGo: 'Seçili anı buraya getir',
+    gokTw2: x => [x.sr ? `Güneş doğuşu ${x.sr}` : 'Güneş bugün doğmuyor', x.ss ? `batışı ${x.ss}` : 'bugün batmıyor',
+      x.ss ? (x.civ ? `sivil alacakaranlık sonu ${x.civ}` : 'sivil alacakaranlık bütün gece sürer') : '', x.civ ? (x.nau ? `denizci ${x.nau}` : 'denizci alacakaranlığı bütün gece sürer') : '',
+      x.nau ? (x.ast ? `astronomik gece ${x.ast}–${x.ast2 || '…'}` : 'astronomik gece olmuyor') : '', x.nau2 ? `sabah denizci ${x.nau2}` : '', x.civ2 ? `sivil ${x.civ2}` : ''].filter(Boolean).join(' · '),
+    gokPolarN: a => `Güneş bugün doğmuyor (kutup gecesi); en yüksek ${a}°.`, gokPolarD: a => `Güneş bugün batmıyor (kutup gündüzü); en alçak ${a}°.`,
+    gokWhole: 'Bugün çıplak gözle (bütün gün tarandı; gurûb yok):',
     gokCap: 'Ek bilgi (Astronomy Engine). Durum sütunu; güneşin yüksekliğine, cismin parlaklığına ve ufka yakınlığına göre kaba bir çıplak göz tahminidir; hava, ışık kirliliği ve göz alışkanlığı hesaba katılmaz. Hilâlin rü’yeti için yukarıdaki değerlendirme (Tam İlmihâl s. 360) esastır. Güneş’e asla doğrudan veya dürbünle bakmayın.',
     miniGlobal: 'Ayın 1. günü (iki ihtimal)', miniLocal: 'Burada ilk mümkün akşam',
     miniFirstEve: (e, w) => `Dünyada ilk mümkün akşam: ${e} (${w})`, miniIsik: 'Işık usulü (s. 326)',
@@ -43,6 +60,18 @@
     hjWhyLead: 'Why two numbers:',
     hjBook: 'A computed date. Day 1 of the month is the calculated day or one day later; never a day earlier (p. 315). Which one is established by sighting.',
     rnIntro: 'Each row is the start of a lunar month. The observation night and the best evening are calculated for this location. According to Tam İlmihâl, day 1 of the month is the calculated day or one day later, never earlier (pp. 315, 326, 360). Which one is established by sighting. Tap a date to plan that evening.',
+    hDetail: 'Sunset and crescent', hHelp: 'Guidance', accTitle: 'Calculation and observation accuracy',
+    polarNightH: 'The Sun does not rise here on this date (polar night).', polarDayH: 'The Sun does not set here on this date.',
+    polarSub: 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (p. 315); enter the nearest such place to plan.',
+    mtagPossible: 'm', arefeSub: 'or the next day (p. 360)', isikRef: 'Tam İlmihâl pp. 326, 359', card4: ['N', 'E', 'S', 'W'],
+    daysAgo: n => `${n} days ago`, magUnit: 'mag', dustLbl: 'dust', selLoc: 'Selected location', atObs: 'at observation',
+    tutBlankCalc: 'Computed data are filled in by the program when a record is created.',
+    dateFmtLbl: 'Date format (input fields)', dateFmtOpts: { 'dmy/': 'day/month/year (13/11/2026)', 'dmy.': 'day.month.year (13.11.2026)', 'ymd-': 'year-month-day (2026-11-13)', 'mdy/': 'month/day/year (11/13/2026)' },
+    datePh: (f, tm) => ({ 'dmy/': 'dd/mm/yyyy', 'dmy.': 'dd.mm.yyyy', 'ymd-': 'yyyy-mm-dd', 'mdy/': 'mm/dd/yyyy' }[f] + (tm ? ' hh:mm' : '')),
+    dateBad: ph => `Could not read the date. Format: ${ph}`, datePick: 'Pick from calendar',
+    srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (in English: Endless Bliss, Hakîkat Kitâbevi)',
+    bookLinks: 'Read or download Endless Bliss, the English version of Tam İlmihâl (Hakîkat Kitâbevi):', bookPage: 'Endless Bliss page',
+    editionNote: 'Page numbers refer to the Turkish Tam İlmihâl, January 2026 printing; Endless Bliss has its own pagination.',
     todayEve: 'This evening', navBack: 'Back: return to the previous selection', navFwd: 'Forward', navToNow: 'Back to now',
     navNowToast: 'Switched to the present moment. Tap ↶ in the top bar to return to the previous selection.',
     dateNoteNext: (a, b) => `The selected moment is the morning of ${b}; the night is shown as the night of the evening of ${a}.`,
@@ -55,9 +84,15 @@
     gokAlways: 'never sets', gokNever: 'never rises here',
     gokNight: (a, b) => `Tonight with the naked eye (sunset ${a} – sunrise ${b}):`,
     gokBest: (f, to, b, dir, alt) => `${f}–${to}, highest ${b} (${dir}, ${alt}°)`,
+    gokBestAll: (b, dir, alt) => `all night, highest ${b} (${dir}, ${alt}°)`,
     gokStars: n => `also ${n} bright stars`, gokNone: 'no planets', gokCalc: 'Scanning the night…',
     gokTw: (r, s, c, n, a, a2, n2, c2) => `Sunrise ${r} · sunset ${s} · end of civil twilight ${c} · nautical ${n} · astronomical night ${a}–${a2} · morning nautical ${n2} · civil ${c2}`,
     gokGo: 'Move the selected moment here',
+    gokTw2: x => [x.sr ? `Sunrise ${x.sr}` : 'The Sun does not rise today', x.ss ? `sunset ${x.ss}` : 'it does not set today',
+      x.ss ? (x.civ ? `end of civil twilight ${x.civ}` : 'civil twilight lasts all night') : '', x.civ ? (x.nau ? `nautical ${x.nau}` : 'nautical twilight lasts all night') : '',
+      x.nau ? (x.ast ? `astronomical night ${x.ast}–${x.ast2 || '…'}` : 'no astronomical night') : '', x.nau2 ? `morning nautical ${x.nau2}` : '', x.civ2 ? `civil ${x.civ2}` : ''].filter(Boolean).join(' · '),
+    gokPolarN: a => `The Sun does not rise today (polar night); highest ${a}°.`, gokPolarD: a => `The Sun does not set today (polar day); lowest ${a}°.`,
+    gokWhole: 'Today with the naked eye (whole day scanned; no sunset):',
     gokCap: 'Additional information (Astronomy Engine). The State column is a rough naked-eye estimate from the Sun’s altitude, the object’s brightness and its height above the horizon; weather, light pollution and dark adaptation are not included. For the crescent, the evaluation above (Tam İlmihâl p. 360) prevails. Never look at the Sun directly or through binoculars.',
     miniGlobal: 'Day 1 of the month (two possibilities)', miniLocal: 'First possible evening here',
     miniFirstEve: (e, w) => `First possible evening worldwide: ${e} (${w})`, miniIsik: 'Işık method (p. 326)',

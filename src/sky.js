@@ -10,34 +10,51 @@
   };
   const objName = (id, L) => (NAMES[L] && NAMES[L][id]) || id;
   const CARD = { tr: ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD', 'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'], en: ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'] };
-  const card = (az, L) => CARD[L][Math.round(((az % 360) + 360) % 360 / 22.5) % 16];
+  const card = (az, L) => (CARD[L] || CARD.en)[Math.round(((az % 360) + 360) % 360 / 22.5) % 16];
+  // Dile bağlı metinler (yeni dil: buraya bir bölüm; eksik anahtar İngilizceden gelir)
+  const SX = {
+    tr: { dec: ',', finger: n => `${n} parmak`, fist: (v, f) => `≈ ${v} yumruk`, twUp: 'Güneş ufkun üstünde', twCivil: 'Sivil alacakaranlık', twNaut: 'Denizci alacakaranlığı',
+      twRed: 'Kızıllık sürüyor', twWhite: 'Kızıllık bitti, beyazlık sürüyor', twNight: 'Gece (şafak bitti)', west: 'Batı ufku', lim5: 'Tam İlmihâl’in sınırı (s. 360)',
+      sunsetPt: 'gurûb noktası', left: 'sol', right: 'sağ', up: 'yukarı', fistScale: '1 yumruk (kol uzatılmış)', toLeft: 'solunda', toRight: 'sağında',
+      below: 'Hilâl ufkun altında', below5: 'Hilâl 5°’nin altında: Tam İlmihâl’e göre görülemez', notSet: 'Güneş henüz batmadı',
+      where: (dx, side, fx, up, fu) => `Hilâl, gurûb noktasının ${dx}° ${side} (${fx}), ufkun ${up}° üstünde (${fu}).`,
+      full: 'Bütün ufuk', sun: 'Güneş', moon: 'Ay', moonBelow: a => `Ay ufkun ${a}° altında`, sunUp: 'Güneş ufkun üstünde' },
+    en: { dec: '.', finger: n => `${n} finger(s)`, fist: (v, f) => `≈ ${v} ${f === 1 ? 'fist' : 'fists'}`, twUp: 'Sun above horizon', twCivil: 'Civil twilight', twNaut: 'Nautical twilight',
+      twRed: 'Red glow persists', twWhite: 'Red gone, white glow persists', twNight: 'Night (twilight over)', west: 'Western horizon', lim5: 'Tam İlmihâl limit (p. 360)',
+      sunsetPt: 'sunset point', left: 'left', right: 'right', up: 'up', fistScale: '1 fist at arm’s length', toLeft: 'to the left', toRight: 'to the right',
+      below: 'Crescent below the horizon', below5: 'Crescent below 5°: not visible per Tam İlmihâl', notSet: 'The Sun has not set yet',
+      where: (dx, side, fx, up, fu) => `The crescent is ${dx}° ${side} of the sunset point (${fx}), ${up}° above the horizon (${fu}).`,
+      full: 'Full horizon', sun: 'Sun', moon: 'Moon', moonBelow: a => `Moon ${a}° below the horizon`, sunUp: 'Sun above the horizon' }
+  };
+  const skyTx = L => (G.HRLangs ? G.HRLangs.pick(SX, L) : (SX[L] || SX.en));
+  const n1 = (v, L) => v.toFixed(1).replace('.', skyTx(L).dec);
   // Yön etiketinin yanında küçük derece değeri (semt; kuzeyden saat yönünde)
-  const degTxt = (az, L) => { const v = ((Math.round(az * 10) / 10 % 360) + 360) % 360; return (Number.isInteger(v) ? String(v) : (L === 'tr' ? String(v).replace('.', ',') : String(v))) + '°'; };
+  const degTxt = (az, L) => { const v = ((Math.round(az * 10) / 10 % 360) + 360) % 360; return (Number.isInteger(v) ? String(v) : String(v).replace('.', skyTx(L).dec)) + '°'; };
   const cardDeg = (az, L) => `${card(az, L)}<tspan font-size="0.72em" font-weight="500" dx="3" opacity=".75">${degTxt(az, L)}</tspan>`;
   function col(name) { return getComputedStyle(document.body).getPropertyValue(name).trim() || '#888'; }
   function hex(c) { const m = c.match(/^#?([0-9a-f]{6})$/i); if (!m) return [128, 128, 128]; const n = parseInt(m[1], 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
   function mix(a, b, f) { const x = hex(a), y = hex(b); f = Math.max(0, Math.min(1, f)); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * f)).join(',')})`; }
   function fists(d) { const f = Math.abs(d) / 10; if (f < 0.2) return null; return Math.round(f * 4) / 4; }
   function fistTxt(d, L) {
-    const f = fists(d); if (f == null) return L === 'tr' ? `${Math.round(Math.abs(d))} parmak` : `${Math.round(Math.abs(d))} finger(s)`;
+    const f = fists(d); if (f == null) return skyTx(L).finger(Math.round(Math.abs(d)));
     const w = Math.floor(f), r = f - w, fr = r === 0.25 ? '¼' : r === 0.5 ? '½' : r === 0.75 ? '¾' : '';
-    return (L === 'tr' ? '≈ ' : '≈ ') + `${w || ''}${fr}` + (L === 'tr' ? ' yumruk' : (f === 1 ? ' fist' : ' fists'));
+    return skyTx(L).fist(`${w || ''}${fr}`, f);
   }
   function phase(alt, L) {
-    const tr = L === 'tr';
-    if (alt > -0.83) return tr ? 'Güneş ufkun üstünde' : 'Sun above horizon';
-    if (alt > -6) return tr ? 'Sivil alacakaranlık' : 'Civil twilight';
-    if (alt > -12) return tr ? 'Denizci alacakaranlığı' : 'Nautical twilight';
-    if (alt > -17) return tr ? 'Kızıllık sürüyor' : 'Red glow persists';
-    if (alt > -19) return tr ? 'Kızıllık bitti, beyazlık sürüyor' : 'Red gone, white glow persists';
-    return tr ? 'Gece (şafak bitti)' : 'Night (twilight over)';
+    const x = skyTx(L);
+    if (alt > -0.83) return x.twUp;
+    if (alt > -6) return x.twCivil;
+    if (alt > -12) return x.twNaut;
+    if (alt > -17) return x.twRed;
+    if (alt > -19) return x.twWhite;
+    return x.twNight;
   }
 
   // r: HRCore.evening sonucu; loc; t: seçili an (AstroTime); L: dil; opt: {compact}
   function draw(r, loc, t, L, opt = {}) {
     const core = C();
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
-    const tr = L === 'tr';
+    const x = skyTx(L);
     const end = r.moonUp && r.moonset && r.lagMin > 0 ? r.moonset : r.gurub.AddDays(70 / 1440);
     const pts = [];
     for (let m = -6; ; m += 2) { const tt = r.gurub.AddDays(m / 1440); if (tt.ut > end.ut + 1 / 1440) break; const p = core.topo('Moon', tt, obs); pts.push({ t: tt, az: p.az, alt: p.alt, m }); }
@@ -63,7 +80,7 @@
     const glowOp = Math.max(0, 0.9 - fDark * 1.1);
     const fmt = at => G.HRU.fmtTime(at).slice(0, 5);
     const u = ++UID;
-    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 34}" role="img" aria-label="${tr ? 'Batı ufku' : 'Western horizon'}">
+    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 34}" role="img" aria-label="${x.west}">
       <defs><linearGradient id="skyg${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient>
       <radialGradient id="glow${u}" cx="0.5" cy="1" r="0.6"><stop offset="0" stop-color="${col('--sky-glow')}" stop-opacity="${glowOp.toFixed(2)}"/><stop offset="1" stop-color="${col('--sky-glow')}" stop-opacity="0"/></radialGradient><clipPath id="above${u}"><rect x="0" y="0" width="${W}" height="${y0}"/></clipPath></defs>
       <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyg${u})"/>
@@ -78,7 +95,7 @@
     }
     // 5° çizgisi (kitap)
     // yazı hilâlin üstüne binmesin: hilâl sol baştaysa yazı sağ başa geçer
-    const lim5 = `5° · ${tr ? 'Tam İlmihâl’in sınırı (s. 360)' : 'Tam İlmihâl limit (p. 360)'}`;
+    const lim5 = `5° · ${x.lim5}`;
     const lim5W = lim5.length * 12 * F * 0.56, mxl = X(now.moon.az);
     const lim5R = now.moon.alt > -1 && mxl > -20 && mxl < 6 + lim5W + 26;
     s += `<line x1="0" x2="${W}" y1="${y5}" y2="${y5}" stroke="${col('--accent')}" stroke-dasharray="7 5" stroke-width="1.4"/>
@@ -99,7 +116,7 @@
     // yer
     s += `<rect x="0" y="${y0}" width="${W}" height="${H - y0}" fill="${col('--ground')}"/>`;
     // güneşin battığı nokta
-    s += `<path d="M${X(sunSetAz)} ${y0 - 1} l-6 9 h12z" fill="${col('--accent')}"/><text x="${X(sunSetAz)}" y="${y0 + 22}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${tr ? 'gurûb noktası' : 'sunset point'}</text>`;
+    s += `<path d="M${X(sunSetAz)} ${y0 - 1} l-6 9 h12z" fill="${col('--accent')}"/><text x="${X(sunSetAz)}" y="${y0 + 22}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${x.sunsetPt}</text>`;
     // seçili andaki güneş (ufkun altında)
     if (sunAlt < 0) s += `<circle cx="${X(now.sun.az)}" cy="${Math.min(H - 6, Y(sunAlt))}" r="6" fill="none" stroke="${col('--accent')}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
     // seçili andaki hilâl, yönü ve ölçüsü
@@ -110,8 +127,8 @@
       const dx = now.moon.az - sunSetAz;
       // gurûb noktasından L biçimli ölçü
       s += `<path d="M${X(sunSetAz)} ${y0} H${mx} V${my + 12}" fill="none" stroke="${col('--sky-label')}" stroke-opacity=".7" stroke-dasharray="3 4"/>`;
-      s += `<text x="${(X(sunSetAz) + mx) / 2}" y="${y0 - 6}" font-size="${12 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${Math.abs(dx).toFixed(1)}° ${dx < 0 ? (tr ? 'sol' : 'left') : (tr ? 'sağ' : 'right')}</text>`;
-      s += `<text x="${mx + (dx < 0 ? -8 : 8)}" y="${(y0 + my) / 2 + 10}" font-size="${12 * F}" text-anchor="${dx < 0 ? 'end' : 'start'}" fill="${col('--sky-label')}" font-weight="600">${now.moon.alt.toFixed(1)}° ${tr ? 'yukarı' : 'up'}</text>`;
+      s += `<text x="${(X(sunSetAz) + mx) / 2}" y="${y0 - 6}" font-size="${12 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${n1(Math.abs(dx), L)}° ${dx < 0 ? x.left : x.right}</text>`;
+      s += `<text x="${mx + (dx < 0 ? -8 : 8)}" y="${(y0 + my) / 2 + 10}" font-size="${12 * F}" text-anchor="${dx < 0 ? 'end' : 'start'}" fill="${col('--sky-label')}" font-weight="600">${n1(now.moon.alt, L)}° ${x.up}</text>`;
       s += `<g transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="11" fill="${col('--sky-night')}" stroke="${col('--sky-label')}" stroke-opacity=".35"/><path d="M0 -11 A11 11 0 0 1 0 11 A14 14 0 0 0 0 -11Z" fill="${col('--moon')}"/></g>`;
       if (r.best && Math.abs(t.ut - r.best.ut) < 1.5 / 1440) s += `<circle cx="${mx}" cy="${my}" r="17" fill="none" stroke="${col('--accent')}" stroke-width="2"/>`;
     }
@@ -120,7 +137,7 @@
     const fistW = 10 * ppd + 6 + 30 * 11 * F * 0.5, mUp = now.moon.alt > -1 && X(now.moon.az) < 14 + fistW + 16 && Y(now.moon.alt) < 16 * F + 26;
     const fx = 14, fy = mUp ? H - 14 : 16 * F;
     s += `<g><line x1="${fx}" x2="${fx + 10 * ppd}" y1="${fy}" y2="${fy}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx}" x2="${fx}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/><line x1="${fx + 10 * ppd}" x2="${fx + 10 * ppd}" y1="${fy - 5}" y2="${fy + 5}" stroke="${col('--sky-label')}" stroke-width="2"/>
-      <text x="${fx + 10 * ppd + 6}" y="${fy + 4}" font-size="${11 * F}" fill="${col('--sky-label')}">10° ≈ ${tr ? '1 yumruk (kol uzatılmış)' : '1 fist at arm’s length'}</text></g>`;
+      <text x="${fx + 10 * ppd + 6}" y="${fy + 4}" font-size="${11 * F}" fill="${col('--sky-label')}">10° ≈ ${x.fistScale}</text></g>`;
     // semt ölçeği ve yönler
     s += `<rect x="0" y="${H}" width="${W}" height="34" fill="${col('--surface-2')}"/>`;
     for (let a = Math.ceil(a0 / 5) * 5; a <= a1; a += 5) {
@@ -135,16 +152,15 @@
     s += '</svg>';
     // okuma paneli
     const dx = now.moon.az - sunSetAz;
-    const side = dx < 0 ? (tr ? 'solunda' : 'to the left') : (tr ? 'sağında' : 'to the right');
+    const side = dx < 0 ? x.toLeft : x.toRight;
     const up = now.moon.alt;
     const flags = [];
-    if (up < 0) flags.push(tr ? 'Hilâl ufkun altında' : 'Crescent below the horizon');
-    else if (up < 5) flags.push(tr ? 'Hilâl 5°’nin altında: Tam İlmihâl’e göre görülemez' : 'Crescent below 5°: not visible per Tam İlmihâl');
-    if (sunAlt > -0.83) flags.push(tr ? 'Güneş henüz batmadı' : 'The Sun has not set yet');
+    if (up < 0) flags.push(x.below);
+    else if (up < 5) flags.push(x.below5);
+    if (sunAlt > -0.83) flags.push(x.notSet);
     const read = {
       time: G.HRU.fmtTime(t), phase: phase(sunAlt, L), moonAlt: up, moonAz: now.moon.az, card: card(now.moon.az, L), sunAlt,
-      where: up > -1 ? (tr ? `Hilâl, gurûb noktasının ${Math.abs(dx).toFixed(1)}° ${side} (${fistTxt(dx, L)}), ufkun ${up.toFixed(1)}° üstünde (${fistTxt(up, L)}).`
-        : `The crescent is ${Math.abs(dx).toFixed(1)}° ${side} of the sunset point (${fistTxt(dx, L)}), ${up.toFixed(1)}° above the horizon (${fistTxt(up, L)}).`) : '',
+      where: up > -1 ? x.where(n1(Math.abs(dx), L), side, fistTxt(dx, L), n1(up, L), fistTxt(up, L)) : '',
       flags, objs: objs.filter(o => o.kind === 'planet').map(o => ({ name: objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag }))
     };
     return { svg: s, read, range: [r.gurub.AddDays(-6 / 1440), end] };
@@ -152,7 +168,7 @@
 
   // 360° panorama: seçili an batı penceresi dışında kaldığında bütün ufuk; yatayda semt 0–360°, dikeyde irtifâ −12°…+62° (ölçek eşit değildir)
   function panorama(loc, t, L, opt = {}) {
-    const core = C(), tr = L === 'tr';
+    const core = C(), x = skyTx(L);
     const obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0));
     const now = core.at(t, loc);
     const W = opt.W || (opt.compact ? 420 : 720), F = (opt.wide ? 1.25 : opt.compact ? 1.3 : 1) * (opt.scale || 1), H = opt.wide ? 290 : opt.compact ? 210 : 250;
@@ -162,7 +178,7 @@
     const fDark = Math.max(0, Math.min(1, -now.sun.alt / 18));
     const top = mix(col('--sky-day'), col('--sky-night'), fDark), low = mix(col('--sky-dusk'), col('--sky-night'), Math.max(0, fDark * 1.2 - 0.1));
     const u = ++UID;
-    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 30}" role="img" aria-label="${tr ? 'Bütün ufuk' : 'Full horizon'}">
+    let s = `<svg class="sky" viewBox="0 0 ${W} ${H + 30}" role="img" aria-label="${x.full}">
       <defs><linearGradient id="skyp${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${low}"/></linearGradient></defs>
       <rect x="0" y="0" width="${W}" height="${y0}" fill="url(#skyp${u})"/>`;
     for (let a = 10; a < aMax; a += 10) s += `<line x1="0" x2="${W}" y1="${Y(a)}" y2="${Y(a)}" stroke="${col('--sky-grid')}" stroke-opacity=".22"/><text x="${W - 4}" y="${Y(a) - 3}" font-size="${10 * F}" text-anchor="end" fill="${col('--sky-label')}" opacity=".7">${a}°</text>`;
@@ -192,20 +208,20 @@
     // güneş
     const sx = X(now.sun.az), sy = Y(now.sun.alt);
     s += now.sun.alt > -0.83 ? `<circle cx="${sx}" cy="${sy}" r="8" fill="${col('--accent')}"/>` : `<circle cx="${sx}" cy="${sy}" r="7" fill="none" stroke="${col('--accent')}" stroke-width="1.5" stroke-dasharray="2 2"/>`;
-    s += `<text x="${sx}" y="${Math.min(H - 4, sy + 20)}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${tr ? 'Güneş' : 'Sun'} ${now.sun.alt.toFixed(0)}°</text>`;
+    s += `<text x="${sx}" y="${Math.min(H - 4, sy + 20)}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}">${x.sun} ${now.sun.alt.toFixed(0)}°</text>`;
     // ay (aydınlık kenar güneşe döner; aydınlanma oranına göre biçim)
     const mx = X(now.moon.az), my = Y(now.moon.alt), k = A.Illumination('Moon', t).phase_fraction;
     const ang = Math.atan2(sy - my, (((now.sun.az - now.moon.az + 540) % 360) - 180) / 360 * W) * 180 / Math.PI;
     const rx = Math.abs(1 - 2 * k) * 10, sweep = k > 0.5 ? 1 : 0;
     const op = now.moon.alt < 0 ? 0.45 : 1;
     s += `<g opacity="${op}" transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${ang.toFixed(1)})"><circle r="10" fill="${col('--sky-night')}" fill-opacity=".45" stroke="${col('--moon')}" stroke-width="1.2"/><path d="M0 -10 A10 10 0 0 1 0 10 A${rx.toFixed(2)} 10 0 0 ${sweep} 0 -10Z" fill="${col('--moon')}"/></g>`;
-    s += `<text x="${mx}" y="${my - 15}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${tr ? 'Ay' : 'Moon'} ${now.moon.alt.toFixed(1)}°</text>`;
+    s += `<text x="${mx}" y="${my - 15}" font-size="${11 * F}" text-anchor="middle" fill="${col('--sky-label')}" font-weight="600">${x.moon} ${n1(now.moon.alt, L)}°</text>`;
     s += `<rect x="0" y="${H}" width="${W}" height="30" fill="${col('--surface-2')}"/>`;
     for (let a = 0; a < 360; a += 45) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${H}" y2="${H + 6}" stroke="${col('--muted')}"/><text class="nohalo" x="${a === 0 ? 3 : X(a)}" y="${H + 22}" font-size="${11 * F}" font-weight="700" text-anchor="${a === 0 ? 'start' : 'middle'}" fill="${col('--ink')}">${cardDeg(a, L)}</text>`;
     s += '</svg>';
     const flags = [];
-    if (now.moon.alt < 0) flags.push(tr ? `Ay ufkun ${Math.abs(now.moon.alt).toFixed(1)}° altında` : `Moon ${Math.abs(now.moon.alt).toFixed(1)}° below the horizon`);
-    if (now.sun.alt > -0.83) flags.push(tr ? 'Güneş ufkun üstünde' : 'Sun above the horizon');
+    if (now.moon.alt < 0) flags.push(x.moonBelow(n1(Math.abs(now.moon.alt), L)));
+    if (now.sun.alt > -0.83) flags.push(x.sunUp);
     return { svg: s, read: { phase: phase(now.sun.alt, L), moonAlt: now.moon.alt, moonAz: now.moon.az, card: card(now.moon.az, L), sunAlt: now.sun.alt, sunAz: now.sun.az, flags, mx: mx / W, objs: objs.filter(o => o.kind === 'planet').map(o => ({ name: objName(o.id, L), alt: o.alt, az: o.az, mag: o.mag })) } };
   }
   G.HRSky = { draw, panorama, objName, card, fistTxt, phase };

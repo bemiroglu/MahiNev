@@ -1,5 +1,14 @@
 # Sürümler
 
+## 0.13.0 — 13 Kasım 2026
+
+- **Takvim usullerinin tanıtımı:** Işık usulü, Uluğ Beğ cetveli, Ebüzziyâ / Kindî cetveli, Madde 88 ve aritmetik (tabular) takvim, kullanıldıkları her yerde **?** açıklamasıyla tanıtılır (s. 326, 358–362). Açıklamalar her usulün nasıl çalıştığını ve neden başarılı olduğunu kısaca anlatır: Işık usulünün 4,367 sayısı ve ay rakamlarını taşıyan beyit, Uluğ Beğ'in 210 yıllık devri, Kindî cetvelinin 405 haftalık sekiz yılı, aritmetik takvimin üç saniyelik ortalama ay farkı.
+- **Tarih alanları gün/ay/yıl biçiminde:** Akşamın tarihi, harita tarihi, rü'yet kaydı ve bildirim zamanı tarayıcının yerel biçiminden bağımsız olarak gün/ay/yıl (13/11/2026) gösterilir. Ayarlar → Tarih biçimi: gün/ay/yıl, gün.ay.yıl, yıl-ay-gün veya ay/gün/yıl. Tarih elle yazılabilir veya 📅 düğmesiyle takvimden seçilir.
+- **İngilizce arayüzde kaynak:** Tam İlmihâl'in İngilizcesi *Endless Bliss*'in Hakîkat Kitâbevi sayfası. Sayfa numaraları Türkçe Tam İlmihâl'in Ocak 2026 baskısına göredir.
+- **Dünyanın her yerinde:** Gök cisimleri aracı kutup gecesinde ve gündüzünde bütün günü tarar ve güneşin en yüksek / en alçak yüksekliğini yazar; şafağın bitmediği yaz gecelerinde "astronomik gece olmuyor" der. Yeni `tests/dunya_tarama.py` 47 uç konumda (kutuplar, tarih çizgisinin iki yanı, yarım ve çeyrek saatli dilimler, yaz saati geçişleri, Ölü Deniz, Everest, konumla uyuşmayan saat dilimi) ve 7 tarihte bütün sekmeleri, açıklama penceresini ve A4 çıktılarını Türkçe ve İngilizce dener.
+- **Çok dilli altyapı:** Dil kaydı (`src/langs.js`): her dilin yerel ayarı, yazı yönü ve Tam İlmihâl'in o dildeki adı ve bağlantıları. Program kodundaki dile bağlı metinler sözlüklere taşındı; eksik bir metin İngilizceden gelir; dil düğmeleri kayıttan oluşur; sayıların ondalık ayracı dilin yerel ayarından gelir. Yeni dil ekleme rehberi: `docs/coklu-dil.md`.
+- **Doğrulama:** 61 test; yeni "çok dilli" testi iki dilde anahtarların ve türlerinin aynı olduğunu ve her dilin kitap bağlantısını denetler.
+
 ## 0.12.0 — 13 Kasım 2026
 
 - **İki gece esası:** Tam İlmihâl'e göre hilâl, hesâbın bildirdiği gecede doğar; o gece görülmeyip bir gece sonra görülebilir (s. 360). Rü'yetle başlama hesapla anlaşılandan bir gün sonra olabilir, önce olamaz (s. 315); bayram, Işık usulüyle bulunan gün yâhud bir gün sonradır (s. 326). Her ayın 1. günü bu iki günden biridir.

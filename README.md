@@ -8,13 +8,13 @@
 
 *Tam İlmihâl Se'âdet-i Ebediyye esaslı kamerî ay başı rasad yardımcısı*
 
-[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-0.12.0-9a5a12)](CHANGELOG.md)
+[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-0.13.0-9a5a12)](CHANGELOG.md)
 [![Lisans](https://img.shields.io/badge/lisans-CC%20BY--NC--ND%204.0-555)](LICENSE)
 ![İnternetsiz](https://img.shields.io/badge/internetsiz-%C3%A7al%C4%B1%C5%9F%C4%B1r-2e7d4f)
 ![Dil](https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%C2%B7%20English-3d5a80)
 
 **[▶ Çevrimiçi aç](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
-**[⬇ İndir (v0.12.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.12.0.html)** &nbsp;·&nbsp;
+**[⬇ İndir (v0.13.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.13.0.html)** &nbsp;·&nbsp;
 **[📖 Tam İlmihâl](https://www.hakikatkitabevi.net/book.php?bookCode=001)** &nbsp;·&nbsp;
 **[English ↓](#english)**
 
@@ -67,7 +67,7 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 | ⏱ **Arama penceresi** | Gurûbdan hilâlin 5°'ye indiği âna kadar sürer. Yanında aranabilir aralık da gösterilir; aralığın karanlık eşiği seçilebilir. |
 | 🧭 **Nereye bakmalı** | Batı ufku çizimi, 360° bütün ufuk ve gökyüzü haritası. Hilâlin yeri gurûb noktasına göre derece ve "yumruk" ölçeğiyle verilir; yönelim için parlak yıldız ve gezegenler gösterilir. Zaman sürgüsüyle akşamın her ânı görülebilir. |
 | 📅 **Ay başı planlaması** | Ayın 1. gününün iki ihtimali (birinci ve ikinci gece) durum kartında; yaklaşan ve önceki rasad gecesi; **◀ Önceki ay başı / Sonraki ay başı ▶** düğmeleri ve 13 aylık **rasad geceleri listesi**; hicrî aylara göre gruplanmış rü'yet şeridi. |
-| 🗓 **Hicrî tarih** | Kamerî gün şer'î gurûbda değişir (s. 188). Ayın 1. günü hesapla bulunan gün veya bir gün sonrası olduğu için (s. 315, 360) hicrî gün iki sayıyla yazılır; **"Neden iki sayı"** satırı hangi sayının hangi güne bağlı olduğunu söyler. Zilhiccede ana gösterim Tam İlmihâl'in bildirdiği Işık usulüdür (s. 326). |
+| 🗓 **Hicrî tarih** | Kamerî gün şer'î gurûbda değişir (s. 188). Ayın 1. günü hesapla bulunan gün veya bir gün sonrası olduğu için (s. 315, 360) hicrî gün iki sayıyla yazılır; **"Neden iki sayı"** satırı hangi sayının hangi güne bağlı olduğunu söyler. Zilhiccede ana gösterim Tam İlmihâl'in bildirdiği Işık usulüdür (s. 326). Işık usulü, Uluğ Beğ, Ebüzziyâ / Kindî cetvelleri ve aritmetik takvim **?** açıklamasıyla tanıtılır (s. 358–362). |
 | 🗺 **Dünya rü'yet imkânı haritası** | Akşam ve anlık kipler; Tam İlmihâl sınıfları, ilk görünürlük katmanı, hilâl yaşı çizgileri ve 18° gurûb boylamı. |
 | ❔ **"Bu akşam ne demek?"** | Seçili akşam ve yer için açıklama penceresi, Tam İlmihâl'in **iki gece** bildirişine göre: hilâl hesâbın bildirdiği gecede doğar, o gece görülmeyip bir gece sonra görülebilir (s. 360); rü'yetle başlama bir gün sonra olabilir, önce olamaz (s. 315). Ayın 1. günü için iki kutu, bugünün kamerî günü, birinci ve ikinci gece tablosu, rü'yet kaydınıza göre tek cevap, ayın adına göre kapsam ve hüküm. Kâdîhân ölçüsü bilgi olarak verilir. Rü'yetsiz hüküm kurmaz. |
 | 🔭 **Gök cisimleri** | "Seçili an" kartında Güneş, Ay, gezegenler ve parlak yıldızlar: yön ve yükseklik, doğuş–tepe–batış, kadir, takımyıldız, alacakaranlık evreleri ve bu gece çıplak gözle görülebilecekler. Rasad günleri dışında da bir gözlem aracıdır. |
@@ -107,8 +107,9 @@ Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse 
 
 ## Doğrulama
 
-- **Program içinde:** Doğrulama sekmesinde 60 test bulunur. Testler Tam İlmihâl'deki örnekleri (Receb 1400, s. 360), Kongre tebliğindeki Receb 1437 vakasını, iki gece esasını (Zilhiccede Işık usulü dahil), gök cisimleri hesabını, şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
+- **Program içinde:** Doğrulama sekmesinde 61 test bulunur. Testler Tam İlmihâl'deki örnekleri (Receb 1400, s. 360), Kongre tebliğindeki Receb 1437 vakasını, iki gece esasını (Zilhiccede Işık usulü dahil), gök cisimleri hesabını, şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
 - **Uçtan uca tarama:** `tests/ui_tarama.py`; 2 ekran boyutu, 2 dil, 5 tema, bütün sekmeler, diyaloglar ve 9 uç konum (kutup gecesi, tarih çizgisi, yaz saati, Mekke). Hata, taşma ve dış istek arar.
+- **Dünya taraması:** `tests/dunya_tarama.py`; 47 uç konum (kutuplar, tarih çizgisinin iki yanı, yarım ve çeyrek saatli dilimler, yaz saati geçişleri, deniz seviyesinin altı ve Everest) ve 7 tarihte bütün sekmeler, açıklama penceresi ve A4 çıktıları, Türkçe ve İngilizce.
 - **Küresel kapsam:** `tools/kuresel_dogrulama.py`
 - **Rü'yet kaydı:** `tools/verify_record.py` ile bir kaydın özeti, imzası ve QR kodu bilgisayarda doğrulanır.
 
@@ -131,6 +132,7 @@ Yardımcı kaynak: Türkiye Takvimi Vakit Hesaplama Heyeti, *Naklî ve Aklî Del
 | [kanonik-rapor.md](docs/kanonik-rapor.md) | Esaslar, terminoloji, doğrulama örnekleri ve alınan kararlar |
 | [kullanim-kilavuzu.md](docs/kullanim-kilavuzu.md) | Kullanım kılavuzu |
 | [kayit-semasi.md](docs/kayit-semasi.md) | Rü'yet kaydı ve doğrulaması |
+| [coklu-dil.md](docs/coklu-dil.md) | Çok dilli altyapı ve yeni dil ekleme |
 | [yol-haritasi.md](docs/yol-haritasi.md) | Planlanan işler |
 | [CHANGELOG.md](CHANGELOG.md) | Sürümler |
 
@@ -145,6 +147,7 @@ python3 build.py                 # dist/mahinev.html ve dist/mahinev-v<sürüm>.
 pip install playwright && playwright install chromium
 python3 tests/run_tests.py       # Doğrulama sekmesindeki testler
 python3 tests/ui_tarama.py       # uçtan uca arayüz taraması (uzun sürer)
+python3 tests/dunya_tarama.py    # 47 uç konum × 7 tarih, bütün işlevler (HR_LANG=en ile İngilizce)
 python3 tools/kuresel_dogrulama.py
 ```
 
@@ -167,8 +170,8 @@ Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir: [THIRD_PARTY_
 **Crescent Sighting Assistant based on *Tam İlmihâl Se'âdet-i Ebediyye***
 
 **[▶ Open online](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
-**[⬇ Download (v0.12.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.12.0.html)** &nbsp;·&nbsp;
-**[📖 Tam İlmihâl](https://www.hakikatkitabevi.net/book.php?bookCode=001)**
+**[⬇ Download (v0.13.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.13.0.html)** &nbsp;·&nbsp;
+**[📖 Endless Bliss](https://www.hakikatkitabevi.net/book.php?bookCode=025)**
 
 </div>
 
@@ -181,8 +184,8 @@ Mâh-ı Nev ("the new moon") is a sighting aid built on the teachings of the boo
 
 It is not a source of fiqh and does not replace Tam İlmihâl. Fiqh is the essential and decisive knowledge: anything in this program that does not agree with Tam İlmihâl and with fiqh is void. For rulings, consult Tam İlmihâl itself.
 
-- **Read or download Tam İlmihâl (Hakîkat Kitâbevi):** [Hakîkat Kitâbevi page](https://www.hakikatkitabevi.net/book.php?bookCode=001) · [PDF](https://www.hakikatkitabevi.net/downloads/001.pdf)
-- Page numbers in the program refer to the **January 2026 printing**; other printings may differ by a few pages.
+- **Read or download *Endless Bliss*, the English version of Tam İlmihâl Se'âdet-i Ebediyye (Hakîkat Kitâbevi):** [Endless Bliss page](https://www.hakikatkitabevi.net/book.php?bookCode=025)
+- Page numbers in the program refer to the Turkish Tam İlmihâl, **January 2026 printing**; other printings may differ by a few pages, and Endless Bliss has its own pagination.
 
 <p align="center"><img src="docs/img/desktop-plan-en.png" alt="Desktop · Plan, English interface" width="900"><br><sub>The English interface: this evening's assessment and a short how-to for new users.</sub></p>
 
@@ -220,7 +223,7 @@ Mâh-ı Nev is a single HTML file. Nothing to install: download it and open it i
 | ⏱ **Search window** | From sunset until the crescent comes down to 5°. The searchable interval is shown beside it, with a selectable darkness threshold. |
 | 🧭 **Where to look** | Western-horizon drawing, a 360° horizon and a sky chart. The crescent's position is given from the sunset point in degrees and in "fists"; bright stars and planets help orientation. A time slider shows any moment of the evening. |
 | 📅 **Month-start planning** | The two possible first days of the month (first and second night) in the status card; upcoming and previous observation nights; **◀ Previous / Next month start ▶** buttons and a 13-month **list of observation nights**; a sighting strip grouped by Hijri month. |
-| 🗓 **Hijri date** | The lunar day changes at the legal sunset (p. 188). Day 1 of a month is the calculated day or one day later (pp. 315, 360), so the Hijri day is written with two numbers; a **"Why two numbers"** line says which number belongs to which day. For Dhu al-Hijja the main display follows the Işık method given in Tam İlmihâl (p. 326). |
+| 🗓 **Hijri date** | The lunar day changes at the legal sunset (p. 188). Day 1 of a month is the calculated day or one day later (pp. 315, 360), so the Hijri day is written with two numbers; a **"Why two numbers"** line says which number belongs to which day. For Dhu al-Hijja the main display follows the Işık method given in Tam İlmihâl (p. 326). The Işık method, the Ulugh Beg and Ebüzziyâ / Kindî tables and the arithmetic calendar are each introduced with a **?** explanation (pp. 358–362). |
 | 🗺 **World sighting-possibility map** | Evening and instant modes; Tam İlmihâl classes, a first-visibility layer, crescent-age lines and the 18° sunset meridian. |
 | ❔ **"What does this evening mean?"** | An explanation window for the selected evening and place, built on Tam İlmihâl's **two nights**: the crescent is born on the night calculation shows and may be seen one night later (p. 360); beginning by sighting may be one day later, never earlier (p. 315). Two boxes for day 1 of the month, today's lunar day, a first/second-night table, a single answer from your own sighting record, scope and ruling by month. The Qadikhan measure is given for information. It never rules without a sighting. |
 | 🔭 **Celestial objects** | In the selected-moment card: Sun, Moon, planets and bright stars with direction and altitude, rise–transit–set, magnitude, constellation, twilight phases and what can be seen with the naked eye tonight. An observing tool for any day, not only watch evenings. |
@@ -241,8 +244,9 @@ On opening, the program checks its own integrity. If the file has been altered, 
 
 ## Verification
 
-- **In the program:** the Verification tab runs 60 tests: the examples in Tam İlmihâl (Rajab 1400, p. 360), the Rajab 1437 case from the congress paper, the two-night rule (including the Işık method for Dhu al-Hijja), the celestial-object calculations, dawn and *temkin* rules (pp. 178, 197), daylight-saving changes, the Yallop criterion, worldwide scope and record integrity.
+- **In the program:** the Verification tab runs 61 tests: the examples in Tam İlmihâl (Rajab 1400, p. 360), the Rajab 1437 case from the congress paper, the two-night rule (including the Işık method for Dhu al-Hijja), the celestial-object calculations, dawn and *temkin* rules (pp. 178, 197), daylight-saving changes, the Yallop criterion, worldwide scope and record integrity.
 - **End-to-end scan:** `tests/ui_tarama.py` covers 2 screen sizes, 2 languages, 5 themes, every tab and dialog, and 9 extreme locations (polar night, date line, daylight saving, Mecca), looking for errors, overflow and outside requests.
+- **World sweep:** `tests/dunya_tarama.py` runs every tab, the explanation window and the A4 printouts at 47 extreme locations (poles, both sides of the date line, half- and quarter-hour zones, daylight-saving changes, below sea level and Everest) on 7 dates, in Turkish and English.
 - **Worldwide scope:** `tools/kuresel_dogrulama.py`
 - **Sighting records:** `tools/verify_record.py` checks a record's digest, signature and QR code on a computer.
 
@@ -272,6 +276,7 @@ python3 build.py                 # dist/mahinev.html and dist/mahinev-v<version>
 pip install playwright && playwright install chromium
 python3 tests/run_tests.py       # tests from the Verification tab
 python3 tests/ui_tarama.py       # end-to-end interface scan (slow)
+python3 tests/dunya_tarama.py    # 47 extreme locations × 7 dates, every function (HR_LANG=en for English)
 python3 tools/kuresel_dogrulama.py
 ```
 

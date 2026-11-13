@@ -426,6 +426,10 @@ body.planning #mbar[class*="st-"] .acts .btn { background: var(--accent); color:
 .goktab .n { font-family: var(--font-mono); font-size: .84rem; }
 .fprev { margin: 0 0 10px; padding: 8px 12px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 600; } .fprev .btn { margin-left: 6px; background: var(--accent-ink); color: var(--accent); border-color: var(--accent-ink); font-weight: 700; }
 @media (max-width: 560px) { .mbar .acts .lbl { display: none; } .mbar .acts { margin-left: 0; width: 100%; justify-content: flex-start; gap: 4px; } .mbar .acts .seg button { padding: 4px 8px; min-height: 30px; font-size: .85rem; } .mbar .acts .btn { padding: 4px 8px; min-height: 30px; } }
+.dbox { position: relative; display: flex; gap: 6px; align-items: stretch; }
+.dbox input[type="text"] { flex: 1; min-width: 0; font-variant-numeric: tabular-nums; } .dbox input.bad { border-color: var(--bad, #c0392b); }
+.dbox .dpick { flex: none; padding: 0 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; font-size: 1rem; }
+.dbox .dnat { position: absolute; right: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; border: 0; padding: 0; }
 .mnk { font: inherit; font-size: .85rem; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); max-width: 100%; }
 .goktab .gmob { display: none; } .goknight .gch { text-align: left; }
 @media (max-width: 560px) { .goktab .gmob { display: inline-block; margin-top: 3px; } .goktab tr > :nth-child(3) { display: none; } .goktab td:first-child { min-width: 7.5em; } }
@@ -492,7 +496,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
       <label class="lvlq"><span id="lLvlQuick"></span><select id="lvlQuick"></select></label>
       <button class="btn" type="button" id="dlHtml"></button>
       <button class="btn" type="button" id="openSet"></button>
-      <div class="seg" role="group" aria-label="Dil / Language"><button id="langTr" type="button">TR</button><button id="langEn" type="button">EN</button></div>
+      <div class="seg" role="group" aria-label="Dil / Language" id="langSeg"><button id="langTr" type="button" data-lang="tr">TR</button><button id="langEn" type="button" data-lang="en">EN</button></div>
     </div>
   </header>
   <div class="stick">
@@ -657,6 +661,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
       <div>
         <h3 id="hHelp"></h3>
         <div class="field"><label for="lvlSel" id="lLvl"></label><select id="lvlSel"></select></div><p class="cap" id="lvlNote"></p>
+        <div class="field"><label for="dateFmt" id="lDateFmt"></label><select id="dateFmt"></select></div>
         <div class="field"><label for="layoutSel" id="lLayout"></label><select id="layoutSel"></select></div><p class="cap" id="layoutNote"></p>
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
