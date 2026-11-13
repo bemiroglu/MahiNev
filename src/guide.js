@@ -211,7 +211,7 @@
       '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
       'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
       'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.',
-      tr ? 'Harita: Natural Earth 1:110m (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).' : 'Map: Natural Earth 1:110m (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).'
+      tr ? 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).' : 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).'
     ].map(x => `<li>${x}</li>`).join('') + '</ul>';
   }
   const CANON_EN = G.HR_CANON_EN || [];

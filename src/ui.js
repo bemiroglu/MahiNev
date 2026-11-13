@@ -43,9 +43,12 @@
     { id: 'sikago', tr: 'Şikago', en: 'Chicago', lat: 41.8781, lon: -87.6298, elev: 181, hMax: 0, tz: 'America/Chicago' }
   ];
   const MECCA = [21.4225, 39.8262];
+  // Harita seçenekleri: [kutu, durum anahtarı (aynı zamanda metin anahtarı)]
+  const MAP_CHK = [['mBook', 'mapBook'], ['mFirst', 'mapFirst'], ['mHatch', 'mapHatch'], ['m18', 'map18'], ['mCities', 'mapCities'], ['mGrat', 'mapGrat'], ['mBorders', 'mapBorders'], ['mRelief', 'mapRelief'], ['mLand', 'mapLand']];
   const TB_MAX = 1620; // 00:00 → ertesi gün 03:00
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
-    mapLayer: 'seadet', mapRes: 3, mapAge: true, mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
+    mapLayer: 'seadet', mapRes: 3, mapValue: 'none', mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
+    mapBook: true, mapFirst: true, mapGrat: false, mapCities: true, mapRelief: true, mapHatch: true, mapView: 'one', mapOptsOpen: false,
     darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', layout: 'sade', level: 'all', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
@@ -107,7 +110,7 @@
     $('hMonth').innerHTML = esc(t.month) + ' ' + q('enerken'); set('miniHow', t.miniHow);
     set('hExtra', t.extra); set('extraNote', t.extraNote); set('hTests', t.testsTitle); set('testsIntro', t.testsIntro); $('footer').innerHTML = noticeHtml(); paintTamper();
     $('aboutOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('aboutCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
-    $('hMap').innerHTML = esc(t.mapTitle) + ' ' + q('kuresel'); set('lMDate', t.mapEvening); set('lMLayer', t.mapLayer); set('lMRes', t.mapRes); set('lMAge', t.mapAge); set('lMBorders', t.mapBorders); set('lM18', t.map18);
+    $('hMap').innerHTML = esc(t.mapTitle) + ' ' + q('kuresel'); set('lMDate', t.mapEvening); set('lMLayer', t.mapLayer); set('lMRes', t.mapRes); set('lMValue', t.mapValue); set('lMView', t.mapView); set('lMOpts', t.mapOpts); set('mPng', '⤓ ' + t.mapPng); $('mPng').title = t.mapPngTip; MAP_CHK.forEach(([id, k]) => set('lM' + id.slice(1), t[k])); set('lMBorders', t.mapBorders); set('lM18', t.map18);
     set('lMMode', t.mapMode); set('lMLand', t.landOnly); set('lMTime', t.mapTime); set('mNow', t.nowBtn);
     $('mMode').innerHTML = [['evening', t.mmEvening], ['instant', t.mmInstant]].map(([v, l]) => `<option value="${v}"${st.mapMode === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('hPick', t.pick); set('pickUse', t.pickUse);
@@ -121,7 +124,9 @@
     fillTz();
     showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('date').value = st.date; $('mDate').value = st.date;
     $('mLayer').innerHTML = [['seadet', t.lySeadet], ['first', t.lyFirst], ['yallop', t.lyYallop], ['odeh', t.lyOdeh]].map(([v, l]) => `<option value="${v}"${st.mapLayer === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
-    $('mRes').value = String(st.mapRes); $('mAge').checked = st.mapAge; $('mBorders').checked = st.mapBorders; $('m18').checked = st.map18; $('mLand').checked = st.mapLand;
+    $('mRes').value = String(st.mapRes); MAP_CHK.forEach(([id, k]) => { $(id).checked = !!st[k]; }); $('mOptsBox').open = !!st.mapOptsOpen;
+    $('mValue').innerHTML = Object.entries(t.mapValueOpts).map(([v, l]) => `<option value="${v}"${st.mapValue === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
+    $('mView').innerHTML = Object.entries(t.mapViewOpts).map(([v, l]) => `<option value="${v}"${st.mapView === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('lFontSize', t.fontSize); set('hOnline', t.hOnline); set('lOptWx', t.optWx); set('lOptAutoLoc', t.optAutoLoc); set('lOptFonts', t.optFonts);
     set('netIntro', t.netIntro); set('netWx', t.netWx); set('netFonts', t.netFonts); set('netLoc', t.netLoc); paintNet();
     $('onlineNote').innerHTML = esc(t.onlineNote) + ' ' + q('hava') + (ON.sandboxed ? `<span class="envnote" style="display:block">${esc(t.sandboxNote)} <button class="btn" type="button" id="saveSelf" style="margin-top:6px">${esc(t.saveSelf)}</button></span>` : '');
@@ -310,11 +315,14 @@
     const box = $('extraBox'); box.open = !!st.extraOpen; box.addEventListener('toggle', () => { st.extraOpen = box.open; save(); });
     $('tb').addEventListener('input', () => setTmin(+$('tb').value));
     document.querySelectorAll('[data-jump]').forEach(b => b.onclick = () => jump(b.dataset.jump));
-    ['mLayer', 'mRes', 'mAge', 'mBorders', 'm18', 'mLand', 'mMode'].forEach(id => $(id).addEventListener('change', () => {
-      st.mapLayer = $('mLayer').value; st.mapRes = +$('mRes').value; st.mapAge = $('mAge').checked; st.mapBorders = $('mBorders').checked; st.map18 = $('m18').checked; st.mapLand = $('mLand').checked; st.mapMode = $('mMode').value;
+    ['mLayer', 'mRes', 'mValue', 'mView', 'mMode', ...MAP_CHK.map(x => x[0])].forEach(id => $(id).addEventListener('change', () => {
+      st.mapLayer = $('mLayer').value; st.mapRes = +$('mRes').value; st.mapValue = $('mValue').value; st.mapView = $('mView').value; st.mapMode = $('mMode').value;
+      MAP_CHK.forEach(([i, k]) => { st[k] = $(i).checked; });
       if (st.mapMode !== 'instant') stopPlay();
       save(); renderBigMap();
     }));
+    $('mOptsBox').addEventListener('toggle', () => { st.mapOptsOpen = $('mOptsBox').open; save(); });
+    $('mPng').onclick = () => savePng();
     $('mTime').addEventListener('input', () => setTmin(+$('mTime').value));
     // Ufuk kartındaki zaman çubuğu: bütün sayfanın seçili ânını değiştirir
     let skyRaf = 0; $('skyT').addEventListener('input', () => { const v = +$('skyT').value; cancelAnimationFrame(skyRaf); skyRaf = requestAnimationFrame(() => setTmin(v)); });
@@ -1085,24 +1093,50 @@
     if (r.W != null) { h += kv(t.width, `${num(r.Wy, 3)}′ / ${num(r.W, 3)}′`); h += kv(t.arcl, `${degf(r.arclGeo)} / ${degf(r.arcl)}`); h += kv(t.arcv, `${degf(r.arcvGeo)} / ${degf(r.arcvTopo)}`); }
     h += kv(t.dip, num(C.dipBook(st.hObs) * 60, 1) + '′', '106,92″ × √h (s. 185)');
     if (r.seri) h += kv(t.zaviye, num(r.seri.zaviye * 60, 1) + '′', `${t.temkin} ${num(r.seri.temkinMin, 2)} ${t.min}`);
+    const x = C.crescentData(r);
+    if (x) {
+      h += `<dt class="grp">${esc(t.hcTitle)}</dt><dd class="grp small">${esc(t.hcNote)}</dd>`;
+      if (r.ictimaPrev) h += kv(t.hcConj, `${fmtDT(r.ictimaPrev)}`, fmtUTC(r.ictimaPrev));
+      h += kv(t.age.replace(/\s*\(.*\)/, ''), ageTxt(r.ageH));
+      h += kv(t.hcSunAzAlt, `${degf(x.sunAz)} / ${degf(x.sunAlt)}`) + kv(t.hcMoonAzAlt, `${degf(x.moonAz)} / ${degf(x.moonAlt)}`);
+      h += kv(t.hcElongGeo, `${degf(x.elongGeo)} / ${degf(x.elongTopo)}`) + kv(t.hcDaz, degf(x.daz)) + kv(t.hcArcv, degf(x.arcv));
+      h += kv(t.hcWidth, num(x.width, 3) + '′') + kv(t.hcSd, num(x.sd, 2) + '′') + kv(t.hcHp, num(x.hp, 2) + '′');
+      h += kv(t.hcDist, `${num(x.geoKm, 0)} / ${num(x.topoKm, 0)} ${t.km}`, t.hcDistSub) + kv(t.hcIllum, num(x.illum, 2) + ' %');
+      h += kv(t.hcMoonset, x.moonset ? fmtTime(x.moonset) : t.none, x.lag != null ? `${t.lag}: ${hm(x.lag)}` : '') + kv(t.hcWin, x.win != null ? hm(x.win) : t.noWindow);
+    }
     $('extra').innerHTML = h + (renderMonth.other || '');
   }
 
   // ---- Harita ----
   let big = null, playing = null, MAPP = null;
+  // Lejant öğeleri: [tür, renk belirteci, metin]; HTML lejantı ve PNG çıktısı aynı listeden çizilir
+  function legendItems(layer, conj) {
+    const f = (c, l) => ['fill', c, l], ln = (c, l, d) => ['line', c, l, d || 'solid'], dm = (c, l) => ['diamond', c, l];
+    if (st.mapMode === 'instant') return [f('--c-visible', t.lgSearch), f('--c-below5', t.lgLow), f('--map-night', t.lgNight), ln('--accent', t.lgDayNight), ln('--map-iso', t.lgMoonHz, 'dashed')];
+    const m18 = st.map18 ? [['box', '--accent', t.map18]] : [];
+    if (layer === 'first') {
+      const cd = conj.date, base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
+      return ['--c-visible', '--c-possible', '--c-below5', '--c-below8'].map((c, k) => f(c, `${fmtCivil(new Date(base + k * 86400000), true)} ${t.eveningAt}`)).concat([f('--c-notborn', t.lgLater), f('--c-nosun', t.lgNoSun)], m18);
+    }
+    let a;
+    if (layer === 'yallop') a = [f('--c-visible', t.yA), f('--c-possible', t.yB), f('--c-below5', t.yC), f('--c-below8', t.yD), f('--c-notborn', t.yEF), f('--c-nosun', t.lgNoSun), ln('--map-edge', t.lgYallopLine)];
+    else if (layer === 'odeh') a = [f('--c-visible', t.oA), f('--c-possible', t.oB), f('--c-below5', t.oC), f('--c-notborn', t.oD), f('--c-nosun', t.lgNoSun), ln('--map-edge', t.lgOdehLine)];
+    else a = [f('--c-visible', t.lgVisible), f('--c-possible', t.lgPossible), f('--c-below5', t.lgBelow5), f('--c-below8', t.lgBelow8), f('--c-notborn', t.lgNotBorn), f('--c-nosun', t.lgNoSun)].concat(st.mapHatch ? [['hatch', '--c-below8', t.lgHatch]] : []);
+    if (st.mapBook) a.push(ln('--c-below8', t.lgBook8), ln('--c-visible-ink', t.lgBook18), ln('--c-below5-ink', t.lgBook5, 'dashed'), ln('--map-edge', t.lgUp0, 'dotted'));
+    if (st.mapValue !== 'none') a.push(ln('--map-iso', t.lgValue(t.mapValueOpts[st.mapValue])));
+    if (st.mapFirst) a.push(dm('--c-possible', t.lgFirst8), dm('--c-visible', t.lgFirst18));
+    return a.concat(m18);
+  }
   function legendFor(layer, conj) {
-    const s = (c, l) => `<span><i style="background:var(${c})"></i>${esc(l)}</span>`;
-    if (st.mapMode === 'instant') return s('--c-visible', t.lgSearch) + s('--c-below5', t.lgLow) + s('--map-night', t.lgNight) +
-      `<span><i style="background:none;border:0;border-top:2px solid var(--accent);height:0"></i>${esc(t.lgDayNight)}</span><span><i style="background:none;border:0;border-top:2px dashed var(--map-iso);height:0"></i>${esc(t.lgMoonHz)}</span>`;
-    if (layer === 'first') return firstLegend(conj);
-    if (layer === 'yallop') return s('--c-visible', t.yA) + s('--c-possible', t.yB) + s('--c-below5', t.yC) + s('--c-below8', t.yD) + s('--c-notborn', t.yEF) + s('--c-nosun', t.lgNoSun);
-    if (layer === 'odeh') return s('--c-visible', t.oA) + s('--c-possible', t.oB) + s('--c-below5', t.oC) + s('--c-notborn', t.oD) + s('--c-nosun', t.lgNoSun);
-    return s('--c-visible', t.lgVisible) + s('--c-possible', t.lgPossible) + s('--c-below5', t.lgBelow5) + s('--c-below8', t.lgBelow8) + s('--c-notborn', t.lgNotBorn) + s('--c-nosun', t.lgNoSun) +
-      (st.map18 ? `<span><i style="background:none;border:2px dashed var(--accent)"></i>${esc(t.map18)}</span>` : '');
+    return legendItems(layer, conj).map(([k, c, l, d]) => {
+      const st2 = k === 'fill' ? `background:var(${c})` : k === 'line' ? `background:none;border:0;border-top:2px ${d} var(${c});height:0` : k === 'diamond' ? `background:var(${c});border:1.5px solid var(--ink);transform:rotate(45deg) scale(.72)` :
+        k === 'hatch' ? `background:repeating-linear-gradient(135deg,var(${c}) 0 3px,var(--map-edge) 3px 4px)` : `background:none;border:2px dashed var(${c})`;
+      return `<span><i style="${st2}"></i>${esc(l)}</span>`;
+    }).join('');
   }
   function mapConj() { return C.nearestNewMoon(A.MakeTime(new Date(st.date + 'T12:00:00Z'))); }
   function mapShift(k) {
-    if (st.mapMode === 'evening' && st.mapLayer === 'first') {
+    if (st.mapMode === 'evening' && (st.mapLayer === 'first' || st.mapView === 'three')) {
       const c = mapConj(), n = k > 0 ? C.nextNewMoonAfter(c.AddDays(5)) : C.lastNewMoonBefore(c.AddDays(-5));
       if (n) { const cd = n.date; setDate(ymdOf(new Date(Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate() + 1)))); }
     } else setDate(addDays(st.date, k), { keepLive: false });
@@ -1112,34 +1146,80 @@
   function stepMin(dm) { let m = (st.tmin || 0) + dm; if (m < 0 || m > TB_MAX) { remember(); setLive(false); st.anchor = null; st.tmin = m < 0 ? m + 1440 : m - 1440; setDate(addDays(st.date, m < 0 ? -1 : 1), { noHist: true }); return; } setTmin(m); }
   function startPlay() { setLive(false); playing = setInterval(() => { let m = (st.tmin || 0) + 10; if (m > 1440 + 600) { st.tmin = m - 1440; st.anchor = null; setDate(addDays(st.date, 1), { noHist: true }); return; } setTmin(m); }, 350); $('mPlay').textContent = t.pause; }
   function stopPlay() { if (playing) { clearInterval(playing); playing = null; } $('mPlay').textContent = t.play; }
+  // Harita çizim parametreleri (tek harita, üç gece ve dışa aktarma için ortak)
+  function valLbl(v, L) { const u = { elong: '°', alt: '°', arcv: '°', age: t.valUnit.h, win: t.valUnit.min, lag: t.valUnit.min, width: '′' }[v] || ''; return (v === 'width' ? num(L, 1) : String(Math.round(L)).replace('-', '−')) + u; }
+  function gratLbl(v, k) { return `${Math.abs(v)}°${v === 0 ? '' : t.gratDir[k === 'lat' ? (v > 0 ? 'N' : 'S') : (v > 0 ? 'E' : 'W')]}`; }
+  const hhmmUT = at => at.date.toISOString().slice(11, 16) + ' UTC';
+  const dayOf = ymd => Date.UTC(+ymd.slice(0, 4), +ymd.slice(5, 7) - 1, +ymd.slice(8, 10));
+  function mapParams(layer, conj, dayUTC, marks) {
+    return { mode: 'evening', layer, res: st.mapRes, conj, dayUTC, marks, borders: st.mapBorders, landOnly: st.mapLand,
+      m18: st.map18 ? C.moment18(conj, 0) : null, book: st.mapBook && layer !== 'first', bookLabels: t.bookLbl,
+      value: layer !== 'first' && st.mapValue !== 'none' ? st.mapValue : null, valueLabel: valLbl,
+      grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]),
+      firstPts: st.mapFirst, firstLabel: (k, pt) => `${t.firstLbl[k]} · ${hhmmUT(pt.ss)}`, relief: st.mapRelief, hatch: st.mapHatch };
+  }
+  function firstNote(fp) {
+    if (!fp) return '';
+    return ['poss', 'vis'].filter(k => fp[k]).map(k => { const p = fp[k]; return `${t.firstLbl[k]}: ${gratLbl(Math.round(p.lat), 'lat')}, ${gratLbl(Math.round(p.lon), 'lon')} · ${t.firstSub(`${fmtDT(p.ss)} (${hhmmUT(p.ss)})`, degf(p.elong, 1))}`; }).join(' · ');
+  }
+  function mapMarks(hmn) {
+    const marks = [{ lat: st.lat, lon: st.lon, kind: 'user', label: t.youHere }];
+    if (hmn.m === 12) marks.push({ lat: MECCA[0], lon: MECCA[1], kind: 'user', label: t.meccaLbl });
+    return marks;
+  }
+  let mapSeq = 0;
   function renderBigMap() {
     if (view !== 'harita') return;
-    if (!big) { big = G.HRMap.mount($('bigMap')); big.onPick(pick); }
-    const inst = st.mapMode === 'instant';
-    ['mLayer', 'mRes'].forEach(id => { $(id).closest('.field').hidden = inst; });
-    ['mAge', 'm18', 'mLand'].forEach(id => { $(id).closest('label').hidden = inst; });
+    if (!big) { big = G.HRMap.mount($('bigMap')); big.onPick((la, lo) => pick(la, lo)); }
+    const inst = st.mapMode === 'instant', three = !inst && st.mapView === 'three', my = ++mapSeq;
+    ['mLayer', 'mRes', 'mView', 'mValue'].forEach(id => { $(id).closest('.field').hidden = inst; });
+    MAP_CHK.forEach(([id]) => { $(id).closest('label').hidden = inst && id !== 'mBorders' && id !== 'mCities' && id !== 'mGrat' && id !== 'mRelief'; });
     $('mInstCtl').hidden = !inst; $('mPlay').textContent = playing ? t.pause : t.play;
-    $('mapPrev').title = !inst && st.mapLayer === 'first' ? t.prevMonth : t.prevDay; $('mapNext').title = !inst && st.mapLayer === 'first' ? t.nextMonth : t.nextDay;
+    const monthStep = !inst && (st.mapLayer === 'first' || three);
+    $('mapPrev').title = monthStep ? t.prevMonth : t.prevDay; $('mapNext').title = monthStep ? t.nextMonth : t.nextDay;
+    $('bigMap').hidden = three; $('map3').hidden = !three; $('mDate').disabled = monthStep;
     const conj = mapConj();
-    const dayUTC = Date.UTC(+st.date.slice(0, 4), +st.date.slice(5, 7) - 1, +st.date.slice(8, 10));
+    const dayUTC = dayOf(st.date);
     const hmn = CAL.monthForConjunction(conj.date);
+    if (three) { $('mapLegend').innerHTML = legendFor(st.mapLayer === 'first' ? 'seadet' : st.mapLayer, conj); MAPP = renderMap3(conj, hmn); return; }
+    const marks = mapMarks(hmn);
     const eG = earliest(conj, null);
-    const marks = [{ lat: st.lat, lon: st.lon, kind: 'user', label: t.youHere }];
-    if (!inst && eG && (st.mapLayer === 'first' || ymdOf(eG.evening) === st.date)) marks.push({ lat: eG.where.lat, lon: eG.where.lon, kind: 'earliest', label: `${t.earliestHere}: ${fmtCivil(eG.first, true)}` });
-    if (hmn.m === 12) marks.push({ lat: MECCA[0], lon: MECCA[1], kind: 'user', label: t.meccaLbl });
+    if (!inst && eG && (st.mapLayer === 'first' || (!st.mapFirst && ymdOf(eG.evening) === st.date))) marks.splice(1, 0, { lat: eG.where.lat, lon: eG.where.lon, kind: 'earliest', label: `${t.earliestHere}: ${fmtCivil(eG.first, true)}` });
     const ageD = (dayUTC - conj.date.getTime()) / 86400000;
     const mid = !inst && st.mapLayer !== 'first' && (ageD > 4.5 || ageD < -2);
     if (inst) {
-      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub });
+      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub, grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]), relief: st.mapRelief });
       $('mapNote').textContent = t.mapInstantNote + ' ' + `${t.mapTime}: ${fmtDT(selT())}${st.timeFmt === 'both' ? ' · ' + fmtUTC(selT()) : ''} · ${t.darkOpt[st.darkKey]}`;
     } else {
-      MAPP = big.render({ mode: 'evening', layer: st.mapLayer, res: st.mapRes, conj, dayUTC, marks, age: st.mapAge, borders: st.mapBorders, landOnly: st.mapLand, m18: st.map18 ? C.moment18(conj, 0) : null, message: mid ? t.midHint : '' });
-      $('mapNote').textContent = (st.mapLayer === 'first' ? t.mapNoteFirst : st.mapLayer === 'seadet' ? t.mapNoteSeadet : t.mapNoteModern) + ' ' + `${monthName(hmn.m)} ${hmn.y} · ${t.conj}: ${fmtDT(conj)}` + (mid ? ' · ' + t.midHint : '') + ' · ' + t.lgOutline;
+      MAPP = big.render(Object.assign(mapParams(st.mapLayer, conj, dayUTC, marks), { message: mid ? t.midHint : '' }));
+      const outline = st.mapLayer === 'first' || (st.mapLayer === 'seadet' && !st.mapBook);
+      const base = (st.mapLayer === 'first' ? t.mapNoteFirst : st.mapLayer === 'seadet' ? t.mapNoteSeadet : t.mapNoteModern) + ' ' + `${monthName(hmn.m)} ${hmn.y} · ${t.conj}: ${fmtDT(conj)}` + (mid ? ' · ' + t.midHint : '') + (outline ? ' · ' + t.lgOutline : '');
+      $('mapNote').textContent = base;
+      Promise.resolve(MAPP).then(() => { if (my === mapSeq && st.mapFirst && st.mapLayer !== 'first') { const fn = firstNote(big.info()); if (fn) $('mapNote').textContent = base + ' · ' + fn; } });
     }
     $('mapLegend').innerHTML = legendFor(st.mapLayer, conj);
-    $('mDate').disabled = !inst && st.mapLayer === 'first';
   }
-  function pick(lat, lon) {
+  // Üç gece: önceki akşam, birinci gece, ikinci gece (Tam İlmihâl s. 315: ay başı hesâbî gün veya bir gün sonrası)
+  let maps3 = null, m3seq = 0;
+  function nights3(conj, hmn) {
+    let f1 = null; try { f1 = G.HRExplain.firstDayOf(exCtx(), conj, hmn); } catch (e) { f1 = null; }
+    if (!f1) return null; const E1 = addDays(f1.H, -1);
+    return [['prev', addDays(E1, -1)], ['A', E1], ['B', f1.H]].map(([k, ev]) => ({ k, ev, day1: addDays(ev, 1) }));
+  }
+  function nightCap(n) { const ev = fmtCivil(civil(n.ev), true), d = fmtCivil(civil(n.day1), true); return n.k === 'prev' ? t.night3Sub.prev(ev) : t.night3Sub[n.k](ev, d); }
+  async function renderMap3(conj, hmn) {
+    const box = $('map3');
+    if (!maps3) { box.innerHTML = [0, 1, 2].map(() => '<div><h3></h3><p class="cap"></p><div class="m3map"></div></div>').join(''); maps3 = Array.from(box.querySelectorAll('.m3map')).map(el => G.HRMap.mount(el)); }
+    const ns = nights3(conj, hmn); if (!ns) return;
+    const layer = st.mapLayer === 'first' ? 'seadet' : st.mapLayer, my = ++m3seq, marks = mapMarks(hmn);
+    box.querySelectorAll('h3').forEach((h, i) => { h.textContent = t.night3[ns[i].k]; });
+    box.querySelectorAll('.cap').forEach((c, i) => { c.textContent = nightCap(ns[i]); });
+    maps3.forEach((m, i) => m.onPick((la, lo) => pick(la, lo, ns[i].ev)));
+    $('mapNote').textContent = t.map3Note + (st.mapLayer === 'first' ? ' ' + t.map3First : '') + ` ${monthName(hmn.m)} ${hmn.y} · ${t.conj}: ${fmtDT(conj)}`;
+    renderMap3.ns = ns;
+    for (let i = 0; i < 3; i++) { if (my !== m3seq) return; await maps3[i].render(mapParams(layer, conj, dayOf(ns[i].ev), marks)); }
+  }
+  function pick(lat, lon, ymd) {
     const box = $('pickBox'); box.hidden = false;
     const ploc = { lat, lon, elev: 0, hObs: 0, tz: st.tz };
     let h = kv(t.pick, `${degf(lat, 2)}, ${degf(lon, 2)}`);
@@ -1147,12 +1227,115 @@
       const at = selT(), p = C.at(at, ploc), cP = C.lastNewMoonBefore(at), sr = C.searchable(p, st.darkKey, cP ? (at.ut - cP.ut) * 24 : null);
       h += kv(t.mapTime, fmtUTC(at)) + kv(t.sunL, degf(p.sun.alt, 1)) + kv(t.moonL, `${degf(p.moon.alt, 1)} · ${G.HRSky.card(p.moon.az, st.lang)}`) + kv(t.momentTitle, esc(sr.ok ? t.obsOk : t.obsNo + ' ' + sr.reasons.map(x => t.why[x]).join(' · ')), '', 'txt');
     } else {
-      let r; try { r = C.evening(ploc, st.date); } catch (e) { r = null; }
+      const ev = ymd || st.date;
+      let r; try { r = C.evening(ploc, ev); } catch (e) { r = null; }
       if (!r || !r.ok) h += kv(t.status, esc(t.lgNoSun), '', 'txt');
-      else h += kv(t.status, esc(clsText(r)[0]), '', 'txt') + kv(t.gurub, fmtUTC(r.gurub)) + kv(t.beyn, degf(r.beynunet)) + kv(t.alt, degf(r.moonAlt)) + kv(t.lag, hm(r.lagMin)) + kv(t.age, ageTxt(r.ageH));
+      else {
+        h += kv(t.status, esc(clsText(r)[0]), fmtCivil(civil(ev), true) + ' ' + t.eveningAt, 'txt') + kv(t.gurub, fmtUTC(r.gurub)) + kv(t.beyn, degf(r.beynunet)) + kv(t.alt, degf(r.moonAlt)) + kv(t.lag, hm(r.lagMin)) + kv(t.age, ageTxt(r.ageH));
+        const x = C.crescentData(r);
+        if (x) {
+          h += kv(t.hcWin + ' ' + q('besderece'), x.win != null ? hm(x.win) : t.noWindow);
+          h += kv(t.pickMore, `ARCV ${degf(x.arcv, 1)} · DAZ ${degf(x.daz, 1)} · W ${num(x.width, 2)}′ · ${num(x.illum, 1)}%`, r.yallop ? `Yallop q ${num(r.yallopQ, 3)} (${r.yallop}) · Odeh V ${num(r.odehV, 2)} (${r.odeh})` : '');
+        }
+      }
     }
     $('pickKv').innerHTML = h;
     $('pickUse').onclick = () => { st.lat = lat; st.lon = lon; st.city = 'custom'; tzFromLon(); save(); fillStatic(); update(); location.hash = '#plan'; };
+  }
+
+  // Çıktı resimlerinin içine küçük program adı ve adresi (yazıları örtmeyecek boş bir köşeye)
+  const creditTxt = () => `Mâh-ı Nev · ${bare((NOTICE && NOTICE.p) || 'https://bemiroglu.github.io/MahiNev/')}`;
+  function svgCredit(svg, corner, dark, inset) {
+    const m = /viewBox="([\d.\-]+) ([\d.\-]+) ([\d.]+) ([\d.]+)"/.exec(svg); if (!m) return svg;
+    const [x0, y0, w, h] = m.slice(1).map(Number), fs = Math.max(9, Math.round(w / 80)), pad = fs * 0.7, tl = corner === 'tl';
+    const [ix, iy] = inset || [0, 0], X = tl ? x0 + ix + pad : x0 + w - pad, Y = tl ? y0 + iy + pad + fs * 0.8 : y0 + h - pad;
+    return svg.replace(/<\/svg>\s*$/, `<text x="${X}" y="${Y}" text-anchor="${tl ? 'start' : 'end'}" style="font-family:${getComputedStyle(document.body).getPropertyValue('--font-body').trim().replace(/"/g, "'")};font-size:${fs}px;font-weight:400;fill:${dark ? '#e8edf4' : '#555'};fill-opacity:${dark ? 0.55 : 0.7};stroke:none;paint-order:normal">${esc(creditTxt())}</text></svg>`);
+  }
+  // ---- Harita dışa aktarma (PNG ve A4): açık temada, seçili dilde ----
+  function lightSnap(m, width) {
+    const prev = document.body.className;
+    document.body.classList.remove('th-dark', 'th-night', 'th-sun'); document.body.classList.add('th-light');
+    try { return m ? m.snapshot(width, { credit: creditTxt() }) : null; } finally { document.body.className = prev; }
+  }
+  // Harita sekmesi açık değilken de çizer (yazdırma için); bitince önceki görünümü geri yükler
+  async function withMapView(kind, fn) {
+    const was = view, wasV = st.mapView;
+    st.mapView = kind; if (was !== 'harita') { view = 'harita'; $('view-harita').hidden = false; }
+    try { renderBigMap(); await MAPP; await new Promise(r => setTimeout(r, 0)); return fn(); }
+    finally { st.mapView = wasV; view = was; if (was === 'harita') renderBigMap(); else $('view-harita').hidden = true; }
+  }
+  function mapPanels() {
+    const three = st.mapMode !== 'instant' && st.mapView === 'three';
+    if (!three) return [{ m: big, title: '', sub: '' }];
+    const ns = renderMap3.ns || [];
+    return (maps3 || []).map((m, i) => ({ m, title: ns[i] ? t.night3[ns[i].k] : '', sub: ns[i] ? nightCap(ns[i]) : '' }));
+  }
+  function htmlText(h) { const dv = document.createElement('div'); dv.innerHTML = h; return dv.textContent.replace(/\s+/g, ' ').trim(); }
+  function wrapText(ctx, s, maxW) {
+    const out = []; let line = '';
+    for (const w of String(s).split(' ')) { const tst = line ? line + ' ' + w : w; if (ctx.measureText(tst).width > maxW && line) { out.push(line); line = w; } else line = tst; }
+    if (line) out.push(line); return out;
+  }
+  async function savePng() {
+    if (MAPP) { toast(t.mapWait); await MAPP; }
+    const prev = document.body.className;
+    document.body.classList.remove('th-dark', 'th-night', 'th-sun'); document.body.classList.add('th-light');
+    let cv;
+    try { cv = composePng(); } finally { document.body.className = prev; }
+    if (!cv) return;
+    const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+    if (!blob) return;
+    const three = st.mapMode !== 'instant' && st.mapView === 'three';
+    if (await saveFile(fileBase(three ? 'map3' : 'map', { hhmm: st.mapMode === 'instant' ? hhmmTz(selT().date, st.tz) : '' }) + '.png', new Uint8Array(await blob.arrayBuffer()), 'image/png')) toast(t.mapSaved);
+  }
+  function composePng() {
+    const css = n => getComputedStyle(document.body).getPropertyValue(n).trim();
+    const W = 1600, pad = 36, mw = W - 2 * pad, panels = mapPanels(), snaps = panels.map(p => ({ p, c: p.m && p.m.snapshot(mw, { credit: creditTxt() }) })).filter(x => x.c);
+    if (!snaps.length) return null;
+    const conj = mapConj(), hmn = CAL.monthForConjunction(conj.date), layer = st.mapView === 'three' && st.mapLayer === 'first' ? 'seadet' : st.mapLayer;
+    const layerName = { seadet: t.lySeadet, first: t.lyFirst, yallop: t.lyYallop, odeh: t.lyOdeh }[layer];
+    const sub = st.mapMode === 'instant' ? `${t.mapTime}: ${fmtDT(selT())} · ${fmtUTC(selT())}` : `${monthName(hmn.m)} ${hmn.y} · ${layerName}` + (st.mapView === 'three' || st.mapLayer === 'first' ? '' : ` · ${fmtCivil(civil(st.date), true)} ${t.eveningAt}`);
+    const fB = `${css('--font-body')}`, fD = `${css('--font-display')}`;
+    const m = document.createElement('canvas').getContext('2d');
+    m.font = `15px ${fB}`; const note = wrapText(m, $('mapNote').textContent, mw);
+    const items = legendItems(layer, conj);
+    // lejant satırları
+    m.font = `14px ${fB}`; const rows = []; let row = [], rw = 0;
+    for (const it of items) { const w = 26 + m.measureText(it[2]).width + 22; if (rw + w > mw && row.length) { rows.push(row); row = []; rw = 0; } row.push([it, w]); rw += w; }
+    if (row.length) rows.push(row);
+    m.font = `13px ${fB}`; const foot = wrapText(m, t.pngSrc((bookOf() || {}).title || 'Tam İlmihâl', G.HR_VERSION) + ' · ' + t.pngNote, mw);
+    let H = pad + 40 + 30 + 14;
+    for (const s of snaps) H += (s.p.title ? 50 : 0) + s.c.height + 12;
+    H += note.length * 21 + 10 + rows.length * 26 + 14 + foot.length * 18 + pad;
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = Math.ceil(H);
+    const c = cv.getContext('2d');
+    c.fillStyle = '#ffffff'; c.fillRect(0, 0, W, cv.height); c.textBaseline = 'top'; c.fillStyle = css('--ink');
+    let y = pad;
+    c.font = `600 30px ${fD}`; c.fillText(t.mapTitle, pad, y); y += 40;
+    c.font = `17px ${fB}`; c.fillStyle = css('--muted'); c.fillText(sub, pad, y); y += 30;
+    c.fillStyle = css('--ink'); c.font = `14px ${fB}`; c.fillText(htmlText(locLine()), pad, y); y += 14 + 6;
+    for (const s of snaps) {
+      if (s.p.title) { y += 6; c.font = `600 19px ${fB}`; c.fillStyle = css('--ink'); c.fillText(s.p.title, pad, y); c.font = `14px ${fB}`; c.fillStyle = css('--muted'); c.fillText(s.p.sub, pad, y + 24); y += 44; }
+      c.drawImage(s.c, pad, y); c.strokeStyle = css('--line'); c.lineWidth = 1; c.strokeRect(pad + 0.5, y + 0.5, s.c.width - 1, s.c.height - 1); y += s.c.height + 12;
+    }
+    c.font = `15px ${fB}`; c.fillStyle = css('--ink'); for (const l of note) { c.fillText(l, pad, y); y += 21; } y += 10;
+    c.font = `14px ${fB}`;
+    for (const r of rows) {
+      let x = pad;
+      for (const [[k, col, l, d], w] of r) {
+        const cc = css(col) || '#888', sy = y + 4;
+        c.save();
+        if (k === 'fill' || k === 'hatch') { c.fillStyle = cc; c.fillRect(x, sy, 20, 12); if (k === 'hatch') { c.strokeStyle = css('--map-edge'); c.lineWidth = 1; c.beginPath(); for (let q = -12; q < 20; q += 4) { c.moveTo(x + q, sy + 12); c.lineTo(x + q + 12, sy); } c.save(); c.rect(x, sy, 20, 12); c.clip(); c.stroke(); c.restore(); } }
+        else if (k === 'line') { c.strokeStyle = cc; c.lineWidth = 2.5; c.setLineDash(d === 'dashed' ? [6, 4] : d === 'dotted' ? [2, 3] : []); c.beginPath(); c.moveTo(x, sy + 6); c.lineTo(x + 20, sy + 6); c.stroke(); }
+        else if (k === 'diamond') { c.fillStyle = cc; c.strokeStyle = css('--ink'); c.lineWidth = 1.5; c.beginPath(); c.moveTo(x + 10, sy - 1); c.lineTo(x + 17, sy + 6); c.lineTo(x + 10, sy + 13); c.lineTo(x + 3, sy + 6); c.closePath(); c.fill(); c.stroke(); }
+        else { c.strokeStyle = cc; c.lineWidth = 2; c.setLineDash([4, 3]); c.strokeRect(x + 1, sy, 18, 12); }
+        c.restore();
+        c.fillStyle = css('--ink'); c.fillText(l, x + 26, y + 2); x += w;
+      }
+      y += 26;
+    }
+    y += 14; c.font = `13px ${fB}`; c.fillStyle = css('--muted'); for (const l of foot) { c.fillText(l, pad, y); y += 18; }
+    return cv;
   }
 
   // ---- Saha ----
@@ -1876,9 +2059,9 @@
   function smOptsSafe() { try { return smOpts(); } catch (e) { return {}; } }
   // ---- Baskı / PDF: her biri tek A4 sayfasına oturan, hedefe odaklı sayfalar ----
   function openPrint() {
-    const def = view === 'harita' ? ['map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
+    const def = view === 'harita' ? [st.mapView === 'three' && st.mapMode !== 'instant' ? 'map3' : 'map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
     const has = records.some(x => x.schema);
-    $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
+    $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'map3', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
     try { $('prDlg').showModal(); } catch (e) { $('prDlg').setAttribute('open', ''); }
   }
   const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : (st.locAuto ? t.myPlace : t.selLoc); };
@@ -1909,9 +2092,10 @@
   }
   function pageSky(at) {
     const svg = withTheme('light', () => G.HRStarMap.draw(LOC, at, st.lang, Object.assign(smOptsSafe(), { size: 680 })).svg);
+    const svgC = svgCredit(svg);
     const hj = hijriAt(at);
     return `<section class="a4">${pgHead(t.smTitle, `${locLine()}<br><strong>${esc(fmtDT(at))}</strong>${hj ? ' · ' + hj.tagged : ''}`)}
-      <div class="psky">${svg}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
+      <div class="psky">${svgC}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
   }
   // Seçili akşamın gökyüzü haritası: hilâlin gurûbdan ay batımına kadar izi ve akşam çizelgesi
   function eveTrack(r) {
@@ -1942,7 +2126,7 @@
     }).join('');
     const hj = hijriAt(at);
     return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>${hj ? ' · ' + hj.tagged : ''}<br>${esc(t.smEveAt(hhmm(at), why))}`)}
-      <div class="psky eve">${svg}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
+      <div class="psky eve">${svgCredit(svg, 'tl', true, [34, 8])}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
       <table class="mt eve"><thead><tr>${t.smEveCols.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>${pgFoot()}</section>`;
   }
   function pageMonth() {
@@ -1962,14 +2146,23 @@
       <p class="cap">${esc(t.pgMonthNote)}</p>${pgFoot()}</section>`;
   }
   async function pageMap() {
-    let img = '';
-    const prev = document.body.className;
-    if (!big) { const was = view; view = 'harita'; $('view-harita').hidden = false; renderBigMap(); view = was; }
-    document.body.classList.remove('th-light', 'th-dark', 'th-night', 'th-sun'); document.body.classList.add('th-light');
-    try { const v = view; view = 'harita'; renderBigMap(); view = v; if (MAPP) await MAPP; const cv = $('bigMap').querySelector('canvas'); img = cv ? cv.toDataURL('image/png') : ''; }
-    finally { document.body.className = prev; if (view === 'harita') renderBigMap(); else $('view-harita').hidden = true; }
-    return `<section class="a4 land">${pgHead(t.mapTitle, `${locLine()}<br>${esc($('mapNote').textContent)}`)}
+    return withMapView('one', () => {
+      const c = lightSnap(big, 1500), img = c ? c.toDataURL('image/png') : '';
+      return `<section class="a4 land">${pgHead(t.mapTitle, `${locLine()}<br>${esc($('mapNote').textContent)}`)}
       <div class="pmap">${img ? `<img src="${img}" alt="">` : ''}</div><div class="legend">${$('mapLegend').innerHTML}</div>${pgFoot()}</section>`;
+    });
+  }
+  // Üç gece: her gece ayrı yatay A4
+  async function pageMap3() {
+    if (st.mapMode === 'instant') return pageMap();
+    return withMapView('three', () => {
+      const ns = renderMap3.ns || [], note = $('mapNote').textContent, lg = $('mapLegend').innerHTML;
+      return (maps3 || []).map((m, i) => {
+        const c = lightSnap(m, 1500), img = c ? c.toDataURL('image/png') : '';
+        return `<section class="a4 land">${pgHead(`${t.mapTitle} — ${ns[i] ? t.night3[ns[i].k] : ''}`, `${locLine()}<br><strong>${esc(ns[i] ? nightCap(ns[i]) : '')}</strong><br>${esc(note)}`)}
+      <div class="pmap">${img ? `<img src="${img}" alt="">` : ''}</div><div class="legend">${lg}</div>${pgFoot()}</section>`;
+      }).join('');
+    });
   }
   function qrSvg(text) { try { const qr = qrcode(0, 'M'); qr.addData(text); qr.make(); return qr.createSvgTag(2, 0); } catch (e) { return ''; } }
   function pageTut(x) {
@@ -2038,8 +2231,8 @@
   const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
   function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
   const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : ''; };
-  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
-    en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', map3: 'dunya-haritasi-uc-gece', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
+    en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', map3: 'world-map-three-nights', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
@@ -2064,6 +2257,7 @@
       else if (k === 'skyEve') parts.push(pageSkyEve());
       else if (k === 'month') parts.push(pageMonth());
       else if (k === 'map') parts.push(await pageMap());
+      else if (k === 'map3') parts.push(await pageMap3());
       else if (k === 'tut') parts.push(pageTut(rec || records.find(x => x.schema)));
       else if (k === 'blank') parts.push(pageTut(null));
     }
@@ -2306,6 +2500,12 @@
     let u1 = null, u2 = null, u3 = null; try { u1 = nextRasad('2026-11-11'); u2 = nextRasad('2026-11-12'); u3 = nextRasad('2026-12-11'); } finally { LOC = keep2; }
     add('yaklaşan rasad', 'İstanbul: 11.11 / 12.11 / 11.12.2026’den itibaren ilk ay başı gecesi', '2026-11-11 / 2026-12-10 / 2027-01-09',
       `${u1.a && u1.a.ymd} / ${u2.a && u2.a.ymd} / ${u3.a && u3.a.ymd}`, '—', u1.a && u1.a.ymd === '2026-11-11' && u2.a && u2.a.ymd === '2026-12-10' && u3.a && u3.a.ymd === '2027-01-09' && (!u3.b || u3.b.ymd >= '2027-01-09'));
+    // hilâl verileri: SD/HP oranı ayın yarıçap oranıdır (≈ 0,2725); topozentrik beynûnet jeosentrikten küçüktür (akşam)
+    { const rI = C.evening({ lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, tz: 'Europe/Istanbul' }, '2026-12-10'), x = C.crescentData(rI);
+      add('hilâl verileri', 'İstanbul 10.12.2026 gurûb: SD/HP · topozentrik < jeosentrik beynûnet · uzaklık', '0,2725 ± 0,003 · evet · 356–407 bin km', x ? `${num(x.sd / x.hp, 4)} · ${x.elongTopo < x.elongGeo ? 'evet' : 'hayır'} · ${num(x.geoKm / 1000, 0)} bin km` : '—', '', x && Math.abs(x.sd / x.hp - 0.2725) < 0.003 && x.elongTopo < x.elongGeo && x.geoKm > 356000 && x.geoKm < 407000); }
+    // harita, üç gece: önceki akşam, birinci gece (H − 1), ikinci gece (H)
+    { const cR = C.nearestNewMoon(A.MakeTime(new Date('2026-12-10T12:00:00Z'))), ns = nights3(cR, CAL.monthForConjunction(cR.date));
+      add('harita, üç gece', 'Receb 1448: önceki akşam / birinci gece / ikinci gece', '2026-12-08 / 2026-12-09 / 2026-12-10', ns ? ns.map(n => n.ev).join(' / ') : '—', '', ns && ns.map(n => n.ev).join() === '2026-12-08,2026-12-09,2026-12-10'); }
     add('özgün dosya', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · özgün`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'özgün' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
     const ok = rows.filter(x => x.ok).length;
     $('tests').innerHTML = `<caption class="small" style="text-align:left;padding-bottom:8px">${ok} / ${rows.length} ${t.pass.toLowerCase()}</caption>

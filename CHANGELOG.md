@@ -1,5 +1,19 @@
 # Sürümler
 
+## 0.14.0 — 13 Kasım 2026
+
+- **Dünya haritasında Tam İlmihâl'in ölçüleri:** beynûnet 8° (altı kesin red) ve 18° (üstü görülebilir) çizgileri, gurûbda irtifâ 5° (kesikli) ve gurûbda ayın ufukta olduğu çizgi (s. 360). Sınıf sınırları bu çizgilerle düzgün çizilir; kesin red alanları taranır (siyah-beyaz baskıda da okunur). Çizgiler Yallop ve Odeh katmanlarında da çizilir; ek bilgi Tam İlmihâl'in ölçüleriyle karşılaştırılarak okunur.
+- **Üç gece yan yana:** Önceki akşam, birinci gece ve ikinci gece; her haritanın altında o akşamın ayın 1. günü için anlamı (s. 315). Yazdırırken her gece ayrı yatay A4.
+- **İlk mümkün / ilk görülebilir yer:** O akşamın haritasında gurûbu en erken olan mümkün ve görülebilir nokta ◆ ile işaretlenir; harita notunda yeri, gurûb saati (yerel ve UT) ve beynûneti yazılır.
+- **Harita görünümü:** Şehirler (seçili dilde), enlem-boylam ağı, hafif kabartma, ülke sınırları ve 18° gurûb boylamı; her biri açılıp kapatılır ve hatırlanır. Kabartma, NASA Blue Marble'dan türetilmiş 900 piksellik gri bir dokudur (≈ 25 KB); dosyaya gömülüdür, internete bağlanmaz. Yazılar çakışmaz; işaret yazıları önceliklidir. Dört temada (açık, koyu, gece, güneş altı) okunur.
+- **Değer çizgisi (ek bilgi):** beynûnet, gurûbda irtifâ, hilâl yaşı, gurûbdan 5° irtifâya kadar geçen süre, gurûbdan ayın batışına kadar geçen süre, ARCV veya hilâl kalınlığı.
+- **PNG kaydet:** Harita, başlık, açıklama, lejant ve kaynak satırıyla seçili dilde resim olarak kaydedilir; üç gece görünümünde üç harita alt alta.
+- **Tıklanan yer:** Sınıf, gurûb, beynûnet, irtifâ, 5° penceresi, fark ve yaşın yanında ARCV, DAZ, kalınlık, aydınlık oran, Yallop q ve Odeh V.
+- **Hilâl verileri (Plan → Ek bilgi):** Gurûb anında ictimâ (yerel ve UTC), hilâl yaşı, Güneş'in ve Ay'ın azimut / irtifâı, jeosentrik ve topozentrik beynûnet, DAZ, ARCV, hilâl kalınlığı, ayın yarıçapı (SD), ufkî paralaksı (HP), uzaklığı, aydınlık oranı, batışı ve 5° penceresi.
+- **Çıktılarda dil ve terimler:** PNG, PDF ve JPG çıktılarındaki harita başlığı, alt yazısı, lejantı, kenar yazıları (K/G/D/B veya N/S/E/W) ve kaynak satırı seçili dildedir; terimler Tam İlmihâl'inkilerdir (beynûnet, irtifâ, gurûb, ictimâ); İngilizcede de bu terimler kullanılır, açıklaması yanında verilir. Saatler yerel ve UTC olarak yazılır.
+- **Çıktı resimlerinde program adı:** Dünya haritası (PNG, PDF, JPG) ve gökyüzü haritaları, haritanın içinde yazı ve işaretlerin bulunmadığı bir köşede küçük ve soluk "Mâh-ı Nev · bemiroglu.github.io/MahiNev" satırı taşır; ekrandaki haritada bu satır yoktur.
+- **Doğrulama:** 63 test; yeni testler hilâl verilerini (SD/HP oranı, iki beynûnet, uzaklık) ve üç gecenin tarihlerini denetler.
+
 ## 0.13.0 — 13 Kasım 2026
 
 - **Takvim usullerinin tanıtımı:** Işık usulü, Uluğ Beğ cetveli, Ebüzziyâ / Kindî cetveli, Madde 88 ve aritmetik (tabular) takvim, kullanıldıkları her yerde **?** açıklamasıyla tanıtılır (s. 326, 358–362). Açıklamalar her usulün nasıl çalıştığını ve neden başarılı olduğunu kısaca anlatır: Işık usulünün 4,367 sayısı ve ay rakamlarını taşıyan beyit, Uluğ Beğ'in 210 yıllık devri, Kindî cetvelinin 405 haftalık sekiz yılı, aritmetik takvimin üç saniyelik ortalama ay farkı.

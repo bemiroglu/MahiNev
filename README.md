@@ -14,7 +14,7 @@
 ![Dil](https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%C2%B7%20English-3d5a80)
 
 **[▶ Çevrimiçi aç](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
-**[⬇ İndir (v0.13.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.13.0.html)** &nbsp;·&nbsp;
+**[⬇ İndir (v0.14.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.14.0.html)** &nbsp;·&nbsp;
 **[📖 Tam İlmihâl](https://www.hakikatkitabevi.net/book.php?bookCode=001)** &nbsp;·&nbsp;
 **[English ↓](#english)**
 
@@ -68,7 +68,7 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 | 🧭 **Nereye bakmalı** | Batı ufku çizimi, 360° bütün ufuk ve gökyüzü haritası. Hilâlin yeri gurûb noktasına göre derece ve "yumruk" ölçeğiyle verilir; yönelim için parlak yıldız ve gezegenler gösterilir. Zaman sürgüsüyle akşamın her ânı görülebilir. |
 | 📅 **Ay başı planlaması** | Ayın 1. gününün iki ihtimali (birinci ve ikinci gece) durum kartında; yaklaşan ve önceki rasad gecesi; **◀ Önceki ay başı / Sonraki ay başı ▶** düğmeleri ve 13 aylık **rasad geceleri listesi**; hicrî aylara göre gruplanmış rü'yet şeridi. |
 | 🗓 **Hicrî tarih** | Kamerî gün şer'î gurûbda değişir (s. 188). Ayın 1. günü hesapla bulunan gün veya bir gün sonrası olduğu için (s. 315, 360) hicrî gün iki sayıyla yazılır; **"Neden iki sayı"** satırı hangi sayının hangi güne bağlı olduğunu söyler. Zilhiccede ana gösterim Tam İlmihâl'in bildirdiği Işık usulüdür (s. 326). Işık usulü, Uluğ Beğ, Ebüzziyâ / Kindî cetvelleri ve aritmetik takvim **?** açıklamasıyla tanıtılır (s. 358–362). |
-| 🗺 **Dünya rü'yet imkânı haritası** | Akşam ve anlık kipler; Tam İlmihâl sınıfları, ilk görünürlük katmanı, hilâl yaşı çizgileri ve 18° gurûb boylamı. |
+| 🗺 **Dünya rü'yet imkânı haritası** | Akşam ve anlık kipler; Tam İlmihâl sınıfları ve ölçü çizgileri (beynûnet 8° ve 18°, gurûbda irtifâ 5°); önceki akşam, birinci ve ikinci gece yan yana; ilk mümkün / görülebilir yer işaretleri; şehirler, enlem-boylam ağı ve hafif kabartma; seçimlik değer çizgileri (ek bilgi); seçili dilde PNG ve her gece ayrı A4. |
 | ❔ **"Bu akşam ne demek?"** | Seçili akşam ve yer için açıklama penceresi, Tam İlmihâl'in **iki gece** bildirişine göre: hilâl hesâbın bildirdiği gecede doğar, o gece görülmeyip bir gece sonra görülebilir (s. 360); rü'yetle başlama bir gün sonra olabilir, önce olamaz (s. 315). Ayın 1. günü için iki kutu, bugünün kamerî günü, birinci ve ikinci gece tablosu, rü'yet kaydınıza göre tek cevap, ayın adına göre kapsam ve hüküm. Kâdîhân ölçüsü bilgi olarak verilir. Rü'yetsiz hüküm kurmaz. |
 | 🔭 **Gök cisimleri** | "Seçili an" kartında Güneş, Ay, gezegenler ve parlak yıldızlar: yön ve yükseklik, doğuş–tepe–batış, kadir, takımyıldız, alacakaranlık evreleri ve bu gece çıplak gözle görülebilecekler. Rasad günleri dışında da bir gözlem aracıdır. |
 | 🧭 **Gezinme** | Üst bantta gün okları ve **↶ Geri / İleri ↷**: "Şimdi" dahil her atlama geri alınabilir. Planlanan akşam Saha sekmesinde önizleme olarak görünür. |
@@ -80,7 +80,7 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 | 📚 **Rehber** | Her konuda fıkhî esas ve bilimsel açıklama, kısa ve ayrıntılı; **Naklî deliller** konusu (âyet, hadîs, icmâ ve âlimlerin bildirdikleri). |
 | ➕ **Ek bilgiler** | Modern ölçütler (Yallop, Odeh, Danjon) ve aritmetik takvim usulleri yalnızca ek bilgi olarak, Tam İlmihâl'in hükmünden sonra verilir. |
 
-<p align="center"><img src="docs/img/masaustu-harita.png" alt="Masaüstü · Dünya rü'yet haritası" width="900"><br><sub>Dünya rü'yet haritası: her yerin kendi gurûbunda hilâlin Tam İlmihâl'e göre durumu.</sub></p>
+<p align="center"><img src="docs/img/masaustu-harita.png" alt="Masaüstü · Dünya rü'yet haritası" width="900"><br><sub>Dünya rü'yet haritası: her yerin kendi gurûbunda hilâlin Tam İlmihâl'e göre durumu; beynûnet 8° ve 18°, gurûbda irtifâ 5° çizgileri ve ilk görülebilir yer.</sub></p>
 
 <p align="center"><img src="docs/img/aciklama.png" alt="Açıklama penceresi" width="640"><br><sub>"Bu akşam ne demek?" penceresi: 10 Aralık 2026, İstanbul. Receb 1448'in 1. günü iki günden biridir: 10 Aralık (birinci gece görülürse) veya 11 Aralık.</sub></p>
 
@@ -96,6 +96,7 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 <td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_Istanbul_gokyuzu-aksam.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_Istanbul_gokyuzu-aksam.jpg" alt="Gökyüzü haritası (seçili akşam)" width="150"></a><br><sub>Gökyüzü haritası (seçili akşam)</sub></td>
 <td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_Istanbul_aylik-cizelge.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_Istanbul_aylik-cizelge.jpg" alt="Aylık rü'yet imkânı çizelgesi" width="150"></a><br><sub>Aylık rü'yet imkânı çizelgesi</sub></td>
 <td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_1742_Istanbul_dunya-haritasi.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_1742_Istanbul_dunya-haritasi.jpg" alt="Dünya rü'yet imkânı haritası" width="220"></a><br><sub>Dünya rü'yet imkânı haritası</sub></td>
+<td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_Istanbul_dunya-haritasi-uc-gece.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_Istanbul_dunya-haritasi-uc-gece.jpg" alt="Dünya haritası: üç gece (PNG)" width="110"></a><br><sub>Üç gece (PNG)</sub></td>
 </tr>
 </table>
 
@@ -170,7 +171,7 @@ Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir: [THIRD_PARTY_
 **Crescent Sighting Assistant based on *Tam İlmihâl Se'âdet-i Ebediyye***
 
 **[▶ Open online](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
-**[⬇ Download (v0.13.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.13.0.html)** &nbsp;·&nbsp;
+**[⬇ Download (v0.14.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.14.0.html)** &nbsp;·&nbsp;
 **[📖 Endless Bliss](https://www.hakikatkitabevi.net/book.php?bookCode=025)**
 
 </div>
@@ -197,6 +198,7 @@ It is not a source of fiqh and does not replace Tam İlmihâl. Fiqh is the essen
 <td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_Istanbul_gokyuzu-aksam.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_Istanbul_gokyuzu-aksam.jpg" alt="Sky chart (selected evening)" width="150"></a><br><sub>Sky chart (selected evening)</sub></td>
 <td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_Istanbul_aylik-cizelge.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_Istanbul_aylik-cizelge.jpg" alt="Monthly sighting-possibility table" width="150"></a><br><sub>Monthly sighting-possibility table</sub></td>
 <td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_1742_Istanbul_dunya-haritasi.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_1742_Istanbul_dunya-haritasi.jpg" alt="World sighting-possibility map" width="220"></a><br><sub>World sighting-possibility map</sub></td>
+<td align="center" valign="bottom"><a href="docs/img/ciktilar/MahiNev_2026-12-10_Istanbul_dunya-haritasi-uc-gece.jpg"><img src="docs/img/ciktilar/kucuk/MahiNev_2026-12-10_Istanbul_dunya-haritasi-uc-gece.jpg" alt="World map: three nights (PNG)" width="110"></a><br><sub>Three nights (PNG)</sub></td>
 </tr>
 </table>
 
@@ -224,7 +226,7 @@ Mâh-ı Nev is a single HTML file. Nothing to install: download it and open it i
 | 🧭 **Where to look** | Western-horizon drawing, a 360° horizon and a sky chart. The crescent's position is given from the sunset point in degrees and in "fists"; bright stars and planets help orientation. A time slider shows any moment of the evening. |
 | 📅 **Month-start planning** | The two possible first days of the month (first and second night) in the status card; upcoming and previous observation nights; **◀ Previous / Next month start ▶** buttons and a 13-month **list of observation nights**; a sighting strip grouped by Hijri month. |
 | 🗓 **Hijri date** | The lunar day changes at the legal sunset (p. 188). Day 1 of a month is the calculated day or one day later (pp. 315, 360), so the Hijri day is written with two numbers; a **"Why two numbers"** line says which number belongs to which day. For Dhu al-Hijja the main display follows the Işık method given in Tam İlmihâl (p. 326). The Işık method, the Ulugh Beg and Ebüzziyâ / Kindî tables and the arithmetic calendar are each introduced with a **?** explanation (pp. 358–362). |
-| 🗺 **World sighting-possibility map** | Evening and instant modes; Tam İlmihâl classes, a first-visibility layer, crescent-age lines and the 18° sunset meridian. |
+| 🗺 **World sighting-possibility map** | Evening and instant modes; Tam İlmihâl classes and measure lines (elongation 8° and 18°, altitude 5° at sunset); the evening before, first and second nights side by side; first possible / visible place markers; cities, a latitude–longitude grid and light relief; optional value lines (additional info); PNG in the selected language and one A4 per night. |
 | ❔ **"What does this evening mean?"** | An explanation window for the selected evening and place, built on Tam İlmihâl's **two nights**: the crescent is born on the night calculation shows and may be seen one night later (p. 360); beginning by sighting may be one day later, never earlier (p. 315). Two boxes for day 1 of the month, today's lunar day, a first/second-night table, a single answer from your own sighting record, scope and ruling by month. The Qadikhan measure is given for information. It never rules without a sighting. |
 | 🔭 **Celestial objects** | In the selected-moment card: Sun, Moon, planets and bright stars with direction and altitude, rise–transit–set, magnitude, constellation, twilight phases and what can be seen with the naked eye tonight. An observing tool for any day, not only watch evenings. |
 | 🧭 **Navigation** | Day arrows and **↶ Back / Forward ↷** in the top bar: every jump, including "Now", can be undone. A planned evening is previewed in the Field tab. |

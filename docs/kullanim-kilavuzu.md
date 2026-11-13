@@ -121,6 +121,23 @@ Pencere hesâbî imkânı anlatır; hüküm, şahitlik şartlarıyla yetkili mak
 
 Güneş'e asla doğrudan veya dürbünle bakmayın.
 
+## Dünya haritası
+
+Harita, her yerde o yerin kendi gurûbunda hilâlin Tam İlmihâl'e göre durumunu gösterir. Hesâbî imkândır; ay başı rü'yetle kesinleşir.
+
+- **Katman:** Tam İlmihâl sınıfları (ana katman), ilk görünürlük akşamı, Yallop ve Odeh (ek bilgi).
+- **Akşamlar:** "Seçili akşam" veya "Üç gece yan yana": önceki akşam, birinci gece ve ikinci gece. Ayın 1. günü, birinci gecenin ertesi günü veya bir gün sonrasıdır; önce olamaz (s. 315). Üç gece görünümünde ◀ ▶ okları ay değiştirir.
+- **Tam İlmihâl ölçü çizgileri:** beynûnet 8° (kırmızı; altı kesin red), beynûnet 18° (yeşil; üstü görülebilir), gurûbda irtifâ 5° (turuncu, kesikli), gurûbda ay ufukta (noktalı). Bu çizgiler Yallop ve Odeh katmanlarında da çizilir; böylece ek bilgi, Tam İlmihâl'in ölçüleriyle karşılaştırılarak okunur.
+- **İlk mümkün / ilk görülebilir yer (◆):** O akşamın haritasında gurûbu en erken olan mümkün (sarı) ve görülebilir (yeşil) nokta. Harita notunda yeri, gurûb saati (yerel ve UT) ve beynûneti yazılır.
+- **Değer çizgisi (ek bilgi):** beynûnet, gurûbda irtifâ, hilâl yaşı, gurûbdan 5° irtifâya kadar geçen süre, gurûbdan ayın batışına kadar geçen süre, ARCV veya hilâl kalınlığı.
+- **Görünüm:** kesin redde tarama, 18° gurûb boylamı, şehirler (seçili dilde), enlem-boylam ağı (20°), ülke sınırları, kabartma, renkleri yalnızca karalarda gösterme. Seçimler hatırlanır.
+- **Tıklanan yer:** Haritada bir noktaya dokununca o yerin sınıfı, gurûbu, beynûneti, irtifâı, 5° penceresi ve ek bilgiler (ARCV, DAZ, kalınlık, aydınlık oran, Yallop q, Odeh V) yazılır; "Bu konumu kullan" ile Plan o yere geçer.
+- **⤓ PNG kaydet:** Harita başlık, açıklama, lejant ve kaynak satırıyla seçili dilde resim olarak kaydedilir. Üç gece görünümünde üç harita alt alta tek resimdir.
+- **Yazdır:** "Dünya haritası (yatay)" tek sayfa; "Dünya haritası: üç gece" her geceyi ayrı yatay A4 sayfasına koyar.
+- **Çıktılarda dil ve kaynak:** PNG, PDF ve JPG çıktılarının başlığı, açıklaması, lejantı ve kenar yazıları seçili dildedir ve Tam İlmihâl'in terimlerini kullanır. Harita ve gökyüzü resimlerinin içinde, yazıları örtmeyen bir köşede küçük bir "Mâh-ı Nev · bemiroglu.github.io/MahiNev" satırı bulunur.
+
+Plan sekmesindeki **Ek bilgi** bölümünde "Hilâl verileri (gurûb anı)" tablosu vardır: ictimâ (yerel ve UTC), hilâl yaşı, Güneş'in ve Ay'ın azimut / irtifâı, jeosentrik ve topozentrik beynûnet, DAZ, ARCV, hilâl kalınlığı, ayın yarıçapı (SD) ve ufkî paralaksı (HP), uzaklığı, aydınlık oranı, batışı ve 5° penceresi.
+
 ## Büyük ekran ve PDF
 
 Hazırlık için büyük bir ekran (bilgisayar veya tablet) tavsiye edilir. Sahada telefon ekranı küçük kalır. Rasad planını ve akşamın gökyüzü haritasını önceden **⎙ Yazdır → PDF** ile kaydedip yanınıza alın; internetsiz ve tek bakışta okunur.
@@ -177,6 +194,7 @@ An çubuğundaki "⎙ Yazdır / PDF" düğmesi bir seçim penceresi açar. Her s
 - gökyüzü haritası (seçili akşam): batı göğü, hilâlin gurûbdan ay batımına kadar yeri ve akşam çizelgesi (saat, Güneş'in ve hilâlin irtifâı, gurûb noktasına göre yön);
 - aylık çizelge;
 - dünya haritası (yatay);
+- dünya haritası: üç gece (her gece ayrı yatay sayfa);
 - tutanak veya boş tutanak formu.
 
 Tarayıcının yazdırma penceresinde "PDF olarak kaydet" seçilebilir; sayfalar JPG olarak da kaydedilebilir.

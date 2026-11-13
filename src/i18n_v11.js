@@ -1,7 +1,6 @@
 /* Metinler: 0.12 (iki gece esası, hicrî günün gerekçesi, gök cisimleri aracı) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.13.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Hicrî günün iki sayısı: ayın 1. günü hesapla bulunan gün veya bir gün sonrasıdır (s. 315, 326, 360)

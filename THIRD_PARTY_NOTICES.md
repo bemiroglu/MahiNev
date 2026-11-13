@@ -6,6 +6,7 @@
 | d3-celestial — Olaf Frohn | 0.7.35 | BSD-3-Clause | `src/stars.js`: yıldız (Hipparcos), takımyıldız çizgileri ve adları |
 | qrcode-generator — Kazuhiko Arase | 2.0.4 | MIT | `src/qrcode.js` |
 | Natural Earth | 1:110m | Kamu malı | `src/land.js`: kara ve sınırlar |
+| NASA Earth Observatory, Blue Marble | gri tona çevrilip küçültüldü (900 piksel) | Kamu malı | `src/relief.js`: haritadaki kabartma dokusu |
 | Open-Meteo | çevrimiçi servis | Veri: CC BY 4.0 | İsteğe bağlı hava, pus ve yükseklik tahmini |
 
 "QR Code" DENSO WAVE INCORPORATED'ın tescilli markasıdır.

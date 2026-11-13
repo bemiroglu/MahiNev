@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.13.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.14.0
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; Tam İlmihâl’e uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -27,7 +27,7 @@
   --ok: #1f7a4a; --ok-bg: #e0f1e7; --warn: #9c6200; --warn-bg: #faedd3; --bad: #b0352d; --bad-bg: #f7dfdc; --info: #3d5d86; --info-bg: #e2eaf4;
   --sky-day: #9fc0de; --sky-dusk: #f0c38c; --sky-night: #0f1a2e; --sky-glow: #ffb466; --sky-grid: #ffffff; --sky-text: #102035; --sky-star: #fff6d8; --moon: #fbf3d6; --ground: #2e3746; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
   --map-sea: #cdd9e4; --map-land: #eef0ec; --map-coast: #6b7785; --map-border: #a3adb8; --map-iso: #7a4f00; --map-label-bg: rgba(255,255,255,.85); --map-mark: #ffffff; --map-mark-ring: #142030; --map-night: #0b1a33; --map-day: #fff4cf; --map-edge: #2b3746;
-  --c-visible: #2e9e5b; --c-possible: #e3b21c; --c-below5: #e07b24; --c-below8: #c8402f; --c-notborn: #7d8794; --c-nosun: #4f5f78;
+  --c-visible: #2e9e5b; --c-possible: #e3b21c; --c-below5: #e07b24; --c-below8: #c8402f; --c-notborn: #7d8794; --c-nosun: #4f5f78; --c-visible-ink: #1b7a42; --c-below5-ink: #b35400;
   --font-display: "IBM Plex Serif", Georgia, "Times New Roman", serif;
   --font-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
@@ -40,7 +40,7 @@
     --ok: #5cc98a; --ok-bg: #11301f; --warn: #e8b34a; --warn-bg: #33270f; --bad: #ef7f76; --bad-bg: #3a1714; --info: #8fb4e3; --info-bg: #15243a;
     --sky-day: #2e4f78; --sky-dusk: #7a4a2c; --sky-night: #060b14; --sky-glow: #c87838; --sky-grid: #9fb3cc; --sky-text: #e8edf4; --sky-star: #fff2c8; --moon: #fbf1cf; --ground: #03060a; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
     --map-sea: #0d1828; --map-land: #1d2a3c; --map-coast: #6f819a; --map-border: #3c4c63; --map-iso: #f2d16b; --map-label-bg: rgba(10,16,25,.85); --map-mark: #ffffff; --map-mark-ring: #0a1019; --map-night: #000208; --map-day: #9cc3f0; --map-edge: #d5deea;
-    --c-visible: #3fbf72; --c-possible: #e8c13a; --c-below5: #e8873a; --c-below8: #d6493c; --c-notborn: #5d6878; --c-nosun: #34435c;
+    --c-visible: #3fbf72; --c-possible: #e8c13a; --c-below5: #e8873a; --c-below8: #d6493c; --c-notborn: #5d6878; --c-nosun: #34435c; --c-visible-ink: #62d892; --c-below5-ink: #f2a35c;
     color-scheme: dark;
   }
 }
@@ -50,7 +50,7 @@
   --ok: #5cc98a; --ok-bg: #11301f; --warn: #e8b34a; --warn-bg: #33270f; --bad: #ef7f76; --bad-bg: #3a1714; --info: #8fb4e3; --info-bg: #15243a;
   --sky-day: #2e4f78; --sky-dusk: #7a4a2c; --sky-night: #060b14; --sky-glow: #c87838; --sky-grid: #9fb3cc; --sky-text: #e8edf4; --sky-star: #fff2c8; --moon: #fbf1cf; --ground: #03060a; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
   --map-sea: #0d1828; --map-land: #1d2a3c; --map-coast: #6f819a; --map-border: #3c4c63; --map-iso: #f2d16b; --map-label-bg: rgba(10,16,25,.85); --map-mark: #ffffff; --map-mark-ring: #0a1019; --map-night: #000208; --map-day: #9cc3f0; --map-edge: #d5deea;
-  --c-visible: #3fbf72; --c-possible: #e8c13a; --c-below5: #e8873a; --c-below8: #d6493c; --c-notborn: #5d6878; --c-nosun: #34435c;
+  --c-visible: #3fbf72; --c-possible: #e8c13a; --c-below5: #e8873a; --c-below8: #d6493c; --c-notborn: #5d6878; --c-nosun: #34435c; --c-visible-ink: #62d892; --c-below5-ink: #f2a35c;
   color-scheme: dark;
 }
 body.th-light {
@@ -59,7 +59,7 @@ body.th-light {
   --ok: #1f7a4a; --ok-bg: #e0f1e7; --warn: #9c6200; --warn-bg: #faedd3; --bad: #b0352d; --bad-bg: #f7dfdc; --info: #3d5d86; --info-bg: #e2eaf4;
   --sky-day: #9fc0de; --sky-dusk: #f0c38c; --sky-night: #0f1a2e; --sky-glow: #ffb466; --sky-grid: #ffffff; --sky-text: #102035; --sky-star: #fff6d8; --moon: #fbf3d6; --ground: #2e3746; --sky-label: #f6f8fb; --sky-halo: rgba(4,9,18,.92);
   --map-sea: #cdd9e4; --map-land: #eef0ec; --map-coast: #6b7785; --map-border: #a3adb8; --map-iso: #7a4f00; --map-label-bg: rgba(255,255,255,.85); --map-mark: #ffffff; --map-mark-ring: #142030; --map-night: #0b1a33; --map-day: #fff4cf; --map-edge: #2b3746;
-  --c-visible: #2e9e5b; --c-possible: #e3b21c; --c-below5: #e07b24; --c-below8: #c8402f; --c-notborn: #7d8794; --c-nosun: #4f5f78;
+  --c-visible: #2e9e5b; --c-possible: #e3b21c; --c-below5: #e07b24; --c-below8: #c8402f; --c-notborn: #7d8794; --c-nosun: #4f5f78; --c-visible-ink: #1b7a42; --c-below5-ink: #b35400;
   color-scheme: light;
 }
 /* Gece teması: yalnızca koyu kırmızı tonlar; karanlığa alışmış gözü bozmaz */
@@ -69,7 +69,7 @@ body.th-night {
   --ok: #ff6a4f; --ok-bg: #2a0702; --warn: #c8432c; --warn-bg: #1c0402; --bad: #8c2618; --bad-bg: #160301; --info: #b8392a; --info-bg: #120201;
   --sky-day: #2a0703; --sky-dusk: #200502; --sky-night: #030000; --sky-glow: #4a1006; --sky-grid: #3a0b06; --sky-text: #e0442f; --sky-star: #ff6a4f; --moon: #ff7a5c; --ground: #000000; --sky-label: #ff6a4f; --sky-halo: #000000;
   --map-sea: #050000; --map-land: #170302; --map-coast: #6a1a10; --map-border: #3a0b06; --map-iso: #ff6a4f; --map-label-bg: rgba(0,0,0,.85); --map-mark: #ff7a5c; --map-mark-ring: #000000; --map-night: #000000; --map-day: #4a1006; --map-edge: #ff6a4f;
-  --c-visible: #ff6a4f; --c-possible: #c2402b; --c-below5: #7a2415; --c-below8: #4a120a; --c-notborn: #220604; --c-nosun: #140303;
+  --c-visible: #ff6a4f; --c-possible: #c2402b; --c-below5: #7a2415; --c-below8: #4a120a; --c-notborn: #220604; --c-nosun: #140303; --c-visible-ink: #ff8a70; --c-below5-ink: #c2402b;
   color-scheme: dark;
 }
 /* Güneş altı: açık havada, parlak ışıkta en yüksek kontrast */
@@ -79,7 +79,7 @@ body.th-sun {
   --ok: #005a24; --ok-bg: #d7f2df; --warn: #7a4300; --warn-bg: #ffe9b8; --bad: #9e0b00; --bad-bg: #ffd9d4; --info: #002f6c; --info-bg: #dde8f7;
   --sky-day: #7fa9d4; --sky-dusk: #e9a85f; --sky-night: #071226; --sky-glow: #ff9a3c; --sky-grid: #ffffff; --sky-text: #000000; --sky-star: #ffffff; --moon: #fff7d6; --ground: #1d232c; --sky-label: #ffffff; --sky-halo: #000000;
   --map-sea: #b9cde0; --map-land: #ffffff; --map-coast: #000000; --map-border: #555555; --map-iso: #5a3200; --map-label-bg: rgba(255,255,255,.95); --map-mark: #ffffff; --map-mark-ring: #000000; --map-night: #001033; --map-day: #fff1b8; --map-edge: #000000;
-  --c-visible: #1a8a45; --c-possible: #e0a800; --c-below5: #e06a00; --c-below8: #c01e10; --c-notborn: #6b6b6b; --c-nosun: #3b4a66;
+  --c-visible: #1a8a45; --c-possible: #e0a800; --c-below5: #e06a00; --c-below8: #c01e10; --c-notborn: #6b6b6b; --c-nosun: #3b4a66; --c-visible-ink: #005a24; --c-below5-ink: #9a4200;
   color-scheme: light;
 }
 body.th-sun .card, body.th-sun .status { border-width: 2px; }
@@ -140,6 +140,7 @@ nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--
 .best .lbl { color: var(--muted); font-size: .85rem; }
 dl.kv { display: grid; grid-template-columns: minmax(150px, 1fr) auto; margin: 0; }
 dl.kv dt, dl.kv dd { padding: 7px 0; border-bottom: 1px solid var(--line); margin: 0; }
+dl.kv dt.grp { grid-column: 1 / -1; padding-top: 14px; font-weight: 700; border-bottom: 0; } dl.kv dd.grp { grid-column: 1 / -1; padding-top: 0; color: var(--muted); }
 dl.kv dt { color: var(--muted); font-size: .9rem; padding-right: 12px; display: flex; gap: 6px; align-items: flex-start; }
 dl.kv dd { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
 dl.kv dd small { display: block; color: var(--muted); font-size: .78rem; font-family: var(--font-body); }
@@ -178,6 +179,9 @@ details.topic { border-bottom: 1px solid var(--line); padding: 8px 0; } details.
 .mapprog { position: absolute; top: 8px; left: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; font: 500 .85rem var(--font-mono); }
 .mapctl { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; margin-bottom: 12px; }
 .mapctl .field { margin: 0; }
+.mapopts { margin: -4px 0 10px; } .mapopts > summary { cursor: pointer; font-weight: 600; font-size: .9rem; color: var(--muted); padding: 4px 0; } .mapopts .mapctl { margin: 6px 0 0; gap: 4px 16px; }
+.map3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .map3 h3 { margin: 0 0 2px; font-size: .95rem; } .map3 > div { display: flex; flex-direction: column; } .map3 .cap { margin: 0 0 4px; } .map3 .m3map { margin-top: auto; }
+@media (max-width: 900px) { .map3 { grid-template-columns: 1fr; } }
 .chk { display: inline-flex; gap: 6px; align-items: center; font-size: .9rem; min-height: 32px; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 0; font-size: .85rem; }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -582,17 +586,27 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
         <div class="btns"><button class="btn" type="button" id="mapPrev">◀</button><button class="btn" type="button" id="mapNext">▶</button></div>
         <div class="field"><label for="mLayer" id="lMLayer"></label><select id="mLayer"></select></div>
         <div class="field"><label for="mRes" id="lMRes"></label><select id="mRes"><option value="4">4°</option><option value="3">3°</option><option value="2">2°</option></select></div>
-        <label class="chk"><input type="checkbox" id="mAge"><span id="lMAge"></span></label>
-        <label class="chk"><input type="checkbox" id="mBorders"><span id="lMBorders"></span></label>
-        <label class="chk"><input type="checkbox" id="m18"><span id="lM18"></span></label>
-        <label class="chk"><input type="checkbox" id="mLand"><span id="lMLand"></span></label>
+        <div class="field"><label for="mView" id="lMView"></label><select id="mView"></select></div>
+        <div class="field"><label for="mValue" id="lMValue"></label><select id="mValue"></select></div>
+        <div class="btns"><button class="btn" type="button" id="mPng"></button></div>
       </div>
+      <details class="mapopts" id="mOptsBox"><summary id="lMOpts"></summary><div class="mapctl">
+        <label class="chk"><input type="checkbox" id="mBook"><span id="lMBook"></span></label>
+        <label class="chk"><input type="checkbox" id="mFirst"><span id="lMFirst"></span></label>
+        <label class="chk"><input type="checkbox" id="mHatch"><span id="lMHatch"></span></label>
+        <label class="chk"><input type="checkbox" id="m18"><span id="lM18"></span></label>
+        <label class="chk"><input type="checkbox" id="mCities"><span id="lMCities"></span></label>
+        <label class="chk"><input type="checkbox" id="mGrat"><span id="lMGrat"></span></label>
+        <label class="chk"><input type="checkbox" id="mBorders"><span id="lMBorders"></span></label>
+        <label class="chk"><input type="checkbox" id="mRelief"><span id="lMRelief"></span></label>
+        <label class="chk"><input type="checkbox" id="mLand"><span id="lMLand"></span></label>
+      </div></details>
       <div class="mapctl" id="mInstCtl" hidden>
         <div class="field" style="flex:1 1 260px"><label for="mTime" id="lMTime"></label><input type="range" id="mTime" min="0" max="1620" step="5"></div>
         <span class="tval" id="mTimeVal" style="font:600 1.15rem var(--font-mono)"></span>
         <div class="btns"><button class="btn" type="button" id="mHPrev">−1 h</button><button class="btn" type="button" id="mHNext">+1 h</button><button class="btn" type="button" id="mPlay"></button><button class="btn" type="button" id="mNow"></button></div>
       </div>
-      <div id="bigMap"></div><div class="legend" id="mapLegend"></div><p class="cap" id="mapNote"></p>
+      <div id="bigMap"></div><div class="map3" id="map3" hidden></div><div class="legend" id="mapLegend"></div><p class="cap" id="mapNote"></p>
       <div id="pickBox" hidden><h3 id="hPick"></h3><dl class="kv" id="pickKv"></dl><div class="btns" style="margin-top:8px"><button class="btn primary" type="button" id="pickUse"></button></div></div>
     </section>
   </main>
@@ -1358,6 +1372,21 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     }
     return out;
   }
+  // Haritanın değer çizgileri için genişletilmiş hücre (ek bilgi; yalnız istendiğinde hesaplanır):
+  // ARCV (ayın ve güneşin havasız yükseklik farkı), DAZ (semt farkı), topos. uzanım, hilâl genişliği (yay dakikası),
+  // ay batışı gecikmesi ve gurûbdan hilâlin 5°’ye inişine kadar geçen süre (dakika). Tam İlmihâl sınıfı değişmez.
+  function cellX(lat, lon, dayUTC, conj) {
+    const c = cell(lat, lon, dayUTC, conj, false); if (!c.ss) return c;
+    const obs = new A.Observer(lat, lon, 0), mo = topo('Moon', c.ss, obs), su = topo('Sun', c.ss, obs);
+    const elT = sep(su.ra, su.dec, mo.ra, mo.dec), sd = deg(Math.asin(MOON_R_KM / (mo.distAU * AU_KM))) * 60;
+    Object.assign(c, { arcv: mo.airAlt - su.airAlt, daz: su.az - mo.az, elT, width: sd * (1 - Math.cos(rad(elT))), moonAz: mo.az });
+    if (c.ageH > 0 && c.up > 0) {
+      try { const ms = A.SearchRiseSet('Moon', obs, -1, c.ss, 1); if (ms) { const l = (ms.ut - c.ss.ut) * 1440; if (l > 0 && l < 720) c.lag = l; } } catch (e) { /* */ }
+      if (c.alt >= K.MIN_ALT) { try { const w = A.SearchAltitude('Moon', obs, -1, c.ss, 0.5, K.MIN_ALT - bennett(K.MIN_ALT)); if (w) c.win = (w.ut - c.ss.ut) * 1440; } catch (e) { /* */ } }
+      else c.win = 0;
+    }
+    return c;
+  }
   // Bir yerin bu ay için ilk elverişli akşamı (0–3 gün sonrası); bulunamazsa null
   function firstEvening(lat, lon, conj) {
     const cd = conj.date, base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
@@ -1397,6 +1426,17 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   function twilight(obs, ss) {
     const f = a => A.SearchAltitude('Sun', obs, -1, ss.AddDays(-0.02), 1, a);
     return { civil: f(-6), nautical: f(-12), ahmar: f(K.SAFAK_AHMAR), ebyad: f(K.SAFAK_EBYAD) };
+  }
+  // Gurûb anında hilâlin ayrıntılı verileri (ek bilgi): azimut/irtifâ, iki beynûnet, SD, HP, uzaklık, kalınlık, ARCV
+  function crescentData(r) {
+    if (!r || !r.ok) return null;
+    const loc = r.loc, obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0)), t = r.gurub;
+    const m = topo('Moon', t, obs), s = topo('Sun', t, obs);
+    const geoKm = A.GeoMoon(t).Length() * AU_KM, topoKm = m.distAU * AU_KM;
+    const elT = sep(s.ra, s.dec, m.ra, m.dec), sd = deg(Math.asin(MOON_R_KM / topoKm)) * 60;
+    return { sunAz: s.az, sunAlt: s.alt, moonAz: m.az, moonAlt: m.alt, elongGeo: r.beynunet, elongTopo: elT, daz: r.daz,
+      sd, hp: deg(Math.asin(6378.14 / geoKm)) * 60, geoKm, topoKm, illum: r.illum, width: sd * (1 - Math.cos(rad(elT))), arcv: m.airAlt - s.airAlt,
+      lag: r.lagMin, moonset: r.moonset, win: r.windowEnd ? (r.windowEnd.ut - t.ut) * 1440 : null };
   }
   // Belirli bir anda güneş ve ay konumu (ufuk çizimi ve saha modu için)
   function at(t, loc) {
@@ -1484,7 +1524,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   }
 
   const Q = 'Qa4AayT+K8a3D8JeSBryXgoVUr1alb7zcmzQOZkX/u1jEx3iuozey25tyfEErebPR9SSR9iPpIALLLX9Uf'; // sürüm bildirimi parçası (build.py)
-  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, firstEvening, skyObjects, twilight, at, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
+  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, cellX, firstEvening, skyObjects, twilight, at, crescentData, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Takvim usulleri (Se'âdet-i Ebediyye s. 358–362) ve aritmetik hicrî takvim.
@@ -2020,7 +2060,7 @@ window.HR_CANON_EN = [
       '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
       'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
       'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.',
-      tr ? 'Harita: Natural Earth 1:110m (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).' : 'Map: Natural Earth 1:110m (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).'
+      tr ? 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).' : 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).'
     ].map(x => `<li>${x}</li>`).join('') + '</ul>';
   }
   const CANON_EN = G.HR_CANON_EN || [];
@@ -2767,7 +2807,6 @@ window.HR_CANON_EN = [
 /* Metinler: 0.12 (iki gece esası, hicrî günün gerekçesi, gök cisimleri aracı) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.13.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     // Hicrî günün iki sayısı: ayın 1. günü hesapla bulunan gün veya bir gün sonrasıdır (s. 315, 326, 360)
@@ -2872,6 +2911,75 @@ window.HR_CANON_EN = [
   Object.assign(T.tr, { fPvOk: 'Seçili anda hilâl aranabilir', fPvTag: 'önizleme' }); Object.assign(T.en, { fPvOk: 'The crescent can be searched for at the selected moment', fPvTag: 'preview' });
   T.tr.hints = Object.assign({}, T.tr.hints, { fieldTop: 'Sahada ne yapmalı: geri sayım, Tam İlmihâl penceresi ve bakılacak yer. Canlı kipte şimdiki an, planlama kipinde seçili an gösterilir.', date: 'Planladığınız akşam. Gün okları (◀ ▶) üst bantta da vardır; ↶ düğmesi önceki seçime, ↷ sonrakine döner. Ay başı rasad gecelerine “◀ Önceki ay başı / Sonraki ay başı ▶” düğmeleriyle gidilir: hilâl ayın 29. günü gurûb vakti aranır (s. 315).' });
   T.en.hints = Object.assign({}, T.en.hints, { fieldTop: 'What to do in the field: countdowns, Tam İlmihâl’s window and where to look. Live mode shows the current moment; planning mode shows the selected moment.', date: 'The evening you are planning. The day arrows (◀ ▶) are also in the top bar; ↶ returns to the previous selection and ↷ to the next. “◀ Previous month start / Next month start ▶” go to month-start observation nights: the crescent is sought at sunset on the 29th (p. 315).' });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+/* Metinler: 0.14 (harita: Tam İlmihâl ölçü çizgileri, üç gece, işaretler, ağ, şehirler, PNG; hilâl verileri) */
+(function (G) {
+  'use strict';
+  G.HR_VERSION = '0.14.0';
+  const T = G.HRI18N.T;
+  Object.assign(T.tr, {
+    mapOpts: 'Görünüm', mapBook: 'Tam İlmihâl ölçü çizgileri (8°, 18°, 5°)', mapFirst: 'İlk mümkün / görülebilir yer', mapGrat: 'Enlem-boylam ağı',
+    mapCities: 'Şehirler', mapRelief: 'Kabartma', mapHatch: 'Kesin redde tarama',
+    mapValue: 'Değer çizgisi (ek bilgi)',
+    mapValueOpts: { none: 'Yok', elong: 'Beynûnet (°)', alt: 'Gurûbda irtifâ (°)', age: 'Hilâl yaşı (saat)', win: 'Gurûbdan 5° irtifâya (dk)', lag: 'Gurûbdan ayın batışına (dk)', arcv: 'ARCV (°)', width: 'Hilâl kalınlığı (′)' },
+    valUnit: { h: ' sa', min: ' dk' },
+    bookLbl: { e8: 'beynûnet 8°', e18: 'beynûnet 18°', a5: 'irtifâ 5°' },
+    gratDir: { N: 'K', S: 'G', E: 'D', W: 'B' },
+    mapView: 'Akşamlar', mapViewOpts: { one: 'Seçili akşam', three: 'Üç gece yan yana' },
+    night3: { prev: 'Önceki akşam', A: 'Birinci gece', B: 'İkinci gece' },
+    night3Sub: { prev: ev => `${ev} akşamı · ay başı bundan önce olamaz (s. 315)`, A: (ev, d) => `${ev} akşamı · görülürse 1. gün ${d}`, B: (ev, d) => `${ev} akşamı · birinci gece görülmezse 1. gün ${d}` },
+    map3Note: 'Aynı ayın üç akşamı. Ayın 1. günü, birinci gecenin ertesi günü (hesâbî gün) veya bir gün sonrasıdır; önce olamaz (s. 315). Hangisi olduğu rü’yetle kesinleşir.',
+    map3First: '“İlk görünürlük akşamı” katmanı tek haritada dört akşamı zaten gösterir; üç gece görünümünde Tam İlmihâl sınıfları çizilir.',
+    firstLbl: { poss: 'İlk mümkün yer', vis: 'İlk görülebilir yer' },
+    firstSub: (tm, b) => `gurûb ${tm} · beynûnet ${b}`,
+    lgBook8: 'Beynûnet 8° çizgisi (altı kesin red)', lgBook18: 'Beynûnet 18° çizgisi (üstü görülebilir)', lgBook5: 'Gurûbda irtifâ 5° (kesikli)',
+    lgUp0: 'Gurûbda ay ufukta (noktalı)', lgHatch: 'Taralı: kesin red', lgFirst8: 'İlk mümkün yer (bu akşam gurûbu en erken olan)', lgFirst18: 'İlk görülebilir yer (bu akşam gurûbu en erken olan)', lgValue: v => `İnce çizgi: ${v}`,
+    lgYallopLine: 'Yallop q sınırları (ince çizgi)', lgOdehLine: 'Odeh V sınırları (ince çizgi)', lgGrat: 'Ağ: 20°',
+    mapPng: 'PNG kaydet', mapPngTip: 'Haritayı başlık, açıklama ve kaynakla birlikte seçili dilde resim olarak kaydeder.',
+    mapWait: 'Harita hazırlanıyor…', mapSaved: 'Resim kaydedildi.',
+    pngSrc: (b, v) => `Kaynak: ${b} (s. 315, 360) · Hesap: Astronomy Engine · Kabartma: NASA Blue Marble · Mâh-ı Nev ${v}`,
+    pngNote: 'Hesâbî imkân haritasıdır; ay başı rü’yetle kesinleşir.',
+    pickMore: 'Ek bilgi (bu nokta, gurûb anı)',
+    // Plan ek bilgi: hilâl verileri (gurûb anı, topozentrik)
+    hcTitle: 'Hilâl verileri (gurûb anı)', hcNote: 'Ek bilgidir; hüküm Tam İlmihâl’in ölçüleriyle ve rü’yetle verilir.',
+    hcSunAzAlt: 'Güneş: azimut / irtifâ', hcMoonAzAlt: 'Ay: azimut / irtifâ', hcDaz: 'DAZ (azimut farkı)', hcSd: 'Ayın yarıçapı (SD)', hcHp: 'Ayın ufkî paralaksı (HP)',
+    hcDist: 'Ayın uzaklığı (merkezden)', hcIllum: 'Aydınlık oran', hcElongGeo: 'Beynûnet (jeosentrik / topozentrik)', hcConj: 'İctimâ (yerel / UTC)', hcWin: 'Gurûbdan 5° irtifâya kadar',
+    hcMoonset: 'Ayın batışı', km: 'km', hcArcv: 'ARCV (gurûb anı, topozentrik)', hcWidth: 'Hilâl kalınlığı (gurûb anı)', hcDistSub: 'yer merkezinden / gözlemciden',
+    prOptsMap3: 'Dünya haritası: üç gece (her gece ayrı A4)'
+  });
+  Object.assign(T.en, {
+    mapOpts: 'Display', mapBook: 'Tam İlmihâl’s measure lines (8°, 18°, 5°)', mapFirst: 'First possible / visible place', mapGrat: 'Latitude–longitude grid',
+    mapCities: 'Cities', mapRelief: 'Relief', mapHatch: 'Hatch definite rejection',
+    mapValue: 'Value line (additional info)',
+    mapValueOpts: { none: 'None', elong: 'Beynûnet (elongation, °)', alt: 'İrtifâ at sunset (°)', age: 'Moon age (hours)', win: 'Sunset to 5° irtifâ (min)', lag: 'Sunset to moonset (min)', arcv: 'ARCV (°)', width: 'Crescent width (′)' },
+    valUnit: { h: ' h', min: ' min' },
+    bookLbl: { e8: 'beynûnet 8°', e18: 'beynûnet 18°', a5: 'irtifâ 5°' },
+    gratDir: { N: 'N', S: 'S', E: 'E', W: 'W' },
+    mapView: 'Evenings', mapViewOpts: { one: 'Selected evening', three: 'Three nights side by side' },
+    night3: { prev: 'Evening before', A: 'First night', B: 'Second night' },
+    night3Sub: { prev: ev => `evening of ${ev} · the month cannot begin before this (p. 315)`, A: (ev, d) => `evening of ${ev} · if seen, day 1 is ${d}`, B: (ev, d) => `evening of ${ev} · if not seen on the first night, day 1 is ${d}` },
+    map3Note: 'Three evenings of the same month. Day 1 of the month is the day after the first night (the calculated day) or one day later; it cannot be earlier (p. 315). Which of the two it is becomes certain by sighting.',
+    map3First: 'The “first-visibility evening” layer already shows four evenings on one map; the three-night view draws Tam İlmihâl’s classes.',
+    firstLbl: { poss: 'First possible place', vis: 'First visible place' },
+    firstSub: (tm, b) => `sunset ${tm} · beynûnet ${b}`,
+    lgBook8: 'Beynûnet 8° line (below: definite rejection)', lgBook18: 'Beynûnet 18° line (above: visible)', lgBook5: 'İrtifâ 5° at sunset (dashed)',
+    lgUp0: 'Moon on the horizon at sunset (dotted)', lgHatch: 'Hatched: definite rejection', lgFirst8: 'First possible place (earliest sunset this evening)', lgFirst18: 'First visible place (earliest sunset this evening)', lgValue: v => `Thin line: ${v}`,
+    lgYallopLine: 'Yallop q boundaries (thin line)', lgOdehLine: 'Odeh V boundaries (thin line)', lgGrat: 'Grid: 20°',
+    mapPng: 'Save PNG', mapPngTip: 'Saves the map as an image in the selected language, with title, legend and source.',
+    mapWait: 'Preparing the map…', mapSaved: 'Image saved.',
+    pngSrc: (b, v) => `Source: ${b} (pp. 315, 360) · Computation: Astronomy Engine · Relief: NASA Blue Marble · Mâh-ı Nev ${v}`,
+    pngNote: 'A map of calculated possibility; the month begins by sighting.',
+    pickMore: 'Additional info (this point, at sunset)',
+    hcTitle: 'Crescent data (at sunset)', hcNote: 'Additional information; the ruling follows Tam İlmihâl’s measures and sighting.',
+    hcSunAzAlt: 'Sun: azimuth / irtifâ', hcMoonAzAlt: 'Moon: azimuth / irtifâ', hcDaz: 'DAZ (azimuth difference)', hcSd: 'Moon’s semi-diameter (SD)', hcHp: 'Moon’s horizontal parallax (HP)',
+    hcDist: 'Moon’s distance (centre)', hcIllum: 'Illuminated fraction', hcElongGeo: 'Beynûnet (geocentric / topocentric)', hcConj: 'Conjunction (local / UTC)', hcWin: 'Sunset to 5° irtifâ',
+    hcMoonset: 'Moonset', km: 'km', hcArcv: 'ARCV (at sunset, topocentric)', hcWidth: 'Crescent width (at sunset)', hcDistSub: 'from Earth’s centre / from the observer',
+    prOptsMap3: 'World map: three nights (each night on its own A4)'
+  });
+  T.tr.mapLand = T.tr.landOnly; T.en.mapLand = T.en.landOnly;
+  T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });
+  T.en.prOpts = Object.assign({}, T.en.prOpts, { map3: T.en.prOptsMap3 });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Ayrıntılı açıklamalar: “?” notlarının uzun hâli. Kısa not her zaman görünür; ayrıntı, Ayarlar’da “Ayrıntılı” seçilirse
@@ -5997,9 +6105,18 @@ var qrcode = function() {
   G.HRStarMap = { Q, draw, drawWest, guides, horizonOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
+/* Kabartma dokusu (gri ton, 900 px; 80°K–60°G, eşdikdörtgen).
+   Kaynak: NASA Earth Observatory "Blue Marble" (kamu malı); renk kaldırılıp deniz nötr griye çekilerek
+   küçültülmüştür. Haritada yalnızca kara üzerinde, düşük yoğunlukta yumuşak ışık katmanı olarak çizilir. */
+(function (G) { 'use strict';
+G.HR_RELIEF = 'data:image/webp;base64,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';
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
 /* Dünya haritası. Eş-dikdörtgen izdüşüm, Canvas.
  * Akşam modu: her noktanın kendi gurûbunda değerlendirme; sınıf her piksel için, ızgara değerlerinin ara değerinden bulunur.
  *   katmanlar: seadet (Tam İlmihâl’in sınıfları) · first (ilk görünürlük akşamı) · yallop · odeh (ek bilgi)
+ *   çizgiler: Tam İlmihâl’in ölçüleri (beynûnet 8° ve 18°, gurûbda hilâl yüksekliği 5°) ve ek bilgi olarak değer çizgileri
+ *   (beynûnet, yükseklik, yaş, arama süresi, ay batışı gecikmesi, ARCV, hilâl genişliği); ilk mümkün / görülebilir yer; ızgara; şehirler
  * Anlık mod: seçili anda gece-gündüz sınırı, alacakaranlık, ☀ ve ☾ noktaları, ayın ufku, şu an aranabilir bölge. */
 (function (G) {
   'use strict';
@@ -6075,40 +6192,83 @@ var qrcode = function() {
   function ringPath(ctx, x, y, ring, shift, close) { ctx.beginPath(); ring.pts.forEach(([lo, la], i) => { const X = x(lo + shift), Y = y(la); i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); }); if (close) ctx.closePath(); }
   function landPath(ctx, x, y) { ctx.beginPath(); for (const r of RINGS()) for (const sh of r.jumped ? [0, 360, -360] : [0]) { r.pts.forEach(([lo, la], i) => { const X = x(lo + sh), Y = y(la); i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); }); ctx.closePath(); } }
 
-  // Pürüzsüz eş-yaş çizgileri: ızgara 3 kat sıklaştırılıp eş-değer eğrileri çıkarılır
-  function isolines(g, step) {
+
+  // ---- eş-değer çizgileri (yürüyen kareler): ızgara 3 kat sıklaştırılır, ara değerle düzgün eğriler çıkar ----
+  // get(s) → değer veya null (null olan dörtgenler atlanır); levels: dizi ya da (lo, hi) → dizi
+  function isoField(g, get, levels, maxSpread) {
     const S = sampler(g), f = 3, r = g.res / f;
     const lats = [], lons = [];
     for (let la = LAT_TOP - g.res / 2; la >= LAT_BOT + g.res / 2 - 1e-9; la -= r) lats.push(la);
     for (let lo = -180 + g.res / 2; lo <= 180 - g.res / 2 + 1e-9; lo += r) lons.push(lo);
-    const V = lats.map(la => lons.map(lo => { const s = S(la, lo); return s.near.code === 'noSunset' ? null : s.v('ageH'); }));
-    const segs = [], labels = new Map();
+    const V = lats.map(la => lons.map(lo => { const s = S(la, lo); return s.near.code === 'noSunset' ? null : get(s); }));
+    const segs = [];
     for (let i = 0; i < lats.length - 1; i++) for (let j = 0; j < lons.length - 1; j++) {
       const q = [V[i][j], V[i][j + 1], V[i + 1][j + 1], V[i + 1][j]];
-      if (q.some(v => v == null)) continue;
-      const lo = Math.min(...q), hi = Math.max(...q); if (hi - lo > 10) continue;
+      if (q.some(v => v == null || !isFinite(v))) continue;
+      const lo = Math.min(...q), hi = Math.max(...q); if (maxSpread && hi - lo > maxSpread) continue;
       const P = [[lats[i], lons[j]], [lats[i], lons[j + 1]], [lats[i + 1], lons[j + 1]], [lats[i + 1], lons[j]]];
-      for (let L = Math.ceil(lo / step) * step; L <= hi; L += step) {
-        if (L <= 0) continue;
+      const Ls = typeof levels === 'function' ? levels(lo, hi) : levels;
+      for (const L of Ls) {
+        if (L < lo || L > hi) continue;
         const pts = [];
         for (let e = 0; e < 4; e++) { const a = q[e], b = q[(e + 1) % 4]; if ((a - L) * (b - L) < 0) { const t = (L - a) / (b - a); pts.push([P[e][0] + (P[(e + 1) % 4][0] - P[e][0]) * t, P[e][1] + (P[(e + 1) % 4][1] - P[e][1]) * t]); } }
-        if (pts.length >= 2) { segs.push([pts[0], pts[1], L]); if (Math.abs(lats[i]) <= r && !labels.has(L)) labels.set(L, pts[0]); }
+        if (pts.length >= 2) segs.push([pts[0], pts[1], L]);
+        if (pts.length === 4) segs.push([pts[2], pts[3], L]);
       }
     }
-    return { segs, labels };
+    return segs;
+  }
+  const stepLevels = (step, min) => (lo, hi) => { const o = []; for (let L = Math.ceil(lo / step) * step; L <= hi; L += step) if (min == null || L >= min) o.push(+L.toFixed(6)); return o; };
+  // Çizgi takımları: getter, seviyeler, biçim. book: Tam İlmihâl’in ölçüleri; diğerleri ek bilgi (değer çizgileri)
+  const okMoon = s => { const a = s.v('ageH'), u = s.v('up'); return a != null && a > 0 && a < 96 && u > 0; };
+  const VALUE = {
+    elong: { get: s => s.v('elong'), lv: stepLevels(2, 2), unit: '°', every: 2 },
+    alt: { get: s => s.v('alt'), lv: stepLevels(2, 0), unit: '°', every: 2 },
+    age: { get: s => s.v('ageH'), lv: stepLevels(2, 2), unit: 'h', every: 4, spread: 10 },
+    win: { get: s => (okMoon(s) && s.v('win') != null ? s.v('win') : null), lv: stepLevels(10, 10), unit: '′', every: 20, x: true },
+    lag: { get: s => (okMoon(s) && s.v('lag') != null ? s.v('lag') : null), lv: stepLevels(15, 15), unit: '′', every: 30, x: true },
+    arcv: { get: s => (s.v('ageH') > 0 ? s.v('arcv') : null), lv: stepLevels(2, 2), unit: '°', every: 2, x: true },
+    width: { get: s => (okMoon(s) ? s.v('width') : null), lv: stepLevels(0.1, 0.1), unit: '′', every: 0.2, x: true, dec: 1 },
+    yallop: { get: s => (okMoon(s) ? s.v('q') : null), lv: [0.216, -0.014, -0.160, -0.232], modern: 1 },
+    odeh: { get: s => (okMoon(s) ? s.v('V') : null), lv: [5.65, 2, -0.96], modern: 1 }
+  };
+  // Şehirler (yön bulmak için; adlar dile göre, yoksa İngilizce). r: 1 her zaman, 2 yer varsa
+  const CITIES = [
+    ['Mekke', 'Makkah', 21.42, 39.83, 1], ['Medine', 'Madinah', 24.47, 39.61, 2], ['İstanbul', 'Istanbul', 41.01, 28.98, 1], ['Ankara', 'Ankara', 39.93, 32.86, 2],
+    ['Kahire', 'Cairo', 30.04, 31.24, 1], ['Kudüs', 'Jerusalem', 31.78, 35.22, 2], ['Bağdat', 'Baghdad', 33.31, 44.37, 2], ['Tahran', 'Tehran', 35.69, 51.39, 1],
+    ['Riyad', 'Riyadh', 24.71, 46.68, 2], ['Dubai', 'Dubai', 25.2, 55.27, 2], ['Karaçi', 'Karachi', 24.86, 67.0, 1], ['Delhi', 'Delhi', 28.61, 77.21, 1],
+    ['Dakka', 'Dhaka', 23.81, 90.41, 2], ['Taşkent', 'Tashkent', 41.3, 69.24, 2], ['Kazan', 'Kazan', 55.79, 49.12, 2], ['Moskova', 'Moscow', 55.76, 37.62, 1],
+    ['Londra', 'London', 51.51, -0.13, 1], ['Paris', 'Paris', 48.86, 2.35, 2], ['Berlin', 'Berlin', 52.52, 13.4, 2], ['Saraybosna', 'Sarajevo', 43.86, 18.41, 2],
+    ['Fas', 'Fez', 34.03, -5.0, 2], ['Dakar', 'Dakar', 14.72, -17.47, 1], ['Lagos', 'Lagos', 6.52, 3.38, 1], ['Hartum', 'Khartoum', 15.5, 32.56, 2],
+    ['Nairobi', 'Nairobi', -1.29, 36.82, 1], ['Kinşasa', 'Kinshasa', -4.44, 15.27, 2], ['Cape Town', 'Cape Town', -33.92, 18.42, 1], ['Johannesburg', 'Johannesburg', -26.2, 28.05, 2],
+    ['Cakarta', 'Jakarta', -6.2, 106.85, 1], ['Kuala Lumpur', 'Kuala Lumpur', 3.14, 101.69, 2], ['Pekin', 'Beijing', 39.9, 116.4, 1], ['Tokyo', 'Tokyo', 35.68, 139.69, 1],
+    ['Manila', 'Manila', 14.6, 120.98, 2], ['Sidney', 'Sydney', -33.87, 151.21, 1], ['Perth', 'Perth', -31.95, 115.86, 2], ['Auckland', 'Auckland', -36.85, 174.76, 1],
+    ['New York', 'New York', 40.71, -74.0, 1], ['Toronto', 'Toronto', 43.65, -79.38, 2], ['Chicago', 'Chicago', 41.88, -87.63, 2], ['Los Angeles', 'Los Angeles', 34.05, -118.24, 1],
+    ['Meksiko', 'Mexico City', 19.43, -99.13, 1], ['Bogota', 'Bogotá', 4.71, -74.07, 2], ['Lima', 'Lima', -12.05, -77.04, 1], ['São Paulo', 'São Paulo', -23.55, -46.63, 1],
+    ['Buenos Aires', 'Buenos Aires', -34.6, -58.38, 1], ['Santiago', 'Santiago', -33.45, -70.67, 2], ['Honolulu', 'Honolulu', 21.31, -157.86, 1], ['Anchorage', 'Anchorage', 61.22, -149.9, 2],
+    ['Reykjavík', 'Reykjavík', 64.15, -21.94, 2]];
+  // Taban dokusu: Blue Marble’dan (NASA, kamu malı) türetilmiş küçük gri doku; karaya “yumuşak ışık” ile, temanın renginde işlenir
+  let RELIEF = null;
+  function relief(onload) {
+    if (RELIEF) return RELIEF.complete && RELIEF.naturalWidth ? RELIEF : null;
+    if (!G.HR_RELIEF) return null;
+    RELIEF = new Image(); RELIEF.onload = onload; RELIEF.src = G.HR_RELIEF; return null;
   }
 
   function mount(el) {
     el.innerHTML = '<div class="mapbox"><canvas></canvas><div class="mapprog" hidden></div><div class="mapmsg" hidden></div></div>';
     const cv = el.querySelector('canvas'), prog = el.querySelector('.mapprog'), msg = el.querySelector('.mapmsg');
-    let last = null, pickCb = null, seq = 0;
-    function size() { const w = Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = window.devicePixelRatio || 1; cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = '100%'; cv.style.height = 'auto'; return { w, h, d }; }  // gizliyken ölçülen genişlik sayfayı taşırmasın
+    let last = null, lastGrids = null, pickCb = null, seq = 0;
+    function size(wOver) {
+      const w = wOver || Math.max(280, Math.round(el.clientWidth || 640)); const h = Math.round(w * (LAT_TOP - LAT_BOT) / 360); const d = wOver ? 1 : (window.devicePixelRatio || 1);
+      return { w, h, d };
+    }
     const proj = (w, h) => ({ x: lon => (lon + 180) / 360 * w, y: lat => (LAT_TOP - lat) / (LAT_TOP - LAT_BOT) * h });
 
     async function render(p) {
       const my = ++seq; last = p;
       msg.hidden = !p.message; msg.textContent = p.message || '';
-      if (p.mode === 'instant') { prog.hidden = true; paint(p, null); return; }
+      if (p.mode === 'instant') { prog.hidden = true; lastGrids = null; paint(p, null); return; }
       prog.hidden = false; prog.textContent = '…';
       const onP = f => { prog.textContent = Math.round(f * 100) + '%'; };
       let grids;
@@ -6121,23 +6281,45 @@ var qrcode = function() {
           if (my !== seq) return;
         }
       } else {
-        const modern = p.layer === 'yallop' || p.layer === 'odeh';
-        grids = [await grid(['ev', p.res, p.dayUTC, p.conj.ut.toFixed(4), modern ? 1 : 0].join('|'), p.res, (la, lo) => G.HRCore.cell(la, lo, p.dayUTC, p.conj, modern), onP)];
+        const modern = p.layer === 'yallop' || p.layer === 'odeh', vx = p.value && VALUE[p.value] && VALUE[p.value].x;
+        // değer çizgisi genişletilmiş hücre isterse (ARCV, genişlik, süreler) ayrı ızgara; sınıflar her zaman aynı hücreden
+        grids = [await grid(['ev', p.res, p.dayUTC, p.conj.ut.toFixed(4), modern ? 1 : 0].join('|'), p.res, (la, lo) => G.HRCore.cell(la, lo, p.dayUTC, p.conj, modern), f => onP(vx ? f / 2 : f))];
+        if (my !== seq) return;
+        if (vx) { grids.x = await grid(['x', p.res, p.dayUTC, p.conj.ut.toFixed(4)].join('|'), p.res, (la, lo) => G.HRCore.cellX(la, lo, p.dayUTC, p.conj), f => onP(0.5 + f / 2)); if (my !== seq) return; }
       }
-      if (my !== seq) return;
-      prog.hidden = true;
+      prog.hidden = true; lastGrids = grids;
       paint(p, grids);
     }
 
-    function paint(p, grids) {
-      const { w, h, d } = size(); const ctx = cv.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0);
+    // İlk mümkün (≥ 8°) ve ilk görülebilir (≥ 18°) yer: bu akşamın ızgarasında gurûbu en erken olan hücre
+    function firstPoints(g) {
+      let poss = null, vis = null;
+      g.lats.forEach((la, i) => g.lons.forEach((lo, j) => {
+        const c = g.rows[i][j]; if (!c || !c.ss) return;
+        if ((c.code === 'possible' || c.code === 'visible') && (!poss || c.ss.ut < poss.ss.ut)) poss = { lat: la, lon: lo, ss: c.ss, elong: c.elong, alt: c.alt };
+        if (c.code === 'visible' && (!vis || c.ss.ut < vis.ss.ut)) vis = { lat: la, lon: lo, ss: c.ss, elong: c.elong, alt: c.alt };
+      }));
+      return { poss, vis };
+    }
+
+    function paint(p, grids, target) {
+      const { w, h, d } = target ? size(target.width) : size();
+      const canvas = target ? document.createElement('canvas') : cv;
+      canvas.width = Math.round(w * d); canvas.height = Math.round(h * d);
+      if (!target) { cv.style.width = '100%'; cv.style.height = 'auto'; }
+      const ctx = canvas.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0);
       const { x, y } = proj(w, h);
+      const sx = Math.max(0.8, w / 1100);   // yazı ve çizgi ölçeği
       ctx.fillStyle = tok('--map-sea'); ctx.fillRect(0, 0, w, h);
       ctx.fillStyle = tok('--map-land'); landPath(ctx, x, y); ctx.fill('nonzero');
+      // taban dokusu (kara)
+      const rel = p.relief && !p.mini ? relief(() => { if (last === p) paint(p, lastGrids); }) : null;
+      const drawRel = a => { if (rel) { ctx.save(); landPath(ctx, x, y); ctx.clip('nonzero'); ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = a; ctx.drawImage(rel, 0, 0, w, h); ctx.restore(); } };
+      drawRel(0.9);
       // sınıf görüntüsü (CSS pikseli çözünürlüğünde)
       const W = Math.round(w), H = Math.round(h);
       const img = new ImageData(W, H), cls = new Uint8Array(W * H);
-      let pal, alpha;
+      let alpha, Ss = null;
       if (p.mode === 'instant') {
         const I = G.HRCore.instant(p.t), thr = G.HRCore.DARK[p.darkKey] != null ? G.HRCore.DARK[p.darkKey] : -0.8333;
         const ageOk = I.ageH != null && I.ageH > 0 && I.ageH < 96, elOk = I.elong >= 8;
@@ -6170,63 +6352,182 @@ var qrcode = function() {
         p._inst = I;
         alpha = 1;
       } else {
-        const Ss = grids.map(sampler);
+        Ss = grids.map(sampler);
         const fn = p.layer === 'first' ? (la, lo) => classFirst(Ss, la, lo) : p.layer === 'seadet' ? (la, lo) => classSeadet(Ss[0], la, lo) : (la, lo) => classModern(Ss[0], la, lo, p.layer);
-        pal = [null, '--c-visible', '--c-possible', '--c-below5', '--c-below8', '--c-notborn', '--c-nosun'].map(n => n && rgb(tok(n)));
+        const pal = [null, '--c-visible', '--c-possible', '--c-below5', '--c-below8', '--c-notborn', '--c-nosun'].map(n => n && rgb(tok(n)));
         for (let py = 0; py < H; py++) { const lat = LAT_TOP - (py + 0.5) / H * (LAT_TOP - LAT_BOT); for (let px = 0; px < W; px++) cls[py * W + px] = fn(lat, (px + 0.5) / W * 360 - 180); }
         const fade = p.layer === 'seadet' || p.layer === 'first' ? 5 : 99;
-        for (let k = 0; k < W * H; k++) { const c = cls[k]; if (!c) continue; const o = k * 4, col = pal[c]; img.data[o] = col[0]; img.data[o + 1] = col[1]; img.data[o + 2] = col[2]; img.data[o + 3] = c === fade ? 70 : c === 6 ? 120 : 165; }
-        const edge = rgb(tok('--map-edge'));
-        for (let py = 0; py < H - 1; py++) for (let px = 0; px < W - 1; px++) { const k = py * W + px, a = cls[k]; if (a !== cls[k + 1] || a !== cls[k + W]) img.data.set([edge[0], edge[1], edge[2], 200], k * 4); }
-        alpha = p.mini ? 0.95 : 0.9;
+        // kesin red bölgeleri (beynûnet < 8°, hilâl doğmamış) çapraz tarama: siyah-beyaz baskıda ve renk körlüğünde de okunur
+        const hatch = p.hatch && p.layer === 'seadet', hc = rgb(tok('--map-edge')), gap = Math.max(6, Math.round(7 * sx));
+        for (let k = 0; k < W * H; k++) {
+          const c = cls[k]; if (!c) continue; const o = k * 4, col = pal[c];
+          if (hatch && (c === 4 || c === 5) && (((k % W) + Math.floor(k / W)) % gap === 0)) { img.data[o] = hc[0]; img.data[o + 1] = hc[1]; img.data[o + 2] = hc[2]; img.data[o + 3] = 120; continue; }
+          img.data[o] = col[0]; img.data[o + 1] = col[1]; img.data[o + 2] = col[2]; img.data[o + 3] = c === fade ? 70 : c === 6 ? 120 : 165;
+        }
+        // sınıf sınırları: Tam İlmihâl çizgileri açıkken çizgiler sınır olur; değilse piksel sınırı
+        const smooth = (p.layer === 'seadet' && p.book) || (p.layer !== 'seadet' && p.layer !== 'first');
+        if (!smooth) {
+          const edge = rgb(tok('--map-edge'));
+          for (let py = 0; py < H - 1; py++) for (let px = 0; px < W - 1; px++) { const k = py * W + px, a = cls[k]; if (a !== cls[k + 1] || a !== cls[k + W]) img.data.set([edge[0], edge[1], edge[2], 200], k * 4); }
+        }
+        alpha = p.mini ? 0.95 : (rel ? 0.82 : 0.9);
       }
       const off = document.createElement('canvas'); off.width = W; off.height = H; off.getContext('2d').putImageData(img, 0, 0);
       ctx.save();
       if (p.landOnly && p.mode !== 'instant') { landPath(ctx, x, y); ctx.clip('nonzero'); }
       ctx.globalAlpha = alpha; ctx.imageSmoothingEnabled = true; ctx.drawImage(off, 0, 0, w, h);
       ctx.restore();
+      // kabartma renklerin üstünde de hafifçe okunur (yer şekilleri kaybolmaz)
+      drawRel(0.75);
       // kıyılar, sınırlar, ekvator
-      ctx.strokeStyle = tok('--map-coast'); ctx.lineWidth = p.mini ? 0.5 : 0.7;
+      ctx.strokeStyle = tok('--map-coast'); ctx.lineWidth = p.mini ? 0.5 : 0.7 * sx;
       for (const r of RINGS()) for (const sh of r.jumped ? [0, 360, -360] : [0]) { ringPath(ctx, x, y, r, sh, true); ctx.stroke(); }
-      if (p.borders && !p.mini) { ctx.strokeStyle = tok('--map-border'); ctx.lineWidth = 0.4; for (const r of BORDERS()) for (const sh of r.jumped ? [0, 360, -360] : [0]) { ringPath(ctx, x, y, r, sh, false); ctx.stroke(); } }
-      ctx.strokeStyle = tok('--map-border'); ctx.lineWidth = 0.5; ctx.setLineDash([2, 5]); ctx.beginPath(); ctx.moveTo(0, y(0)); ctx.lineTo(w, y(0)); ctx.stroke(); ctx.setLineDash([]);
-      // eş-yaş çizgileri
-      if (p.mode !== 'instant' && p.age && p.layer !== 'first' && grids) {
-        const iso = isolines(grids[0], 2);
-        ctx.strokeStyle = tok('--map-iso'); ctx.globalAlpha = 0.75; ctx.lineWidth = 0.8; ctx.beginPath();
-        for (const [a, b] of iso.segs) { ctx.moveTo(x(a[1]), y(a[0])); ctx.lineTo(x(b[1]), y(b[0])); }
-        ctx.stroke(); ctx.globalAlpha = 1;
-        ctx.font = '600 10.5px ' + tok('--font-mono'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        for (const [L, pt] of iso.labels) { if (L % 4) continue; const X = x(pt[1]), Y = y(0); ctx.fillStyle = tok('--map-label-bg'); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(X - 12, Y - 8, 24, 16, 4) : ctx.rect(X - 12, Y - 8, 24, 16); ctx.fill(); ctx.fillStyle = tok('--map-iso'); ctx.fillText(String(L), X, Y + 0.5); }
+      if (p.borders && !p.mini) { ctx.strokeStyle = tok('--map-border'); ctx.lineWidth = 0.4 * sx; for (const r of BORDERS()) for (const sh of r.jumped ? [0, 360, -360] : [0]) { ringPath(ctx, x, y, r, sh, false); ctx.stroke(); } }
+      // enlem-boylam ızgarası (seçimlik): 30° boylam, 20° enlem; dönenceler ve kutup daireleri noktalı
+      if (p.grat && !p.mini) {
+        ctx.save(); ctx.strokeStyle = tok('--map-border'); ctx.globalAlpha = 0.55; ctx.lineWidth = 0.6 * sx; ctx.setLineDash([1.5 * sx, 3 * sx]); ctx.beginPath();
+        for (let lo = -150; lo <= 150; lo += 30) { ctx.moveTo(x(lo), 0); ctx.lineTo(x(lo), h); }
+        for (let la = -60; la <= 80; la += 20) { ctx.moveTo(0, y(la)); ctx.lineTo(w, y(la)); }
+        ctx.stroke(); ctx.setLineDash([0.8 * sx, 5 * sx]); ctx.beginPath();
+        for (const la of [23.44, -23.44, 66.56]) { ctx.moveTo(0, y(la)); ctx.lineTo(w, y(la)); }
+        ctx.stroke(); ctx.restore();
+        ctx.save(); ctx.font = `600 ${Math.round(9.5 * sx)}px ${tok('--font-mono')}`; ctx.fillStyle = tok('--muted'); ctx.textBaseline = 'top'; ctx.textAlign = 'center';
+        const gl = p.gratLabel || ((v, k) => `${Math.abs(v)}°${v === 0 ? '' : k === 'lat' ? (v > 0 ? 'N' : 'S') : (v > 0 ? 'E' : 'W')}`);
+        for (let lo = -150; lo <= 150; lo += 30) halo(ctx, gl(lo, 'lon'), x(lo), h - 13 * sx);
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        for (let la = -40; la <= 60; la += 20) halo(ctx, gl(la, 'lat'), 3 * sx, y(la));
+        ctx.restore();
+      } else {
+        ctx.strokeStyle = tok('--map-border'); ctx.lineWidth = 0.5 * sx; ctx.setLineDash([2, 5]); ctx.beginPath(); ctx.moveTo(0, y(0)); ctx.lineTo(w, y(0)); ctx.stroke(); ctx.setLineDash([]);
+      }
+      const boxes = [];   // yerleşmiş yazıların kutuları (çakışmayı önler)
+      const free = (bx) => { if (boxes.some(b => bx[0] < b[2] && bx[2] > b[0] && bx[1] < b[3] && bx[3] > b[1])) return false; boxes.push(bx); return true; };
+      // işaretler: kullanıcı, Mekke, dünyada ilk mümkün / ilk görülebilir yer, anlık kipte ☀ ☾
+      // yazı yerleri şehirlerden önce ayrılır (işaret yazıları önceliklidir); çizim en sonda
+      const marks = (p.marks || []).slice();
+      if (p.firstPts && p.mode !== 'instant' && grids && p.layer !== 'first') {
+        const fp = firstPoints(grids[0]);
+        if (fp.poss) marks.push({ lat: fp.poss.lat, lon: fp.poss.lon, kind: 'first8', label: p.firstLabel ? p.firstLabel('poss', fp.poss) : '' });
+        if (fp.vis) marks.push({ lat: fp.vis.lat, lon: fp.vis.lon, kind: 'first18', label: p.firstLabel ? p.firstLabel('vis', fp.vis) : '' });
+        p._first = fp;
+      }
+      if (p.mode === 'instant' && p._inst) { marks.push({ lat: p._inst.subSolar.lat, lon: p._inst.subSolar.lon, kind: 'sun', label: p.sunLabel }); marks.push({ lat: p._inst.subLunar.lat, lon: p._inst.subLunar.lon, kind: 'moon', label: p.moonLabel }); }
+      const mFont = `600 ${Math.round(11.5 * sx)}px ${tok('--font-body')}`;
+      ctx.font = mFont;
+      for (const m of marks) { const X = x(m.lon), Y = y(m.lat); m.X = X; m.Y = Y; if (Y >= 0 && Y <= h) boxes.push([X - 9 * sx, Y - 9 * sx, X + 9 * sx, Y + 9 * sx]); }
+      for (const m of marks) {
+        if (!m.label || p.mini || m.Y < 0 || m.Y > h) continue;
+        const tw = ctx.measureText(m.label).width, hh = 8 * sx, X = m.X, Y = m.Y, g = 13 * sx;
+        // aday yerler: sağ, sol, sağ üst/alt, sol üst/alt, üst, alt
+        const cand = [[X + g, Y, 'left'], [X - g, Y, 'right'], [X + g, Y - 2.2 * hh, 'left'], [X + g, Y + 2.2 * hh, 'left'], [X - g, Y - 2.2 * hh, 'right'], [X - g, Y + 2.2 * hh, 'right'], [X - tw / 2, Y - 2.6 * hh, 'left'], [X - tw / 2, Y + 2.6 * hh, 'left']];
+        const fits = ([tx, ty, al]) => { const x0 = al === 'left' ? tx : tx - tw; return x0 >= 2 && x0 + tw <= w - 2 && ty - hh >= 0 && ty + hh <= h; };
+        const bxOf = ([tx, ty, al]) => (al === 'left' ? [tx - 2, ty - hh, tx + tw + 2, ty + hh] : [tx - tw - 2, ty - hh, tx + 2, ty + hh]);
+        let pick = cand.find(cd => fits(cd) && free(bxOf(cd)));
+        if (!pick) { pick = cand.find(fits) || cand[0]; boxes.push(bxOf(pick)); }
+        m.lab = pick;
+      }
+      // değer çizgileri (ek bilgi) ve Tam İlmihâl çizgileri
+      const drawSet = (segs, color, width, dash, labelOf, every, haloW) => {
+        if (!segs.length) return;
+        ctx.save(); ctx.lineCap = 'round';
+        if (haloW) { ctx.strokeStyle = tok('--map-label-bg'); ctx.globalAlpha = 0.7; ctx.lineWidth = width + haloW; ctx.setLineDash(dash || []); ctx.beginPath(); for (const [a, b] of segs) { ctx.moveTo(x(a[1]), y(a[0])); ctx.lineTo(x(b[1]), y(b[0])); } ctx.stroke(); ctx.globalAlpha = 1; }
+        ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.beginPath();
+        for (const [a, b] of segs) { ctx.moveTo(x(a[1]), y(a[0])); ctx.lineTo(x(b[1]), y(b[0])); }
+        ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+        if (!labelOf) return;
+        // etiketler: her seviye için çizginin enlem sırasına göre %40 ve %75’indeki noktalar
+        const by = new Map(); for (const sg of segs) { if (every && Math.abs(sg[2] / every - Math.round(sg[2] / every)) > 1e-6) continue; (by.get(sg[2]) || by.set(sg[2], []).get(sg[2])).push(sg); }
+        ctx.save(); ctx.font = `700 ${Math.round(10.5 * sx)}px ${tok('--font-mono')}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        for (const [L, list] of by) {
+          list.sort((a, b) => b[0][0] - a[0][0]);
+          for (const qn of [0.4, 0.75]) {
+            const sg = list[Math.floor(qn * (list.length - 1))]; if (!sg) continue;
+            const X = x((sg[0][1] + sg[1][1]) / 2), Y = y((sg[0][0] + sg[1][0]) / 2), txt = labelOf(L), tw = ctx.measureText(txt).width + 8 * sx, th = 15 * sx;
+            if (X < tw / 2 || X > w - tw / 2 || Y < th || Y > h - th) continue;
+            if (!free([X - tw / 2, Y - th / 2, X + tw / 2, Y + th / 2])) continue;
+            ctx.fillStyle = tok('--map-label-bg'); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(X - tw / 2, Y - th / 2, tw, th, 4 * sx) : ctx.rect(X - tw / 2, Y - th / 2, tw, th); ctx.fill();
+            ctx.fillStyle = color; ctx.fillText(txt, X, Y + 0.5);
+          }
+        }
+        ctx.restore();
+      };
+      if (p.mode !== 'instant' && grids && p.layer !== 'first') {
+        const g0 = grids[0];
+        const v = p.value && VALUE[p.value];
+        if (v && !v.modern) {
+          const g = v.x ? grids.x : g0;
+          if (g) drawSet(isoField(g, v.get, v.lv, v.spread), tok('--map-iso'), 0.9 * sx, null, L => (p.valueLabel ? p.valueLabel(p.value, L) : (v.dec ? L.toFixed(v.dec) : String(Math.round(L))) + v.unit), v.every, 0);
+        }
+        // Yallop / Odeh katmanında sınıf sınırları düzgün eğri (ek bilgi)
+        if (p.layer === 'yallop' || p.layer === 'odeh') drawSet(isoField(g0, VALUE[p.layer].get, VALUE[p.layer].lv), tok('--map-edge'), 1.1 * sx, null, null, 0, 0);
+        // Tam İlmihâl’in ölçüleri: beynûnet 8° ve 18° (ay ufkun üstünde iken), gurûbda hilâl yüksekliği 5° (beynûnet ≥ 8° iken), ufuk 0°
+        if (p.book && p.layer !== 'first') {
+          const L = p.bookLabels || { e8: '8°', e18: '18°', a5: '5°' };
+          drawSet(isoField(g0, s => (okMoon(s) ? s.v('elong') : null), [8]), tok('--c-below8'), 1.8 * sx, null, () => L.e8, 0, 2.5 * sx);
+          drawSet(isoField(g0, s => (okMoon(s) ? s.v('elong') : null), [18]), tok('--c-visible-ink'), 1.8 * sx, null, () => L.e18, 0, 2.5 * sx);
+          drawSet(isoField(g0, s => (okMoon(s) && s.v('elong') >= 8 ? s.v('alt') : null), [5]), tok('--c-below5-ink'), 1.6 * sx, [6 * sx, 4 * sx], () => L.a5, 0, 2.5 * sx);
+          drawSet(isoField(g0, s => { const a = s.v('ageH'); return a != null && a > 0 && a < 96 ? s.v('up') : null; }, [0]), tok('--map-edge'), 1 * sx, [2 * sx, 3 * sx], null, 0, 0);
+        }
       }
       // 18° anında güneşin battığı boylam (s. 360)
       if (p.mode !== 'instant' && p.m18 && p.layer !== 'first') {
-        ctx.strokeStyle = tok('--accent'); ctx.lineWidth = 1.6; ctx.setLineDash([6, 4]); ctx.beginPath(); let st = false;
+        ctx.strokeStyle = tok('--accent'); ctx.lineWidth = 1.6 * sx; ctx.setLineDash([6 * sx, 4 * sx]); ctx.beginPath(); let st = false;
         for (let la = 66; la >= -58; la -= 1) { const lon = G.HRCore.sunsetLon(p.m18.t, la); if (lon == null) { st = false; continue; } const X = x(lon), Y = y(la); if (!st) { ctx.moveTo(X, Y); st = true; } else ctx.lineTo(X, Y); }
         ctx.stroke(); ctx.setLineDash([]);
       }
-      // anlık mod: ☀ ve ☾ noktaları
-      const marks = (p.marks || []).slice();
-      if (p.mode === 'instant' && p._inst) { marks.push({ lat: p._inst.subSolar.lat, lon: p._inst.subSolar.lon, kind: 'sun', label: p.sunLabel }); marks.push({ lat: p._inst.subLunar.lat, lon: p._inst.subLunar.lon, kind: 'moon', label: p.moonLabel }); }
+      // şehirler (seçimlik)
+      if (p.cities && !p.mini) {
+        ctx.save(); ctx.font = `600 ${Math.round(10 * sx)}px ${tok('--font-body')}`; ctx.textBaseline = 'middle';
+        for (const rank of [1, 2]) for (const c of CITIES) {
+          if (c[4] !== rank) continue; const X = x(c[3]), Y = y(c[2]); if (Y < 4 || Y > h - 4) continue;
+          const nm = p.cityName ? p.cityName(c) : c[1], tw = ctx.measureText(nm).width, right = X > w - tw - 20;
+          const bx = right ? [X - tw - 8 * sx, Y - 7 * sx, X + 3 * sx, Y + 7 * sx] : [X - 3 * sx, Y - 7 * sx, X + tw + 8 * sx, Y + 7 * sx];
+          if (!free(bx)) continue;
+          ctx.fillStyle = tok('--ink'); ctx.beginPath(); ctx.arc(X, Y, (c[0] === 'Mekke' ? 3.2 : 2.2) * sx, 0, 2 * Math.PI); ctx.fill();
+          ctx.textAlign = right ? 'right' : 'left'; halo(ctx, nm, X + (right ? -5 : 5) * sx, Y);
+        }
+        ctx.restore();
+      }
+      // işaretlerin çizimi
+      ctx.lineJoin = 'round';
       for (const m of marks) {
-        const X = x(m.lon), Y = y(m.lat); if (Y < 0 || Y > h) continue;
+        const X = m.X, Y = m.Y; if (Y < 0 || Y > h) continue;
         ctx.lineWidth = 2; ctx.strokeStyle = tok('--map-mark-ring');
         if (m.kind === 'sun') { ctx.fillStyle = tok('--accent'); for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; ctx.beginPath(); ctx.moveTo(X + 8 * Math.cos(a), Y + 8 * Math.sin(a)); ctx.lineTo(X + 12 * Math.cos(a), Y + 12 * Math.sin(a)); ctx.strokeStyle = tok('--accent'); ctx.stroke(); } ctx.beginPath(); ctx.arc(X, Y, 6, 0, 2 * Math.PI); ctx.fill(); }
         else if (m.kind === 'moon') { ctx.fillStyle = tok('--moon'); ctx.beginPath(); ctx.arc(X, Y, 7, 0, 2 * Math.PI); ctx.fill(); ctx.fillStyle = tok('--map-sea'); ctx.beginPath(); ctx.arc(X + 3.5, Y - 1, 6, 0, 2 * Math.PI); ctx.fill(); }
         else if (m.kind === 'earliest') { ctx.fillStyle = tok('--accent'); ctx.beginPath(); for (let k = 0; k < 10; k++) { const r = k % 2 ? 4 : 9, a = -Math.PI / 2 + k * Math.PI / 5; const px = X + r * Math.cos(a), py = Y + r * Math.sin(a); k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.closePath(); ctx.fill(); ctx.stroke(); }
+        else if (m.kind === 'first8' || m.kind === 'first18') { const r = 7 * sx; ctx.fillStyle = tok(m.kind === 'first8' ? '--c-possible' : '--c-visible'); ctx.beginPath(); ctx.moveTo(X, Y - r); ctx.lineTo(X + r, Y); ctx.lineTo(X, Y + r); ctx.lineTo(X - r, Y); ctx.closePath(); ctx.fill(); ctx.strokeStyle = tok('--ink'); ctx.lineWidth = 1.5; ctx.stroke(); }
         else { ctx.fillStyle = tok('--map-mark'); ctx.beginPath(); ctx.arc(X, Y, p.mini ? 4.5 : 6, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); }
-        if (m.label && !p.mini) { ctx.font = '600 12px ' + tok('--font-body'); const right = X > w - 170; ctx.textAlign = right ? 'right' : 'left'; ctx.textBaseline = 'middle'; const tx = X + (right ? -14 : 14); ctx.lineWidth = 3; ctx.strokeStyle = tok('--map-label-bg'); ctx.strokeText(m.label, tx, Y); ctx.fillStyle = tok('--ink'); ctx.fillText(m.label, tx, Y); }
+        if (m.lab) {
+          const [tx, ty, al] = m.lab; ctx.font = mFont; ctx.textAlign = al; ctx.textBaseline = 'middle';
+          ctx.lineWidth = 3; ctx.strokeStyle = tok('--map-label-bg'); ctx.strokeText(m.label, tx, ty); ctx.fillStyle = tok('--ink'); ctx.fillText(m.label, tx, ty);
+        }
       }
+      // çıktı resimlerinde küçük program adı ve adresi: yazıların ve işaretlerin bulunmadığı ilk köşe
+      if (p.credit && !p.mini) {
+        ctx.save(); ctx.font = `500 ${Math.round(9.5 * sx)}px ${tok('--font-body')}`; ctx.textBaseline = 'middle';
+        const tw = ctx.measureText(p.credit).width, hh = 7 * sx, m = 6 * sx;
+        const cand = [[w - m - tw, h - m - hh], [m, h - m - hh], [w - m - tw, m + hh], [m, m + hh]];
+        let c = cand.find(([X, Y]) => free([X - 3 * sx, Y - hh, X + tw + 3 * sx, Y + hh])) || cand[0];
+        const [X, Y] = c;
+        ctx.globalAlpha = 0.55; ctx.fillStyle = tok('--map-label-bg'); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(X - 3 * sx, Y - hh, tw + 6 * sx, 2 * hh, 3 * sx) : ctx.rect(X - 3 * sx, Y - hh, tw + 6 * sx, 2 * hh); ctx.fill();
+        ctx.globalAlpha = 0.75; ctx.fillStyle = tok('--muted'); ctx.textAlign = 'left'; ctx.fillText(p.credit, X, Y + 0.5);
+        ctx.restore();
+      }
+      return canvas;
     }
+    function halo(ctx, s, X, Y) { ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = tok('--map-label-bg'); ctx.strokeText(s, X, Y); ctx.fillStyle = tok('--ink'); ctx.fillText(s, X, Y); }
     cv.addEventListener('click', ev => {
       if (!pickCb || !last) return;
       const rect = cv.getBoundingClientRect(); const fx = (ev.clientX - rect.left) / rect.width, fy = (ev.clientY - rect.top) / rect.height;
       pickCb(+(LAT_TOP - fy * (LAT_TOP - LAT_BOT)).toFixed(2), +(fx * 360 - 180).toFixed(2));
     });
     let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (last && el.offsetParent) render(last); }, 200); });
-    return { render, onPick: f => { pickCb = f; }, repaint: () => last && render(last) };
+    // Dışa aktarma: son çizimi verilen genişlikte yeniden çizer (PNG ve A4 için)
+    const snapshot = (width, extra) => (last ? paint(extra ? Object.assign({}, last, extra) : last, lastGrids, { width }) : null);
+    return { render, snapshot, info: () => last && last._first, onPick: f => { pickCb = f; }, repaint: () => last && render(last) };
   }
-  G.HRMap = { mount, LAT_TOP, LAT_BOT };
+  G.HRMap = { mount, LAT_TOP, LAT_BOT, CITIES };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* “Bu akşam ne demek?”: seçili tarih ve yer için açıklama ve örnek.
@@ -6662,7 +6963,7 @@ var qrcode = function() {
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD34b46907f6b0940e';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD60f27c47ea740f78';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -6695,9 +6996,12 @@ var qrcode = function() {
     { id: 'sikago', tr: 'Şikago', en: 'Chicago', lat: 41.8781, lon: -87.6298, elev: 181, hMax: 0, tz: 'America/Chicago' }
   ];
   const MECCA = [21.4225, 39.8262];
+  // Harita seçenekleri: [kutu, durum anahtarı (aynı zamanda metin anahtarı)]
+  const MAP_CHK = [['mBook', 'mapBook'], ['mFirst', 'mapFirst'], ['mHatch', 'mapHatch'], ['m18', 'map18'], ['mCities', 'mapCities'], ['mGrat', 'mapGrat'], ['mBorders', 'mapBorders'], ['mRelief', 'mapRelief'], ['mLand', 'mapLand']];
   const TB_MAX = 1620; // 00:00 → ertesi gün 03:00
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
-    mapLayer: 'seadet', mapRes: 3, mapAge: true, mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
+    mapLayer: 'seadet', mapRes: 3, mapValue: 'none', mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
+    mapBook: true, mapFirst: true, mapGrat: false, mapCities: true, mapRelief: true, mapHatch: true, mapView: 'one', mapOptsOpen: false,
     darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', layout: 'sade', level: 'all', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
@@ -6759,7 +7063,7 @@ var qrcode = function() {
     $('hMonth').innerHTML = esc(t.month) + ' ' + q('enerken'); set('miniHow', t.miniHow);
     set('hExtra', t.extra); set('extraNote', t.extraNote); set('hTests', t.testsTitle); set('testsIntro', t.testsIntro); $('footer').innerHTML = noticeHtml(); paintTamper();
     $('aboutOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('aboutCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
-    $('hMap').innerHTML = esc(t.mapTitle) + ' ' + q('kuresel'); set('lMDate', t.mapEvening); set('lMLayer', t.mapLayer); set('lMRes', t.mapRes); set('lMAge', t.mapAge); set('lMBorders', t.mapBorders); set('lM18', t.map18);
+    $('hMap').innerHTML = esc(t.mapTitle) + ' ' + q('kuresel'); set('lMDate', t.mapEvening); set('lMLayer', t.mapLayer); set('lMRes', t.mapRes); set('lMValue', t.mapValue); set('lMView', t.mapView); set('lMOpts', t.mapOpts); set('mPng', '⤓ ' + t.mapPng); $('mPng').title = t.mapPngTip; MAP_CHK.forEach(([id, k]) => set('lM' + id.slice(1), t[k])); set('lMBorders', t.mapBorders); set('lM18', t.map18);
     set('lMMode', t.mapMode); set('lMLand', t.landOnly); set('lMTime', t.mapTime); set('mNow', t.nowBtn);
     $('mMode').innerHTML = [['evening', t.mmEvening], ['instant', t.mmInstant]].map(([v, l]) => `<option value="${v}"${st.mapMode === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('hPick', t.pick); set('pickUse', t.pickUse);
@@ -6773,7 +7077,9 @@ var qrcode = function() {
     fillTz();
     showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('date').value = st.date; $('mDate').value = st.date;
     $('mLayer').innerHTML = [['seadet', t.lySeadet], ['first', t.lyFirst], ['yallop', t.lyYallop], ['odeh', t.lyOdeh]].map(([v, l]) => `<option value="${v}"${st.mapLayer === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
-    $('mRes').value = String(st.mapRes); $('mAge').checked = st.mapAge; $('mBorders').checked = st.mapBorders; $('m18').checked = st.map18; $('mLand').checked = st.mapLand;
+    $('mRes').value = String(st.mapRes); MAP_CHK.forEach(([id, k]) => { $(id).checked = !!st[k]; }); $('mOptsBox').open = !!st.mapOptsOpen;
+    $('mValue').innerHTML = Object.entries(t.mapValueOpts).map(([v, l]) => `<option value="${v}"${st.mapValue === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
+    $('mView').innerHTML = Object.entries(t.mapViewOpts).map(([v, l]) => `<option value="${v}"${st.mapView === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     set('lFontSize', t.fontSize); set('hOnline', t.hOnline); set('lOptWx', t.optWx); set('lOptAutoLoc', t.optAutoLoc); set('lOptFonts', t.optFonts);
     set('netIntro', t.netIntro); set('netWx', t.netWx); set('netFonts', t.netFonts); set('netLoc', t.netLoc); paintNet();
     $('onlineNote').innerHTML = esc(t.onlineNote) + ' ' + q('hava') + (ON.sandboxed ? `<span class="envnote" style="display:block">${esc(t.sandboxNote)} <button class="btn" type="button" id="saveSelf" style="margin-top:6px">${esc(t.saveSelf)}</button></span>` : '');
@@ -6962,11 +7268,14 @@ var qrcode = function() {
     const box = $('extraBox'); box.open = !!st.extraOpen; box.addEventListener('toggle', () => { st.extraOpen = box.open; save(); });
     $('tb').addEventListener('input', () => setTmin(+$('tb').value));
     document.querySelectorAll('[data-jump]').forEach(b => b.onclick = () => jump(b.dataset.jump));
-    ['mLayer', 'mRes', 'mAge', 'mBorders', 'm18', 'mLand', 'mMode'].forEach(id => $(id).addEventListener('change', () => {
-      st.mapLayer = $('mLayer').value; st.mapRes = +$('mRes').value; st.mapAge = $('mAge').checked; st.mapBorders = $('mBorders').checked; st.map18 = $('m18').checked; st.mapLand = $('mLand').checked; st.mapMode = $('mMode').value;
+    ['mLayer', 'mRes', 'mValue', 'mView', 'mMode', ...MAP_CHK.map(x => x[0])].forEach(id => $(id).addEventListener('change', () => {
+      st.mapLayer = $('mLayer').value; st.mapRes = +$('mRes').value; st.mapValue = $('mValue').value; st.mapView = $('mView').value; st.mapMode = $('mMode').value;
+      MAP_CHK.forEach(([i, k]) => { st[k] = $(i).checked; });
       if (st.mapMode !== 'instant') stopPlay();
       save(); renderBigMap();
     }));
+    $('mOptsBox').addEventListener('toggle', () => { st.mapOptsOpen = $('mOptsBox').open; save(); });
+    $('mPng').onclick = () => savePng();
     $('mTime').addEventListener('input', () => setTmin(+$('mTime').value));
     // Ufuk kartındaki zaman çubuğu: bütün sayfanın seçili ânını değiştirir
     let skyRaf = 0; $('skyT').addEventListener('input', () => { const v = +$('skyT').value; cancelAnimationFrame(skyRaf); skyRaf = requestAnimationFrame(() => setTmin(v)); });
@@ -7737,24 +8046,50 @@ var qrcode = function() {
     if (r.W != null) { h += kv(t.width, `${num(r.Wy, 3)}′ / ${num(r.W, 3)}′`); h += kv(t.arcl, `${degf(r.arclGeo)} / ${degf(r.arcl)}`); h += kv(t.arcv, `${degf(r.arcvGeo)} / ${degf(r.arcvTopo)}`); }
     h += kv(t.dip, num(C.dipBook(st.hObs) * 60, 1) + '′', '106,92″ × √h (s. 185)');
     if (r.seri) h += kv(t.zaviye, num(r.seri.zaviye * 60, 1) + '′', `${t.temkin} ${num(r.seri.temkinMin, 2)} ${t.min}`);
+    const x = C.crescentData(r);
+    if (x) {
+      h += `<dt class="grp">${esc(t.hcTitle)}</dt><dd class="grp small">${esc(t.hcNote)}</dd>`;
+      if (r.ictimaPrev) h += kv(t.hcConj, `${fmtDT(r.ictimaPrev)}`, fmtUTC(r.ictimaPrev));
+      h += kv(t.age.replace(/\s*\(.*\)/, ''), ageTxt(r.ageH));
+      h += kv(t.hcSunAzAlt, `${degf(x.sunAz)} / ${degf(x.sunAlt)}`) + kv(t.hcMoonAzAlt, `${degf(x.moonAz)} / ${degf(x.moonAlt)}`);
+      h += kv(t.hcElongGeo, `${degf(x.elongGeo)} / ${degf(x.elongTopo)}`) + kv(t.hcDaz, degf(x.daz)) + kv(t.hcArcv, degf(x.arcv));
+      h += kv(t.hcWidth, num(x.width, 3) + '′') + kv(t.hcSd, num(x.sd, 2) + '′') + kv(t.hcHp, num(x.hp, 2) + '′');
+      h += kv(t.hcDist, `${num(x.geoKm, 0)} / ${num(x.topoKm, 0)} ${t.km}`, t.hcDistSub) + kv(t.hcIllum, num(x.illum, 2) + ' %');
+      h += kv(t.hcMoonset, x.moonset ? fmtTime(x.moonset) : t.none, x.lag != null ? `${t.lag}: ${hm(x.lag)}` : '') + kv(t.hcWin, x.win != null ? hm(x.win) : t.noWindow);
+    }
     $('extra').innerHTML = h + (renderMonth.other || '');
   }
 
   // ---- Harita ----
   let big = null, playing = null, MAPP = null;
+  // Lejant öğeleri: [tür, renk belirteci, metin]; HTML lejantı ve PNG çıktısı aynı listeden çizilir
+  function legendItems(layer, conj) {
+    const f = (c, l) => ['fill', c, l], ln = (c, l, d) => ['line', c, l, d || 'solid'], dm = (c, l) => ['diamond', c, l];
+    if (st.mapMode === 'instant') return [f('--c-visible', t.lgSearch), f('--c-below5', t.lgLow), f('--map-night', t.lgNight), ln('--accent', t.lgDayNight), ln('--map-iso', t.lgMoonHz, 'dashed')];
+    const m18 = st.map18 ? [['box', '--accent', t.map18]] : [];
+    if (layer === 'first') {
+      const cd = conj.date, base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
+      return ['--c-visible', '--c-possible', '--c-below5', '--c-below8'].map((c, k) => f(c, `${fmtCivil(new Date(base + k * 86400000), true)} ${t.eveningAt}`)).concat([f('--c-notborn', t.lgLater), f('--c-nosun', t.lgNoSun)], m18);
+    }
+    let a;
+    if (layer === 'yallop') a = [f('--c-visible', t.yA), f('--c-possible', t.yB), f('--c-below5', t.yC), f('--c-below8', t.yD), f('--c-notborn', t.yEF), f('--c-nosun', t.lgNoSun), ln('--map-edge', t.lgYallopLine)];
+    else if (layer === 'odeh') a = [f('--c-visible', t.oA), f('--c-possible', t.oB), f('--c-below5', t.oC), f('--c-notborn', t.oD), f('--c-nosun', t.lgNoSun), ln('--map-edge', t.lgOdehLine)];
+    else a = [f('--c-visible', t.lgVisible), f('--c-possible', t.lgPossible), f('--c-below5', t.lgBelow5), f('--c-below8', t.lgBelow8), f('--c-notborn', t.lgNotBorn), f('--c-nosun', t.lgNoSun)].concat(st.mapHatch ? [['hatch', '--c-below8', t.lgHatch]] : []);
+    if (st.mapBook) a.push(ln('--c-below8', t.lgBook8), ln('--c-visible-ink', t.lgBook18), ln('--c-below5-ink', t.lgBook5, 'dashed'), ln('--map-edge', t.lgUp0, 'dotted'));
+    if (st.mapValue !== 'none') a.push(ln('--map-iso', t.lgValue(t.mapValueOpts[st.mapValue])));
+    if (st.mapFirst) a.push(dm('--c-possible', t.lgFirst8), dm('--c-visible', t.lgFirst18));
+    return a.concat(m18);
+  }
   function legendFor(layer, conj) {
-    const s = (c, l) => `<span><i style="background:var(${c})"></i>${esc(l)}</span>`;
-    if (st.mapMode === 'instant') return s('--c-visible', t.lgSearch) + s('--c-below5', t.lgLow) + s('--map-night', t.lgNight) +
-      `<span><i style="background:none;border:0;border-top:2px solid var(--accent);height:0"></i>${esc(t.lgDayNight)}</span><span><i style="background:none;border:0;border-top:2px dashed var(--map-iso);height:0"></i>${esc(t.lgMoonHz)}</span>`;
-    if (layer === 'first') return firstLegend(conj);
-    if (layer === 'yallop') return s('--c-visible', t.yA) + s('--c-possible', t.yB) + s('--c-below5', t.yC) + s('--c-below8', t.yD) + s('--c-notborn', t.yEF) + s('--c-nosun', t.lgNoSun);
-    if (layer === 'odeh') return s('--c-visible', t.oA) + s('--c-possible', t.oB) + s('--c-below5', t.oC) + s('--c-notborn', t.oD) + s('--c-nosun', t.lgNoSun);
-    return s('--c-visible', t.lgVisible) + s('--c-possible', t.lgPossible) + s('--c-below5', t.lgBelow5) + s('--c-below8', t.lgBelow8) + s('--c-notborn', t.lgNotBorn) + s('--c-nosun', t.lgNoSun) +
-      (st.map18 ? `<span><i style="background:none;border:2px dashed var(--accent)"></i>${esc(t.map18)}</span>` : '');
+    return legendItems(layer, conj).map(([k, c, l, d]) => {
+      const st2 = k === 'fill' ? `background:var(${c})` : k === 'line' ? `background:none;border:0;border-top:2px ${d} var(${c});height:0` : k === 'diamond' ? `background:var(${c});border:1.5px solid var(--ink);transform:rotate(45deg) scale(.72)` :
+        k === 'hatch' ? `background:repeating-linear-gradient(135deg,var(${c}) 0 3px,var(--map-edge) 3px 4px)` : `background:none;border:2px dashed var(${c})`;
+      return `<span><i style="${st2}"></i>${esc(l)}</span>`;
+    }).join('');
   }
   function mapConj() { return C.nearestNewMoon(A.MakeTime(new Date(st.date + 'T12:00:00Z'))); }
   function mapShift(k) {
-    if (st.mapMode === 'evening' && st.mapLayer === 'first') {
+    if (st.mapMode === 'evening' && (st.mapLayer === 'first' || st.mapView === 'three')) {
       const c = mapConj(), n = k > 0 ? C.nextNewMoonAfter(c.AddDays(5)) : C.lastNewMoonBefore(c.AddDays(-5));
       if (n) { const cd = n.date; setDate(ymdOf(new Date(Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate() + 1)))); }
     } else setDate(addDays(st.date, k), { keepLive: false });
@@ -7764,34 +8099,80 @@ var qrcode = function() {
   function stepMin(dm) { let m = (st.tmin || 0) + dm; if (m < 0 || m > TB_MAX) { remember(); setLive(false); st.anchor = null; st.tmin = m < 0 ? m + 1440 : m - 1440; setDate(addDays(st.date, m < 0 ? -1 : 1), { noHist: true }); return; } setTmin(m); }
   function startPlay() { setLive(false); playing = setInterval(() => { let m = (st.tmin || 0) + 10; if (m > 1440 + 600) { st.tmin = m - 1440; st.anchor = null; setDate(addDays(st.date, 1), { noHist: true }); return; } setTmin(m); }, 350); $('mPlay').textContent = t.pause; }
   function stopPlay() { if (playing) { clearInterval(playing); playing = null; } $('mPlay').textContent = t.play; }
+  // Harita çizim parametreleri (tek harita, üç gece ve dışa aktarma için ortak)
+  function valLbl(v, L) { const u = { elong: '°', alt: '°', arcv: '°', age: t.valUnit.h, win: t.valUnit.min, lag: t.valUnit.min, width: '′' }[v] || ''; return (v === 'width' ? num(L, 1) : String(Math.round(L)).replace('-', '−')) + u; }
+  function gratLbl(v, k) { return `${Math.abs(v)}°${v === 0 ? '' : t.gratDir[k === 'lat' ? (v > 0 ? 'N' : 'S') : (v > 0 ? 'E' : 'W')]}`; }
+  const hhmmUT = at => at.date.toISOString().slice(11, 16) + ' UTC';
+  const dayOf = ymd => Date.UTC(+ymd.slice(0, 4), +ymd.slice(5, 7) - 1, +ymd.slice(8, 10));
+  function mapParams(layer, conj, dayUTC, marks) {
+    return { mode: 'evening', layer, res: st.mapRes, conj, dayUTC, marks, borders: st.mapBorders, landOnly: st.mapLand,
+      m18: st.map18 ? C.moment18(conj, 0) : null, book: st.mapBook && layer !== 'first', bookLabels: t.bookLbl,
+      value: layer !== 'first' && st.mapValue !== 'none' ? st.mapValue : null, valueLabel: valLbl,
+      grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]),
+      firstPts: st.mapFirst, firstLabel: (k, pt) => `${t.firstLbl[k]} · ${hhmmUT(pt.ss)}`, relief: st.mapRelief, hatch: st.mapHatch };
+  }
+  function firstNote(fp) {
+    if (!fp) return '';
+    return ['poss', 'vis'].filter(k => fp[k]).map(k => { const p = fp[k]; return `${t.firstLbl[k]}: ${gratLbl(Math.round(p.lat), 'lat')}, ${gratLbl(Math.round(p.lon), 'lon')} · ${t.firstSub(`${fmtDT(p.ss)} (${hhmmUT(p.ss)})`, degf(p.elong, 1))}`; }).join(' · ');
+  }
+  function mapMarks(hmn) {
+    const marks = [{ lat: st.lat, lon: st.lon, kind: 'user', label: t.youHere }];
+    if (hmn.m === 12) marks.push({ lat: MECCA[0], lon: MECCA[1], kind: 'user', label: t.meccaLbl });
+    return marks;
+  }
+  let mapSeq = 0;
   function renderBigMap() {
     if (view !== 'harita') return;
-    if (!big) { big = G.HRMap.mount($('bigMap')); big.onPick(pick); }
-    const inst = st.mapMode === 'instant';
-    ['mLayer', 'mRes'].forEach(id => { $(id).closest('.field').hidden = inst; });
-    ['mAge', 'm18', 'mLand'].forEach(id => { $(id).closest('label').hidden = inst; });
+    if (!big) { big = G.HRMap.mount($('bigMap')); big.onPick((la, lo) => pick(la, lo)); }
+    const inst = st.mapMode === 'instant', three = !inst && st.mapView === 'three', my = ++mapSeq;
+    ['mLayer', 'mRes', 'mView', 'mValue'].forEach(id => { $(id).closest('.field').hidden = inst; });
+    MAP_CHK.forEach(([id]) => { $(id).closest('label').hidden = inst && id !== 'mBorders' && id !== 'mCities' && id !== 'mGrat' && id !== 'mRelief'; });
     $('mInstCtl').hidden = !inst; $('mPlay').textContent = playing ? t.pause : t.play;
-    $('mapPrev').title = !inst && st.mapLayer === 'first' ? t.prevMonth : t.prevDay; $('mapNext').title = !inst && st.mapLayer === 'first' ? t.nextMonth : t.nextDay;
+    const monthStep = !inst && (st.mapLayer === 'first' || three);
+    $('mapPrev').title = monthStep ? t.prevMonth : t.prevDay; $('mapNext').title = monthStep ? t.nextMonth : t.nextDay;
+    $('bigMap').hidden = three; $('map3').hidden = !three; $('mDate').disabled = monthStep;
     const conj = mapConj();
-    const dayUTC = Date.UTC(+st.date.slice(0, 4), +st.date.slice(5, 7) - 1, +st.date.slice(8, 10));
+    const dayUTC = dayOf(st.date);
     const hmn = CAL.monthForConjunction(conj.date);
+    if (three) { $('mapLegend').innerHTML = legendFor(st.mapLayer === 'first' ? 'seadet' : st.mapLayer, conj); MAPP = renderMap3(conj, hmn); return; }
+    const marks = mapMarks(hmn);
     const eG = earliest(conj, null);
-    const marks = [{ lat: st.lat, lon: st.lon, kind: 'user', label: t.youHere }];
-    if (!inst && eG && (st.mapLayer === 'first' || ymdOf(eG.evening) === st.date)) marks.push({ lat: eG.where.lat, lon: eG.where.lon, kind: 'earliest', label: `${t.earliestHere}: ${fmtCivil(eG.first, true)}` });
-    if (hmn.m === 12) marks.push({ lat: MECCA[0], lon: MECCA[1], kind: 'user', label: t.meccaLbl });
+    if (!inst && eG && (st.mapLayer === 'first' || (!st.mapFirst && ymdOf(eG.evening) === st.date))) marks.splice(1, 0, { lat: eG.where.lat, lon: eG.where.lon, kind: 'earliest', label: `${t.earliestHere}: ${fmtCivil(eG.first, true)}` });
     const ageD = (dayUTC - conj.date.getTime()) / 86400000;
     const mid = !inst && st.mapLayer !== 'first' && (ageD > 4.5 || ageD < -2);
     if (inst) {
-      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub });
+      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub, grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]), relief: st.mapRelief });
       $('mapNote').textContent = t.mapInstantNote + ' ' + `${t.mapTime}: ${fmtDT(selT())}${st.timeFmt === 'both' ? ' · ' + fmtUTC(selT()) : ''} · ${t.darkOpt[st.darkKey]}`;
     } else {
-      MAPP = big.render({ mode: 'evening', layer: st.mapLayer, res: st.mapRes, conj, dayUTC, marks, age: st.mapAge, borders: st.mapBorders, landOnly: st.mapLand, m18: st.map18 ? C.moment18(conj, 0) : null, message: mid ? t.midHint : '' });
-      $('mapNote').textContent = (st.mapLayer === 'first' ? t.mapNoteFirst : st.mapLayer === 'seadet' ? t.mapNoteSeadet : t.mapNoteModern) + ' ' + `${monthName(hmn.m)} ${hmn.y} · ${t.conj}: ${fmtDT(conj)}` + (mid ? ' · ' + t.midHint : '') + ' · ' + t.lgOutline;
+      MAPP = big.render(Object.assign(mapParams(st.mapLayer, conj, dayUTC, marks), { message: mid ? t.midHint : '' }));
+      const outline = st.mapLayer === 'first' || (st.mapLayer === 'seadet' && !st.mapBook);
+      const base = (st.mapLayer === 'first' ? t.mapNoteFirst : st.mapLayer === 'seadet' ? t.mapNoteSeadet : t.mapNoteModern) + ' ' + `${monthName(hmn.m)} ${hmn.y} · ${t.conj}: ${fmtDT(conj)}` + (mid ? ' · ' + t.midHint : '') + (outline ? ' · ' + t.lgOutline : '');
+      $('mapNote').textContent = base;
+      Promise.resolve(MAPP).then(() => { if (my === mapSeq && st.mapFirst && st.mapLayer !== 'first') { const fn = firstNote(big.info()); if (fn) $('mapNote').textContent = base + ' · ' + fn; } });
     }
     $('mapLegend').innerHTML = legendFor(st.mapLayer, conj);
-    $('mDate').disabled = !inst && st.mapLayer === 'first';
   }
-  function pick(lat, lon) {
+  // Üç gece: önceki akşam, birinci gece, ikinci gece (Tam İlmihâl s. 315: ay başı hesâbî gün veya bir gün sonrası)
+  let maps3 = null, m3seq = 0;
+  function nights3(conj, hmn) {
+    let f1 = null; try { f1 = G.HRExplain.firstDayOf(exCtx(), conj, hmn); } catch (e) { f1 = null; }
+    if (!f1) return null; const E1 = addDays(f1.H, -1);
+    return [['prev', addDays(E1, -1)], ['A', E1], ['B', f1.H]].map(([k, ev]) => ({ k, ev, day1: addDays(ev, 1) }));
+  }
+  function nightCap(n) { const ev = fmtCivil(civil(n.ev), true), d = fmtCivil(civil(n.day1), true); return n.k === 'prev' ? t.night3Sub.prev(ev) : t.night3Sub[n.k](ev, d); }
+  async function renderMap3(conj, hmn) {
+    const box = $('map3');
+    if (!maps3) { box.innerHTML = [0, 1, 2].map(() => '<div><h3></h3><p class="cap"></p><div class="m3map"></div></div>').join(''); maps3 = Array.from(box.querySelectorAll('.m3map')).map(el => G.HRMap.mount(el)); }
+    const ns = nights3(conj, hmn); if (!ns) return;
+    const layer = st.mapLayer === 'first' ? 'seadet' : st.mapLayer, my = ++m3seq, marks = mapMarks(hmn);
+    box.querySelectorAll('h3').forEach((h, i) => { h.textContent = t.night3[ns[i].k]; });
+    box.querySelectorAll('.cap').forEach((c, i) => { c.textContent = nightCap(ns[i]); });
+    maps3.forEach((m, i) => m.onPick((la, lo) => pick(la, lo, ns[i].ev)));
+    $('mapNote').textContent = t.map3Note + (st.mapLayer === 'first' ? ' ' + t.map3First : '') + ` ${monthName(hmn.m)} ${hmn.y} · ${t.conj}: ${fmtDT(conj)}`;
+    renderMap3.ns = ns;
+    for (let i = 0; i < 3; i++) { if (my !== m3seq) return; await maps3[i].render(mapParams(layer, conj, dayOf(ns[i].ev), marks)); }
+  }
+  function pick(lat, lon, ymd) {
     const box = $('pickBox'); box.hidden = false;
     const ploc = { lat, lon, elev: 0, hObs: 0, tz: st.tz };
     let h = kv(t.pick, `${degf(lat, 2)}, ${degf(lon, 2)}`);
@@ -7799,12 +8180,115 @@ var qrcode = function() {
       const at = selT(), p = C.at(at, ploc), cP = C.lastNewMoonBefore(at), sr = C.searchable(p, st.darkKey, cP ? (at.ut - cP.ut) * 24 : null);
       h += kv(t.mapTime, fmtUTC(at)) + kv(t.sunL, degf(p.sun.alt, 1)) + kv(t.moonL, `${degf(p.moon.alt, 1)} · ${G.HRSky.card(p.moon.az, st.lang)}`) + kv(t.momentTitle, esc(sr.ok ? t.obsOk : t.obsNo + ' ' + sr.reasons.map(x => t.why[x]).join(' · ')), '', 'txt');
     } else {
-      let r; try { r = C.evening(ploc, st.date); } catch (e) { r = null; }
+      const ev = ymd || st.date;
+      let r; try { r = C.evening(ploc, ev); } catch (e) { r = null; }
       if (!r || !r.ok) h += kv(t.status, esc(t.lgNoSun), '', 'txt');
-      else h += kv(t.status, esc(clsText(r)[0]), '', 'txt') + kv(t.gurub, fmtUTC(r.gurub)) + kv(t.beyn, degf(r.beynunet)) + kv(t.alt, degf(r.moonAlt)) + kv(t.lag, hm(r.lagMin)) + kv(t.age, ageTxt(r.ageH));
+      else {
+        h += kv(t.status, esc(clsText(r)[0]), fmtCivil(civil(ev), true) + ' ' + t.eveningAt, 'txt') + kv(t.gurub, fmtUTC(r.gurub)) + kv(t.beyn, degf(r.beynunet)) + kv(t.alt, degf(r.moonAlt)) + kv(t.lag, hm(r.lagMin)) + kv(t.age, ageTxt(r.ageH));
+        const x = C.crescentData(r);
+        if (x) {
+          h += kv(t.hcWin + ' ' + q('besderece'), x.win != null ? hm(x.win) : t.noWindow);
+          h += kv(t.pickMore, `ARCV ${degf(x.arcv, 1)} · DAZ ${degf(x.daz, 1)} · W ${num(x.width, 2)}′ · ${num(x.illum, 1)}%`, r.yallop ? `Yallop q ${num(r.yallopQ, 3)} (${r.yallop}) · Odeh V ${num(r.odehV, 2)} (${r.odeh})` : '');
+        }
+      }
     }
     $('pickKv').innerHTML = h;
     $('pickUse').onclick = () => { st.lat = lat; st.lon = lon; st.city = 'custom'; tzFromLon(); save(); fillStatic(); update(); location.hash = '#plan'; };
+  }
+
+  // Çıktı resimlerinin içine küçük program adı ve adresi (yazıları örtmeyecek boş bir köşeye)
+  const creditTxt = () => `Mâh-ı Nev · ${bare((NOTICE && NOTICE.p) || 'https://bemiroglu.github.io/MahiNev/')}`;
+  function svgCredit(svg, corner, dark, inset) {
+    const m = /viewBox="([\d.\-]+) ([\d.\-]+) ([\d.]+) ([\d.]+)"/.exec(svg); if (!m) return svg;
+    const [x0, y0, w, h] = m.slice(1).map(Number), fs = Math.max(9, Math.round(w / 80)), pad = fs * 0.7, tl = corner === 'tl';
+    const [ix, iy] = inset || [0, 0], X = tl ? x0 + ix + pad : x0 + w - pad, Y = tl ? y0 + iy + pad + fs * 0.8 : y0 + h - pad;
+    return svg.replace(/<\/svg>\s*$/, `<text x="${X}" y="${Y}" text-anchor="${tl ? 'start' : 'end'}" style="font-family:${getComputedStyle(document.body).getPropertyValue('--font-body').trim().replace(/"/g, "'")};font-size:${fs}px;font-weight:400;fill:${dark ? '#e8edf4' : '#555'};fill-opacity:${dark ? 0.55 : 0.7};stroke:none;paint-order:normal">${esc(creditTxt())}</text></svg>`);
+  }
+  // ---- Harita dışa aktarma (PNG ve A4): açık temada, seçili dilde ----
+  function lightSnap(m, width) {
+    const prev = document.body.className;
+    document.body.classList.remove('th-dark', 'th-night', 'th-sun'); document.body.classList.add('th-light');
+    try { return m ? m.snapshot(width, { credit: creditTxt() }) : null; } finally { document.body.className = prev; }
+  }
+  // Harita sekmesi açık değilken de çizer (yazdırma için); bitince önceki görünümü geri yükler
+  async function withMapView(kind, fn) {
+    const was = view, wasV = st.mapView;
+    st.mapView = kind; if (was !== 'harita') { view = 'harita'; $('view-harita').hidden = false; }
+    try { renderBigMap(); await MAPP; await new Promise(r => setTimeout(r, 0)); return fn(); }
+    finally { st.mapView = wasV; view = was; if (was === 'harita') renderBigMap(); else $('view-harita').hidden = true; }
+  }
+  function mapPanels() {
+    const three = st.mapMode !== 'instant' && st.mapView === 'three';
+    if (!three) return [{ m: big, title: '', sub: '' }];
+    const ns = renderMap3.ns || [];
+    return (maps3 || []).map((m, i) => ({ m, title: ns[i] ? t.night3[ns[i].k] : '', sub: ns[i] ? nightCap(ns[i]) : '' }));
+  }
+  function htmlText(h) { const dv = document.createElement('div'); dv.innerHTML = h; return dv.textContent.replace(/\s+/g, ' ').trim(); }
+  function wrapText(ctx, s, maxW) {
+    const out = []; let line = '';
+    for (const w of String(s).split(' ')) { const tst = line ? line + ' ' + w : w; if (ctx.measureText(tst).width > maxW && line) { out.push(line); line = w; } else line = tst; }
+    if (line) out.push(line); return out;
+  }
+  async function savePng() {
+    if (MAPP) { toast(t.mapWait); await MAPP; }
+    const prev = document.body.className;
+    document.body.classList.remove('th-dark', 'th-night', 'th-sun'); document.body.classList.add('th-light');
+    let cv;
+    try { cv = composePng(); } finally { document.body.className = prev; }
+    if (!cv) return;
+    const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+    if (!blob) return;
+    const three = st.mapMode !== 'instant' && st.mapView === 'three';
+    if (await saveFile(fileBase(three ? 'map3' : 'map', { hhmm: st.mapMode === 'instant' ? hhmmTz(selT().date, st.tz) : '' }) + '.png', new Uint8Array(await blob.arrayBuffer()), 'image/png')) toast(t.mapSaved);
+  }
+  function composePng() {
+    const css = n => getComputedStyle(document.body).getPropertyValue(n).trim();
+    const W = 1600, pad = 36, mw = W - 2 * pad, panels = mapPanels(), snaps = panels.map(p => ({ p, c: p.m && p.m.snapshot(mw, { credit: creditTxt() }) })).filter(x => x.c);
+    if (!snaps.length) return null;
+    const conj = mapConj(), hmn = CAL.monthForConjunction(conj.date), layer = st.mapView === 'three' && st.mapLayer === 'first' ? 'seadet' : st.mapLayer;
+    const layerName = { seadet: t.lySeadet, first: t.lyFirst, yallop: t.lyYallop, odeh: t.lyOdeh }[layer];
+    const sub = st.mapMode === 'instant' ? `${t.mapTime}: ${fmtDT(selT())} · ${fmtUTC(selT())}` : `${monthName(hmn.m)} ${hmn.y} · ${layerName}` + (st.mapView === 'three' || st.mapLayer === 'first' ? '' : ` · ${fmtCivil(civil(st.date), true)} ${t.eveningAt}`);
+    const fB = `${css('--font-body')}`, fD = `${css('--font-display')}`;
+    const m = document.createElement('canvas').getContext('2d');
+    m.font = `15px ${fB}`; const note = wrapText(m, $('mapNote').textContent, mw);
+    const items = legendItems(layer, conj);
+    // lejant satırları
+    m.font = `14px ${fB}`; const rows = []; let row = [], rw = 0;
+    for (const it of items) { const w = 26 + m.measureText(it[2]).width + 22; if (rw + w > mw && row.length) { rows.push(row); row = []; rw = 0; } row.push([it, w]); rw += w; }
+    if (row.length) rows.push(row);
+    m.font = `13px ${fB}`; const foot = wrapText(m, t.pngSrc((bookOf() || {}).title || 'Tam İlmihâl', G.HR_VERSION) + ' · ' + t.pngNote, mw);
+    let H = pad + 40 + 30 + 14;
+    for (const s of snaps) H += (s.p.title ? 50 : 0) + s.c.height + 12;
+    H += note.length * 21 + 10 + rows.length * 26 + 14 + foot.length * 18 + pad;
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = Math.ceil(H);
+    const c = cv.getContext('2d');
+    c.fillStyle = '#ffffff'; c.fillRect(0, 0, W, cv.height); c.textBaseline = 'top'; c.fillStyle = css('--ink');
+    let y = pad;
+    c.font = `600 30px ${fD}`; c.fillText(t.mapTitle, pad, y); y += 40;
+    c.font = `17px ${fB}`; c.fillStyle = css('--muted'); c.fillText(sub, pad, y); y += 30;
+    c.fillStyle = css('--ink'); c.font = `14px ${fB}`; c.fillText(htmlText(locLine()), pad, y); y += 14 + 6;
+    for (const s of snaps) {
+      if (s.p.title) { y += 6; c.font = `600 19px ${fB}`; c.fillStyle = css('--ink'); c.fillText(s.p.title, pad, y); c.font = `14px ${fB}`; c.fillStyle = css('--muted'); c.fillText(s.p.sub, pad, y + 24); y += 44; }
+      c.drawImage(s.c, pad, y); c.strokeStyle = css('--line'); c.lineWidth = 1; c.strokeRect(pad + 0.5, y + 0.5, s.c.width - 1, s.c.height - 1); y += s.c.height + 12;
+    }
+    c.font = `15px ${fB}`; c.fillStyle = css('--ink'); for (const l of note) { c.fillText(l, pad, y); y += 21; } y += 10;
+    c.font = `14px ${fB}`;
+    for (const r of rows) {
+      let x = pad;
+      for (const [[k, col, l, d], w] of r) {
+        const cc = css(col) || '#888', sy = y + 4;
+        c.save();
+        if (k === 'fill' || k === 'hatch') { c.fillStyle = cc; c.fillRect(x, sy, 20, 12); if (k === 'hatch') { c.strokeStyle = css('--map-edge'); c.lineWidth = 1; c.beginPath(); for (let q = -12; q < 20; q += 4) { c.moveTo(x + q, sy + 12); c.lineTo(x + q + 12, sy); } c.save(); c.rect(x, sy, 20, 12); c.clip(); c.stroke(); c.restore(); } }
+        else if (k === 'line') { c.strokeStyle = cc; c.lineWidth = 2.5; c.setLineDash(d === 'dashed' ? [6, 4] : d === 'dotted' ? [2, 3] : []); c.beginPath(); c.moveTo(x, sy + 6); c.lineTo(x + 20, sy + 6); c.stroke(); }
+        else if (k === 'diamond') { c.fillStyle = cc; c.strokeStyle = css('--ink'); c.lineWidth = 1.5; c.beginPath(); c.moveTo(x + 10, sy - 1); c.lineTo(x + 17, sy + 6); c.lineTo(x + 10, sy + 13); c.lineTo(x + 3, sy + 6); c.closePath(); c.fill(); c.stroke(); }
+        else { c.strokeStyle = cc; c.lineWidth = 2; c.setLineDash([4, 3]); c.strokeRect(x + 1, sy, 18, 12); }
+        c.restore();
+        c.fillStyle = css('--ink'); c.fillText(l, x + 26, y + 2); x += w;
+      }
+      y += 26;
+    }
+    y += 14; c.font = `13px ${fB}`; c.fillStyle = css('--muted'); for (const l of foot) { c.fillText(l, pad, y); y += 18; }
+    return cv;
   }
 
   // ---- Saha ----
@@ -8528,9 +9012,9 @@ var qrcode = function() {
   function smOptsSafe() { try { return smOpts(); } catch (e) { return {}; } }
   // ---- Baskı / PDF: her biri tek A4 sayfasına oturan, hedefe odaklı sayfalar ----
   function openPrint() {
-    const def = view === 'harita' ? ['map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
+    const def = view === 'harita' ? [st.mapView === 'three' && st.mapMode !== 'instant' ? 'map3' : 'map'] : view === 'saha' ? (records.some(x => x.schema) ? ['tut'] : ['plan']) : ['plan'];
     const has = records.some(x => x.schema);
-    $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
+    $('prOpts').innerHTML = ['plan', 'sky', 'skyEve', 'month', 'map', 'map3', 'tut', 'blank'].filter(k => k !== 'tut' || has).map(k => `<label><input type="checkbox" value="${k}"${def.includes(k) ? ' checked' : ''}><span>${esc(t.prOpts[k])}</span></label>`).join('');
     try { $('prDlg').showModal(); } catch (e) { $('prDlg').setAttribute('open', ''); }
   }
   const placeName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : (st.locAuto ? t.myPlace : t.selLoc); };
@@ -8561,9 +9045,10 @@ var qrcode = function() {
   }
   function pageSky(at) {
     const svg = withTheme('light', () => G.HRStarMap.draw(LOC, at, st.lang, Object.assign(smOptsSafe(), { size: 680 })).svg);
+    const svgC = svgCredit(svg);
     const hj = hijriAt(at);
     return `<section class="a4">${pgHead(t.smTitle, `${locLine()}<br><strong>${esc(fmtDT(at))}</strong>${hj ? ' · ' + hj.tagged : ''}`)}
-      <div class="psky">${svg}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
+      <div class="psky">${svgC}</div><p class="cap">${esc(t.smNote)}</p>${guidesHtml(at)}${pgFoot()}</section>`;
   }
   // Seçili akşamın gökyüzü haritası: hilâlin gurûbdan ay batımına kadar izi ve akşam çizelgesi
   function eveTrack(r) {
@@ -8594,7 +9079,7 @@ var qrcode = function() {
     }).join('');
     const hj = hijriAt(at);
     return `<section class="a4">${pgHead(t.smEveTitle, `${locLine()}<br><strong>${esc(fmtCivil(civil(st.date)))}</strong>${hj ? ' · ' + hj.tagged : ''}<br>${esc(t.smEveAt(hhmm(at), why))}`)}
-      <div class="psky eve">${svg}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
+      <div class="psky eve">${svgCredit(svg, 'tl', true, [34, 8])}</div><p class="cap">${esc(t.smEveNote)}${r.moonUp ? '' : ' ' + esc(t.smEveNoMoon)}</p>${guidesHtml(at)}
       <table class="mt eve"><thead><tr>${t.smEveCols.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>${pgFoot()}</section>`;
   }
   function pageMonth() {
@@ -8614,14 +9099,23 @@ var qrcode = function() {
       <p class="cap">${esc(t.pgMonthNote)}</p>${pgFoot()}</section>`;
   }
   async function pageMap() {
-    let img = '';
-    const prev = document.body.className;
-    if (!big) { const was = view; view = 'harita'; $('view-harita').hidden = false; renderBigMap(); view = was; }
-    document.body.classList.remove('th-light', 'th-dark', 'th-night', 'th-sun'); document.body.classList.add('th-light');
-    try { const v = view; view = 'harita'; renderBigMap(); view = v; if (MAPP) await MAPP; const cv = $('bigMap').querySelector('canvas'); img = cv ? cv.toDataURL('image/png') : ''; }
-    finally { document.body.className = prev; if (view === 'harita') renderBigMap(); else $('view-harita').hidden = true; }
-    return `<section class="a4 land">${pgHead(t.mapTitle, `${locLine()}<br>${esc($('mapNote').textContent)}`)}
+    return withMapView('one', () => {
+      const c = lightSnap(big, 1500), img = c ? c.toDataURL('image/png') : '';
+      return `<section class="a4 land">${pgHead(t.mapTitle, `${locLine()}<br>${esc($('mapNote').textContent)}`)}
       <div class="pmap">${img ? `<img src="${img}" alt="">` : ''}</div><div class="legend">${$('mapLegend').innerHTML}</div>${pgFoot()}</section>`;
+    });
+  }
+  // Üç gece: her gece ayrı yatay A4
+  async function pageMap3() {
+    if (st.mapMode === 'instant') return pageMap();
+    return withMapView('three', () => {
+      const ns = renderMap3.ns || [], note = $('mapNote').textContent, lg = $('mapLegend').innerHTML;
+      return (maps3 || []).map((m, i) => {
+        const c = lightSnap(m, 1500), img = c ? c.toDataURL('image/png') : '';
+        return `<section class="a4 land">${pgHead(`${t.mapTitle} — ${ns[i] ? t.night3[ns[i].k] : ''}`, `${locLine()}<br><strong>${esc(ns[i] ? nightCap(ns[i]) : '')}</strong><br>${esc(note)}`)}
+      <div class="pmap">${img ? `<img src="${img}" alt="">` : ''}</div><div class="legend">${lg}</div>${pgFoot()}</section>`;
+      }).join('');
+    });
   }
   function qrSvg(text) { try { const qr = qrcode(0, 'M'); qr.addData(text); qr.make(); return qr.createSvgTag(2, 0); } catch (e) { return ''; } }
   function pageTut(x) {
@@ -8690,8 +9184,8 @@ var qrcode = function() {
   const coordSlug = (la, lo) => `${Math.abs(la).toFixed(2)}${la >= 0 ? 'N' : 'S'}-${Math.abs(lo).toFixed(2)}${lo >= 0 ? 'E' : 'W'}`;
   function placeSlug(name, la, lo) { return slug(name) || coordSlug(la, lo); }
   const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : ''; };
-  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
-    en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', map3: 'dunya-haritasi-uc-gece', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
+    en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', map3: 'world-map-three-nights', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
@@ -8716,6 +9210,7 @@ var qrcode = function() {
       else if (k === 'skyEve') parts.push(pageSkyEve());
       else if (k === 'month') parts.push(pageMonth());
       else if (k === 'map') parts.push(await pageMap());
+      else if (k === 'map3') parts.push(await pageMap3());
       else if (k === 'tut') parts.push(pageTut(rec || records.find(x => x.schema)));
       else if (k === 'blank') parts.push(pageTut(null));
     }
@@ -8958,6 +9453,12 @@ var qrcode = function() {
     let u1 = null, u2 = null, u3 = null; try { u1 = nextRasad('2026-11-11'); u2 = nextRasad('2026-11-12'); u3 = nextRasad('2026-12-11'); } finally { LOC = keep2; }
     add('yaklaşan rasad', 'İstanbul: 11.11 / 12.11 / 11.12.2026’den itibaren ilk ay başı gecesi', '2026-11-11 / 2026-12-10 / 2027-01-09',
       `${u1.a && u1.a.ymd} / ${u2.a && u2.a.ymd} / ${u3.a && u3.a.ymd}`, '—', u1.a && u1.a.ymd === '2026-11-11' && u2.a && u2.a.ymd === '2026-12-10' && u3.a && u3.a.ymd === '2027-01-09' && (!u3.b || u3.b.ymd >= '2027-01-09'));
+    // hilâl verileri: SD/HP oranı ayın yarıçap oranıdır (≈ 0,2725); topozentrik beynûnet jeosentrikten küçüktür (akşam)
+    { const rI = C.evening({ lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, tz: 'Europe/Istanbul' }, '2026-12-10'), x = C.crescentData(rI);
+      add('hilâl verileri', 'İstanbul 10.12.2026 gurûb: SD/HP · topozentrik < jeosentrik beynûnet · uzaklık', '0,2725 ± 0,003 · evet · 356–407 bin km', x ? `${num(x.sd / x.hp, 4)} · ${x.elongTopo < x.elongGeo ? 'evet' : 'hayır'} · ${num(x.geoKm / 1000, 0)} bin km` : '—', '', x && Math.abs(x.sd / x.hp - 0.2725) < 0.003 && x.elongTopo < x.elongGeo && x.geoKm > 356000 && x.geoKm < 407000); }
+    // harita, üç gece: önceki akşam, birinci gece (H − 1), ikinci gece (H)
+    { const cR = C.nearestNewMoon(A.MakeTime(new Date('2026-12-10T12:00:00Z'))), ns = nights3(cR, CAL.monthForConjunction(cR.date));
+      add('harita, üç gece', 'Receb 1448: önceki akşam / birinci gece / ikinci gece', '2026-12-08 / 2026-12-09 / 2026-12-10', ns ? ns.map(n => n.ev).join(' / ') : '—', '', ns && ns.map(n => n.ev).join() === '2026-12-08,2026-12-09,2026-12-10'); }
     add('özgün dosya', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · özgün`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'özgün' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
     const ok = rows.filter(x => x.ok).length;
     $('tests').innerHTML = `<caption class="small" style="text-align:left;padding-bottom:8px">${ok} / ${rows.length} ${t.pass.toLowerCase()}</caption>

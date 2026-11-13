@@ -326,6 +326,21 @@
     }
     return out;
   }
+  // Haritanın değer çizgileri için genişletilmiş hücre (ek bilgi; yalnız istendiğinde hesaplanır):
+  // ARCV (ayın ve güneşin havasız yükseklik farkı), DAZ (semt farkı), topos. uzanım, hilâl genişliği (yay dakikası),
+  // ay batışı gecikmesi ve gurûbdan hilâlin 5°’ye inişine kadar geçen süre (dakika). Tam İlmihâl sınıfı değişmez.
+  function cellX(lat, lon, dayUTC, conj) {
+    const c = cell(lat, lon, dayUTC, conj, false); if (!c.ss) return c;
+    const obs = new A.Observer(lat, lon, 0), mo = topo('Moon', c.ss, obs), su = topo('Sun', c.ss, obs);
+    const elT = sep(su.ra, su.dec, mo.ra, mo.dec), sd = deg(Math.asin(MOON_R_KM / (mo.distAU * AU_KM))) * 60;
+    Object.assign(c, { arcv: mo.airAlt - su.airAlt, daz: su.az - mo.az, elT, width: sd * (1 - Math.cos(rad(elT))), moonAz: mo.az });
+    if (c.ageH > 0 && c.up > 0) {
+      try { const ms = A.SearchRiseSet('Moon', obs, -1, c.ss, 1); if (ms) { const l = (ms.ut - c.ss.ut) * 1440; if (l > 0 && l < 720) c.lag = l; } } catch (e) { /* */ }
+      if (c.alt >= K.MIN_ALT) { try { const w = A.SearchAltitude('Moon', obs, -1, c.ss, 0.5, K.MIN_ALT - bennett(K.MIN_ALT)); if (w) c.win = (w.ut - c.ss.ut) * 1440; } catch (e) { /* */ } }
+      else c.win = 0;
+    }
+    return c;
+  }
   // Bir yerin bu ay için ilk elverişli akşamı (0–3 gün sonrası); bulunamazsa null
   function firstEvening(lat, lon, conj) {
     const cd = conj.date, base = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
@@ -365,6 +380,17 @@
   function twilight(obs, ss) {
     const f = a => A.SearchAltitude('Sun', obs, -1, ss.AddDays(-0.02), 1, a);
     return { civil: f(-6), nautical: f(-12), ahmar: f(K.SAFAK_AHMAR), ebyad: f(K.SAFAK_EBYAD) };
+  }
+  // Gurûb anında hilâlin ayrıntılı verileri (ek bilgi): azimut/irtifâ, iki beynûnet, SD, HP, uzaklık, kalınlık, ARCV
+  function crescentData(r) {
+    if (!r || !r.ok) return null;
+    const loc = r.loc, obs = new A.Observer(loc.lat, loc.lon, (loc.elev || 0) + (loc.hObs || 0)), t = r.gurub;
+    const m = topo('Moon', t, obs), s = topo('Sun', t, obs);
+    const geoKm = A.GeoMoon(t).Length() * AU_KM, topoKm = m.distAU * AU_KM;
+    const elT = sep(s.ra, s.dec, m.ra, m.dec), sd = deg(Math.asin(MOON_R_KM / topoKm)) * 60;
+    return { sunAz: s.az, sunAlt: s.alt, moonAz: m.az, moonAlt: m.alt, elongGeo: r.beynunet, elongTopo: elT, daz: r.daz,
+      sd, hp: deg(Math.asin(6378.14 / geoKm)) * 60, geoKm, topoKm, illum: r.illum, width: sd * (1 - Math.cos(rad(elT))), arcv: m.airAlt - s.airAlt,
+      lag: r.lagMin, moonset: r.moonset, win: r.windowEnd ? (r.windowEnd.ut - t.ut) * 1440 : null };
   }
   // Belirli bir anda güneş ve ay konumu (ufuk çizimi ve saha modu için)
   function at(t, loc) {
@@ -452,5 +478,5 @@
   }
 
   const Q = '@@N1@@'; // sürüm bildirimi parçası (build.py)
-  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, firstEvening, skyObjects, twilight, at, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
+  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, cellX, firstEvening, skyObjects, twilight, at, crescentData, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
