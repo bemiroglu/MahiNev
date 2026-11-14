@@ -38,7 +38,7 @@
   Object.assign(G.HRI18N.T.en, {
     modeLive: 'Now', modePlan: 'Sighting plan', backNow: 'Back to now', printBtn: 'Print / PDF',
     hjAfter: 'after sunset: new lunar day', hjHesabi: 'computed',
-    hjNote: 'The lunar day begins at the legal sunset (ezânî day, p. 188). Month name and Hijri year are computed; the month begins by sighting. The new Hijri year begins when the Muharram crescent is seen; until then both possibilities are shown.',
+    hjNote: 'The lunar day begins at the shar’î sunset (adhânî day, EB IV, p. 165). Month name and Hijri year are computed; the month begins by sighting. The new Hijri year begins when the Muharram crescent is seen; until then both possibilities are shown.',
     hjOr: 'or', hjEnd: 'month’s end',
     upTitle: 'Upcoming sighting', upA: 'Observation night (first possible evening)', upB: 'Best evening (≥ 18°)',
     upIn: n => n <= 0 ? 'this evening' : n === 1 ? 'tomorrow evening' : `in ${n} days`, upPlan: 'Plan this night', upMonth: m => `${m} crescent`, upWin: 'Search', upToday: 'Today (lunar, computed)', upLoading: 'Calculating…',
@@ -56,16 +56,16 @@
     wxLevel: { good: 'Sky looks favourable', fair: 'Partly favourable; check the horizon', poor: 'Not favourable' },
     wxReason: { rain: 'high chance of precipitation', low: 'low cloud', lowSome: 'some low cloud', cloud: 'overcast', cloudSome: 'partly cloudy', haze: 'poor visibility (haze/fog)', hazeSome: 'moderate visibility', aod: 'heavy aerosol/dust', aodSome: 'light haze/dust', humid: 'high humidity' },
     wxAod: 'Haze (aerosol optical depth)', wxFor: 'Sunset hour of the selected evening',
-    wxFiqh: 'Per Tam İlmihâl, in cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the testimony of many; for the feast two upright witnesses are needed (p. 315). A forecast is no basis for a ruling; the real sky is observed.',
+    wxFiqh: 'Per Tam İlmihâl, in cloudy weather the Ramadân crescent is established by one ’âdil Muslim saying “I saw it”, in clear weather by the testimony of many; for the ’Iyd two ’âdil witnesses are needed (EB V, p. 56). A forecast is no basis for a ruling; the real sky is observed.',
     wxSrc: 'Source: Open-Meteo (open data). Values are hourly and for a point; the western horizon must still be checked.',
     openSM: 'Sky chart', smTitle: 'Sky chart', smFace: 'Direction at bottom', faces: { 270: 'West', 180: 'South', 90: 'East', 0: 'North' },
     smLines: 'Constellation lines', smNames: 'Star names', smCons: 'Constellation names', smEcl: 'Ecliptic',
-    smNote: 'Hold the chart overhead with its lower edge towards the direction you face. Dashed circle: 5° above the horizon (Tam İlmihâl’s limit, p. 360). Dotted line: the ecliptic; the Moon and planets lie near it. Star data: d3-celestial (Hipparcos, BSD licence).',
+    smNote: 'Hold the chart overhead with its lower edge towards the direction you face. Dashed circle: 5° above the horizon (Tam İlmihâl’s limit, EB V, p. 137). Dotted line: the ecliptic; the Moon and planets lie near it. Star data: d3-celestial (Hipparcos, BSD licence).',
     guidesTitle: 'Bright objects to help orientation', guidesNone: 'No prominent bright object nearby.',
     fSM: 'Sky chart', fLoc: 'My location',
     printing: 'Preparing the print page…', printSaved: 'Print page saved; open it and use the browser’s “Save as PDF”.', printNA: 'Printing and saving are unavailable in this view.', printDeclined: 'Saving cancelled.',
     printTitle: { plan: 'Sighting plan', sky: 'Sky chart', map: 'World sighting map', field: 'Field summary' },
-    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Se’âdet-i Ebediyye pp. 315, 360).',
+    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (ru’yat); what is given here is computed possibility (Se’âdet-i Ebediyye EB V, pp. 54, 137).',
     printGen: 'Prepared', locAutoDone: 'Location taken automatically.', locSandbox: 'Location is off inside claude.ai; open the file in a browser.', myPlace: 'My location',
     footer: ''
   });
@@ -75,13 +75,13 @@
       'Ezânî gün, güneşin üst kenarının şer’î ufuktan iki şer’î gurûbu arasındaki zamandır (s. 188); bu sebeple program kamerî günü şer’î gurûbda değiştirir. Ay başı rü’yetle olur; hesap ve takvimle başlanmaz (s. 315). Gündüz görülen hilâl gelecek gecenin hilâlidir (s. 315).',
       'Program her ay için hesâbî en erken günü bulur; o günden önce yeni ay başlayamaz. En erken gün ve ertesi gün için iki ihtimal (1 | 29/30) birlikte yazılır. Ay adı ve yıl, ictimâya göre aritmetik takvimden alınır; Muharrem’de yeni yıl ancak hilâl görülünce kesinleştiğinden, o güne kadar eski yıl ile yeni yıl yan yana gösterilir.'];
     T.en.hicri = ['Lunar day, month name and Hijri year',
-      'The ezânî day is the time between two legal sunsets of the Sun’s upper limb over the legal horizon (p. 188); the programme therefore changes the lunar day at the legal sunset. The month begins by sighting, not by calculation or calendar (p. 315). A crescent seen by day belongs to the coming night (p. 315).',
+      'The adhânî day is the time between two shar’î sunsets of the Sun’s upper limb over the shar’î horizon (EB IV, p. 165); the programme therefore changes the lunar day at the shar’î sunset. The month begins by sighting, not by calculation or calendar (EB V, p. 54). A crescent seen by day belongs to the coming night (EB V, p. 56).',
       'For each month the programme finds the computed earliest day; the new month cannot begin before it. For the earliest day and the next, both possibilities (1 | 29/30) are written. Month name and year come from the arithmetic calendar for the conjunction; since the new year in Muharram is certain only once the crescent is seen, the old and new years are shown side by side until then.'];
     T.tr.hava = ['Hava, bulut ve görüş',
       'Bulutlu havada Ramazân hilâli bir âdil müslimânın “gördüm” demesiyle, açık havada birçok kimsenin şehâdetiyle sabit olur; bayram için iki âdil gerekir (s. 315). Hava tahmini yalnızca rasada hazırlık içindir; hüküm gerçek gözleme bağlıdır.',
       'İnce hilâl ufka yakın ve sönüktür: alçak bulut, pus ve toz en büyük engeldir. Program iki nokta için tahmin alır: bulunduğunuz yer ve hilâlin battığı yönde yaklaşık 25 km ötesi (5° yükseklikteki görüş hattı 2 km’deki bulut tabanını bu mesafede keser). Görüş mesafesi 20 km’nin, aerosol optik derinliği 0,2’nin altındaysa ufuk genellikle temizdir.'];
     T.en.hava = ['Weather, cloud and visibility',
-      'In cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the testimony of many; for the feast two upright witnesses are needed (p. 315). The forecast is only for preparing the observation; the ruling depends on real observation.',
+      'In cloudy weather the Ramadân crescent is established by one ’âdil Muslim saying “I saw it”, in clear weather by the testimony of many; for the ’Iyd two ’âdil witnesses are needed (EB V, p. 56). The forecast is only for preparing the observation; the ruling depends on real observation.',
       'A thin crescent is low and faint: low cloud, haze and dust are the main obstacles. The programme fetches two points: your location and a point about 25 km away towards where the crescent sets (a line of sight 5° high meets a 2 km cloud base at that distance). With visibility above 20 km and aerosol optical depth below 0.2 the horizon is usually clean.'];
   }
 })(typeof globalThis !== 'undefined' ? globalThis : window);

@@ -57,12 +57,12 @@
     hjWhyN: (m, d1, d2, n) => `${n} if 1 ${m} is ${d1}, ${n - 1} if it is ${d2}`,
     hjWhy1: (m, d1, d2, pm) => `if 1 ${m} is ${d1}, today is 1 ${m}; if it is ${d2}, today is the last day of ${pm}`,
     hjWhyLead: 'Why two numbers:',
-    hjBook: 'A computed date. Day 1 of the month is the calculated day or one day later; never a day earlier (p. 315). Which one is established by sighting.',
-    rnIntro: 'Each row is the start of a lunar month. The observation night and the best evening are calculated for this location. According to Tam İlmihâl, day 1 of the month is the calculated day or one day later, never earlier (pp. 315, 326, 360). Which one is established by sighting. Tap a date to plan that evening.',
+    hjBook: 'A computed date. Day 1 of the month is the calculated day or one day later; never a day earlier (EB V, p. 57). Which one is established by sighting.',
+    rnIntro: 'Each row is the start of a lunar month. The observation night and the best evening are calculated for this location. According to Tam İlmihâl, day 1 of the month is the calculated day or one day later, never earlier (EB V, pp. 57, 79, 137). Which one is established by sighting. Tap a date to plan that evening.',
     hDetail: 'Sunset and crescent', hHelp: 'Guidance', accTitle: 'Calculation and observation accuracy',
     polarNightH: 'The Sun does not rise here on this date (polar night).', polarDayH: 'The Sun does not set here on this date.',
-    polarSub: 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (p. 315); enter the nearest such place to plan.',
-    mtagPossible: 'm', arefeSub: 'or the next day (p. 360)', isikRef: 'Tam İlmihâl pp. 326, 359', card4: ['N', 'E', 'S', 'W'],
+    polarSub: 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (EB V, pp. 56–57); enter the nearest such place to plan.',
+    mtagPossible: 'm', arefeSub: 'or the next day (EB V, p. 138)', isikRef: 'Tam İlmihâl, EB V, pp. 79, 135–136', card4: ['N', 'E', 'S', 'W'],
     daysAgo: n => `${n} days ago`, magUnit: 'mag', dustLbl: 'dust', selLoc: 'Selected location', atObs: 'at observation',
     tutBlankCalc: 'Computed data are filled in by the program when a record is created.',
     dateFmtLbl: 'Date format (input fields)', dateFmtOpts: { 'dmy/': 'day/month/year (13/11/2026)', 'dmy.': 'day.month.year (13.11.2026)', 'ymd-': 'year-month-day (2026-11-13)', 'mdy/': 'month/day/year (11/13/2026)' },
@@ -70,7 +70,7 @@
     dateBad: ph => `Could not read the date. Format: ${ph}`, datePick: 'Pick from calendar',
     srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (in English: Endless Bliss, Hakîkat Kitâbevi)',
     bookLinks: 'Read or download Endless Bliss, the English version of Tam İlmihâl (Hakîkat Kitâbevi):', bookPage: 'Endless Bliss page',
-    editionNote: 'Page numbers refer to the Turkish Tam İlmihâl, January 2026 printing; Endless Bliss has its own pagination.',
+    editionNote: 'References such as “EB V, p. 137” are to Endless Bliss, the English Tam İlmihâl in six fascicles (here: Fifth Fascicle, page 137). Editions used: Fourth Fascicle, 21st edition; Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).',
     todayEve: 'This evening', navBack: 'Back: return to the previous selection', navFwd: 'Forward', navToNow: 'Back to now',
     navNowToast: 'Switched to the present moment. Tap ↶ in the top bar to return to the previous selection.',
     dateNoteNext: (a, b) => `The selected moment is the morning of ${b}; the night is shown as the night of the evening of ${a}.`,
@@ -92,17 +92,17 @@
       x.nau ? (x.ast ? `astronomical night ${x.ast}–${x.ast2 || '…'}` : 'no astronomical night') : '', x.nau2 ? `morning nautical ${x.nau2}` : '', x.civ2 ? `civil ${x.civ2}` : ''].filter(Boolean).join(' · '),
     gokPolarN: a => `The Sun does not rise today (polar night); highest ${a}°.`, gokPolarD: a => `The Sun does not set today (polar day); lowest ${a}°.`,
     gokWhole: 'Today with the naked eye (whole day scanned; no sunset):',
-    gokCap: 'Additional information (Astronomy Engine). The State column is a rough naked-eye estimate from the Sun’s altitude, the object’s brightness and its height above the horizon; weather, light pollution and dark adaptation are not included. For the crescent, the evaluation above (Tam İlmihâl p. 360) prevails. Never look at the Sun directly or through binoculars.',
+    gokCap: 'Additional information (Astronomy Engine). The State column is a rough naked-eye estimate from the Sun’s altitude, the object’s brightness and its height above the horizon; weather, light pollution and dark adaptation are not included. For the crescent, the evaluation above (Tam İlmihâl, EB V, p. 137) prevails. Never look at the Sun directly or through binoculars.',
     miniGlobal: 'Day 1 of the month (two possibilities)', miniLocal: 'First possible evening here',
-    miniFirstEve: (e, w) => `First possible evening worldwide: ${e} (${w})`, miniIsik: 'Işık method (p. 326)',
-    miniLocalSub: 'The first watch evening at this location; it does not by itself fix the start of the month (p. 315).',
+    miniFirstEve: (e, w) => `First possible evening worldwide: ${e} (${w})`, miniIsik: 'Işık method (EB V, p. 79)',
+    miniLocalSub: 'The first watch evening at this location; it does not by itself fix the start of the month (EB V, pp. 55–57).',
     stStart: 'Month start', stStartVal: (m, a, b) => `1 ${m}: ${a} or ${b}`,
-    stStartSub: (e1, e2) => `First night: evening of ${e1} · second night: evening of ${e2}. Which one is established by sighting; never earlier (pp. 315, 360).`,
-    stStartSubZh: 'The day found by the Işık method or one day later; never earlier (p. 326).',
+    stStartSub: (e1, e2) => `First night: evening of ${e1} · second night: evening of ${e2}. Which one is established by sighting; never earlier (EB V, pp. 57, 137).`,
+    stStartSubZh: 'The day found by the Işık method or one day later; never earlier (EB V, p. 79).',
     qaStart: (m, a, b) => `Month start: 1 ${m} is ${a} or ${b}; which one is established by sighting.`,
     rnCols: ['Lunar month (calculated)', 'Conjunction', 'Observation night (here)', 'Best evening (here)', 'Day 1 (two possibilities)', '']
   });
   Object.assign(T.tr, { fPvOk: 'Seçili anda hilâl aranabilir', fPvTag: 'önizleme' }); Object.assign(T.en, { fPvOk: 'The crescent can be searched for at the selected moment', fPvTag: 'preview' });
   T.tr.hints = Object.assign({}, T.tr.hints, { fieldTop: 'Sahada ne yapmalı: geri sayım, Tam İlmihâl penceresi ve bakılacak yer. Canlı kipte şimdiki an, planlama kipinde seçili an gösterilir.', date: 'Planladığınız akşam. Gün okları (◀ ▶) üst bantta da vardır; ↶ düğmesi önceki seçime, ↷ sonrakine döner. Ay başı rasad gecelerine “◀ Önceki ay başı / Sonraki ay başı ▶” düğmeleriyle gidilir: hilâl ayın 29. günü gurûb vakti aranır (s. 315).' });
-  T.en.hints = Object.assign({}, T.en.hints, { fieldTop: 'What to do in the field: countdowns, Tam İlmihâl’s window and where to look. Live mode shows the current moment; planning mode shows the selected moment.', date: 'The evening you are planning. The day arrows (◀ ▶) are also in the top bar; ↶ returns to the previous selection and ↷ to the next. “◀ Previous month start / Next month start ▶” go to month-start observation nights: the crescent is sought at sunset on the 29th (p. 315).' });
+  T.en.hints = Object.assign({}, T.en.hints, { fieldTop: 'What to do in the field: countdowns, Tam İlmihâl’s window and where to look. Live mode shows the current moment; planning mode shows the selected moment.', date: 'The evening you are planning. The day arrows (◀ ▶) are also in the top bar; ↶ returns to the previous selection and ↷ to the next. “◀ Previous month start / Next month start ▶” go to month-start observation nights: the crescent is sought at sunset on the 29th (EB V, p. 55).' });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

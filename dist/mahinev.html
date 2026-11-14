@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.14.0
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.14.1-deneme.1
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; Tam İlmihâl’e uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -1021,7 +1021,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 /* Dil kaydı: arayüz dilleri, yerel biçimler, yazı yönü ve her dilde Tam İlmihâl’in adı ve bağlantıları.
  * Yeni bir dil eklemek için: buraya bir kayıt, i18n dosyalarına T[kod] ve MONTHS[kod], explain.js / guide.js / sky.js /
  * starmap.js / gok.js sözlüklerine birer bölüm eklenir (bkz. docs/coklu-dil.md). Eksik metinler İngilizceden gelir.
- * Program içindeki sayfa numaraları Türkçe Tam İlmihâl’in Ocak 2026 baskısına göredir. */
+ * Türkçe metinlerdeki sayfa numaraları Tam İlmihâl’in Ocak 2026 baskısına, İngilizce metinlerdekiler Endless Bliss’e (fasikül, sayfa) göredir. */
 (function (G) {
   'use strict';
   const HK = 'https://www.hakikatkitabevi.net/';
@@ -1029,8 +1029,9 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     tr: { code: 'tr', name: 'Türkçe', short: 'TR', locale: 'tr-TR', dir: 'ltr', fallback: null,
       book: { title: 'Tam İlmihâl Se’âdet-i Ebediyye', page: HK + 'book.php?bookCode=001', pdf: HK + 'downloads/001.pdf', pages: 'tr-2026-01' } },
     en: { code: 'en', name: 'English', short: 'EN', locale: 'en-GB', dir: 'ltr', fallback: 'tr',
-      // Endless Bliss dört fasikül hâlinde ayrı ayrı indirilir; bu yüzden yalnız kitap sayfası verilir.
-      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: null } }
+      // Endless Bliss altı fasikül hâlinde ayrı ayrı indirilir; bu yüzden yalnız kitap sayfası verilir.
+      // İngilizce metinlerdeki atıflar "EB V, p. 137" biçimindedir (fasikül, sayfa; 2020 baskıları). Eşleme: docs/endless-bliss-esleme.md
+      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: 'eb-2020' } }
   };
   const ORDER = ['tr', 'en'];
   const get = L => LANGS[L] || LANGS.en;
@@ -1611,7 +1612,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   'use strict';
   const MONTHS = {
     tr: ['Muharrem', 'Safer', 'Rebîulevvel', 'Rebîulâhır', 'Cemâziyelevvel', 'Cemâziyelâhır', 'Receb', 'Şa’bân', 'Ramezân', 'Şevvâl', 'Zilka’de', 'Zilhicce'],
-    en: ['Muharram', 'Safar', 'Rabiʻ al-Awwal', 'Rabiʻ al-Akhir', 'Jumada al-Ula', 'Jumada al-Akhira', 'Rajab', 'Shaʻban', 'Ramadan', 'Shawwal', 'Dhu al-Qaʻda', 'Dhu al-Hijja']
+    en: ['Muharram', 'Safar', 'Rabî’ul-awwal', 'Rabî’ul-âkhir', 'Jamâzil-awwal', 'Jamâzil-âkhir', 'Rajab', 'Sha’bân', 'Ramadân', 'Shawwâl', 'Dhu’l-qa’da', 'Dhu’l-hijja']
   };
   const T = {
     tr: {
@@ -1679,26 +1680,26 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       notCalendar: 'This program is not a calendar. A lunar month begins when the crescent is seen with the naked eye (ru’yat); what is shown here is the calculated possibility.',
       tabRuyet: 'Sighting', tabHelp: 'Help and canonical text', tabTests: 'Verification',
       location: 'Location', city: 'City', custom: 'Enter manually', lat: 'Arz (latitude, °N)', lon: 'Tûl (longitude, °E)',
-      elev: 'Ground elevation (m)', hObs: 'Râsıd height (observer, m)', hMax: 'Highest point of the city (m, for tamkin)',
+      elev: 'Ground elevation (m)', hObs: 'Observer’s height (râsid, m)', hMax: 'Highest point of the city (m, for Tamkin)',
       tz: 'Time zone', useMyLoc: 'Use my location', locFail: 'Location unavailable. Enter latitude and longitude manually.',
       date: 'Evening of', today: 'Today', prevDay: 'Previous day', nextDay: 'Next day', nextNight: 'Next observation night',
       evening: 'Evening', status: 'Calculated sighting possibility',
       cls: {
-        notBorn_beforeConj: ['Crescent not yet born', 'Conjunction (ictimâ) has not happened yet.'],
+        notBorn_beforeConj: ['Crescent not yet born', 'Conjunction (ijtimâ’) has not happened yet.'],
         notBorn_moonFirst: ['Crescent not yet born', 'The Moon sets before the Sun.'],
-        below8: ['Not visible (Tam İlmihâl)', 'Beynûnet (elongation) below 8° at sunset; the crescent cannot be seen anywhere (p. 360).'],
-        below5: ['Not visible: closer than 5° to the horizon', 'The crescent’s apparent altitude is below 5° at sunset (p. 360).'],
-        possible: ['Possible; careful observation needed', 'Beynûnet between 8° and 18° (p. 360).'],
-        visible: ['Visible by calculation', 'Beynûnet 18° or more; visible if the sky is clear (p. 360, Ottoman criterion).'],
+        below8: ['Not visible (Tam İlmihâl)', 'Beynûnet (elongation) below 8° at sunset; the crescent cannot be seen anywhere (EB V, p. 137).'],
+        below5: ['Not visible: closer than 5° to the horizon', 'The crescent’s apparent altitude is below 5° at sunset (EB V, p. 137).'],
+        possible: ['Possible; careful observation needed', 'Beynûnet between 8° and 18° (EB V, p. 137).'],
+        visible: ['Visible by calculation', 'Beynûnet 18° or more; visible if the sky is clear (EB V, p. 137, Ottoman criterion).'],
         midMonth: ['Not a new-moon observation night', 'The crescent has been in the sky for several nights.']
       },
       claim: 'A sighting claim for this evening',
-      claimReject: 'Rejected (Imâm Subkî, p. 360)', claimWarn: 'Warning: not visible according to Tam İlmihâl', claimOk: 'Acceptable (subject to witness conditions)', claimNa: '—',
+      claimReject: 'Rejected (Imâm-i Subkî, EB V, p. 137)', claimWarn: 'Warning: not visible according to Tam İlmihâl', claimOk: 'Acceptable (subject to witness conditions)', claimNa: '—',
       bestTime: 'Best observation time', bestSrc: 'Yallop 1997: sunset + 4/9 × lag',
-      gurub: 'Zâhirî gurûb (sunset)', seri: 'Şer’î gurûb (with tamkin)', temkin: 'tamkin',
+      gurub: 'Apparent sunset (zâhirî ghurûb)', seri: 'Shar’î sunset (with Tamkin)', temkin: 'Tamkin',
       moonset: 'Moonset', lag: 'Lag (Moon after Sun)', age: 'Moon age (since conjunction)',
-      lastConj: 'Last ictimâ (conjunction)', beyn: 'Beynûnet (elongation)', alt: 'İrtifâ (apparent altitude)', geoAlt: 'geocentric',
-      az: 'Semt (azimuth)', daz: 'Azimuth difference from Sun', illum: 'Illumination', kadihan: 'Kâdîhân check (p. 316)',
+      lastConj: 'Last ijtimâ’ (conjunction)', beyn: 'Beynûnet (elongation)', alt: 'Apparent altitude (irtifâ’)', geoAlt: 'geocentric',
+      az: 'Semt (azimuth)', daz: 'Azimuth difference from Sun', illum: 'Illumination', kadihan: 'Qâdî-Khân check (EB V, p. 58)',
       kFirst: 'Moon sets before end of twilight: first-night crescent', kSecond: 'Moon sets after end of twilight: second-night crescent',
       guide: 'Where to look',
       guideTxt: (d, side, h) => `At the best time the crescent is ${d}° ${side} of where the Sun set, ${h}° above the horizon.`,
@@ -1708,24 +1709,24 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       month: 'Month-start information', monthName: 'Month beginning with this conjunction', monthNote: 'The month name comes from the arithmetic calendar.',
       conj: 'İctimâ (conjunction)', m18: '18° moment (Ottoman criterion)', m18lon: 'Longitude where the Sun sets at that moment (your latitude)',
       earliestGlobal: 'Earliest possible day (worldwide)', earliestLocal: 'Earliest possible day (your location)',
-      earliestMecca: 'Earliest possible day (Mecca, for Hajj)', arefe: 'Arafah (Hajj): earliest',
-      earliestRule: 'The day after the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°. The month cannot begin before this day; by sighting it may begin one day later (pp. 315, 360).',
+      earliestMecca: 'Earliest possible day (Mecca, for Hajj)', arefe: '’Arafa (Hajj): earliest',
+      earliestRule: 'The day after the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°. The month cannot begin before this day; by sighting it may begin one day later (EB V, pp. 57, 137).',
       eveningAt: 'evening', at: 'place', isikLabel: 'Işık method', isikDiff: 'The Işık method differs from the earliest possible day; the ruling depends on sighting.',
       lunarDay: 'Lunar day (calculated)', lunarDayNote: 'The month may begin on the earliest day or the next, so two values are shown.',
-      scope: 'Scope used', scopeGlobal: 'Worldwide (Ramadan: seen in one place, binding everywhere, p. 315)',
-      scopeLocal: 'Your location (Qurban is local; Radd al-Muhtar, Kitab al-Sawm)',
-      otherMethods: 'Other calendar methods (calendar information only)', ulugbey: 'Ulugh Beg table', kindi: 'Ebüzziyâ / Kindî table',
-      tabular: 'Arithmetic (tabular) calendar', madde88: 'Article 88 (start of Muharram)', undefinedInBook: 'undefined in Tam İlmihâl; Ulugh Beg result',
+      scope: 'Scope used', scopeGlobal: 'Worldwide (Ramadân: seen in one place, binding everywhere, EB V, p. 56)',
+      scopeLocal: 'Your location (Qurbân is local; Radd al-Muhtar, Kitab al-Sawm)',
+      otherMethods: 'Other calendar methods (calendar information only)', ulugbey: 'Uluğ Bey table', kindi: 'Abuzziyâ / Kindî table',
+      tabular: 'Arithmetic (tabular) calendar', madde88: 'First day of the Hijri year (×5 ÷ 8)', undefinedInBook: 'undefined in Tam İlmihâl; Uluğ Bey result',
       extra: 'Additional information', extraNote: 'Modern visibility models and Tam İlmihâl’s observation window. They give no ruling.',
       yallop: 'Yallop q (modern visibility model)', odeh: 'Odeh V (modern visibility model)',
       yallopCls: { A: 'Easily visible to the naked eye', B: 'Visible under perfect conditions', C: 'May need optical aid to find the crescent', D: 'Will need optical aid (not naked eye)', E: 'Not visible with a telescope', F: 'Not visible, below the Danjon limit' },
       odehCls: { A: 'Visible by naked eye', B: 'Visible by optical aid, could be seen by naked eye', C: 'Visible by optical aid only (not naked eye)', D: 'Not visible even with optical aid' },
-      bookWindow: 'Tam İlmihâl’s observation window', bookWindowTxt: 'from zâhirî gurûb until the crescent’s apparent altitude falls to 5° (p. 360). According to Tam İlmihâl the crescent appears within 45 minutes after sunset.',
+      bookWindow: 'Tam İlmihâl’s observation window', bookWindowTxt: 'from the apparent sunset until the crescent’s apparent altitude falls to 5° (EB V, p. 137). According to Tam İlmihâl the crescent appears within 45 minutes after sunset.',
       noWindow: 'no window (crescent below 5° at sunset)',
       modernLimit: 'Modern limit (Fatoohi 1998, Sultan 2007)', modernBelow: 'elongation below 7.5°: physically not visible',
       modernAbove: 'elongation above 7.5°',
-      safak17: 'Kâdîhân, Imâmayn twilight (−17°, red glow)', safak17Note: 'According to the Imâmayn and the other three schools, twilight ends when the red glow disappears (p. 178); by this measure it ends earlier.',
-      width: 'Crescent width W (topocentric)', arcl: 'ARCL (topocentric elongation)', arcv: 'ARCV (geocentric / topocentric)', dip: 'İnhitât-ı ufk (dip of the horizon)', zaviye: 'Altitude angle (şer’î gurûb)',
+      safak17: 'Qâdî-Khân, Imâmeyn twilight (−17°, redness)', safak17Note: 'According to the Imâmeyn and the other three schools, twilight ends when the redness disappears (EB IV, p. 143); by this measure it ends earlier.',
+      width: 'Crescent width W (topocentric)', arcl: 'ARCL (topocentric elongation)', arcv: 'ARCV (geocentric / topocentric)', dip: 'Dip of horizon (inhitât-i ufq)', zaviye: 'Altitude angle (shar’î sunset)',
       local: 'local', min: 'min', h: 'h', d: 'd', none: '—', computing: 'computing…',
       testsTitle: 'Verification cases', testsIntro: 'The program recomputes these cases on load. Expected values come from the examples in Tam İlmihâl, the Jamry screenshot and an independent Python calculation.',
       tCase: 'Case', tQty: 'Quantity', tExp: 'Expected', tGot: 'Computed', tTol: 'Tolerance', tRes: 'Result', pass: 'Pass', fail: 'Fail',
@@ -1786,7 +1787,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     lySeadet: 'Tam İlmihâl classes', lyFirst: 'First-visibility evening', lyYallop: 'Yallop (additional)', lyOdeh: 'Odeh (additional)',
     mapAge: 'Moon-age lines (hours)', mapBorders: 'Country borders', map18: '18° sunset longitude',
     mapNoteSeadet: 'Each point is evaluated at its own local sunset; the date is the local date there. In green and yellow areas the crescent can be seen by calculation; whether it is actually seen is known only by observation.',
-    mapNoteFirst: 'The first suitable evening of this month for each region by calculation (beynûnet ≥ 8° and altitude ≥ 5°). If the crescent is seen and established that evening, the month begins the next day; it cannot begin earlier, and by sighting it may begin later (pp. 315, 360).',
+    mapNoteFirst: 'The first suitable evening of this month for each region by calculation (beynûnet ≥ 8° and altitude ≥ 5°). If the crescent is seen and established that evening, the month begins the next day; it cannot begin earlier, and by sighting it may begin later (EB V, pp. 57, 137).',
     mapNoteModern: 'Modern visibility model; additional information, no ruling.',
     lgVisible: 'Visible (≥ 18°)', lgPossible: 'Possible; careful observation (8°–18°)', lgBelow5: 'Not visible: below 5°', lgBelow8: 'Not visible: beynûnet < 8°', lgNotBorn: 'Crescent not yet born', lgNoSun: 'Sun does not set',
     lgFirst: k => `Evening ${k + 1}`, lgLater: 'Not within this month’s first 3 days',
@@ -1795,15 +1796,15 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     youHere: 'You', earliestHere: 'Worldwide earliest', meccaLbl: 'Mecca',
     pick: 'Selected point', pickUse: 'Use this location', mapOpen: 'Open on the map',
     miniTitle: 'First-visibility map', miniGlobal: 'Worldwide earliest day', miniLocal: 'Earliest day at your location',
-    miniHow: 'Colour shows the first evening on which the crescent can be seen in each region by calculation. If it is seen and established that evening, the month begins the next day; it cannot begin earlier, and by sighting it may begin later (pp. 315, 360).',
+    miniHow: 'Colour shows the first evening on which the crescent can be seen in each region by calculation. If it is seen and established that evening, the month begins the next day; it cannot begin earlier, and by sighting it may begin later (EB V, pp. 57, 137).',
     fieldTitle: 'Field mode', fieldTonight: 'This evening', fieldNotToday: 'The selected evening is not today.', fieldToToday: 'Switch to today',
     cdGurub: 'To sunset', cdBest: 'To best time', cdWin: 'To the 5° time (window end)', cdSet: 'To moonset', passed: 'passed',
     whereNow: 'Where to look now', nightMode: 'Night mode', wake: 'Keep screen on', wakeOn: 'Screen kept on', wakeFail: 'The screen cannot be kept on in this view.',
     compass: 'Compass', compassFail: 'The compass is not available on this device or in this view.', heading: 'Your heading', turn: d => `Turn ${Math.abs(d).toFixed(0)}° ${d < 0 ? 'left' : 'right'} to face the crescent.`,
     record: 'Sighting record', saw: 'I saw it', notSaw: 'Not seen', notes: 'Note (weather, witnesses, duration)', records: 'Records', del: 'Delete', noRecords: 'No records yet.',
-    evReject: 'Rejected: by calculation the crescent cannot be seen this evening (Imam Subki, p. 360).', evWarn5: 'Warning: the crescent was below 5° at that time; not visible per Tam İlmihâl (p. 360).',
-    evDay: 'Recorded before sunset: a crescent seen by day belongs to the coming night (p. 315).', evAfterSet: 'The Moon had already set at that time; check the clock.',
-    evOk: 'Consistent with calculation. A legal ruling is established by witnesses (pp. 315–316).', evNotSaw: 'Recorded: not seen.',
+    evReject: 'Rejected: by calculation the crescent cannot be seen this evening (Imâm-i Subkî, EB V, p. 137).', evWarn5: 'Warning: the crescent was below 5° at that time; not visible per Tam İlmihâl (EB V, p. 137).',
+    evDay: 'Recorded before sunset: a crescent seen by day belongs to the coming night (EB V, p. 56).', evAfterSet: 'The Moon had already set at that time; check the clock.',
+    evOk: 'Consistent with calculation. A legal ruling is established by witnesses (EB V, pp. 55–58).', evNotSaw: 'Recorded: not seen.',
     recNote: 'Records are kept only in this browser.',
     gPlan: 'Observation plan and techniques', gTopics: 'Legal and scientific explanations',
     checklist: 'Field checklist', now: 'Now',
@@ -1820,30 +1821,30 @@ window.HR_CANON_TR = ["Süâl: Hicrî Kamerî ay başı ile takvîmlerde bildiri
 /* Kanonik metnin İngilizce karşılığı (Türkçe metin esastır). */
 window.HR_CANON_EN = [
     'Question: How should the relation between the true beginning of a Hijri lunar month and the month beginnings printed in calendars be understood? Are the month beginnings in calendars the true ones?',
-    'Since fasting, Hajj and Qurban are accepted only when performed at their correct times, we ask this question to learn the correct times our religion states for these acts of worship. Can calendars be relied on in these matters?',
+    'Since fasting, Hajj and Qurbân are accepted only when performed at their correct times, we ask this question to learn the correct times our religion states for these acts of worship. Can calendars be relied on in these matters?',
     'Answer: No calendar can be relied on in this matter. The explanation follows.',
     '1. General information',
     'Two concepts must be known first: the “birth of the new crescent” and the “sighting of the new crescent (ru’yat al-hilal)”.',
     'The birth of the crescent is not its sighting. The birth is a matter of calculation: the time of birth is found by calculation. The sighting (ru’yat al-hilal) is seeing the crescent with the naked eye. The time of sighting cannot be calculated.',
-    'Once in every revolution of the Moon around the Earth, the Moon and the Sun are on the same side of the Earth and the three lie on one line. This state is called ictimâ’-ı neyyireyn (conjunction). The side of the Moon facing us is then dark and we cannot see it. This period is called muhak. It is not fixed; it varies between 28 and 72 hours. The moment of conjunction is the exact middle of the muhak and is listed for every month in scientific calendars.',
-    'Takiyyuddin Muhammad ibn Daqiq says that the crescent cannot be seen at all before 1–2 days have passed after the conjunction.',
-    '2. On the beginning of Ramadan and the Eid',
-    'Because calendars give the birth of the crescent and not its sighting, the beginning of Ramadan cannot be known from a calendar.',
+    'Once each revolution of the moon, the Sun, the earth and the moon become aligned with one another, the Sun and the moon sharing the same orientation with respect to the earth. This state is called ijtimâ’i neyyireyn = conjunction. In this state the face of the moon in our direction becomes obscure; we cannot see the moon. This period of time is called muhâq. There is not a fixed length of this period; it varies from twenty-eight hours to seventy-two hours. The time of conjunction is exactly the middle of the period of muhâq, and scientific calendars give it for every month.',
+    'Taqiy-y-ud-dîn Muhammad ibni Daqîq states that the new moon can never be sighted before one or two days after the ijtimâ’i neyyireyn = conjunction.',
+    '2. On the beginning of Ramadân and the ’Iyd',
+    'Because calendars give the birth of the crescent and not its sighting, the beginning of Ramadân cannot be known from a calendar.',
     'The birth of the crescent is known by calculation, not by seeing, and what the calculation gives is certainly correct. But the crescent may be seen on the night of its birth, or not seen that night and seen on the second night. These calculations are not for finding when the lunar month begins; they are for knowing the night on which the crescent can be seen.',
     'Within the Hijri year the times of birth of the crescents can be calculated with certainty, but seeing the crescent with the naked eye from the Earth’s surface is possible only by observation (rasad). Hijri month beginnings become certain when the new crescent is seen by naked-eye observation. Because calendars are prepared in advance, the month beginnings in them are found by calculation. For worship, the month beginnings made certain by ru’yat are the basis.',
-    'Research going back thousands of years has not made it possible to determine by calculation when the new crescent will be seen. The time of ru’yat cannot be calculated for the past or the future. Therefore calendars cannot be relied on, and ru’yat is required. This is the miracle in the hadith of our Prophet (peace be upon him): “Begin fasting when you see the crescent!”',
-    'In Hijri calendars some months have 29 days and some 30, without a regular alternation. Searching the sky for the Ramadan crescent is an act of worship. Announcing the beginning of Ramadan in advance is a sign of not knowing Islam. For this reason Islamic scholars have stated that fixing the Hijri calendar by calculation is not permissible, and calendars cannot be relied on for fasting, Hajj and Qurban.',
+    'Research going back thousands of years has not made it possible to determine by calculation when the new crescent will be seen. The time of ru’yat cannot be calculated for the past or the future. Therefore calendars cannot be relied on, and ru’yat is required. This is the miracle in the hadith of our Prophet (peace be upon him): “Begin to fast when you see the new moon!”',
+    'In Hijri calendars some months have 29 days and some 30, without a regular alternation. It is an act of worship to look for the new moon in the sky. Announcing the beginning of Ramadân-i sherîf beforehand is an indication of not knowing Islam. For this reason Islamic scholars have stated that fixing the Hijri calendar by calculation is not permissible, and calendars cannot be relied on for fasting, Hajj and Qurbân.',
     'For historians, calendars are prepared retrospectively for date-conversion tables, taking a month as 30 days when the remaining fraction at month end exceeds 0.5 day.',
-    'Ibn Abidin (vol. 1, p. 289), on determining the qibla, says: “Calendars must not be relied on for knowing the first day of Ramadan. Fasting becomes obligatory by seeing the new moon in the sky. Our Prophet said: ‘Begin fasting when you see the crescent!’ The birth of the crescent is known by calculation, not by seeing; the calculation is correct and the crescent is born on the night it gives. But it may not be seen that night and may be seen a night later, and fasting must begin on the night it is seen, not the night it is born, because Islam commands so.”',
-    'To say “we saw the crescent” on the night before the night given in calendars is wrong. Imam Subki says: “If someone says he saw the crescent on the 30th night of Sha’ban, while calculation shows it will be born a night later, the calculation is believed, because what is known by calculation is certain. It is impossible to see it a night before it is born.” [Beginning Ramadan by sighting may be one day after what calculation gives, but not one day before.] These calculations are not for finding when the month begins; they are for knowing the night on which the crescent can be seen. Imam Subki said the same. Do not be deceived by those who reverse his words.',
-    'In every age and place Ramadan began by seeing the crescent. Now it is started by calculating the time of the crescent’s birth; this beginning is not in accordance with Islamic rulings.',
-    'Fatawa al-Hindiyya also states that beginning Ramadan and the Eid by calendar or calculation is not permissible.',
-    'When Ramadan begins in one place, fasting must begin everywhere in the world.',
-    '3. On the beginning of Dhu al-Hijja',
-    'The first day of Eid al-Adha is known by seeing the crescent of Dhu al-Hijja. The 9th day, the day of Arafah, is the day found by calculation or calendar, or the day after. The Hajj of those who go to Arafat one day before is not valid.',
-    'One of the three obligatory parts of Hajj is standing at Arafat on the day of Arafah, from noon of the 9th of Dhu al-Hijja until dawn of the next day. [Standing at Arafat a day early or a day late invalidates the Hajj.]',
-    'Where Ramadan and the Eid months are not established lawfully by witnesses, the first day of Dhu al-Hijja and from it the 10th day, the first day of Eid al-Adha, is calculated. The first day of the Eid is the day so found, or a day later. It cannot be a day earlier, because the Moon cannot be seen in the sky before it is born.',
-    'When Ramadan begins in one place, fasting must begin everywhere in the world. Hajj, Qurban and prayer times are not like this: their times being known in one place does not make them the same elsewhere. [That is, these three are local.]',
+    'Ibni ’Âbidîn (vol. 1, p. 289), in the discourse on how to find the direction of the qibla, says: “Scholars said that we should not trust calendars in learning the first day of Ramadân-i sherîf. For, the fast becomes fard after the new moon is seen in the sky. Our Prophet (sall-Allâhu ’alaihi wa sallam) stated: ‘Begin to fast when you see the new moon!’ On the other hand, the appearing of the new moon depends on calculation, not on seeing it; calculation is valid, and the new moon appears on the night indicated by calculation. Yet it may be seen on the following night instead of that night, and it is necessary to begin the fast on the night it is seen, not on the night it must appear (according to the calculation). Such is the commandment of Islam.”',
+    'To say “we saw the crescent” on the night before the night given in calendars is wrong. Imâm-i Subkî says: “If someone says he saw the crescent on the 30th night of Sha’bân, while calculation shows it will be born a night later, the calculation is believed, because what is known by calculation is certain. It is impossible to see it a night before it is born.” [The first day of Ramadân started upon seeing the new moon can be a day after that which is estimated by calculation. But it cannot be the day before.] The purpose for these calculations is not to determine the time when the lunar month begins, but to determine the (beginning of the) month when the new moon can be seen. Imâm-i Subkî said the same. Do not be deceived by those who reverse his words.',
+    'The month of Ramadân used to start upon the sighting of the new moon, everywhere and in every century. Today, however, it is being started at the time when the new moon is beforehand calculated to be sighted; therefore this beginning is out of keeping with the ahkâm-i islâmiyya (rules of Islam).',
+    'It is written in Fatâwâ-i Hindiyya as well that it is not permissible to begin Ramadân or the ’Iyd by calendar or calculation.',
+    'When the new moon is seen in a city on the thirtieth night of Sha’bân, it is necessary to begin the fast all over the world.',
+    '3. On the beginning of Dhu’l-hijja',
+    'The first day of the ’Iyd of Qurbân is determined by observing the new moon for the beginning of the month of Dhu’l-hijja. The ninth day of Dhu’l-hijja, the ’Arafa Day, is the day found by calculation or calendar, or the following day. The hajj performed by those who climb ’Arafât a day earlier is not valid.',
+    'One of the three obligatory parts of Hajj is standing at ’Arafât on the day of ’Arafa, from noon of the 9th of Dhu’l-hijja until dawn of the next day. [Standing at ’Arafât a day early or a day late invalidates the Hajj.]',
+    'At places where Ramadân and the month containing the days of ’Iyd cannot be discovered by testimony of witnesses as prescribed by the Sharî’a, the first day of the month of Dhu’l-hijja, and hence the tenth day, the first day of the ’Iyd of Qurbân, is calculated. The first day of the ’Iyd is the day determined by this calculation, or it is the next day. It cannot be the previous day; for, the new moon cannot be seen before it appears in the sky.',
+    'When Ramadân begins in one place, fasting must begin everywhere in the world. Hajj, Qurbân and prayer times are not like this: their times being known in one place does not make them the same elsewhere. [That is, these three are local.]',
     'Writings and statements that do not agree with what the Islamic scholars said above are wrong, worthless and not valid at all.'
   ];;
 
@@ -1907,50 +1908,50 @@ window.HR_CANON_EN = [
     },
     en: {
       hesap: ['Calculation and sighting',
-        'The month begins by seeing the crescent; beginning it by calculation or calendar is not permissible (pp. 314–315; Fatawa al-Hindiyya). Calculation gives the night on which the crescent can be seen, not when the month begins (p. 360, Imam Subki). A start by sighting may be one day after the calculation, never before (p. 315).',
+        'The month begins by seeing the crescent; beginning it by calculation or calendar is not permissible (EB V, pp. 54–55; Fatâwâ-i Hindiyya). Calculation gives the night on which the crescent can be seen, not when the month begins (EB V, p. 137, Imâm-i Subkî). A start by sighting may be one day after the calculation, never before (EB V, p. 57).',
         'The moment of conjunction and the Moon’s position are computed to seconds and arcminutes. Whether the crescent is seen depends on the air, the sky brightness and the observer’s eye, so it can only be predicted as a probability.'],
-      ictima: ['Conjunction and muhak',
-        'When Moon, Sun and Earth are aligned (ictimâ), the side of the Moon facing us is dark. The period in which it is invisible is called muhak; it lasts 28–72 hours, and the conjunction is its middle (p. 360). According to Ibn Daqiq the crescent is not seen before 1–2 days have passed (p. 314).',
+      ictima: ['Conjunction and muhâq',
+        'When Moon, Sun and Earth are aligned (ijtimâ’i neyyireyn = conjunction), the side of the Moon facing us is dark. The period in which it is invisible is called muhâq; it lasts 28–72 hours, and the conjunction is its middle (EB V, p. 136). According to ibni Daqîq the crescent is not seen before 1–2 days have passed (EB V, p. 55).',
         'Conjunction is the moment the Moon’s ecliptic longitude equals the Sun’s. Because the lunar orbit is inclined about 5.1° to the ecliptic, the Moon can be 0–5° from the Sun even at conjunction. The mean interval between conjunctions is 29 d 12 h 44 min; actual intervals range from 29.3 to 29.8 days.'],
       beynunet: ['Beynûnet: 8° and 18°',
-        'While the beynûnet is under 8° the crescent cannot be seen anywhere. When it reaches at most 18°, the crescent appears in the west as the Sun sets, at the longitude where the Sun is setting at that moment and to its west (p. 360). The 18° value is the Ottoman scholars’ criterion.',
+        'While the beynûnet is under 8° the crescent cannot be seen anywhere. When it reaches at most 18°, the crescent appears in the west as the Sun sets, at the longitude where the Sun is setting at that moment and to its west (EB V, p. 137). The value 18° is as was accepted by the Ottoman scholars.',
         'Beynûnet is the angle between Moon and Sun as seen from the Earth’s centre (elongation). At small elongation the lit arc is extremely thin and its ends vanish. Modern studies put the naked-eye limit near 7.5° (Danjon limit ≈7°). The Moon moves away from the Sun by about 12.2° a day.'],
       besderece: ['Closeness to the horizon: 5°',
-        'Because of the 57′ parallax, the crescent cannot be seen once it comes within 5° of the horizon (p. 360). Tam İlmihâl’s observation window lasts from sunset until the crescent drops to 5°.',
+        'Because of the 57′ parallax, the crescent cannot be seen once it comes within 5° of the horizon (EB V, p. 137). Tam İlmihâl’s observation window lasts from sunset until the crescent drops to 5°.',
         'Light near the horizon crosses a very thick layer of air; extinction and haze wipe out the faint crescent. The Moon’s parallax (about 57′) makes it appear about 1° lower than seen from the Earth’s centre. The program computes apparent altitude including parallax and refraction.'],
-      gurub: ['Sunset and tamkin',
-        'There are three sunsets: hakîkî, zâhirî and şer’î. For those who can see the sunset, the zâhirî sunset counts; for those who cannot, the şer’î sunset, found by adding tamkin to the hakîkî sunset (pp. 181, 186, 317). Tamkin is not a safety margin (p. 316).',
-        'Zâhirî sunset is when the Sun’s upper limb disappears below the visible horizon. Refraction (about 34′) and the solar radius (about 16′) push it a few minutes after the geometric sunset. From a height the horizon dips; Tam İlmihâl gives 106.92″ × √h (p. 185).'],
-      safak: ['Twilight and the Kâdîhân rule',
-        'Kâdîhân: if the crescent sets after twilight ends it is the second night’s crescent; if before, the first night’s (p. 316). Tam İlmihâl gives both views when describing the time of the night prayer (p. 178). According to the Imâmayn (and the other three schools), it begins when the red glow in the west disappears, i.e. when the Sun’s upper limb is 17° below the horizon. According to Imâm-ı A‘zam, it begins when the white glow disappears, at 19°. Tam İlmihâl states that praying the afternoon and night prayers by Imâm-ı A‘zam’s view is the precautionary course (p. 194), and that waiting for the white glow to vanish is better (p. 244). For the Kâdîhân rule it does not say which twilight is meant. The programme therefore takes Imâm-ı A‘zam’s precautionary view (−19°) as primary and shows the Imâmayn result (−17°) beside it as the alternative. When the two give different results, it says so.',
-        'Twilight times follow Tam İlmihâl’s method: first the true time when the Sun’s centre reaches −19° or −17° relative to the true horizon, then temkin is added to obtain the legal time (p. 197; about 8–10 minutes in Istanbul). The second night’s crescent is thicker and higher and sets later; the rule rests on this fact, so a claim to have seen it on the first night can be checked against the moonset time.'],
-      kuresel: ['Ramadan worldwide, Qurban local',
-        'When the crescent is seen in one city on the 30th night of Sha’ban, fasting must begin everywhere (p. 315), provided the sighting is established by witnesses, a judge’s ruling or widespread report. Hajj follows the sighting in Mecca; Qurban and prayer times follow one’s own location (Radd al-Muhtar, Kitab al-Sawm).',
+      gurub: ['Sunset and Tamkin',
+        'There are three sunsets: true (haqîqî), apparent (zâhirî) and shar’î. For those who can see the sunset, the apparent sunset counts; for those who cannot, the shar’î sunset, found by adding Tamkin to the true sunset (EB IV, pp. 151, 160; V, p. 61). Tamkin is not a safety margin (EB V, p. 59).',
+        'Zâhirî sunset is when the Sun’s upper limb disappears below the visible horizon. Refraction (about 34′) and the solar radius (about 16′) push it a few minutes after the geometric sunset. From a height the horizon dips; Tam İlmihâl gives 106.92″ × √h (EB IV, p. 159).'],
+      safak: ['Twilight and the Qâdî-Khân rule',
+        'Qâdî-Khân: if the crescent sets after twilight ends it is the second night’s crescent; if before, the first night’s (EB V, p. 58). Tam İlmihâl gives both views when describing the time of the night prayer (EB IV, p. 143). According to the Imâmeyn (and the other three schools), it begins when the redness in the west disappears, i.e. when the Sun’s upper limb is 17° below the horizon. According to Imâm-i a’zam, it begins when the whiteness disappears, at 19°. Tam İlmihâl states that it would be cautious to perform the late afternoon and night prayers according to Imâm-i a’zam’s ijtihâd (EB IV, p. 177), and that waiting for the whiteness to vanish is better (EB IV, p. 284). For the Qâdî-Khân rule it does not say which twilight is meant. The programme therefore takes Imâm-i a’zam’s precautionary view (−19°) as primary and shows the Imâmeyn result (−17°) beside it as the alternative. When the two give different results, it says so.',
+        'Twilight times follow Tam İlmihâl’s method: first the true time when the Sun’s centre reaches −19° or −17° relative to the true horizon, then Tamkin is added to obtain the shar’î time (EB IV, pp. 138, 143, 183; about 8–10 minutes in Istanbul). The second night’s crescent is thicker and higher and sets later; the rule rests on this fact, so a claim to have seen it on the first night can be checked against the moonset time.'],
+      kuresel: ['Ramadân worldwide, Qurbân local',
+        'When the crescent is seen in one city on the 30th night of Sha’bân, fasting must begin everywhere (EB V, p. 56), provided the sighting is established by witnesses, a Qâdî’s ruling or widespread report. Hajj follows the sighting in Mecca; Qurbân and prayer times follow one’s own location (Radd al-Muhtar, Kitab al-Sawm).',
         'The crescent is seen first in western places: on the same local date sunset happens later in the west, and meanwhile the Moon moves further from the Sun. So the earliest sighting worldwide is usually possible in the Americas and the Pacific.'],
       sahitlik: ['Witnesses',
-        'In cloudy weather one just Muslim’s sighting of the Ramadan crescent suffices; in clear weather many witnesses are needed. Where there is no judge, Ramadan begins on one just person’s word and the Eid on two. In cloudy weather Shawwal needs two men or one man and two women (pp. 315–316).',
-        'The program’s record is a user statement; it helps document the time, place and conditions. A claim for an evening on which sighting is impossible by calculation is rejected (Imam Subki, p. 360).'],
+        'In cloudy weather one just Muslim’s sighting of the Ramadân crescent suffices; in clear weather many witnesses are needed. Where there is no Qâdî, Ramadân begins on one ’âdil person’s word and the ’Iyd on two. In cloudy weather Shawwâl needs two men or one man and two women (EB V, pp. 55–58).',
+        'The program’s record is a user statement; it helps document the time, place and conditions. A claim for an evening on which sighting is impossible by calculation is rejected (Imâm-i Subkî, EB V, p. 137).'],
       ciplak: ['Naked-eye requirement',
         'Ru’yat is seeing the new moon in the sky. Observation and crescent sighting must be with the naked eye; observation with instruments is not valid (Rasad Hakkında Zarûrî Malûmat).',
         'Binoculars and telescopes can show a crescent below the naked-eye limit; the "optical aid needed" classes of modern models describe this. The program’s main classes are for the naked eye.'],
       enerken: ['Earliest possible day',
-        'The month begins on the day found by calculation or the next day; never a day before (pp. 315, 360). Ramadan uses the whole world, Qurban your location, Hajj Mecca.',
+        'The month begins on the day found by calculation or the next day; never a day before (EB V, pp. 57, 137). Ramadân uses the whole world, Qurbân your location, Hajj Mecca.',
         'The program looks for the first evening with beynûnet ≥ 8° and apparent altitude ≥ 5°; the earliest day is the day after it. A date’s latest sunset is just east of the date line, so the worldwide earliest evening is usually in the Pacific.'],
       isik: ['Işık method',
-        'Found by Hüseyn Hilmi Işık, this method gives the first day of any Arabic month in a few steps: multiply the year number minus one by 4.367, add the month’s number to the whole part, divide the sum by seven; the remainder counts the day from Friday. The numbers of the twelve months are hidden, by the Abjad reckoning, in the first letters of the words of a couplet: “Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle.” Tam İlmihâl states that the method is very definite and precise (p. 359). Where it is not established by witnesses, ʿId al-Adha is the day so found or one day later (p. 326).',
-        '4.367 is the weekly remainder of the lunar year of 354.367 days (p. 358): 354.367 days = 50 weeks + 4.367 days. Each year the month starts move that far through the week; the month numbers carry the shift produced by months of 29 and 30 days. So a single multiplication and division find, across centuries, the weekday of any month start. The program shows day 1 of Dhu al-Hijja and ʿId al-Adha by this method.'],
-      ulugbey: ['Ulugh Beg table',
-        'The lunar month tables of Ulugh Beg, known for his observatory in Samarkand, are taken into Tam İlmihâl from the book of Ahmed Ziyâ Beg. Tam İlmihâl states that among the methods for finding a month start, Ulugh Beg’s is the most correct (pp. 361–362). The Hijri year is divided by 210; the remainder gives the first day of Muharram from the first table, and the second table gives the first day of the month sought.',
+        'Found by Hüseyn Hilmi Işık, this method gives the first day of any Arabic month in a few steps: multiply the year number minus one by 4.367, add the month’s number to the whole part, divide the sum by seven; the remainder counts the day from Friday. The numbers of the twelve months are given, by the Ebjed (hurûf-i jummal) reckoning, by the first letters of the capitalized words of a couplet; in Endless Bliss: “Hilmi, Be not Drifted by Hopeless Zeal of Earth! Jilting Damsel Was to the Zealous its Beauty’s Joy.” (in Tam İlmihâl: “Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle.” — the same twelve initials H B D H Z E / C D V Z B C, whose Ebjed values 8 2 4 5 7 1 / 3 4 6 7 2 3 are the numbers of the months) Tam İlmihâl states that the method is very precise and accurate (EB V, pp. 135–136). Where it is not established by witnesses, ’Iyd of Qurbân is the day so found or one day later (EB V, p. 79).',
+        '4.367 is the weekly remainder of the lunar year of 354.367 days (EB V, p. 133): 354.367 days = 50 weeks + 4.367 days. Each year the month starts move that far through the week; the month numbers carry the shift produced by months of 29 and 30 days. So a single multiplication and division find, across centuries, the weekday of any month start. The program shows day 1 of Dhu’l-hijja and ’Iyd of Qurbân by this method.'],
+      ulugbey: ['Uluğ Bey table',
+        'The lunar month tables of Uluğ Bey, known for his observatory in Samarkand, are taken into Tam İlmihâl from the book of Ahmed Ziyâ Bey. Tam İlmihâl states that among the methods for finding a month start, the most dependable is the one systematized by Uluğ Bey (EB V, pp. 139–142). The Hijri year is divided by 210; the remainder gives the first day of Muharram from the first table, and the second table gives the first day of the month sought.',
         '210 lunar years are seven of the arithmetic calendar’s 30-year cycles. Thirty years last 10,631 days and leave a remainder of 5 days in the week; over seven cycles this completes whole weeks and the weekdays return to the same order. So two small tables give the weekday for every month of every Hijri year.'],
-      kindi: ['Ebüzziyâ / Kindî table',
-        'In this method, given in the Ebüzziyâ calendar (1310 [1893 CE]) and based on the table of Ibn Ishaq Yaʿqub al-Kindi, the Hijri year is divided by eight. The remainder chooses the column and the month the row; the number where they meet counts the day from Friday (p. 361).',
+      kindi: ['Abuzziyâ / Kindî table',
+        'In this method, given in the Abuzziyâ calendar (1310 [1893 CE]) and based on the chart of Ibni Ishaq Ya’qûb Kindî, the Hijri year is divided by eight. The remainder chooses the column and the month the row; the number where they meet counts the day from Friday (EB V, pp. 138–139).',
         'Eight lunar years (three of 355 days, five of 354) are 2,835 days, exactly 405 weeks. So the weekdays return to the same order every eight years and all month starts fit in one table of eight columns. It is a practical tool that gives the answer at a glance, without arithmetic.'],
       tabular: ['Arithmetic (tabular) calendar',
-        'The Hijri lunar era begins on 1 Muharram 1: Friday 16 July 622 (p. 358). The arithmetic calendar counts months alternately as 30 and 29 days and takes 11 years of every 30 as 355 days, the others as 354.',
+        'The Hijri lunar era begins on 1 Muharram 1: Friday 16 July 622 (EB V, p. 133). The arithmetic calendar counts months alternately as 30 and 29 days and takes 11 years of every 30 as 355 days, the others as 354.',
         'In this scheme the mean month is 29.530556 days, only about three seconds away from the true mean month (29.530589 days). So it keeps month starts very close to the real Moon for centuries. It is widely used for date conversion and in calendars; the program shows it for comparison.'],
-      madde88: ['Article 88: start of the Hijri year',
-        'To find the first day of Muharram, multiply the year number by five and divide by eight; the remainder counts the day from Thursday. Example: 1357 × 5 = 6785; dividing by eight leaves 1, so Muharram begins on a Thursday (p. 359).',
-        'Like the Kindî table, the method rests on the eight-year cycle: eight lunar years are exactly 405 weeks. For years where the remainder is zero the program shows the Ulugh Beg result.'],
+      madde88: ['First day of the Hijri year (×5 ÷ 8)',
+        'To find the first day of Muharram, multiply the year number by five and divide by eight; the remainder counts the day from Thursday. Example: 1357 × 5 = 6785; dividing by eight leaves 1, so Muharram begins on a Thursday (EB V, p. 135).',
+        'Like the Kindî table, the method rests on the eight-year cycle: eight lunar years are exactly 405 weeks. For years where the remainder is zero the program shows the Uluğ Bey result.'],
       modern: ['Modern models (Yallop, Odeh)',
         'Additional information only; no ruling. Only the best observation time (sunset + 4/9 × lag) is shown on the main panel.',
         'Yallop (1997) and Odeh (2004) are criteria fitted to hundreds of recorded observations. Both compare the altitude difference between Moon and Sun (ARCV) with the crescent width (W). Classes range from "easily visible to the naked eye" to "not visible even with a telescope".']
@@ -2007,7 +2008,7 @@ window.HR_CANON_EN = [
       ]],
       ['After the sighting', [
         'Record the time, place, weather, how long you saw it and who was with you.',
-        'The program’s record is a user statement. A legal ruling is established by witnesses (pp. 315–316).'
+        'The program’s record is a user statement. A legal ruling is established by witnesses (EB V, pp. 55–58).'
       ]]
     ]
   };
@@ -2037,9 +2038,9 @@ window.HR_CANON_EN = [
       ['8° ≤ beynûnet < 18°', 'Görülmesi mümkün; dikkatli rasad gerekir', 'Kabul edilebilir'],
       ['Beynûnet ≥ 18°', 'Hesâba göre görülebilir (hava müsaitse)', 'Kabul edilebilir']
     ] : [
-      ['No conjunction yet, or the Moon sets before the Sun', 'Crescent not yet born', 'Rejected (Subki, p. 360)'],
-      ['Beynûnet < 8° at sunset', 'Not visible (Tam İlmihâl, p. 360); additional: modern limit 7.5°', 'Rejected (Subki, p. 360)'],
-      ['Apparent altitude of the crescent < 5°', 'Not visible: closer than 5° to the horizon (p. 360)', 'Warning'],
+      ['No conjunction yet, or the Moon sets before the Sun', 'Crescent not yet born', 'Rejected (Subkî, EB V, p. 137)'],
+      ['Beynûnet < 8° at sunset', 'Not visible (Tam İlmihâl, EB V, p. 137); additional: modern limit 7.5°', 'Rejected (Subkî, EB V, p. 137)'],
+      ['Apparent altitude of the crescent < 5°', 'Not visible: closer than 5° to the horizon (EB V, p. 137)', 'Warning'],
       ['8° ≤ beynûnet < 18°', 'Possible; careful observation needed', 'Acceptable'],
       ['Beynûnet ≥ 18°', 'Visible by calculation (if the sky is clear)', 'Acceptable']
     ];
@@ -2052,11 +2053,11 @@ window.HR_CANON_EN = [
     const tr = L === 'tr';
     return '<ul>' + [
       tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
-         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): pp. 175–203, 314–317, 326, 344, 358–362, 360.',
-      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : L === 'en' ? 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. Page numbers in the program refer to the Turkish Tam İlmihâl (January 2026 printing); Endless Bliss has its own pagination.' : bookLine(L),
+         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): EB IV, pp. 135–195, 284; V, pp. 54–61, 79, 117, 133–142.',
+      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : L === 'en' ? 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. It is published in six fascicles. References such as “EB V, p. 137” mean Endless Bliss, Fifth Fascicle, page 137. Editions used: Fourth Fascicle, 21st edition, and Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).' : bookLine(L),
       tr ? 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.'
          : 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
-      tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibn Abidin, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
+      tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
       '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
       'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
       'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.',
@@ -2134,7 +2135,7 @@ window.HR_CANON_EN = [
     nightGo: 'Go', nightChoice: 'Which night?',
     midHint: 'The selected evening is mid-month; no crescent observation applies.', midGo: 'Go to the nearest observation night',
     momentTitle: 'Observation at this moment', obsOk: 'The crescent can be searched for now.', obsNo: 'The crescent cannot be searched for now:',
-    why: { age: 'not the crescent period (outside the first 4 days after conjunction)', sun: 'the Sun is not yet below the chosen threshold', elong: 'beynûnet below 8° (p. 360)', moonDown: 'the Moon is below the horizon', low: 'the crescent is below 5° (not visible per Tam İlmihâl, p. 360)' },
+    why: { age: 'not the crescent period (outside the first 4 days after conjunction)', sun: 'the Sun is not yet below the chosen threshold', elong: 'beynûnet below 8° (EB V, p. 137)', moonDown: 'the Moon is below the horizon', low: 'the crescent is below 5° (not visible per Tam İlmihâl, EB V, p. 137)' },
     todayRange: 'Search interval on this day', noRange: 'no search interval on this day',
     sunL: 'Sun', moonL: 'Moon', elongNow: 'Beynûnet (now)', ageNow: 'Moon age (now)', phaseL: 'Phase', riseSet: 'Rise / set',
     phaseName: { new: 'New Moon (near conjunction)', waxCres: 'Waxing crescent', firstQ: 'First quarter', waxGib: 'Waxing gibbous', full: 'Full Moon', wanGib: 'Waning gibbous', lastQ: 'Last quarter', wanCres: 'Waning crescent (morning)' },
@@ -2152,7 +2153,7 @@ window.HR_CANON_EN = [
     sunSub: 'Sun overhead', moonSub: 'Moon overhead', prevMonth: 'Previous month', nextMonth: 'Next month',
     recAt: 'Time of record', recEvening: d => `Belongs to the evening of ${d}`, recDayLbl: 'daytime (before sunset)',
     fSearch: 'Searchable now?', fMorning: 'Morning',
-    bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (p. 360); the time bar opens on that interval.`,
+    bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (EB V, p. 137); the time bar opens on that interval.`,
     footer: ''
   });
   const T = G.HRGuide && G.HRGuide.TOPICS;
@@ -2161,7 +2162,7 @@ window.HR_CANON_EN = [
       'Tam İlmihâl, hilâlin gurûbdan sonra arandığını ve ufka 5° yaklaşınca görülemeyeceğini bildirir (s. 360); aramaya başlamak için güneşin ayrıca kaç derece alçalması gerektiğine dair bir sınır koymaz. Bu sebeple program Tam İlmihâl’in sınıflarını ve kesin red hükmünü bu seçime bağlamaz.',
       'Gurûbdan hemen sonra gök hâlâ parlaktır; ince hilâlin gökle zıtlığı (kontrastı) güneş birkaç derece alçaldıkça artar, hilâl ise bu arada ufka yaklaşır. En iyi denge çoğu zaman gurûbdan birkaç dakika sonradır (Yallop: gurûb + farkın 4/9’u). Güneş −6°’de sivil alacakaranlık biter. Bu seçim, zaman çubuğundaki yeşil “aranabilir aralık” bandını, seçili an kartını, anlık haritayı ve saha modunu birlikte değiştirir.'];
     T.en.karanlik = ['How far should the Sun be below the horizon?',
-      'Tam İlmihâl states that the crescent is sought after sunset and cannot be seen once it is within 5° of the horizon (p. 360); it sets no separate limit for how far the Sun must have sunk before searching. The programme therefore does not tie Tam İlmihâl’s classes or the rejection rule to this choice.',
+      'Tam İlmihâl states that the crescent is sought after sunset and cannot be seen once it is within 5° of the horizon (EB V, p. 137); it sets no separate limit for how far the Sun must have sunk before searching. The programme therefore does not tie Tam İlmihâl’s classes or the rejection rule to this choice.',
       'Right after sunset the sky is still bright; the crescent’s contrast against the sky improves as the Sun sinks a few degrees, while the crescent itself approaches the horizon. The best balance is often a few minutes after sunset (Yallop: sunset + 4/9 of the lag). Civil twilight ends with the Sun at −6°. This choice changes, together, the green “search interval” band on the time bar, the selected-moment card, the live map and field mode.'];
   }
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -2206,7 +2207,7 @@ window.HR_CANON_EN = [
   Object.assign(G.HRI18N.T.en, {
     modeLive: 'Now', modePlan: 'Sighting plan', backNow: 'Back to now', printBtn: 'Print / PDF',
     hjAfter: 'after sunset: new lunar day', hjHesabi: 'computed',
-    hjNote: 'The lunar day begins at the legal sunset (ezânî day, p. 188). Month name and Hijri year are computed; the month begins by sighting. The new Hijri year begins when the Muharram crescent is seen; until then both possibilities are shown.',
+    hjNote: 'The lunar day begins at the shar’î sunset (adhânî day, EB IV, p. 165). Month name and Hijri year are computed; the month begins by sighting. The new Hijri year begins when the Muharram crescent is seen; until then both possibilities are shown.',
     hjOr: 'or', hjEnd: 'month’s end',
     upTitle: 'Upcoming sighting', upA: 'Observation night (first possible evening)', upB: 'Best evening (≥ 18°)',
     upIn: n => n <= 0 ? 'this evening' : n === 1 ? 'tomorrow evening' : `in ${n} days`, upPlan: 'Plan this night', upMonth: m => `${m} crescent`, upWin: 'Search', upToday: 'Today (lunar, computed)', upLoading: 'Calculating…',
@@ -2224,16 +2225,16 @@ window.HR_CANON_EN = [
     wxLevel: { good: 'Sky looks favourable', fair: 'Partly favourable; check the horizon', poor: 'Not favourable' },
     wxReason: { rain: 'high chance of precipitation', low: 'low cloud', lowSome: 'some low cloud', cloud: 'overcast', cloudSome: 'partly cloudy', haze: 'poor visibility (haze/fog)', hazeSome: 'moderate visibility', aod: 'heavy aerosol/dust', aodSome: 'light haze/dust', humid: 'high humidity' },
     wxAod: 'Haze (aerosol optical depth)', wxFor: 'Sunset hour of the selected evening',
-    wxFiqh: 'Per Tam İlmihâl, in cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the testimony of many; for the feast two upright witnesses are needed (p. 315). A forecast is no basis for a ruling; the real sky is observed.',
+    wxFiqh: 'Per Tam İlmihâl, in cloudy weather the Ramadân crescent is established by one ’âdil Muslim saying “I saw it”, in clear weather by the testimony of many; for the ’Iyd two ’âdil witnesses are needed (EB V, p. 56). A forecast is no basis for a ruling; the real sky is observed.',
     wxSrc: 'Source: Open-Meteo (open data). Values are hourly and for a point; the western horizon must still be checked.',
     openSM: 'Sky chart', smTitle: 'Sky chart', smFace: 'Direction at bottom', faces: { 270: 'West', 180: 'South', 90: 'East', 0: 'North' },
     smLines: 'Constellation lines', smNames: 'Star names', smCons: 'Constellation names', smEcl: 'Ecliptic',
-    smNote: 'Hold the chart overhead with its lower edge towards the direction you face. Dashed circle: 5° above the horizon (Tam İlmihâl’s limit, p. 360). Dotted line: the ecliptic; the Moon and planets lie near it. Star data: d3-celestial (Hipparcos, BSD licence).',
+    smNote: 'Hold the chart overhead with its lower edge towards the direction you face. Dashed circle: 5° above the horizon (Tam İlmihâl’s limit, EB V, p. 137). Dotted line: the ecliptic; the Moon and planets lie near it. Star data: d3-celestial (Hipparcos, BSD licence).',
     guidesTitle: 'Bright objects to help orientation', guidesNone: 'No prominent bright object nearby.',
     fSM: 'Sky chart', fLoc: 'My location',
     printing: 'Preparing the print page…', printSaved: 'Print page saved; open it and use the browser’s “Save as PDF”.', printNA: 'Printing and saving are unavailable in this view.', printDeclined: 'Saving cancelled.',
     printTitle: { plan: 'Sighting plan', sky: 'Sky chart', map: 'World sighting map', field: 'Field summary' },
-    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Se’âdet-i Ebediyye pp. 315, 360).',
+    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (ru’yat); what is given here is computed possibility (Se’âdet-i Ebediyye EB V, pp. 54, 137).',
     printGen: 'Prepared', locAutoDone: 'Location taken automatically.', locSandbox: 'Location is off inside claude.ai; open the file in a browser.', myPlace: 'My location',
     footer: ''
   });
@@ -2243,13 +2244,13 @@ window.HR_CANON_EN = [
       'Ezânî gün, güneşin üst kenarının şer’î ufuktan iki şer’î gurûbu arasındaki zamandır (s. 188); bu sebeple program kamerî günü şer’î gurûbda değiştirir. Ay başı rü’yetle olur; hesap ve takvimle başlanmaz (s. 315). Gündüz görülen hilâl gelecek gecenin hilâlidir (s. 315).',
       'Program her ay için hesâbî en erken günü bulur; o günden önce yeni ay başlayamaz. En erken gün ve ertesi gün için iki ihtimal (1 | 29/30) birlikte yazılır. Ay adı ve yıl, ictimâya göre aritmetik takvimden alınır; Muharrem’de yeni yıl ancak hilâl görülünce kesinleştiğinden, o güne kadar eski yıl ile yeni yıl yan yana gösterilir.'];
     T.en.hicri = ['Lunar day, month name and Hijri year',
-      'The ezânî day is the time between two legal sunsets of the Sun’s upper limb over the legal horizon (p. 188); the programme therefore changes the lunar day at the legal sunset. The month begins by sighting, not by calculation or calendar (p. 315). A crescent seen by day belongs to the coming night (p. 315).',
+      'The adhânî day is the time between two shar’î sunsets of the Sun’s upper limb over the shar’î horizon (EB IV, p. 165); the programme therefore changes the lunar day at the shar’î sunset. The month begins by sighting, not by calculation or calendar (EB V, p. 54). A crescent seen by day belongs to the coming night (EB V, p. 56).',
       'For each month the programme finds the computed earliest day; the new month cannot begin before it. For the earliest day and the next, both possibilities (1 | 29/30) are written. Month name and year come from the arithmetic calendar for the conjunction; since the new year in Muharram is certain only once the crescent is seen, the old and new years are shown side by side until then.'];
     T.tr.hava = ['Hava, bulut ve görüş',
       'Bulutlu havada Ramazân hilâli bir âdil müslimânın “gördüm” demesiyle, açık havada birçok kimsenin şehâdetiyle sabit olur; bayram için iki âdil gerekir (s. 315). Hava tahmini yalnızca rasada hazırlık içindir; hüküm gerçek gözleme bağlıdır.',
       'İnce hilâl ufka yakın ve sönüktür: alçak bulut, pus ve toz en büyük engeldir. Program iki nokta için tahmin alır: bulunduğunuz yer ve hilâlin battığı yönde yaklaşık 25 km ötesi (5° yükseklikteki görüş hattı 2 km’deki bulut tabanını bu mesafede keser). Görüş mesafesi 20 km’nin, aerosol optik derinliği 0,2’nin altındaysa ufuk genellikle temizdir.'];
     T.en.hava = ['Weather, cloud and visibility',
-      'In cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the testimony of many; for the feast two upright witnesses are needed (p. 315). The forecast is only for preparing the observation; the ruling depends on real observation.',
+      'In cloudy weather the Ramadân crescent is established by one ’âdil Muslim saying “I saw it”, in clear weather by the testimony of many; for the ’Iyd two ’âdil witnesses are needed (EB V, p. 56). The forecast is only for preparing the observation; the ruling depends on real observation.',
       'A thin crescent is low and faint: low cloud, haze and dust are the main obstacles. The programme fetches two points: your location and a point about 25 km away towards where the crescent sets (a line of sight 5° high meets a 2 km cloud base at that distance). With visibility above 20 km and aerosol optical depth below 0.2 the horizon is usually clean.'];
   }
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -2303,7 +2304,7 @@ window.HR_CANON_EN = [
     settings: 'Settings', theme: 'Appearance', liveInt: 'Screen refresh in live mode', liveInts: { 1: 'Every second', 10: 'Every 10 seconds', 60: 'Every minute' },
     play: 'Live', freeze: 'Freeze', modeFrozen: 'Now (frozen)',
     nightChoice: 'Month-start observation', prevNight: '◀ Previous month', nextNight: 'Next month ▶',
-    hjGlobal: 'Worldwide', hjLocal: 'Here', hjShort: 'The lunar day begins at the legal sunset (p. 188).',
+    hjGlobal: 'Worldwide', hjLocal: 'Here', hjShort: 'The lunar day begins at the shar’î sunset (EB IV, p. 165).',
     upTitle: 'Upcoming month-start observation',
     stWindow: 'Search per Tam İlmihâl', stBest: 'Best time (Yallop)', stAfterWin: 'after the window; per Tam İlmihâl the crescent is then below 5°',
     stNoWindow: 'No Tam İlmihâl window this evening', liveTag: 'Now', thisEvening: d => `Evening of ${d}`,
@@ -2324,13 +2325,13 @@ window.HR_CANON_EN = [
     tutTitle: 'Crescent Sighting Report', tutSub: 'Observer’s statement and computed comparison',
     tutObs: 'Observation', tutComp: 'Computed data (for comparison)', tutPeople: 'Observer and companions', tutSign: 'Signature',
     tutWitness: 'Observing together (name, signature)', tutFiqh: 'Legal reminder',
-    tutFiqhTxt: 'In cloudy weather the Ramadan crescent is established by one upright Muslim saying “I saw it”, in clear weather by the report of many; for the feast two upright witnesses (two men, or one man and two women) and the words “I testify” are needed; likewise where there is no judge (Tam İlmihâl pp. 315–316). One who saw it outside the city or from a high place may be accepted alone; the word of time-keepers (calculators) is no proof; relaying what others saw is narration, not testimony (Radd al-Muhtar, Book of Fasting, on establishing the crescent). This report documents the observer’s statement; the ruling belongs to the competent authority.',
+    tutFiqhTxt: 'In cloudy weather the Ramadân crescent is established by one ’âdil Muslim saying “I saw it”, in clear weather by the report of many; for the ’Iyd two ’âdil witnesses (two men, or one man and two women) and the words “I testify” are needed; likewise where there is no Qâdî (Tam İlmihâl, EB V, pp. 55–58). One who saw it outside the city or from a high place may be accepted alone; the word of time-keepers (calculators) is no proof; relaying what others saw is narration, not testimony (Radd al-Muhtar, Book of Fasting, on establishing the crescent). This report documents the observer’s statement; the ruling belongs to the competent authority.',
     tutBlank: 'Blank report form', tutResult: 'Result', tutCalc: 'Per calculation', tutRecId: 'Record no.',
     prTitle: 'Print / PDF', prIntro: 'Each option is laid out for one A4 page. If you choose several, each prints on its own page.', prGo: 'Prepare',
     prOpts: { plan: 'Observation plan (selected evening)', sky: 'Sky chart (selected moment)', month: 'Monthly sighting table', map: 'World sighting map (landscape)', tut: 'Sighting report (latest record)', blank: 'Blank report form' },
     prNote: 'In the standalone file the browser’s print dialog opens (“Save as PDF” is available). Inside claude.ai the page is saved as an HTML file.',
     pgPlanTitle: 'Crescent observation plan', pgMonthTitle: 'Monthly sighting table', pgCheck: 'During the observation',
-    pgChecklist: ['Be in place 20 minutes before sunset; check that the western horizon is clear.', 'Mark the sunset point and the crescent’s azimuth with a compass; use the fist scale.', 'Let your eyes adapt; search with the naked eye.', 'The search ends when the crescent reaches 5° (p. 360).', 'If seen, record time, place and conditions at once; record it if not seen too.'],
+    pgChecklist: ['Be in place 20 minutes before sunset; check that the western horizon is clear.', 'Mark the sunset point and the crescent’s azimuth with a compass; use the fist scale.', 'Let your eyes adapt; search with the naked eye.', 'The search ends when the crescent reaches 5° (EB V, p. 137).', 'If seen, record time, place and conditions at once; record it if not seen too.'],
     pgCols: ['Evening', 'Sunset', 'Beynûnet', 'Altitude', 'Lag', 'Class'],
     footer: 'Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · qrcode-generator (MIT) · Open-Meteo'
   });
@@ -2380,33 +2381,33 @@ window.HR_CANON_EN = [
     footer: 'Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · qrcode-generator (MIT) · Open-Meteo'
   });
   Object.assign(G.HRI18N.T.en, {
-    kdTitle: 'Kâdîhân check (p. 316)', kdA: 'Imâm-ı A‘zam: white glow, −19° (primary)', kdB: 'Imâmayn: red glow, −17° (alternative)',
+    kdTitle: 'Qâdî-Khân check (EB V, p. 58)', kdA: 'Imâm-i a’zam: whiteness, −19° (primary)', kdB: 'Imâmeyn: redness, −17° (alternative)',
     kdFirst: 'first-night crescent', kdSecond: 'second-night crescent', kdSafak: 'twilight end',
-    kdDiffer: 'The two views give different results. The primary one is Imâm-ı A‘zam’s view, which Tam İlmihâl calls the precautionary course (p. 194); the Imâmayn view is shown for information.',
-    kdSame: 'Both views give the same result.', kdNone: 'The crescent is below the horizon at sunset; the Kâdîhân check does not apply.',
-    safakA: 'Twilight end · Imâm-ı A‘zam (−19°, legal)', safakB: 'Twilight end · Imâmayn (−17°, legal)', safakNote: t => `true time + ${t} min temkin (p. 197)`,
+    kdDiffer: 'The two views give different results. The primary one is Imâm-i a’zam’s view, which Tam İlmihâl calls the cautious course (EB IV, p. 177); the Imâmeyn view is shown for information.',
+    kdSame: 'Both views give the same result.', kdNone: 'The crescent is below the horizon at sunset; the Qâdî-Khân check does not apply.',
+    safakA: 'Twilight end · Imâm-i a’zam (−19°, legal)', safakB: 'Twilight end · Imâmeyn (−17°, legal)', safakNote: t => `true time + ${t} min Tamkin (EB IV, pp. 138, 183)`,
     explain: 'Show explanations for new users', explainNote: 'When on, each card starts with a short note on what it is, why it matters and its legal basis. Experienced users can turn it off.',
     introTitle: 'How to use', introClose: 'Got it, hide',
     introSteps: [
       'Enter your <b>location</b> or tap “Use my location”. Latitude and longitude can be typed in any common form (41,0082 · 41.0082 N · 41°00′29″N).',
-      'Pick the observation night from the <b>Upcoming month-start observation</b> card. For each evening the programme says whether the crescent can be seen per Tam İlmihâl (p. 360).',
+      'Pick the observation night from the <b>Upcoming month-start observation</b> card. For each evening the programme says whether the crescent can be seen per Tam İlmihâl (EB V, p. 137).',
       'On the evening, open the <b>Field</b> tab: time, countdowns, where to look and the sky view are there. Create a <b>sighting record</b> whether you saw it or not.',
-      'Remember: the programme is <b>not a calendar</b>. The month begins by naked-eye sighting and testimony, not by calculation (Tam İlmihâl p. 315).'
+      'Remember: the programme is <b>not a calendar</b>. The month begins by naked-eye sighting and testimony, not by calculation (Tam İlmihâl, EB V, p. 54).'
     ],
     hints: {
-      loc: 'Your observing site. Visibility depends on the place; height lowers the horizon (p. 185). The city’s highest point is needed for the legal sunset and temkin (pp. 175–176).',
-      date: 'The evening you are planning. “Previous/Next month” go to month-start observation nights: the crescent is sought at sunset on the 29th (p. 315).',
-      up: 'Today’s computed Hijri date and the next observation night. The lunar day begins at the legal sunset (p. 188); the month begins by sighting.',
-      status: 'The selected evening per Tam İlmihâl: conjunction, elongation 8° and 18°, 5° above the horizon (p. 360). “Rejected” means calculation shows it cannot be seen; otherwise the ruling rests on testimony.',
+      loc: 'Your observing site. Visibility depends on the place; height lowers the horizon (EB IV, p. 159). The city’s highest point is needed for the shar’î sunset and Tamkin (EB IV, pp. 159–161).',
+      date: 'The evening you are planning. “Previous/Next month” go to month-start observation nights: the crescent is sought at sunset on the 29th (EB V, p. 55).',
+      up: 'Today’s computed Hijri date and the next observation night. The lunar day begins at the shar’î sunset (EB IV, p. 165); the month begins by sighting.',
+      status: 'The selected evening per Tam İlmihâl: conjunction, elongation 8° and 18°, 5° above the horizon (EB V, p. 137). “Rejected” means calculation shows it cannot be seen; otherwise the ruling rests on testimony.',
       tb: 'For any hour: can the crescent be sought now, and why not? The yellow band is Tam İlmihâl’s window (sunset until the crescent sinks to 5°).',
-      wx: 'Optional weather forecast. Testimony requirements differ in cloudy and clear weather (p. 315); a forecast is no basis for a ruling.',
+      wx: 'Optional weather forecast. Testimony requirements differ in cloudy and clear weather (EB V, p. 56); a forecast is no basis for a ruling.',
       sky: 'Where to look: left/right of the sunset point and height, in fists. Bright stars and planets are given for orientation.',
       strip: 'All evenings of the month at a glance: the colour is that evening’s class. Tap a box to plan that evening.',
-      detail: 'Sunset, legal sunset (with temkin), moonset and the crescent’s measures. The Kâdîhân check shows whether the Moon sets before or after twilight (p. 316).',
-      month: 'The month that begins with this conjunction and the computed earliest day: the month cannot begin before it (p. 315). Arithmetic calendars are calendar information only.',
-      map: 'The crescent at each place’s own sunset. The Ramadan crescent seen anywhere binds everywhere (p. 315); for the sacrifice the local scope is primary.',
+      detail: 'Sunset, shar’î sunset (with Tamkin), moonset and the crescent’s measures. The Qâdî-Khân check shows whether the Moon sets before or after twilight (EB V, p. 58).',
+      month: 'The month that begins with this conjunction and the computed earliest day: the month cannot begin before it (EB V, p. 57). Arithmetic calendars are calendar information only.',
+      map: 'The crescent at each place’s own sunset. The Ramadân crescent seen anywhere binds everywhere (EB V, p. 56); for the sacrifice the local scope is primary.',
       fieldTop: 'What to do now in the field: countdowns, Tam İlmihâl’s window and where to look. The sky view is always for the current moment.',
-      fieldRec: 'Record your observation. The record and printed report document your statement; the ruling belongs to the authority. Cloudy/clear sky and the site matter legally (pp. 315–316).'
+      fieldRec: 'Record your observation. The record and printed report document your statement; the ruling belongs to the authority. Cloudy/clear sky and the site matter legally (EB V, pp. 55–58).'
     },
     coordOk: (d, dms) => `Understood: ${d} (${dms})`, coordPair: 'Latitude and longitude entered together; both were filled in.', coordSwap: 'This value was understood as a longitude and moved to the longitude field.',
     coordErr: { empty: 'Empty value.', letter: b => `The letter “${b}” is not understood. Use N/S/E/W (or K/G/D/B).`, mixed: 'Both latitude and longitude letters in one value.', format: 'Format not understood. Example: 41.0082 · 41.0082 N · 41°00′29″N', minsec: 'Minutes and seconds must be below 60.', range: 'Out of range: latitude ±90°, longitude ±180°.' },
@@ -2448,7 +2449,7 @@ window.HR_CANON_EN = [
     licThird: 'Embedded third-party components come with their own licences',
     tamper: 'This copy does not match the published original file and may have been modified. Download the original before relying on its results:',
     tamperShort: 'modified copy',
-    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Tam İlmihâl, pp. 315, 360).'
+    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (ru’yat); what is given here is computed possibility (Tam İlmihâl, EB V, pp. 54, 137).'
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
@@ -2507,8 +2508,8 @@ window.HR_CANON_EN = [
     evDoubt: 'An uncertain observation is not a sighting claim; it is kept for information only.',
     evNotSaw: 'Recorded: a clear search was made and the crescent was not seen. This record alone does not show that the month completes thirty days.',
     evNoObs: 'Recorded: no observation was possible. This record does not show that the crescent was absent.',
-    evReject: 'Per Tam İlmihâl the crescent cannot be seen this evening: what is known by calculation is certain, and a sighting claim under these conditions is not accepted (Imam Subki, p. 360). Evaluating the claim belongs to the competent authority.',
-    evOk: 'Consistent with calculation. The month is established by witnesses meeting the conditions and by the competent authority (pp. 315–316).',
+    evReject: 'Per Tam İlmihâl the crescent cannot be seen this evening: what is known by calculation is certain, and a sighting claim under these conditions is not accepted (Imâm-i Subkî, EB V, p. 137). Evaluating the claim belongs to the competent authority.',
+    evOk: 'Consistent with calculation. The month is established by witnesses meeting the conditions and by the competent authority (EB V, pp. 55–58).',
     recErrSeers: 'You report a sighting; the number of people who saw it must be at least 1.',
     recErrOrder: 'The first-seen time cannot be after the last-seen time.',
     recErrFuture: 'The record time appears to be in the future; check the clock.',
@@ -2521,13 +2522,13 @@ window.HR_CANON_EN = [
     recPhotoKeep: 'Keep the original photo file separately. The record holds only its digest (SHA-256) and a small preview; the original can be linked back with “Verify a photo”.',
     recThumbDropped: 'preview not stored for lack of storage space',
     recBackupNote: 'Records live only in this browser and are lost if browser data is cleared. Back up regularly.',
-    hjBook: 'A computed date; the month is established by sighting. Tam İlmihâl: beginning Ramadan by sighting the crescent may be one day later than what is known by calculation, but it cannot be one day earlier (p. 315).',
+    hjBook: 'A computed date; the month is established by sighting. Tam İlmihâl: beginning Ramadân by sighting the crescent may be one day later than what is known by calculation, but it cannot be one day earlier (EB V, p. 57).',
     globalScope: 'Worldwide: the latest sunset of a given calendar day is just east of the date line, so the search is made there, between the polar circles (±66°). Verified to give the same day as a whole-world scan.',
-    hMaxUnset: 'The city’s highest point was not entered (0 m used); the legal sunset and temkin were computed without it (pp. 176, 186). Enter it if known.',
+    hMaxUnset: 'The city’s highest point was not entered (0 m used); the shar’î sunset and Tamkin were computed without it (EB IV, pp. 159–161). Enter it if known.',
     compassNote: 'The compass is approximate: it is the phone’s magnetic reading, not corrected for magnetic variation, and misleads near vehicles, ships and steel structures. Confirm the direction with the guide stars.',
     precisionNote: 'Calculation accuracy is not observation accuracy. Positions are computed to about 1 arc-minute, but refraction near the horizon varies with temperature, pressure and layering. Setting times may therefore differ by 1–2 minutes in reality, more over the sea. Times are given to the minute.',
     privacyNote: 'Privacy: location, records, names and photo previews are kept only in this browser and are never sent to a server. Automatic location uses your device permission and stays on the device. Only when the weather forecast is on is an approximate location sent to open-meteo.com.',
-    claimReject: 'Not accepted per Tam İlmihâl (Imam Subki, p. 360)', claimOk: 'Not contradicted; ruling by witness conditions',
+    claimReject: 'Not accepted per Tam İlmihâl (Imâm-i Subkî, EB V, p. 137)', claimOk: 'Not contradicted; ruling by witness conditions',
     traceRules: 'Rule set', traceEngine: 'Astronomy core',
     width: 'Crescent width W (Yallop / Odeh)', arcl: 'ARCL (geocentric, Yallop / topocentric, Odeh)', arcv: 'ARCV (geocentric, Yallop / topocentric, Odeh)',
     introToggle: 'How to use (show / hide)',
@@ -2618,11 +2619,11 @@ window.HR_CANON_EN = [
     tzOffErr: 'Offset not understood. Examples: +3, -5, +5:30 (between −12 and +14).',
     tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the official time differs, correct it with the “UTC offset” box or the list.`,
     tzAuto: o => `The location is far from the selected time zone; the offset was computed from longitude: UTC${o}. If the clock time used there differs, correct it with the “UTC offset” box or the list.`,
-    stripHesabi: '· computed', stripDay: 'Daytime', stripEve: 'After sunset', stripHesabiLong: 'Hijri dates are computed; the month is established by sighting (p. 360).',
+    stripHesabi: '· computed', stripDay: 'Daytime', stripEve: 'After sunset', stripHesabiLong: 'Hijri dates are computed; the month is established by sighting (EB V, p. 137).',
     detailLvl: 'Explanations (“?” notes)', detailShort: 'Short (default)', detailLong: 'Detailed',
     skyTTip: 'Slide the time: the whole page (Plan, Map, status band) follows this moment.',
-    bandNone: 'No sunset on this date', bandMid: 'Not a month-start evening', bandReject: 'No sighting possible this evening (definite rejection, p. 360)',
-    bandBelow5: 'Not visible this evening: crescent below 5° (p. 360)', bandTonight: w => `Sighting possible this evening · search ${w}`,
+    bandNone: 'No sunset on this date', bandMid: 'Not a month-start evening', bandReject: 'No sighting possible this evening (definite rejection, EB V, p. 137)',
+    bandBelow5: 'Not visible this evening: crescent below 5° (EB V, p. 137)', bandTonight: w => `Sighting possible this evening · search ${w}`,
     bandNow: w => `Search for the crescent now · ${w}`, bandSel: w => `Crescent searchable at the selected moment · ${w}`, bandPast: w => `This evening’s search window has passed (${w})`,
     safetyHide: 'Hide warning', safetyHidden: 'Eye-safety warning hidden; you can turn it back on in Settings.', optSafety: 'Show the eye-safety warning',
     wxLevel: { good: 'Weather: western horizon looks clear', fair: 'Weather: partly cloudy; cloud or haze possible in the west', poor: 'Weather: overcast or wet' },
@@ -2633,8 +2634,8 @@ window.HR_CANON_EN = [
     bookLinks: 'Read or download Tam İlmihâl (Hakîkat Kitâbevi):', bookPage: 'Hakîkat Kitâbevi page', bookPdf: 'PDF',
     srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi)',
     pageEdition: 'Page nos.: January 2026 printing',
-    zhIsik: 'First day of Dhu al-Hijja (Işık method)', zhIsikSub: 'This is the basis where it is not established by witnesses (p. 326).',
-    zhKurban: 'First day of Eid al-Adha', zhKurbanSub: 'The day found by this calculation or one day later; not earlier (p. 326).',
+    zhIsik: 'First day of Dhu’l-hijja (Işık method)', zhIsikSub: 'This is the basis where it is not established by witnesses (EB V, p. 79).',
+    zhKurban: 'First day of ’Iyd of Qurbân', zhKurbanSub: 'The day found by this calculation or one day later; not earlier (EB V, p. 79).',
     zhAstro: 'Astronomical calculation (additional)', zhAstroSub: 'Computed earliest day, your location.',
     layoutLbl: 'Layout', layoutSade: 'Simple (recommended): secondary cards start folded', layoutTam: 'Full: all cards open',
     layoutNote: 'Tap a card’s title to open or close it; your choice is remembered. You can always return to the “Full” layout.',
@@ -2737,7 +2738,7 @@ window.HR_CANON_EN = [
     lvlLbl: 'Level of use', lvlQuick: 'Level',
     lvlOpts: { all: 'All levels', basic: 'Beginner', mid: 'Experienced', expert: 'Expert' },
     lvlNote: 'The level only changes what starts open and how much detail is shown; the calculation is the same. The ruling of Tam İlmihâl (class, definite rejection, search window, sighting claim) is visible at every level. Folded cards open when you tap their title. A4 outputs are always complete. With “All levels”, cards start open or folded according to the “Layout” setting.',
-    lvlHelp: { all: 'Everything; cards per the Layout setting.', basic: 'Should I look tonight, when, where, how many fists up, until when.', mid: 'Also altitude, azimuth, elongation, crescent age, Qadikhan check, monthly strip.', expert: 'Also topocentric/geocentric values, Yallop/Odeh parameters, raw data (JSON/CSV).' },
+    lvlHelp: { all: 'Everything; cards per the Layout setting.', basic: 'Should I look tonight, when, where, how many fists up, until when.', mid: 'Also altitude, azimuth, elongation, crescent age, Qâdî-Khân check, monthly strip.', expert: 'Also topocentric/geocentric values, Yallop/Odeh parameters, raw data (JSON/CSV).' },
     lvlIntro: 'Choose your level (you can change it later in the top bar):',
     qaTitle: 'Short answer',
     qaNo: (why, nx) => `No watch this evening: ${why}${nx ? ` Next observation night: ${nx}.` : ''}`,
@@ -2751,7 +2752,7 @@ window.HR_CANON_EN = [
     guideTxt: (d, side, h) => `At the time Yallop suggests (additional information) the crescent is ${d}° ${side} of where the Sun set, ${h}° above the horizon.`,
     mPrev: '◀ Previous month start', mNext: 'Next month start ▶', mList: '☰ Observation nights',
     mSelA: m => `Selected evening: observation night for ${m} (first possible evening, this location)`, mSelB: m => `Selected evening: best evening for ${m} (this location)`,
-    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (pp. 315, 360). Tap a date to plan that evening.',
+    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (EB V, pp. 57, 137). Tap a date to plan that evening.',
     rnPrev: '◀ Previous 12 months', rnNext: 'Next 12 months ▶', rnNow: 'Back to today', rnCalc: 'Calculating…',
     rnCols: ['Lunar month (calculated)', 'Conjunction', 'Observation night (here)', 'Best evening (here)', 'Earliest day 1 worldwide', ''],
     rnNone: 'no suitable evening here', rnSel: 'selected',
@@ -2801,7 +2802,7 @@ window.HR_CANON_EN = [
   T.tr.printTitle = Object.assign({}, T.tr.printTitle, { map: 'Dünya rü’yet imkânı haritası' }); T.en.printTitle = Object.assign({}, T.en.printTitle, { map: 'World sighting-possibility map' });
   // Aylık çizelge: hesâbî imkândır, gözlem sonucu değildir
   Object.assign(T.tr, { pgMonthTitle: 'Aylık rü’yet imkânı çizelgesi', pgMonthNote: 'Her satır bir akşamdır. Sınıf, o akşam gurûb anındaki hesâbî rü’yet imkânıdır (s. 360); hilâlin görülüp görülmediği rasadla anlaşılır. A rasad gecesi, B en elverişli akşamdır; “s” sabah hilâlinin görülebileceği günlerdir.' });
-  Object.assign(T.en, { pgMonthTitle: 'Monthly sighting-possibility table', pgMonthNote: 'Each row is one evening. The class is the calculated possibility of sighting at sunset that evening (p. 360); whether the crescent is actually seen is known only by observation. A: observation night, B: best evening; “m”: a morning crescent can be seen.' });
+  Object.assign(T.en, { pgMonthTitle: 'Monthly sighting-possibility table', pgMonthNote: 'Each row is one evening. The class is the calculated possibility of sighting at sunset that evening (EB V, p. 137); whether the crescent is actually seen is known only by observation. A: observation night, B: best evening; “m”: a morning crescent can be seen.' });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Metinler: 0.12 (iki gece esası, hicrî günün gerekçesi, gök cisimleri aracı) */
@@ -2863,12 +2864,12 @@ window.HR_CANON_EN = [
     hjWhyN: (m, d1, d2, n) => `${n} if 1 ${m} is ${d1}, ${n - 1} if it is ${d2}`,
     hjWhy1: (m, d1, d2, pm) => `if 1 ${m} is ${d1}, today is 1 ${m}; if it is ${d2}, today is the last day of ${pm}`,
     hjWhyLead: 'Why two numbers:',
-    hjBook: 'A computed date. Day 1 of the month is the calculated day or one day later; never a day earlier (p. 315). Which one is established by sighting.',
-    rnIntro: 'Each row is the start of a lunar month. The observation night and the best evening are calculated for this location. According to Tam İlmihâl, day 1 of the month is the calculated day or one day later, never earlier (pp. 315, 326, 360). Which one is established by sighting. Tap a date to plan that evening.',
+    hjBook: 'A computed date. Day 1 of the month is the calculated day or one day later; never a day earlier (EB V, p. 57). Which one is established by sighting.',
+    rnIntro: 'Each row is the start of a lunar month. The observation night and the best evening are calculated for this location. According to Tam İlmihâl, day 1 of the month is the calculated day or one day later, never earlier (EB V, pp. 57, 79, 137). Which one is established by sighting. Tap a date to plan that evening.',
     hDetail: 'Sunset and crescent', hHelp: 'Guidance', accTitle: 'Calculation and observation accuracy',
     polarNightH: 'The Sun does not rise here on this date (polar night).', polarDayH: 'The Sun does not set here on this date.',
-    polarSub: 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (p. 315); enter the nearest such place to plan.',
-    mtagPossible: 'm', arefeSub: 'or the next day (p. 360)', isikRef: 'Tam İlmihâl pp. 326, 359', card4: ['N', 'E', 'S', 'W'],
+    polarSub: 'With no sunset there is no crescent observation. Tam İlmihâl says that where days exceed twenty-four hours, for fasting one follows a city whose day is not so long (EB V, pp. 56–57); enter the nearest such place to plan.',
+    mtagPossible: 'm', arefeSub: 'or the next day (EB V, p. 138)', isikRef: 'Tam İlmihâl, EB V, pp. 79, 135–136', card4: ['N', 'E', 'S', 'W'],
     daysAgo: n => `${n} days ago`, magUnit: 'mag', dustLbl: 'dust', selLoc: 'Selected location', atObs: 'at observation',
     tutBlankCalc: 'Computed data are filled in by the program when a record is created.',
     dateFmtLbl: 'Date format (input fields)', dateFmtOpts: { 'dmy/': 'day/month/year (13/11/2026)', 'dmy.': 'day.month.year (13.11.2026)', 'ymd-': 'year-month-day (2026-11-13)', 'mdy/': 'month/day/year (11/13/2026)' },
@@ -2876,7 +2877,7 @@ window.HR_CANON_EN = [
     dateBad: ph => `Could not read the date. Format: ${ph}`, datePick: 'Pick from calendar',
     srcLine: 'Source: Tam İlmihâl Se’âdet-i Ebediyye (in English: Endless Bliss, Hakîkat Kitâbevi)',
     bookLinks: 'Read or download Endless Bliss, the English version of Tam İlmihâl (Hakîkat Kitâbevi):', bookPage: 'Endless Bliss page',
-    editionNote: 'Page numbers refer to the Turkish Tam İlmihâl, January 2026 printing; Endless Bliss has its own pagination.',
+    editionNote: 'References such as “EB V, p. 137” are to Endless Bliss, the English Tam İlmihâl in six fascicles (here: Fifth Fascicle, page 137). Editions used: Fourth Fascicle, 21st edition; Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).',
     todayEve: 'This evening', navBack: 'Back: return to the previous selection', navFwd: 'Forward', navToNow: 'Back to now',
     navNowToast: 'Switched to the present moment. Tap ↶ in the top bar to return to the previous selection.',
     dateNoteNext: (a, b) => `The selected moment is the morning of ${b}; the night is shown as the night of the evening of ${a}.`,
@@ -2898,25 +2899,25 @@ window.HR_CANON_EN = [
       x.nau ? (x.ast ? `astronomical night ${x.ast}–${x.ast2 || '…'}` : 'no astronomical night') : '', x.nau2 ? `morning nautical ${x.nau2}` : '', x.civ2 ? `civil ${x.civ2}` : ''].filter(Boolean).join(' · '),
     gokPolarN: a => `The Sun does not rise today (polar night); highest ${a}°.`, gokPolarD: a => `The Sun does not set today (polar day); lowest ${a}°.`,
     gokWhole: 'Today with the naked eye (whole day scanned; no sunset):',
-    gokCap: 'Additional information (Astronomy Engine). The State column is a rough naked-eye estimate from the Sun’s altitude, the object’s brightness and its height above the horizon; weather, light pollution and dark adaptation are not included. For the crescent, the evaluation above (Tam İlmihâl p. 360) prevails. Never look at the Sun directly or through binoculars.',
+    gokCap: 'Additional information (Astronomy Engine). The State column is a rough naked-eye estimate from the Sun’s altitude, the object’s brightness and its height above the horizon; weather, light pollution and dark adaptation are not included. For the crescent, the evaluation above (Tam İlmihâl, EB V, p. 137) prevails. Never look at the Sun directly or through binoculars.',
     miniGlobal: 'Day 1 of the month (two possibilities)', miniLocal: 'First possible evening here',
-    miniFirstEve: (e, w) => `First possible evening worldwide: ${e} (${w})`, miniIsik: 'Işık method (p. 326)',
-    miniLocalSub: 'The first watch evening at this location; it does not by itself fix the start of the month (p. 315).',
+    miniFirstEve: (e, w) => `First possible evening worldwide: ${e} (${w})`, miniIsik: 'Işık method (EB V, p. 79)',
+    miniLocalSub: 'The first watch evening at this location; it does not by itself fix the start of the month (EB V, pp. 55–57).',
     stStart: 'Month start', stStartVal: (m, a, b) => `1 ${m}: ${a} or ${b}`,
-    stStartSub: (e1, e2) => `First night: evening of ${e1} · second night: evening of ${e2}. Which one is established by sighting; never earlier (pp. 315, 360).`,
-    stStartSubZh: 'The day found by the Işık method or one day later; never earlier (p. 326).',
+    stStartSub: (e1, e2) => `First night: evening of ${e1} · second night: evening of ${e2}. Which one is established by sighting; never earlier (EB V, pp. 57, 137).`,
+    stStartSubZh: 'The day found by the Işık method or one day later; never earlier (EB V, p. 79).',
     qaStart: (m, a, b) => `Month start: 1 ${m} is ${a} or ${b}; which one is established by sighting.`,
     rnCols: ['Lunar month (calculated)', 'Conjunction', 'Observation night (here)', 'Best evening (here)', 'Day 1 (two possibilities)', '']
   });
   Object.assign(T.tr, { fPvOk: 'Seçili anda hilâl aranabilir', fPvTag: 'önizleme' }); Object.assign(T.en, { fPvOk: 'The crescent can be searched for at the selected moment', fPvTag: 'preview' });
   T.tr.hints = Object.assign({}, T.tr.hints, { fieldTop: 'Sahada ne yapmalı: geri sayım, Tam İlmihâl penceresi ve bakılacak yer. Canlı kipte şimdiki an, planlama kipinde seçili an gösterilir.', date: 'Planladığınız akşam. Gün okları (◀ ▶) üst bantta da vardır; ↶ düğmesi önceki seçime, ↷ sonrakine döner. Ay başı rasad gecelerine “◀ Önceki ay başı / Sonraki ay başı ▶” düğmeleriyle gidilir: hilâl ayın 29. günü gurûb vakti aranır (s. 315).' });
-  T.en.hints = Object.assign({}, T.en.hints, { fieldTop: 'What to do in the field: countdowns, Tam İlmihâl’s window and where to look. Live mode shows the current moment; planning mode shows the selected moment.', date: 'The evening you are planning. The day arrows (◀ ▶) are also in the top bar; ↶ returns to the previous selection and ↷ to the next. “◀ Previous month start / Next month start ▶” go to month-start observation nights: the crescent is sought at sunset on the 29th (p. 315).' });
+  T.en.hints = Object.assign({}, T.en.hints, { fieldTop: 'What to do in the field: countdowns, Tam İlmihâl’s window and where to look. Live mode shows the current moment; planning mode shows the selected moment.', date: 'The evening you are planning. The day arrows (◀ ▶) are also in the top bar; ↶ returns to the previous selection and ↷ to the next. “◀ Previous month start / Next month start ▶” go to month-start observation nights: the crescent is sought at sunset on the 29th (EB V, p. 55).' });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Metinler: 0.14 (harita: Tam İlmihâl ölçü çizgileri, üç gece, işaretler, ağ, şehirler, PNG; hilâl verileri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.14.0';
+  G.HR_VERSION = '0.14.1-deneme.1';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     mapOpts: 'Görünüm', mapBook: 'Tam İlmihâl ölçü çizgileri (8°, 18°, 5°)', mapFirst: 'İlk mümkün / görülebilir yer', mapGrat: 'Enlem-boylam ağı',
@@ -2958,8 +2959,8 @@ window.HR_CANON_EN = [
     gratDir: { N: 'N', S: 'S', E: 'E', W: 'W' },
     mapView: 'Evenings', mapViewOpts: { one: 'Selected evening', three: 'Three nights side by side' },
     night3: { prev: 'Evening before', A: 'First night', B: 'Second night' },
-    night3Sub: { prev: ev => `evening of ${ev} · the month cannot begin before this (p. 315)`, A: (ev, d) => `evening of ${ev} · if seen, day 1 is ${d}`, B: (ev, d) => `evening of ${ev} · if not seen on the first night, day 1 is ${d}` },
-    map3Note: 'Three evenings of the same month. Day 1 of the month is the day after the first night (the calculated day) or one day later; it cannot be earlier (p. 315). Which of the two it is becomes certain by sighting.',
+    night3Sub: { prev: ev => `evening of ${ev} · the month cannot begin before this (EB V, p. 57)`, A: (ev, d) => `evening of ${ev} · if seen, day 1 is ${d}`, B: (ev, d) => `evening of ${ev} · if not seen on the first night, day 1 is ${d}` },
+    map3Note: 'Three evenings of the same month. Day 1 of the month is the day after the first night (the calculated day) or one day later; it cannot be earlier (EB V, p. 57). Which of the two it is becomes certain by sighting.',
     map3First: 'The “first-visibility evening” layer already shows four evenings on one map; the three-night view draws Tam İlmihâl’s classes.',
     firstLbl: { poss: 'First possible place', vis: 'First visible place' },
     firstSub: (tm, b) => `sunset ${tm} · beynûnet ${b}`,
@@ -2968,7 +2969,7 @@ window.HR_CANON_EN = [
     lgYallopLine: 'Yallop q boundaries (thin line)', lgOdehLine: 'Odeh V boundaries (thin line)', lgGrat: 'Grid: 20°',
     mapPng: 'Save PNG', mapPngTip: 'Saves the map as an image in the selected language, with title, legend and source.',
     mapWait: 'Preparing the map…', mapSaved: 'Image saved.',
-    pngSrc: (b, v) => `Source: ${b} (pp. 315, 360) · Computation: Astronomy Engine · Relief: NASA Blue Marble · Mâh-ı Nev ${v}`,
+    pngSrc: (b, v) => `Source: ${b}, Fifth Fascicle, pp. 57, 137 · Computation: Astronomy Engine · Relief: NASA Blue Marble · Mâh-ı Nev ${v}`,
     pngNote: 'A map of calculated possibility; the month begins by sighting.',
     pickMore: 'Additional info (this point, at sunset)',
     hcTitle: 'Crescent data (at sunset)', hcNote: 'Additional information; the ruling follows Tam İlmihâl’s measures and sighting.',
@@ -2993,14 +2994,14 @@ window.HR_CANON_EN = [
     'Şa’bânın 29. günü akşam hilâli aramak vâcib-i kifâyedir; görülmezse ay otuza tamamlanır (s. 314–315). Semâda Ramezân hilâlini aramak bir ibâdettir. Hesap, ayın başladığı vakti değil, hilâlin görülebileceği geceyi anlamak içindir (s. 360).',
     'Rasad gecesi (A): bulunduğunuz yerde hilâlin görülmesinin mümkün olduğu ilk akşam (gurûbda beynûnet ≥ 8° ve hilâl ufkun 5° üstünde). En elverişli akşam (B): beynûnetin 18°’ye ulaştığı ilk akşam. İkisi de hesâbî imkândır; hilâlin görüldüğünü bildirmez.'];
   T.en.rasad = ['Watch night and most favourable evening',
-    'Searching for the crescent on the evening of the 29th of Sha’ban is a communal obligation (vâcib-i kifâye); if it is not seen, the month is completed to thirty days (pp. 314–315). Searching the sky for the Ramadan crescent is an act of worship. Calculation is for knowing the night on which the crescent can be seen, not the moment the month begins (p. 360).',
+    'Searching for the crescent on the evening of the 29th of Sha’bân is a communal obligation (wâjib-i kifâya); if it is not seen, the month is completed to thirty days (EB V, p. 55). Searching the sky for the Ramadân crescent is an act of worship. Calculation is for knowing the night on which the crescent can be seen, not the moment the month begins (EB V, p. 137).',
     'Watch night (A): the first evening at your location on which the crescent can possibly be seen (elongation ≥ 8° at sunset and the crescent 5° above the horizon). Most favourable evening (B): the first evening on which the elongation reaches 18°. Both are computed possibility; neither says that the crescent was seen.'];
 
   T.tr.dogrulama = ['Kaydın doğrulanması',
     'Rü’yet kaydı ve tutanak şahitlik değildir; şahitliğin değerlendirilmesi yetkili makama aittir (s. 315–316). Doğrulama yalnız kaydın sonradan değiştirilmediğini gösterir; hilâlin görüldüğünü ispat etmez.',
     'Özet (SHA-256), kaydın içeriğinden hesaplanan 64 haneli parmak izidir; tek harf değişse bütünüyle değişir. Kâğıt tek başına doğrulanamaz: doğrulayan kişi gözlemcinin JSON kaydını alır, program özeti yeniden hesaplar ve kâğıttaki kodla karşılaştırır.'];
   T.en.dogrulama = ['Verifying a record',
-    'A sighting record or report is not testimony; evaluating testimony belongs to the competent authority (pp. 315–316). Verification only shows that the record has not been changed afterwards; it does not prove that the crescent was seen.',
+    'A sighting record or report is not testimony; evaluating testimony belongs to the competent authority (EB V, pp. 55–58). Verification only shows that the record has not been changed afterwards; it does not prove that the crescent was seen.',
     'The digest (SHA-256) is a 64-character fingerprint computed from the record’s content; changing a single letter changes it completely. The paper alone cannot be verified: the verifier obtains the observer’s JSON record, and the program recomputes the digest and compares it with the code on the paper.'];
 
   // Naklî deliller (yardımcı kaynak: Kongre tebliği, Türkiye Takvimi, 2016; Tam İlmihâl’deki hükümler: s. 314–316, 360)
@@ -3009,13 +3010,13 @@ window.HR_CANON_EN = [
     'İTÜ’den Prof. Hamit Dilgan, Diyanet’e verilen 1963 tarihli cevapta, hesapta görülme şartları sağlansa bile yeni ayın fiilen görülmeyebileceğini bildirmiş; görülme imkânı ile fiilen görülmenin ayrı tutulması gerektiğini yazmıştır. ABD Deniz Rasathanesi (USNO) de ictimâ anı kesin hesaplansa bile hilâlin görülebilirliğinin pek çok etkene bağlı olduğunu ve hesapla kesin bilinemeyeceğini belirtir (Kongre tebliği, s. 5, 8). Program bu yüzden “mümkün” der, “görüldü” demez.',
     ['Nass ve icmâ (Kongre tebliği)', 'Astronomların ifadeleri', 'Âlimlerin bildirdikleri — ayrıntı', 'Astronomi kaynakları — ayrıntı']];
   T.en.nakli = ['Textual evidence',
-    'The beginning of the lunar months, above all Ramadan and Dhu al-Hijja, is tied to sighting the crescent. The Qur’an states that the crescents are signs of time for people and for the Hajj (al-Baqara 189). The hadiths command beginning the fast on seeing the crescent, ending it on seeing it again, and completing Shaʿban to thirty days if the sky is clouded (Bukhari, Muslim, Nasa’i, Darimi, Muwatta, Musnad). There is consensus that Ramadan is established by sighting or by completing Shaʿban to thirty (Tabyin al-Haqa’iq, Iʿanat al-Talibin). Where there is a clear text, there is no room for ijtihad (Mecelle, art. 14). Source: congress paper, p. 3. Rulings in Tam İlmihâl: pp. 314–316, 360.',
+    'The beginning of the lunar months, above all Ramadân and Dhu’l-hijja, is tied to sighting the crescent. The Qur’an states that the crescents are signs of time for people and for the Hajj (al-Baqara 189). The hadiths command beginning the fast on seeing the crescent, ending it on seeing it again, and completing Sha’bân to thirty days if the sky is clouded (Bukhari, Muslim, Nasa’i, Darimi, Muwatta, Musnad). There is consensus that Ramadân is established by sighting or by completing Sha’bân to thirty (Tabyin al-Haqa’iq, Iʿanat al-Talibin). Where there is a clear text, there is no room for ijtihad (Mecelle, art. 14). Source: congress paper, p. 3. Rulings in Tam İlmihâl: EB V, pp. 54–58, 137.',
     'Prof. Hamit Dilgan of Istanbul Technical University, in a 1963 reply to the Presidency of Religious Affairs, wrote that the new crescent may not actually be seen even when the calculated conditions are met, and that the possibility of sighting must be kept apart from actual sighting. The US Naval Observatory (USNO) likewise notes that although the time of New Moon can be computed exactly, the crescent’s visibility depends on many factors and cannot be predicted with certainty (congress paper, pp. 5, 8). This is why the program says “possible”, never “seen”.',
     ['Text and consensus (congress paper)', 'Statements of astronomers', 'What the scholars report — detail', 'Astronomical sources — detail']];
   const NAKLI_LONG = {
     tr: ['İbni Âbidîn, kıble bahsinde (c. 1, s. 289) Ramezânın başını anlamakta takvime güvenilmeyeceğini bildirir: hilâl hesabın bildirdiği gece doğar, fakat o gece görülmeyip ertesi gece görülebilir; oruca görüldüğü gece başlanır. Elmalılı Hamdi Efendi ve Rasathâne müdürü Fatin Gökmen Efendi (Sebîl-ür-reşâd, c. 22), şer’in orucu astronomi kaidelerine değil rü’yete bağladığını yazmıştır; Fatin Efendi, hesaba aykırı şahitlikte iki şahitle yetinilmemesini daha meşrû görür. Bu, Tam İlmihâl’in İmâm-ı Sübkî’den naklettiği hükümle aynıdır (s. 360). Şems-ül-eimme Halvânî: iki âdilin haberiyle veya kâdînın hükmüyle bir yerde Ramezân başlayınca her yerde oruca başlanır; hac, kurban ve namaz vakitleri ise mahallîdir. Mecmû’a-i Zühdiyye: Şevvâl hilâlini yalnız gören kimse bayram yapamaz. Takvimle başlanmışsa kazâ: Şa’bân rü’yetle başlamışsa bir gün, başlamamışsa iki gün (Hindiyye, Kâdîhân). (Kongre tebliği, s. 3–8.)',
       'USNO’ya göre çıplak gözle güvenilir en erken rü’yetler ictimâdan yaklaşık 15,5 saat, teleskopla 12,1 saat sonra bildirilmiştir; bunlar istisnadır. Görülebilirliği ictimâdaki beynûnet (0–5°), ayın yörüngedeki hızı ve uzaklığı, gözlemcinin enlemi ve yüksekliği, ekliptiğin batı ufkuyla yaptığı açı (orta kuzey enlemlerde bahar ayları elverişlidir), gök şartları ve rasıdın tecrübesi etkiler. Tam İlmihâl’in 8° sınırı (yaklaşık 14 saat) bu değerlerle uyumludur. Örnek: Receb 1437’de takvimler 8 Nisan 2016’yı gösteriyordu; 7 Nisan akşamı hilâl hiçbir yerde görülmedi, 8 Nisan akşamı görüldü ve ay 9 Nisan’da başladı (Kongre tebliği, s. 8–11).'],
-    en: ['Ibn ʿAbidin, in the chapter on the qibla (vol. 1, p. 289), says calendars are not to be relied on for the start of Ramadan: the crescent is born on the night calculation shows, but it may not be seen that night and be seen the next; fasting begins on the night it is seen. Elmalılı Hamdi Efendi and the observatory director Fatin Gökmen Efendi (Sebil al-Rashad, vol. 22) wrote that the Shariʿa ties the fast to sighting, not to astronomical rules; Fatin Efendi held it more proper not to accept two witnesses whose testimony contradicts calculation. This is the same as the ruling Tam İlmihâl reports from Imam Subki (p. 360). Shams al-A’imma Halwani: once Ramadan begins in one place by the report of two upright witnesses or a judge’s ruling, fasting begins everywhere; Hajj, sacrifice and prayer times are local. Majmuʿa-i Zuhdiyya: someone who alone sees the Shawwal crescent may not celebrate ʿId. Make-up fasts if Ramadan was begun by calendar: one day if Shaʿban began by sighting, otherwise two (Hindiyya, Qadikhan). (Congress paper, pp. 3–8.)',
+    en: ['Ibni ’Âbidîn, in the chapter on the qibla (vol. 1, p. 289), says calendars are not to be relied on for the start of Ramadân: the new moon appears on the night indicated by calculation, yet it may be seen on the following night instead; fasting begins on the night it is seen. Elmalılı Hamdi Efendi and the observatory director Fatin Gökmen Efendi (Sebil al-Rashad, vol. 22) wrote that the Sharî’a ties the fast to sighting, not to astronomical rules; Fatin Efendi held it more proper not to accept two witnesses whose testimony contradicts calculation. This is the same as the ruling Tam İlmihâl reports from Imâm-i Subkî (EB V, p. 137). Shams al-A’imma Halwani: once Ramadân begins in one place by the report of two ’âdil witnesses or a Qâdî’s ruling, fasting begins everywhere; Hajj, sacrifice and prayer times are local. Majmuʿa-i Zuhdiyya: someone who alone sees the Shawwâl crescent may not celebrate ’Iyd. Make-up fasts if Ramadân was begun by calendar: one day if Sha’bân began by sighting, otherwise two (Hindiyya, Qâdî-Khân). (Congress paper, pp. 3–8.)',
       'According to USNO, the earliest reliable naked-eye sightings were reported about 15.5 hours after New Moon, and 12.1 hours with telescopes; these are exceptional. Visibility depends on the elongation at New Moon (0–5°), the Moon’s orbital speed and distance, the observer’s latitude and altitude, the angle of the ecliptic to the western horizon (spring months are favoured at mid-northern latitudes), sky conditions and the observer’s experience. Tam İlmihâl’s 8° limit (about 14 hours) agrees with these values. Example: for Rajab 1437 calendars gave 8 April 2016; on 7 April the crescent was not seen anywhere, it was seen on 8 April and the month began on 9 April (congress paper, pp. 8–11).']
   };
   // Ayrıntılı metinler: [fıkhî ayrıntı, bilimsel ayrıntı]
@@ -3060,40 +3061,40 @@ window.HR_CANON_EN = [
     },
     en: {
       hesap: [
-        'Tam İlmihâl distinguishes two things: the birth of the crescent and its sighting. The birth is a matter of calculation, and what calculation states is certain. The sighting (rü’yet-i hilâl) is by the naked eye, and its time cannot be calculated: the crescent may be seen on the night of its birth, or not until the second night. Ibn Abidin states that calendars must not be relied on for the first day of Ramadan and that fasting begins on the night the crescent is seen, not the night it is born. Fatawa-i Hindiyya also states that beginning Ramadan or the feast by calendar or calculation is not permissible. Imam Subki: if someone says he saw the crescent on a night before calculation says it is born, the calculation is believed, because what is known by calculation is certain (pp. 314–315, 360).',
+        'Tam İlmihâl distinguishes two things: the birth of the crescent and its sighting. The birth is a matter of calculation, and what calculation states is certain. The sighting (rü’yet-i hilâl) is by the naked eye, and its time cannot be calculated: the crescent may be seen on the night of its birth, or not until the second night. Ibni ’Âbidîn states that calendars must not be relied on for the first day of Ramadân and that fasting begins on the night the crescent is seen, not the night it is born. Fatawa-i Hindiyya also states that beginning Ramadân or the ’Iyd by calendar or calculation is not permissible. Imâm-i Subkî: if someone says he saw the crescent on a night before calculation says it is born, the calculation is believed, because what is known by calculation is certain (EB V, pp. 54–55, 137).',
         'The program computes two different things. First, what is certain: the conjunction, sunset, the Moon’s position, the elongation, to the minute and arc-minute. Second, possibility: whether, by the thresholds of Tam İlmihâl (8°, 18°, 5°), the crescent can possibly be seen that evening. No result of the program says “the month has begun”; the month is established only by sighting and the conditions of testimony.'],
       hicri: [
-        'The ezânî day runs between two legal sunsets (p. 188), so the lunar day begins in the evening. According to Tam İlmihâl, the crescent is born on the night calculation shows; it may not be seen that night and be seen one night later (p. 360). Beginning Ramadan by sighting may be one day later than what calculation shows, but never one day earlier (p. 315). So day 1 of every month is one of two days: the calculated day or one day later. The program’s “n (or n−1)” and “1 | 29/30” correspond to these two possibilities; the “Why two numbers” line says which number belongs to which day. Because a crescent seen in one city binds the whole world (p. 315), the worldwide date is used in every month except Dhu al-Hijja; in Dhu al-Hijja, where it is not established by witnesses, the Işık method is used (p. 326).',
-        'The Hijri day is counted from the computed earliest day of each month. The program changes the lunar day at the legal sunset; after sunset the selected moment belongs to the next lunar day. Month names and the year come from the arithmetic calendar for the conjunction; in Muharram both years are written because the new year is certain only when the crescent is seen. All these dates are computed and become certain by sighting.'],
+        'The adhânî day runs between two shar’î sunsets (EB IV, p. 165), so the lunar day begins in the evening. According to Tam İlmihâl, the new moon appears on the night indicated by calculation, yet it may be seen on the following night instead of that night (EB V, p. 138). Beginning Ramadân by sighting may be one day later than what calculation shows, but never one day earlier (EB V, p. 57). So day 1 of every month is one of two days: the calculated day or one day later. The program’s “n (or n−1)” and “1 | 29/30” correspond to these two possibilities; the “Why two numbers” line says which number belongs to which day. Because a crescent seen in one city binds the whole world (EB V, p. 56), the worldwide date is used in every month except Dhu’l-hijja; in Dhu’l-hijja, where it is not established by witnesses, the Işık method is used (EB V, p. 79).',
+        'The Hijri day is counted from the computed earliest day of each month. The program changes the lunar day at the shar’î sunset; after sunset the selected moment belongs to the next lunar day. Month names and the year come from the arithmetic calendar for the conjunction; in Muharram both years are written because the new year is certain only when the crescent is seen. All these dates are computed and become certain by sighting.'],
       kuresel: [
-        'When the crescent is seen in one city on the 30th night of Sha’ban, fasting becomes necessary everywhere in the world (p. 315). According to Radd al-Muhtar (Kitab al-Sawm), differing horizons are not considered in the apparent narration; a sighting in the west binds those in the east, provided it is established in a binding way: two witnesses, testimony to a judge’s ruling, or widespread news. Merely reporting “they saw it somewhere” is not enough. Hajj, sacrifice and prayer times are not like this; they are local (Radd al-Muhtar, Kitab al-Sawm).',
+        'When the crescent is seen in one city on the 30th night of Sha’bân, fasting becomes necessary everywhere in the world (EB V, p. 56). According to Radd al-Muhtar (Kitab al-Sawm), differing horizons are not considered in the apparent narration; a sighting in the west binds those in the east, provided it is established in a binding way: two witnesses, testimony to a Qâdî’s ruling, or widespread news. Merely reporting “they saw it somewhere” is not enough. Hajj, sacrifice and prayer times are not like this; they are local (Radd al-Muhtar, Kitab al-Sawm).',
         'On the same calendar day, sunset comes later in the west while the Moon keeps moving away from the Sun, so the crescent usually becomes visible first in western places. The program searches for the worldwide earliest evening just east of the date line, between the polar circles, where the latest sunset of a calendar day falls; this gives the same day as a whole-world scan.'],
       sahitlik: [
-        'In cloudy weather, one upright Muslim saying “I saw it” suffices for the Ramadan crescent; in clear weather it is established by the reports of many. Two upright witnesses are needed for the feast; in cloudy weather two men, or one man and two women, testify for Shawwal. It is the same where there is no judge. The report of a single person who saw it outside the city or from a high place may be accepted. Where the month was begun by calendar, two days of make-up fasting are needed after the feast (pp. 315–316).',
-        'The program’s sighting record documents the observer’s statement and the conditions of the moment: time, place, sky, number of people who saw it, photo digest. The record is not testimony and does not replace it. A record without a name is marked “anonymous statement”. A claim made for an evening on which sighting is impossible by calculation is not accepted, by the ruling of Tam İlmihâl (Imam Subki, p. 360).'],
+        'In cloudy weather, one ’âdil Muslim saying “I saw it” suffices for the Ramadân crescent; in clear weather it is established by the reports of many. Two ’âdil witnesses are needed for the ’Iyd; in cloudy weather two men, or one man and two women, testify for Shawwâl. It is the same where there is no Qâdî. The report of a single person who saw it outside the city or from a high place may be accepted. Where the month was begun by calendar, two days of make-up fasting are needed after the ’Iyd (EB V, pp. 56–57).',
+        'The program’s sighting record documents the observer’s statement and the conditions of the moment: time, place, sky, number of people who saw it, photo digest. The record is not testimony and does not replace it. A record without a name is marked “anonymous statement”. A claim made for an evening on which sighting is impossible by calculation is not accepted, by the ruling of Tam İlmihâl (Imâm-i Subkî, EB V, p. 137).'],
       besderece: [
-        'Tam İlmihâl states that because of the 57′ parallax the crescent cannot be seen once it comes within 5° of the horizon (p. 360). The observation window therefore begins at sunset and ends when the crescent comes down to 5°. If the crescent is already below 5° at sunset, it cannot be seen that evening.',
-        'The program computes the apparent altitude, including the Moon’s parallax (about 1°) and atmospheric refraction. The window begins at the visible sunset (the Sun’s upper limb disappearing below the visible horizon) and ends when the crescent’s apparent altitude falls to 5°. Refraction near the horizon varies with temperature and pressure, so the window’s limits may shift by a few minutes in reality.'],
+        'Tam İlmihâl states that because of the 57′ parallax the crescent cannot be seen once it comes within 5° of the horizon (EB V, p. 137). The observation window therefore begins at sunset and ends when the crescent comes down to 5°. If the crescent is already below 5° at sunset, it cannot be seen that evening.',
+        'The program computes the apparent altitude, including the Moon’s parallax (about 1°) and atmospheric refraction. The window begins at the apparent sunset (the Sun’s upper limb disappearing below the visible horizon) and ends when the crescent’s apparent altitude falls to 5°. Refraction near the horizon varies with temperature and pressure, so the window’s limits may shift by a few minutes in reality.'],
       beynunet: [
-        'When the elongation is less than 8°, the crescent cannot be seen at any time or place. At 18° the crescent appears on the western horizon at sunset, at the longitude where the Sun is setting and west of it. 18° is the accepted value of Ottoman scholars (p. 360). The program builds its classes on these two thresholds: below 8° definite rejection, 8°–18° “possible; careful observation needed”, 18° and above “visible by calculation”.',
+        'When the elongation is less than 8°, the crescent cannot be seen at any time or place. At 18° the crescent appears on the western horizon at sunset, at the longitude where the Sun is setting and west of it. 18° is the accepted value of Ottoman scholars (EB V, p. 137). The program builds its classes on these two thresholds: below 8° definite rejection, 8°–18° “possible; careful observation needed”, 18° and above “visible by calculation”.',
         'Elongation is the angle between the Moon and the Sun seen from the centre of the Earth. The Moon moves away from the Sun by about 12.2° a day on average. Modern observations also put the smallest naked-eye elongation at around 7–8°; this is additional information only, the classes follow the thresholds of Tam İlmihâl.'],
       ciplak: [
         'Sighting means seeing the new Moon in the sky. Observation and sighting of the crescent must be done with the naked eye; observation with instruments is not valid (Rasad Hakkında Zarûrî Malûmat). The lunar months begin when the new crescent is seen with the naked eye through observation.',
         'Binoculars may help to locate the crescent, but a crescent found with binoculars counts as a sighting only if it is then seen with the naked eye. The record form has a separate option for “found with binoculars, then seen with the naked eye”. Detections “only with binoculars” or “only by photograph” are supporting information. Pointing binoculars west before sunset can permanently damage the eye.'],
       enerken: [
-        'Beginning Ramadan by sighting may be one day later than what calculation shows, but not one day earlier (p. 315). The 9th of Dhu al-Hijja, the day of Arafa, is likewise the calculated day or one day later; the Hajj of those who stand at Arafat one day earlier is not valid (pp. 344, 360).',
-        'The program looks for the first evening on which the elongation exceeds 8° and the crescent’s apparent altitude exceeds 5°. The computed earliest day is the day after that evening. Ramadan uses the worldwide date, the sacrifice your location, and Hajj Makkah.'],
+        'Beginning Ramadân by sighting may be one day later than what calculation shows, but not one day earlier (EB V, p. 57). The 9th of Dhu’l-hijja, the day of ’Arafa, is likewise the calculated day or one day later; the Hajj of those who stand at ’Arafât one day earlier is not valid (EB V, pp. 117, 138).',
+        'The program looks for the first evening on which the elongation exceeds 8° and the crescent’s apparent altitude exceeds 5°. The computed earliest day is the day after that evening. Ramadân uses the worldwide date, the sacrifice your location, and Hajj Makkah.'],
       safak: [
-        'According to Qadikhan, if the crescent sets after twilight it is the crescent of the second night; if before, of the first night (p. 316). For the night prayer Tam İlmihâl gives two views: per Imam A’zam, the disappearance of the whiteness (Sun at −19°); per the Imameyn and the other three schools, the disappearance of the redness (−17°) (p. 178). Tam İlmihâl states that it is more cautious to pray according to Imam A’zam’s view (p. 194). The program therefore uses −19° and shows −17° together with its result.',
-        'Twilight times are computed with the method of Tam İlmihâl: first the true time at which the Sun’s centre reaches −19° (or −17°) relative to the true horizon, then the temkin is added to obtain the legal time (p. 197). If the two views give different results, the program says so plainly.'],
+        'According to Qâdî-Khân, if the crescent sets after twilight it is the crescent of the second night; if before, of the first night (EB V, p. 58). For the night prayer Tam İlmihâl gives two views: per Imâm-i a’zam, the disappearance of the whiteness (Sun at −19°); per the Imâmeyn and the other three schools, the disappearance of the redness (−17°) (EB IV, p. 143). Tam İlmihâl states that it is more cautious to pray according to Imâm-i a’zam’s view (EB IV, p. 177). The program therefore uses −19° and shows −17° together with its result.',
+        'Twilight times are computed with the method of Tam İlmihâl: first the true time at which the Sun’s centre reaches −19° (or −17°) relative to the true horizon, then the Tamkin is added to obtain the shar’î time (EB IV, pp. 138, 143, 183). If the two views give different results, the program says so plainly.'],
       gurub: [
-        'Tam İlmihâl defines three sunsets (p. 186): true sunset (the true altitude of the Sun’s centre is zero), visible sunset (the upper limb disappears from the observer’s visible horizon) and legal sunset (the upper limb’s altitude relative to the legal horizon is zero; true sunset + temkin). For one who can see the sunset the visible sunset counts; for one who cannot, the legal sunset (pp. 181, 186, 317). Temkin is the difference between the true and the legal time; it is not a precautionary margin. A city has a single temkin (pp. 176, 186, 316).',
-        'Temkin is computed from the dip of the horizon, refraction and the Sun’s radius minus parallax. For Istanbul Tam İlmihâl finds 7 min 52 s on 21 March / 23 September and adopts an average of 10 minutes with a 2-minute margin (pp. 185–186). The program computes the temkin for every date with the method of Tam İlmihâl from the city’s highest point; if that height is not entered, the temkin is computed without it.'],
+        'Tam İlmihâl defines three sunsets (EB IV, pp. 160–161): true sunset (the true altitude of the Sun’s centre is zero), apparent sunset (the upper limb disappears from the observer’s visible horizon) and shar’î sunset (the upper limb’s altitude relative to the shar’î horizon is zero; true sunset + Tamkin). For one who can see the sunset the apparent sunset counts; for one who cannot, the shar’î sunset (EB IV, pp. 151, 160; V, p. 61). Tamkin is the difference between the true and the shar’î time; it is not a precautionary margin. A city has a single Tamkin (EB IV, pp. 138, 160; V, p. 59).',
+        'Tamkin is computed from the dip of the horizon, refraction and the Sun’s radius minus parallax. For Istanbul Tam İlmihâl finds 7 min 52 s on 21 March / 23 September and adopts an average of 10 minutes with a 2-minute margin (EB IV, pp. 159–160). The program computes the Tamkin for every date with the method of Tam İlmihâl from the city’s highest point; if that height is not entered, the Tamkin is computed without it.'],
       dogrulama: [
         'Whoever collects the records (a person or committee) asks each observer for both the report and the JSON record. The ruling is given by the competent authority on the basis of the witnesses and their statements; the program does not replace that evaluation.',
         'Verification checks three things. (1) Digest: is the digest recomputed from the JSON content the same as the one in the record and on the paper? (2) Signature: the record was signed with the private key on the device where it was made; the public key and fingerprint in the record verify that signature. The fingerprint identifies the device, not the person; clearing browser data creates a new key. (3) QR: the text “HRK1|record-no|digest” ties the paper to the digital record. Verification works offline: in this program’s “Verify a record” window, or on a computer with tools/verify_record.py.'],
       rasad: [
-        'Tam İlmihâl states that saying “we saw the crescent” on the night before the one given by calendars is wrong (p. 360). The crescent is sought on the evening of the 29th of Sha’ban; if it is not seen, the month is completed to thirty days.',
+        'Tam İlmihâl states that saying “we saw the crescent” on the night before the one given by calendars is wrong (EB V, p. 137). The crescent is sought on the evening of the 29th of Sha’bân; if it is not seen, the month is completed to thirty days.',
         'The cards show the next and the previous month-start watch nights for your location. Once this evening’s search window has passed, the card moves to the next month. “Plan this night” opens that evening, and every screen follows it.']
     }
   };
@@ -5675,7 +5676,7 @@ var qrcode = function() {
       where: (dx, side, fx, up, fu) => `Hilâl, gurûb noktasının ${dx}° ${side} (${fx}), ufkun ${up}° üstünde (${fu}).`,
       full: 'Bütün ufuk', sun: 'Güneş', moon: 'Ay', moonBelow: a => `Ay ufkun ${a}° altında`, sunUp: 'Güneş ufkun üstünde' },
     en: { dec: '.', finger: n => `${n} finger(s)`, fist: (v, f) => `≈ ${v} ${f === 1 ? 'fist' : 'fists'}`, twUp: 'Sun above horizon', twCivil: 'Civil twilight', twNaut: 'Nautical twilight',
-      twRed: 'Red glow persists', twWhite: 'Red gone, white glow persists', twNight: 'Night (twilight over)', west: 'Western horizon', lim5: 'Tam İlmihâl limit (p. 360)',
+      twRed: 'Red glow persists', twWhite: 'Red gone, whiteness persists', twNight: 'Night (twilight over)', west: 'Western horizon', lim5: 'Tam İlmihâl limit (EB V, p. 137)',
       sunsetPt: 'sunset point', left: 'left', right: 'right', up: 'up', fistScale: '1 fist at arm’s length', toLeft: 'to the left', toRight: 'to the right',
       below: 'Crescent below the horizon', below5: 'Crescent below 5°: not visible per Tam İlmihâl', notSet: 'The Sun has not set yet',
       where: (dx, side, fx, up, fu) => `The crescent is ${dx}° ${side} of the sunset point (${fx}), ${up}° above the horizon (${fu}).`,
@@ -5894,7 +5895,7 @@ var qrcode = function() {
       rel: (ref, parts) => `${ref} ${parts || 'hemen yanında'}`, west: 'Batı göğü, seçili akşam', lim5: 'Tam İlmihâl’in sınırı (s. 360)', fist: '1 yumruk', dec: ',' },
     en: { star: 1, chart: 'Sky chart', sun: 'Sun', moon: 'Moon ', crescent: 'Crescent ', sunsetPt: 'sunset point', card8: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
       lr: (n, r) => `${n}° to the ${r ? 'right' : 'left'}`, ud: (n, u) => `${n}° ${u ? 'above' : 'below'}`, refMoon: 'the crescent', refSun: 'the sunset point',
-      rel: (ref, parts) => `${parts || 'right next to'} ${ref}`, west: 'Western sky, selected evening', lim5: 'Tam İlmihâl limit (p. 360)', fist: '1 fist', dec: '.' }
+      rel: (ref, parts) => `${parts || 'right next to'} ${ref}`, west: 'Western sky, selected evening', lim5: 'Tam İlmihâl limit (EB V, p. 137)', fist: '1 fist', dec: '.' }
   };
   const smTx = L => (G.HRLangs ? G.HRLangs.pick(STX, L) : (STX[L] || STX.en));
   let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
@@ -6612,19 +6613,19 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
       head: (d, p) => `Evening of ${d} · ${p}`, monthLine: (m, c) => `Start of ${m} · Conjunction: ${c}`,
       here: 'This evening here', world: 'This evening worldwide', start: 'Start of the month: two nights', scope: 'Scope and ruling', more: 'Detailed explanation',
       claim: 'Sighting claim', worldCalc: 'Scanning the world…',
-      worldNone: 'Tonight the crescent cannot be seen anywhere in the world by calculation. A claim to have seen it tonight is not accepted (pp. 315, 360).',
+      worldNone: 'Tonight the crescent cannot be seen anywhere in the world by calculation. A claim to have seen it tonight is not accepted (EB V, pp. 57, 137).',
       worldPoss: x => `Regions where it is possible by calculation (elongation 8°–18°): ${x}.`, worldVis: x => `Regions where it is visible (elongation ≥ 18°): ${x}.`,
       worldNote: 'Regions come from a coarse scan (sea level, standard sunset). See the Map tab for detail.',
-      lead: 'According to Tam İlmihâl, the crescent is born on the night calculation shows; but it may not be seen that night and be seen one night later (p. 360). Beginning by sighting may be one day later than what calculation shows, never a day earlier (p. 315). So day 1 of the month is one of two days:',
-      leadZh: 'Where it is not established by witnesses, day 1 of Dhu al-Hijja is found by the Işık method. The ʿId is the calculated day or one day later, never a day earlier (p. 326). So day 1 of the month is one of two days:',
+      lead: 'According to Tam İlmihâl, the new moon appears on the night indicated by calculation, yet it may be seen on the following night instead of that night (EB V, p. 138). Beginning by sighting may be one day later than what calculation shows, never a day earlier (EB V, p. 57). So day 1 of the month is one of two days:',
+      leadZh: 'Where it is not established by witnesses, day 1 of Dhu’l-hijja is found by the Işık method. The ’Iyd is the calculated day or one day later, never a day earlier (EB V, p. 79). So day 1 of the month is one of two days:',
       optEq: (m, d) => `1 ${m} = ${d}`,
       optA: e => `If the crescent is seen and established somewhere in the world on the evening of ${e} (the first night).`,
-      optB: (e, e2) => `If the crescent is not seen on the evening of ${e}; it may be seen on the second night, the evening of ${e2} (p. 360).`,
-      optAZh: 'The day found by the Işık method (p. 326).', optBZh: 'Or one day later (p. 326).',
-      kurban: (a, b) => `First day of ʿId al-Adha: ${a} or ${b}.`,
+      optB: (e, e2) => `If the crescent is not seen on the evening of ${e}; it may be seen on the second night, the evening of ${e2} (EB V, p. 137).`,
+      optAZh: 'The day found by the Işık method (EB V, p. 79).', optBZh: 'Or one day later (EB V, p. 79).',
+      kurban: (a, b) => `First day of ’Iyd of Qurbân: ${a} or ${b}.`,
       notBefore: (m, d, p) => `1 ${m} cannot be before ${d} (${p}).`,
-      b18: e => `On the evening of ${e} the crescent passes 18° in many places; by the acceptance of the Ottoman scholars it is seen at this elongation (p. 360).`,
-      prevLead: m => `The start of the previous month (${m}) is also one of two days; a month is never shorter than 29 or longer than 30 days (p. 315):`,
+      b18: e => `On the evening of ${e} the crescent passes 18° in many places; by the acceptance of the Ottoman scholars it is seen at this elongation (EB V, p. 137).`,
+      prevLead: m => `The start of the previous month (${m}) is also one of two days; a month is never shorter than 29 or longer than 30 days (EB V, p. 55):`,
       prev30: (p, e, m, d) => `If the previous month began on ${p}, ${e} is its 30th day: the month is completed to thirty and 1 ${m} is ${d}.`,
       prev29: (p, e, m, d) => `If the previous month began on ${p}, the evening of ${e} is its 28th evening: a month is not shorter than 29 days and 1 ${m} is ${d}.`,
       prevOpen: (p, e, m) => `If the previous month began on ${p}, the evening of ${e} is the watch evening (the 29th); 1 ${m} is one of these two days, by sighting.`,
@@ -6637,30 +6638,30 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
       rPrev: 'evening before', rA: 'first night', rB: 'second night', tonight: 'selected evening',
       fReject: p => `not accepted (${p})`, fDay: (m, d) => `1 ${m} = ${d}`,
       wNone: 'not possible anywhere', wVis: x => `≥ 18°: ${x}`, wPoss: x => `8°–18°: ${x}`, wCalc: '…',
-      zhAstro: 'The “Here” column is additional information: the astronomical calculation for this location (Dhu al-Hijja is local).',
+      zhAstro: 'The “Here” column is additional information: the astronomical calculation for this location (Dhu’l-hijja is local).',
       recHead: 'Your sighting', recSeenA: (e, m, d) => `By your record you saw the crescent on the evening of ${e}, the first night. If this sighting is established, 1 ${m} = ${d}.`,
       recSeenB: (e, m, d, e0, d0) => `By your record you saw the crescent on the evening of ${e}, the second night. If this sighting is established, 1 ${m} = ${d}. If the crescent was seen and established elsewhere on the evening of ${e0}, 1 ${m} = ${d0}.`,
-      recBad: e => `The sighting in your record for the evening of ${e} is not accepted by Tam İlmihâl: the crescent cannot be seen anywhere that evening by calculation (pp. 315, 360).`,
+      recBad: e => `The sighting in your record for the evening of ${e} is not accepted by Tam İlmihâl: the crescent cannot be seen anywhere that evening by calculation (EB V, pp. 57, 137).`,
       recNot: e => `Your record: not seen on the evening of ${e}.`,
-      recRam: 'A sighting is established by the report of the one who says “I saw it”: for Ramadan, in cloudy weather one upright Muslim, in clear weather many people; where there is no judge, Ramadan begins when one upright person says “I saw it” (p. 315).',
-      recSev: 'For the ʿId, two upright persons must say “I saw it” (p. 315); someone who alone sees the Shawwal crescent may not celebrate ʿId (p. 316).',
-      recGen: 'A record does not replace testimony. A sighting is established by the report of the one who says “I saw it”; Tam İlmihâl states the conditions (p. 315).',
-      sGlobal: 'When the crescent is seen in one city, fasting must begin all over the world (p. 315). The program uses this scope in every month except Dhu al-Hijja.',
-      sRamazan: 'For Ramadan the crescent is sought at sunset on the 29th of Shaʿban; if it is not seen, Shaʿban is completed to thirty (p. 315).',
-      sSevval: 'The ʿId crescent needs two upright witnesses (p. 315). Someone who alone sees the Shawwal crescent may not celebrate ʿId (p. 316).',
-      sKaza: 'If Ramadan was begun by calendar instead of sighting, make-up fasts are needed after ʿId (pp. 315–316): one day if Shaʿban began by sighting, otherwise two (Hindiyya, Qadikhan).',
-      sHajj: () => 'Hajj, sacrifice and prayer times are local (Radd al-Muhtar; congress paper, pp. 7–8). The Hajj follows the sighting in Mecca; ʿArafa is the calculated day or one day later, never earlier (pp. 315, 360).',
-      sDay: 'A crescent seen in daytime belongs to the coming night (p. 315).',
-      kSecond: 'If the crescent is seen this evening, by Qadikhan it is the crescent of the second night: it sets after the end of twilight (p. 316).',
-      kFirst: 'If the crescent is seen this evening, by Qadikhan it is the crescent of the first night: it sets before the end of twilight (p. 316).',
+      recRam: 'A sighting is established by the report of the one who says “I saw it”: for Ramadân, in cloudy weather one ’âdil Muslim, in clear weather many people; where there is no Qâdî, Ramadân begins when one ’âdil person says “I saw it” (EB V, p. 56).',
+      recSev: 'For the ’Iyd, two ’âdil persons must say “I saw it” (EB V, p. 56); someone who alone sees the Shawwâl crescent may not celebrate ’Iyd (EB V, p. 58).',
+      recGen: 'A record does not replace testimony. A sighting is established by the report of the one who says “I saw it”; Tam İlmihâl states the conditions (EB V, p. 56).',
+      sGlobal: 'When the crescent is seen in one city, fasting must begin all over the world (EB V, p. 56). The program uses this scope in every month except Dhu’l-hijja.',
+      sRamazan: 'For Ramadân the crescent is sought at sunset on the 29th of Sha’bân; if it is not seen, Sha’bân is completed to thirty (EB V, p. 55).',
+      sSevval: 'The ’Iyd crescent needs two ’âdil witnesses (EB V, p. 56). Someone who alone sees the Shawwâl crescent may not celebrate ’Iyd (EB V, p. 58).',
+      sKaza: 'If Ramadân was begun by calendar instead of sighting, make-up fasts are needed after ’Iyd (EB V, pp. 56–57): one day if Sha’bân began by sighting, otherwise two (Hindiyya, Qâdî-Khân).',
+      sHajj: () => 'Hajj, sacrifice and prayer times are local (Radd al-Muhtar; congress paper, pp. 7–8). The Hajj follows the sighting in Mecca; ’Arafa is the calculated day or one day later, never earlier (EB V, pp. 57, 138).',
+      sDay: 'A crescent seen in daytime belongs to the coming night (EB V, p. 56).',
+      kSecond: 'If the crescent is seen this evening, by Qâdî-Khân it is the crescent of the second night: it sets after the end of twilight (EB V, p. 58).',
+      kFirst: 'If the crescent is seen this evening, by Qâdî-Khân it is the crescent of the first night: it sets before the end of twilight (EB V, p. 58).',
       kInfo: 'This measure is shown for information; the program does not choose the start of the month by it.',
-      kNoEarly: 'Since the month cannot begin before the calculated day (p. 315), this measure does not move the start earlier.',
-      kLocal: 'The Qadikhan measure concerns the crescent at this location; the first and second nights above are worldwide.',
-      mIbni: 'Ibn ʿAbidin, in the chapter on the qibla: the crescent is born on the night calculation shows, but it may not be seen that night and be seen one night later. Fasting begins on the night it is seen, not the night it is born (p. 360).',
+      kNoEarly: 'Since the month cannot begin before the calculated day (EB V, p. 57), this measure does not move the start earlier.',
+      kLocal: 'The Qâdî-Khân measure concerns the crescent at this location; the first and second nights above are worldwide.',
+      mIbni: 'Ibni ’Âbidîn, in the chapter on the qibla: the new moon appears on the night indicated by calculation, yet it may be seen on the following night instead of that night. Fasting begins on the night it is seen, not on the night it must appear according to the calculation (EB V, p. 138).',
       mDilgan: 'Prof. Hamit Dilgan (ITU, 1963): the possibility of seeing the crescent must be kept apart from its actual sighting (congress paper, p. 5). This is why the program says “possible”, never “seen”.',
       mReceb: 'Example, Rajab 1437: on the evening of 7 April 2016 the crescent was possible by calculation only in the western Americas and the Pacific; it was not seen anywhere. It was seen on 8 April and the month began on 9 April. The computed earliest day was 8 April: the month began on the second of the two days (congress paper, p. 9).',
       mLink: 'Evidence: Guide → Textual evidence',
-      foot: 'This explanation describes calculated possibility. Calculation is for knowing the night on which the crescent can be seen, not the time the month begins (p. 360). The ruling is given by the competent authority under the conditions of testimony (p. 315).',
+      foot: 'This explanation describes calculated possibility. Calculation is for knowing the night on which the crescent can be seen, not the time the month begins (EB V, p. 137). The ruling is given by the competent authority under the conditions of testimony (EB V, p. 56).',
       mid: h => `There is no month-start watch this evening. Computed Hijri day: <b>${h}</b>.`, midWhy: x => `Why two numbers: ${x}.`, midNext: d => `Next month-start watch night: <b>${d}</b>.`,
       plan: 'Plan this night'
     }
@@ -6963,7 +6964,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD60f27c47ea740f78';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDf5f94394beba4c7f';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }

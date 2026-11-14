@@ -1,7 +1,7 @@
 /* Dil kaydı: arayüz dilleri, yerel biçimler, yazı yönü ve her dilde Tam İlmihâl’in adı ve bağlantıları.
  * Yeni bir dil eklemek için: buraya bir kayıt, i18n dosyalarına T[kod] ve MONTHS[kod], explain.js / guide.js / sky.js /
  * starmap.js / gok.js sözlüklerine birer bölüm eklenir (bkz. docs/coklu-dil.md). Eksik metinler İngilizceden gelir.
- * Program içindeki sayfa numaraları Türkçe Tam İlmihâl’in Ocak 2026 baskısına göredir. */
+ * Türkçe metinlerdeki sayfa numaraları Tam İlmihâl’in Ocak 2026 baskısına, İngilizce metinlerdekiler Endless Bliss’e (fasikül, sayfa) göredir. */
 (function (G) {
   'use strict';
   const HK = 'https://www.hakikatkitabevi.net/';
@@ -9,8 +9,9 @@
     tr: { code: 'tr', name: 'Türkçe', short: 'TR', locale: 'tr-TR', dir: 'ltr', fallback: null,
       book: { title: 'Tam İlmihâl Se’âdet-i Ebediyye', page: HK + 'book.php?bookCode=001', pdf: HK + 'downloads/001.pdf', pages: 'tr-2026-01' } },
     en: { code: 'en', name: 'English', short: 'EN', locale: 'en-GB', dir: 'ltr', fallback: 'tr',
-      // Endless Bliss dört fasikül hâlinde ayrı ayrı indirilir; bu yüzden yalnız kitap sayfası verilir.
-      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: null } }
+      // Endless Bliss altı fasikül hâlinde ayrı ayrı indirilir; bu yüzden yalnız kitap sayfası verilir.
+      // İngilizce metinlerdeki atıflar "EB V, p. 137" biçimindedir (fasikül, sayfa; 2020 baskıları). Eşleme: docs/endless-bliss-esleme.md
+      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: 'eb-2020' } }
   };
   const ORDER = ['tr', 'en'];
   const get = L => LANGS[L] || LANGS.en;

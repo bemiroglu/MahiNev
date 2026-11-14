@@ -1,5 +1,9 @@
 # Sürümler
 
+## 0.14.1 — geliştirmede
+
+- **İngilizce metinler Endless Bliss’e göre:** İngilizce arayüz, Tam İlmihâl’in İngilizcesi Endless Bliss’in terimlerini kullanır (Ramadân, Sha’bân, Dhu’l-hijja, ’Arafa, ’Iyd of Qurbân, ijtimâ’ = conjunction, muhâq, shar’î sunset, Tamkin, adhânî, Qâdî-Khân, Ibni ’Âbidîn, Imâm-i Subkî, Uluğ Bey, Abuzziyâ). Atıflar Endless Bliss’in fasikül ve sayfasını verir (ör. EB V, p. 137). Kanonik metnin İngilizcesinde kitaptan aktarılan cümleler Endless Bliss’teki hâliyle yazılır; Işık usulünün beyti Endless Bliss’teki İngilizce beyittir.
+
 ## 0.14.0 — 13 Kasım 2026
 
 - **Dünya haritasında Tam İlmihâl'in ölçüleri:** beynûnet 8° (altı kesin red) ve 18° (üstü görülebilir) çizgileri, gurûbda irtifâ 5° (kesikli) ve gurûbda ayın ufukta olduğu çizgi (s. 360). Sınıf sınırları bu çizgilerle düzgün çizilir; kesin red alanları taranır (siyah-beyaz baskıda da okunur). Çizgiler Yallop ve Odeh katmanlarında da çizilir; ek bilgi Tam İlmihâl'in ölçüleriyle karşılaştırılarak okunur.

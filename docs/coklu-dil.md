@@ -32,16 +32,17 @@ Mâh-ı Nev bugün Türkçe ve İngilizce çalışır. Altyapı, yeni bir dilin 
 
 ## Terimler
 
-Program bu terimleri her dilde aynı anlamla kullanır. Çeviride o dildeki Tam İlmihâl baskısının karşılıkları esas alınır.
+Program bu terimleri her dilde aynı anlamla kullanır. Çeviride o dildeki Tam İlmihâl baskısının karşılıkları esas alınır; İngilizcede Endless Bliss’in terimleri ve sayfaları kullanılır (ayrıntılı liste ve sayfa eşlemesi: docs/endless-bliss-esleme.md). Arayüzde hilâl için "crescent" denir; çünkü İngilizcede "new moon" astronomide ictimâ anlamına da gelir.
 
 | Türkçe | İngilizce (programda) | Anlamı |
 |---|---|---|
-| hilâl | crescent | yeni ayın ince yayı |
+| hilâl | crescent (Endless Bliss: new moon) | yeni ayın ince yayı |
 | rü'yet | sighting | hilâlin gözle görülmesi |
-| gurûb (şer'î gurûb) | sunset (legal sunset) | güneşin üst kenarının şer'î ufukta batışı |
+| gurûb (şer'î gurûb) | sunset (shar’î sunset) | güneşin üst kenarının şer'î ufukta batışı |
 | beynûnet | beynûnet (elongation) | ay ile güneş arasındaki açı |
-| ictimâ | conjunction | ay ile güneşin aynı boylamda buluşması |
-| muhak | muhak | ayın görünmediği süre |
+| ictimâ | conjunction (ijtimâ’) | ay ile güneşin aynı boylamda buluşması |
+| muhak | muhâq | ayın görünmediği süre |
+| temkin | Tamkin | hakîkî vakit ile şer'î vakit arasındaki fark |
 | hesâbî | computed / calculated | hesapla bulunan, rü'yetle kesinleşmemiş |
 | Işık usulü | Işık method | Hüseyn Hilmi Işık'ın ay başı usulü (s. 359) |
 

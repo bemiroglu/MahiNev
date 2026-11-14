@@ -30,6 +30,6 @@
     licThird: 'Embedded third-party components come with their own licences',
     tamper: 'This copy does not match the published original file and may have been modified. Download the original before relying on its results:',
     tamperShort: 'modified copy',
-    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (rü’yet); what is given here is computed possibility (Tam İlmihâl, pp. 315, 360).'
+    printFooter: 'This printout is not a calendar. The lunar month begins when the crescent is seen with the naked eye (ru’yat); what is given here is computed possibility (Tam İlmihâl, EB V, pp. 54, 137).'
   });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

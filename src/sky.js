@@ -20,7 +20,7 @@
       where: (dx, side, fx, up, fu) => `Hilâl, gurûb noktasının ${dx}° ${side} (${fx}), ufkun ${up}° üstünde (${fu}).`,
       full: 'Bütün ufuk', sun: 'Güneş', moon: 'Ay', moonBelow: a => `Ay ufkun ${a}° altında`, sunUp: 'Güneş ufkun üstünde' },
     en: { dec: '.', finger: n => `${n} finger(s)`, fist: (v, f) => `≈ ${v} ${f === 1 ? 'fist' : 'fists'}`, twUp: 'Sun above horizon', twCivil: 'Civil twilight', twNaut: 'Nautical twilight',
-      twRed: 'Red glow persists', twWhite: 'Red gone, white glow persists', twNight: 'Night (twilight over)', west: 'Western horizon', lim5: 'Tam İlmihâl limit (p. 360)',
+      twRed: 'Red glow persists', twWhite: 'Red gone, whiteness persists', twNight: 'Night (twilight over)', west: 'Western horizon', lim5: 'Tam İlmihâl limit (EB V, p. 137)',
       sunsetPt: 'sunset point', left: 'left', right: 'right', up: 'up', fistScale: '1 fist at arm’s length', toLeft: 'to the left', toRight: 'to the right',
       below: 'Crescent below the horizon', below5: 'Crescent below 5°: not visible per Tam İlmihâl', notSet: 'The Sun has not set yet',
       where: (dx, side, fx, up, fu) => `The crescent is ${dx}° ${side} of the sunset point (${fx}), ${up}° above the horizon (${fu}).`,

@@ -42,33 +42,33 @@
     footer: 'Astronomy Engine 2.1.19 (MIT) · Natural Earth · d3-celestial (BSD) · qrcode-generator (MIT) · Open-Meteo'
   });
   Object.assign(G.HRI18N.T.en, {
-    kdTitle: 'Kâdîhân check (p. 316)', kdA: 'Imâm-ı A‘zam: white glow, −19° (primary)', kdB: 'Imâmayn: red glow, −17° (alternative)',
+    kdTitle: 'Qâdî-Khân check (EB V, p. 58)', kdA: 'Imâm-i a’zam: whiteness, −19° (primary)', kdB: 'Imâmeyn: redness, −17° (alternative)',
     kdFirst: 'first-night crescent', kdSecond: 'second-night crescent', kdSafak: 'twilight end',
-    kdDiffer: 'The two views give different results. The primary one is Imâm-ı A‘zam’s view, which Tam İlmihâl calls the precautionary course (p. 194); the Imâmayn view is shown for information.',
-    kdSame: 'Both views give the same result.', kdNone: 'The crescent is below the horizon at sunset; the Kâdîhân check does not apply.',
-    safakA: 'Twilight end · Imâm-ı A‘zam (−19°, legal)', safakB: 'Twilight end · Imâmayn (−17°, legal)', safakNote: t => `true time + ${t} min temkin (p. 197)`,
+    kdDiffer: 'The two views give different results. The primary one is Imâm-i a’zam’s view, which Tam İlmihâl calls the cautious course (EB IV, p. 177); the Imâmeyn view is shown for information.',
+    kdSame: 'Both views give the same result.', kdNone: 'The crescent is below the horizon at sunset; the Qâdî-Khân check does not apply.',
+    safakA: 'Twilight end · Imâm-i a’zam (−19°, legal)', safakB: 'Twilight end · Imâmeyn (−17°, legal)', safakNote: t => `true time + ${t} min Tamkin (EB IV, pp. 138, 183)`,
     explain: 'Show explanations for new users', explainNote: 'When on, each card starts with a short note on what it is, why it matters and its legal basis. Experienced users can turn it off.',
     introTitle: 'How to use', introClose: 'Got it, hide',
     introSteps: [
       'Enter your <b>location</b> or tap “Use my location”. Latitude and longitude can be typed in any common form (41,0082 · 41.0082 N · 41°00′29″N).',
-      'Pick the observation night from the <b>Upcoming month-start observation</b> card. For each evening the programme says whether the crescent can be seen per Tam İlmihâl (p. 360).',
+      'Pick the observation night from the <b>Upcoming month-start observation</b> card. For each evening the programme says whether the crescent can be seen per Tam İlmihâl (EB V, p. 137).',
       'On the evening, open the <b>Field</b> tab: time, countdowns, where to look and the sky view are there. Create a <b>sighting record</b> whether you saw it or not.',
-      'Remember: the programme is <b>not a calendar</b>. The month begins by naked-eye sighting and testimony, not by calculation (Tam İlmihâl p. 315).'
+      'Remember: the programme is <b>not a calendar</b>. The month begins by naked-eye sighting and testimony, not by calculation (Tam İlmihâl, EB V, p. 54).'
     ],
     hints: {
-      loc: 'Your observing site. Visibility depends on the place; height lowers the horizon (p. 185). The city’s highest point is needed for the legal sunset and temkin (pp. 175–176).',
-      date: 'The evening you are planning. “Previous/Next month” go to month-start observation nights: the crescent is sought at sunset on the 29th (p. 315).',
-      up: 'Today’s computed Hijri date and the next observation night. The lunar day begins at the legal sunset (p. 188); the month begins by sighting.',
-      status: 'The selected evening per Tam İlmihâl: conjunction, elongation 8° and 18°, 5° above the horizon (p. 360). “Rejected” means calculation shows it cannot be seen; otherwise the ruling rests on testimony.',
+      loc: 'Your observing site. Visibility depends on the place; height lowers the horizon (EB IV, p. 159). The city’s highest point is needed for the shar’î sunset and Tamkin (EB IV, pp. 159–161).',
+      date: 'The evening you are planning. “Previous/Next month” go to month-start observation nights: the crescent is sought at sunset on the 29th (EB V, p. 55).',
+      up: 'Today’s computed Hijri date and the next observation night. The lunar day begins at the shar’î sunset (EB IV, p. 165); the month begins by sighting.',
+      status: 'The selected evening per Tam İlmihâl: conjunction, elongation 8° and 18°, 5° above the horizon (EB V, p. 137). “Rejected” means calculation shows it cannot be seen; otherwise the ruling rests on testimony.',
       tb: 'For any hour: can the crescent be sought now, and why not? The yellow band is Tam İlmihâl’s window (sunset until the crescent sinks to 5°).',
-      wx: 'Optional weather forecast. Testimony requirements differ in cloudy and clear weather (p. 315); a forecast is no basis for a ruling.',
+      wx: 'Optional weather forecast. Testimony requirements differ in cloudy and clear weather (EB V, p. 56); a forecast is no basis for a ruling.',
       sky: 'Where to look: left/right of the sunset point and height, in fists. Bright stars and planets are given for orientation.',
       strip: 'All evenings of the month at a glance: the colour is that evening’s class. Tap a box to plan that evening.',
-      detail: 'Sunset, legal sunset (with temkin), moonset and the crescent’s measures. The Kâdîhân check shows whether the Moon sets before or after twilight (p. 316).',
-      month: 'The month that begins with this conjunction and the computed earliest day: the month cannot begin before it (p. 315). Arithmetic calendars are calendar information only.',
-      map: 'The crescent at each place’s own sunset. The Ramadan crescent seen anywhere binds everywhere (p. 315); for the sacrifice the local scope is primary.',
+      detail: 'Sunset, shar’î sunset (with Tamkin), moonset and the crescent’s measures. The Qâdî-Khân check shows whether the Moon sets before or after twilight (EB V, p. 58).',
+      month: 'The month that begins with this conjunction and the computed earliest day: the month cannot begin before it (EB V, p. 57). Arithmetic calendars are calendar information only.',
+      map: 'The crescent at each place’s own sunset. The Ramadân crescent seen anywhere binds everywhere (EB V, p. 56); for the sacrifice the local scope is primary.',
       fieldTop: 'What to do now in the field: countdowns, Tam İlmihâl’s window and where to look. The sky view is always for the current moment.',
-      fieldRec: 'Record your observation. The record and printed report document your statement; the ruling belongs to the authority. Cloudy/clear sky and the site matter legally (pp. 315–316).'
+      fieldRec: 'Record your observation. The record and printed report document your statement; the ruling belongs to the authority. Cloudy/clear sky and the site matter legally (EB V, pp. 55–58).'
     },
     coordOk: (d, dms) => `Understood: ${d} (${dms})`, coordPair: 'Latitude and longitude entered together; both were filled in.', coordSwap: 'This value was understood as a longitude and moved to the longitude field.',
     coordErr: { empty: 'Empty value.', letter: b => `The letter “${b}” is not understood. Use N/S/E/W (or K/G/D/B).`, mixed: 'Both latitude and longitude letters in one value.', format: 'Format not understood. Example: 41.0082 · 41.0082 N · 41°00′29″N', minsec: 'Minutes and seconds must be below 60.', range: 'Out of range: latitude ±90°, longitude ±180°.' },

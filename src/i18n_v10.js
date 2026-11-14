@@ -77,7 +77,7 @@
     lvlLbl: 'Level of use', lvlQuick: 'Level',
     lvlOpts: { all: 'All levels', basic: 'Beginner', mid: 'Experienced', expert: 'Expert' },
     lvlNote: 'The level only changes what starts open and how much detail is shown; the calculation is the same. The ruling of Tam İlmihâl (class, definite rejection, search window, sighting claim) is visible at every level. Folded cards open when you tap their title. A4 outputs are always complete. With “All levels”, cards start open or folded according to the “Layout” setting.',
-    lvlHelp: { all: 'Everything; cards per the Layout setting.', basic: 'Should I look tonight, when, where, how many fists up, until when.', mid: 'Also altitude, azimuth, elongation, crescent age, Qadikhan check, monthly strip.', expert: 'Also topocentric/geocentric values, Yallop/Odeh parameters, raw data (JSON/CSV).' },
+    lvlHelp: { all: 'Everything; cards per the Layout setting.', basic: 'Should I look tonight, when, where, how many fists up, until when.', mid: 'Also altitude, azimuth, elongation, crescent age, Qâdî-Khân check, monthly strip.', expert: 'Also topocentric/geocentric values, Yallop/Odeh parameters, raw data (JSON/CSV).' },
     lvlIntro: 'Choose your level (you can change it later in the top bar):',
     qaTitle: 'Short answer',
     qaNo: (why, nx) => `No watch this evening: ${why}${nx ? ` Next observation night: ${nx}.` : ''}`,
@@ -91,7 +91,7 @@
     guideTxt: (d, side, h) => `At the time Yallop suggests (additional information) the crescent is ${d}° ${side} of where the Sun set, ${h}° above the horizon.`,
     mPrev: '◀ Previous month start', mNext: 'Next month start ▶', mList: '☰ Observation nights',
     mSelA: m => `Selected evening: observation night for ${m} (first possible evening, this location)`, mSelB: m => `Selected evening: best evening for ${m} (this location)`,
-    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (pp. 315, 360). Tap a date to plan that evening.',
+    rnTitle: 'Month-start observation nights', rnIntro: 'Each row is the start of a lunar month. Dates are calculated for this location: the first evening on which the crescent can be seen by calculation, and the best evening. The month is established by sighting and cannot begin before the “earliest day 1 worldwide” (EB V, pp. 57, 137). Tap a date to plan that evening.',
     rnPrev: '◀ Previous 12 months', rnNext: 'Next 12 months ▶', rnNow: 'Back to today', rnCalc: 'Calculating…',
     rnCols: ['Lunar month (calculated)', 'Conjunction', 'Observation night (here)', 'Best evening (here)', 'Earliest day 1 worldwide', ''],
     rnNone: 'no suitable evening here', rnSel: 'selected',
@@ -141,5 +141,5 @@
   T.tr.printTitle = Object.assign({}, T.tr.printTitle, { map: 'Dünya rü’yet imkânı haritası' }); T.en.printTitle = Object.assign({}, T.en.printTitle, { map: 'World sighting-possibility map' });
   // Aylık çizelge: hesâbî imkândır, gözlem sonucu değildir
   Object.assign(T.tr, { pgMonthTitle: 'Aylık rü’yet imkânı çizelgesi', pgMonthNote: 'Her satır bir akşamdır. Sınıf, o akşam gurûb anındaki hesâbî rü’yet imkânıdır (s. 360); hilâlin görülüp görülmediği rasadla anlaşılır. A rasad gecesi, B en elverişli akşamdır; “s” sabah hilâlinin görülebileceği günlerdir.' });
-  Object.assign(T.en, { pgMonthTitle: 'Monthly sighting-possibility table', pgMonthNote: 'Each row is one evening. The class is the calculated possibility of sighting at sunset that evening (p. 360); whether the crescent is actually seen is known only by observation. A: observation night, B: best evening; “m”: a morning crescent can be seen.' });
+  Object.assign(T.en, { pgMonthTitle: 'Monthly sighting-possibility table', pgMonthNote: 'Each row is one evening. The class is the calculated possibility of sighting at sunset that evening (EB V, p. 137); whether the crescent is actually seen is known only by observation. A: observation night, B: best evening; “m”: a morning crescent can be seen.' });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

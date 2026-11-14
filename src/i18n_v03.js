@@ -50,7 +50,7 @@
     nightGo: 'Go', nightChoice: 'Which night?',
     midHint: 'The selected evening is mid-month; no crescent observation applies.', midGo: 'Go to the nearest observation night',
     momentTitle: 'Observation at this moment', obsOk: 'The crescent can be searched for now.', obsNo: 'The crescent cannot be searched for now:',
-    why: { age: 'not the crescent period (outside the first 4 days after conjunction)', sun: 'the Sun is not yet below the chosen threshold', elong: 'beynûnet below 8° (p. 360)', moonDown: 'the Moon is below the horizon', low: 'the crescent is below 5° (not visible per Tam İlmihâl, p. 360)' },
+    why: { age: 'not the crescent period (outside the first 4 days after conjunction)', sun: 'the Sun is not yet below the chosen threshold', elong: 'beynûnet below 8° (EB V, p. 137)', moonDown: 'the Moon is below the horizon', low: 'the crescent is below 5° (not visible per Tam İlmihâl, EB V, p. 137)' },
     todayRange: 'Search interval on this day', noRange: 'no search interval on this day',
     sunL: 'Sun', moonL: 'Moon', elongNow: 'Beynûnet (now)', ageNow: 'Moon age (now)', phaseL: 'Phase', riseSet: 'Rise / set',
     phaseName: { new: 'New Moon (near conjunction)', waxCres: 'Waxing crescent', firstQ: 'First quarter', waxGib: 'Waxing gibbous', full: 'Full Moon', wanGib: 'Waning gibbous', lastQ: 'Last quarter', wanCres: 'Waning crescent (morning)' },
@@ -68,7 +68,7 @@
     sunSub: 'Sun overhead', moonSub: 'Moon overhead', prevMonth: 'Previous month', nextMonth: 'Next month',
     recAt: 'Time of record', recEvening: d => `Belongs to the evening of ${d}`, recDayLbl: 'daytime (before sunset)',
     fSearch: 'Searchable now?', fMorning: 'Morning',
-    bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (p. 360); the time bar opens on that interval.`,
+    bestAfterWin: (a, b) => `This evening Yallop’s best time comes after the crescent has sunk below 5°. Per Tam İlmihâl the crescent is sought between ${a} and ${b} (EB V, p. 137); the time bar opens on that interval.`,
     footer: ''
   });
   const T = G.HRGuide && G.HRGuide.TOPICS;
@@ -77,7 +77,7 @@
       'Tam İlmihâl, hilâlin gurûbdan sonra arandığını ve ufka 5° yaklaşınca görülemeyeceğini bildirir (s. 360); aramaya başlamak için güneşin ayrıca kaç derece alçalması gerektiğine dair bir sınır koymaz. Bu sebeple program Tam İlmihâl’in sınıflarını ve kesin red hükmünü bu seçime bağlamaz.',
       'Gurûbdan hemen sonra gök hâlâ parlaktır; ince hilâlin gökle zıtlığı (kontrastı) güneş birkaç derece alçaldıkça artar, hilâl ise bu arada ufka yaklaşır. En iyi denge çoğu zaman gurûbdan birkaç dakika sonradır (Yallop: gurûb + farkın 4/9’u). Güneş −6°’de sivil alacakaranlık biter. Bu seçim, zaman çubuğundaki yeşil “aranabilir aralık” bandını, seçili an kartını, anlık haritayı ve saha modunu birlikte değiştirir.'];
     T.en.karanlik = ['How far should the Sun be below the horizon?',
-      'Tam İlmihâl states that the crescent is sought after sunset and cannot be seen once it is within 5° of the horizon (p. 360); it sets no separate limit for how far the Sun must have sunk before searching. The programme therefore does not tie Tam İlmihâl’s classes or the rejection rule to this choice.',
+      'Tam İlmihâl states that the crescent is sought after sunset and cannot be seen once it is within 5° of the horizon (EB V, p. 137); it sets no separate limit for how far the Sun must have sunk before searching. The programme therefore does not tie Tam İlmihâl’s classes or the rejection rule to this choice.',
       'Right after sunset the sky is still bright; the crescent’s contrast against the sky improves as the Sun sinks a few degrees, while the crescent itself approaches the horizon. The best balance is often a few minutes after sunset (Yallop: sunset + 4/9 of the lag). Civil twilight ends with the Sun at −6°. This choice changes, together, the green “search interval” band on the time bar, the selected-moment card, the live map and field mode.'];
   }
 })(typeof globalThis !== 'undefined' ? globalThis : window);

@@ -1,7 +1,7 @@
 /* Metinler: 0.14 (harita: Tam İlmihâl ölçü çizgileri, üç gece, işaretler, ağ, şehirler, PNG; hilâl verileri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.14.0';
+  G.HR_VERSION = '0.14.1-deneme.1';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     mapOpts: 'Görünüm', mapBook: 'Tam İlmihâl ölçü çizgileri (8°, 18°, 5°)', mapFirst: 'İlk mümkün / görülebilir yer', mapGrat: 'Enlem-boylam ağı',
@@ -43,8 +43,8 @@
     gratDir: { N: 'N', S: 'S', E: 'E', W: 'W' },
     mapView: 'Evenings', mapViewOpts: { one: 'Selected evening', three: 'Three nights side by side' },
     night3: { prev: 'Evening before', A: 'First night', B: 'Second night' },
-    night3Sub: { prev: ev => `evening of ${ev} · the month cannot begin before this (p. 315)`, A: (ev, d) => `evening of ${ev} · if seen, day 1 is ${d}`, B: (ev, d) => `evening of ${ev} · if not seen on the first night, day 1 is ${d}` },
-    map3Note: 'Three evenings of the same month. Day 1 of the month is the day after the first night (the calculated day) or one day later; it cannot be earlier (p. 315). Which of the two it is becomes certain by sighting.',
+    night3Sub: { prev: ev => `evening of ${ev} · the month cannot begin before this (EB V, p. 57)`, A: (ev, d) => `evening of ${ev} · if seen, day 1 is ${d}`, B: (ev, d) => `evening of ${ev} · if not seen on the first night, day 1 is ${d}` },
+    map3Note: 'Three evenings of the same month. Day 1 of the month is the day after the first night (the calculated day) or one day later; it cannot be earlier (EB V, p. 57). Which of the two it is becomes certain by sighting.',
     map3First: 'The “first-visibility evening” layer already shows four evenings on one map; the three-night view draws Tam İlmihâl’s classes.',
     firstLbl: { poss: 'First possible place', vis: 'First visible place' },
     firstSub: (tm, b) => `sunset ${tm} · beynûnet ${b}`,
@@ -53,7 +53,7 @@
     lgYallopLine: 'Yallop q boundaries (thin line)', lgOdehLine: 'Odeh V boundaries (thin line)', lgGrat: 'Grid: 20°',
     mapPng: 'Save PNG', mapPngTip: 'Saves the map as an image in the selected language, with title, legend and source.',
     mapWait: 'Preparing the map…', mapSaved: 'Image saved.',
-    pngSrc: (b, v) => `Source: ${b} (pp. 315, 360) · Computation: Astronomy Engine · Relief: NASA Blue Marble · Mâh-ı Nev ${v}`,
+    pngSrc: (b, v) => `Source: ${b}, Fifth Fascicle, pp. 57, 137 · Computation: Astronomy Engine · Relief: NASA Blue Marble · Mâh-ı Nev ${v}`,
     pngNote: 'A map of calculated possibility; the month begins by sighting.',
     pickMore: 'Additional info (this point, at sunset)',
     hcTitle: 'Crescent data (at sunset)', hcNote: 'Additional information; the ruling follows Tam İlmihâl’s measures and sighting.',

@@ -10,7 +10,7 @@
       rel: (ref, parts) => `${ref} ${parts || 'hemen yanında'}`, west: 'Batı göğü, seçili akşam', lim5: 'Tam İlmihâl’in sınırı (s. 360)', fist: '1 yumruk', dec: ',' },
     en: { star: 1, chart: 'Sky chart', sun: 'Sun', moon: 'Moon ', crescent: 'Crescent ', sunsetPt: 'sunset point', card8: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
       lr: (n, r) => `${n}° to the ${r ? 'right' : 'left'}`, ud: (n, u) => `${n}° ${u ? 'above' : 'below'}`, refMoon: 'the crescent', refSun: 'the sunset point',
-      rel: (ref, parts) => `${parts || 'right next to'} ${ref}`, west: 'Western sky, selected evening', lim5: 'Tam İlmihâl limit (p. 360)', fist: '1 fist', dec: '.' }
+      rel: (ref, parts) => `${parts || 'right next to'} ${ref}`, west: 'Western sky, selected evening', lim5: 'Tam İlmihâl limit (EB V, p. 137)', fist: '1 fist', dec: '.' }
   };
   const smTx = L => (G.HRLangs ? G.HRLangs.pick(STX, L) : (STX[L] || STX.en));
   let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
