@@ -115,4 +115,5 @@
   };
   LONG.tr.nakli = NAKLI_LONG.tr; LONG.en.nakli = NAKLI_LONG.en;
   G.HRGuide.LONG = LONG;
+  if (G.HRLangs) G.HRLangs.reg('LONG', LONG);
 })(typeof globalThis !== 'undefined' ? globalThis : window);

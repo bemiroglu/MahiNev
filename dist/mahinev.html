@@ -1031,9 +1031,17 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     en: { code: 'en', name: 'English', short: 'EN', locale: 'en-GB', dir: 'ltr', fallback: 'tr',
       // Endless Bliss altı fasikül hâlinde ayrı ayrı indirilir; bu yüzden yalnız kitap sayfası verilir.
       // İngilizce metinlerdeki atıflar "EB V, p. 137" biçimindedir (fasikül, sayfa; 2020 baskıları). Eşleme: docs/endless-bliss-esleme.md
+      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: 'eb-2020' } },
+    // Fransızca, İspanyolca, Boşnakça: Tam İlmihâl’in bu dillerde tercümesi yok; atıflar Endless Bliss’e (fasikül, sayfa) yapılır.
+    // Metinleri dosyada sıkıştırılmış dil paketi olarak durur (src/lang/*.js), dil seçilince açılır.
+    fr: { code: 'fr', name: 'Français', short: 'FR', locale: 'fr-FR', dir: 'ltr', fallback: 'en', packed: true,
+      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: 'eb-2020' } },
+    es: { code: 'es', name: 'Español', short: 'ES', locale: 'es-ES', dir: 'ltr', fallback: 'en', packed: true,
+      book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: 'eb-2020' } },
+    bs: { code: 'bs', name: 'Bosanski', short: 'BS', locale: 'bs-BA', dir: 'ltr', fallback: 'en', packed: true,
       book: { title: 'Endless Bliss', page: HK + 'book.php?bookCode=025', pdf: null, pages: 'eb-2020' } }
   };
-  const ORDER = ['tr', 'en'];
+  const ORDER = ['tr', 'en', 'fr', 'es', 'bs'];
   const get = L => LANGS[L] || LANGS.en;
   // Dile göre sözlükten seçim: önce istenen dil, sonra İngilizce, sonra Türkçe
   const pick = (dict, L) => (dict && (dict[L] || dict.en || dict.tr)) || {};
@@ -1042,9 +1050,44 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     for (const L of Object.keys(T)) if (L !== 'en' && L !== 'tr' && T.en && Object.getPrototypeOf(T[L]) !== T.en) Object.setPrototypeOf(T[L], T.en);
     return T;
   }
-  G.HRLangs = { LANGS, ORDER, get, pick, chain };
+  // ---- Sıkıştırılmış dil paketleri ----
+  // Her modül dile bağlı sözlüğünü bir adla kaydeder (reg). Paket, bu adlarla o dilin metinlerini taşır; açılınca
+  // sözlüklere dil[kod] olarak yerleşir. Nesne sözlüklerinde eksik anahtar İngilizceden gelir. apply verilmişse
+  // yerleştirmeyi modül kendisi yapar (ör. şehir adları).
+  const REG = {};
+  const reg = (name, dict, apply) => { REG[name] = { dict, apply }; return dict; };
+  const PK = () => G.HR_PACKS || {};
+  const packed = c => !!(LANGS[c] && LANGS[c].packed && PK()[c]);
+  const ready = c => !packed(c) || !!done[c];
+  const done = {}, pending = {};
+  const plainObj = v => v && typeof v === 'object' && !Array.isArray(v) && typeof v !== 'function';
+  function install(c, P) {
+    for (const k of Object.keys(P)) {
+      const r = REG[k]; if (!r) continue;
+      const v = P[k];
+      if (r.apply) { r.apply(c, v); continue; }
+      if (plainObj(v) && plainObj(r.dict.en)) Object.setPrototypeOf(v, r.dict.en);
+      r.dict[c] = v;
+    }
+    done[c] = true;
+  }
+  function bytes(b64) { const bin = atob(b64), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
+  // Paketi açar (deflate-raw + base64; tarayıcının DecompressionStream özelliği). İnternet gerekmez.
+  function load(c) {
+    if (!packed(c) || done[c]) return Promise.resolve(c);
+    if (pending[c]) return pending[c];
+    if (typeof DecompressionStream === 'undefined') return Promise.reject(new Error('DecompressionStream'));
+    const ds = new DecompressionStream('deflate-raw');
+    pending[c] = new Response(new Blob([bytes(PK()[c])]).stream().pipeThrough(ds)).text()
+      .then(src => { install(c, new Function('"use strict"; return (' + src + '\n);')()); return c; })
+      .finally(() => { delete pending[c]; });
+    return pending[c];
+  }
+  const canLoad = () => typeof DecompressionStream !== 'undefined';
+  G.HRLangs = { LANGS, ORDER, get, pick, chain, reg, REG, packed, ready, load, canLoad };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
+window.HR_PACKS = {};
 /* Mâh-ı Nev — hesap çekirdeği
  * Kanonik dayanak: Se'âdet-i Ebediyye (Hakîkat Kitâbevi), s. 175–186, 314–316, 326, 344, 358–362.
  * Astronomik motor: Astronomy Engine (Don Cross, MIT).
@@ -1735,6 +1778,7 @@ window.HR_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     }
   };
   G.HRI18N = { T, MONTHS };
+  if (G.HRLangs) { G.HRLangs.reg('T', T); G.HRLangs.reg('MONTHS', MONTHS); }
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* arayüz metinleri */
@@ -2013,16 +2057,57 @@ window.HR_CANON_EN = [
     ]
   };
 
+  // Rehber’in sabit metinleri: konu başlıkları, kurallar tablosu, kaynaklar, kanonik metin notu (yeni dil: dil paketi “GX”)
+  const PRAY = '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)';
+  const YALLOP = 'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.';
+  const FATOOHI = 'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.';
+  const GX = {
+    tr: {
+      lbFiqh: 'Fıkhî esas (Tam İlmihâl)', lbSci: 'Bilimsel açıklama', lbFiqhD: 'Fıkhî esas — ayrıntı', lbSciD: 'Bilimsel açıklama — ayrıntı', more: 'Ayrıntılı açıklama',
+      rulesHead: ['Gurûbdaki durum (sırayla denetlenir)', 'Ana görünüm', 'Rü’yet beyanına karşılık'],
+      rules: [
+        ['İctimâ olmamış veya ay güneşten önce batıyor', 'Hilâl doğmamış', 'Kesin red (Sübkî, s. 360)'],
+        ['Gurûbda beynûnet < 8°', 'Görülemez (Tam İlmihâl, s. 360); ek bilgi: modern sınır 7,5°', 'Kesin red (Sübkî, s. 360)'],
+        ['Hilâlin görünen irtifâı < 5°', 'Görülemez: ufka 5°’den yakın (s. 360)', 'Uyarı'],
+        ['8° ≤ beynûnet < 18°', 'Görülmesi mümkün; dikkatli rasad gerekir', 'Kabul edilebilir'],
+        ['Beynûnet ≥ 18°', 'Hesâba göre görülebilir (hava müsaitse)', 'Kabul edilebilir']
+      ],
+      srcBook: 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.',
+      srcRead: 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).',
+      srcCongress: 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.',
+      srcAbidin: 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).',
+      srcMap: 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).',
+      canonNote: ''
+    },
+    en: {
+      lbFiqh: 'Legal basis (Tam İlmihâl)', lbSci: 'Scientific explanation', lbFiqhD: 'Legal basis — detail', lbSciD: 'Scientific explanation — detail', more: 'Detailed explanation',
+      rulesHead: ['Condition at sunset (checked in order)', 'Main label', 'Response to a sighting claim'],
+      rules: [
+        ['No conjunction yet, or the Moon sets before the Sun', 'Crescent not yet born', 'Rejected (Subkî, EB V, p. 137)'],
+        ['Beynûnet < 8° at sunset', 'Not visible (Tam İlmihâl, EB V, p. 137); additional: modern limit 7.5°', 'Rejected (Subkî, EB V, p. 137)'],
+        ['Apparent altitude of the crescent < 5°', 'Not visible: closer than 5° to the horizon (EB V, p. 137)', 'Warning'],
+        ['8° ≤ beynûnet < 18°', 'Possible; careful observation needed', 'Acceptable'],
+        ['Beynûnet ≥ 18°', 'Visible by calculation (if the sky is clear)', 'Acceptable']
+      ],
+      srcBook: 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): EB IV, pp. 135–195, 284; V, pp. 54–61, 79, 117, 133–142.',
+      srcRead: 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. It is published in six fascicles. References such as “EB V, p. 137” mean Endless Bliss, Fifth Fascicle, page 137. Editions used: Fourth Fascicle, 21st edition, and Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).',
+      srcCongress: 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
+      srcAbidin: 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
+      srcMap: 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).',
+      canonNote: 'English rendering of the Turkish canonical text. The Turkish text is authoritative.'
+    }
+  };
+  const gx = L => PK(GX, L);
   // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
   function topicHtml(L, id, mode) {
     const t = PK(TOPICS, L)[id]; if (!t) return '';
-    const lb = t[3] || [];   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
-    const fk = lb[0] || (L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)'), bl = lb[1] || (L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation');
+    const lb = t[3] || [], x = gx(L);   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
+    const fk = lb[0] || x.lbFiqh, bl = lb[1] || x.lbSci;
     let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
     const lg = G.HRGuide.LONG && PK(G.HRGuide.LONG, L)[id];
     if (lg && mode && mode !== 'short') {
-      const body = `<p class="lab">${lb[2] || (L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail')}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || (L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail')}</p><p>${esc(lg[1])}</p>`;
-      h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
+      const body = `<p class="lab">${lb[2] || x.lbFiqhD}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || x.lbSciD}</p><p>${esc(lg[1])}</p>`;
+      h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${x.more}</summary>${body}</details>`;
     }
     return h;
   }
@@ -2030,46 +2115,21 @@ window.HR_CANON_EN = [
     return PK(PLAN, L).map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
   }
   function rulesHtml(L) {
-    const tr = L === 'tr';
-    const rows = tr ? [
-      ['İctimâ olmamış veya ay güneşten önce batıyor', 'Hilâl doğmamış', 'Kesin red (Sübkî, s. 360)'],
-      ['Gurûbda beynûnet < 8°', 'Görülemez (Tam İlmihâl, s. 360); ek bilgi: modern sınır 7,5°', 'Kesin red (Sübkî, s. 360)'],
-      ['Hilâlin görünen irtifâı < 5°', 'Görülemez: ufka 5°’den yakın (s. 360)', 'Uyarı'],
-      ['8° ≤ beynûnet < 18°', 'Görülmesi mümkün; dikkatli rasad gerekir', 'Kabul edilebilir'],
-      ['Beynûnet ≥ 18°', 'Hesâba göre görülebilir (hava müsaitse)', 'Kabul edilebilir']
-    ] : [
-      ['No conjunction yet, or the Moon sets before the Sun', 'Crescent not yet born', 'Rejected (Subkî, EB V, p. 137)'],
-      ['Beynûnet < 8° at sunset', 'Not visible (Tam İlmihâl, EB V, p. 137); additional: modern limit 7.5°', 'Rejected (Subkî, EB V, p. 137)'],
-      ['Apparent altitude of the crescent < 5°', 'Not visible: closer than 5° to the horizon (EB V, p. 137)', 'Warning'],
-      ['8° ≤ beynûnet < 18°', 'Possible; careful observation needed', 'Acceptable'],
-      ['Beynûnet ≥ 18°', 'Visible by calculation (if the sky is clear)', 'Acceptable']
-    ];
-    const head = tr ? ['Gurûbdaki durum (sırayla denetlenir)', 'Ana görünüm', 'Rü’yet beyanına karşılık'] : ['Condition at sunset (checked in order)', 'Main label', 'Response to a sighting claim'];
-    return `<div class="scroll"><table class="t"><thead><tr>${head.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    const x = gx(L);
+    return `<div class="scroll"><table class="t"><thead><tr>${x.rulesHead.map(v => `<th>${v}</th>`).join('')}</tr></thead><tbody>${x.rules.map(r => `<tr>${r.map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
   // Kayıttaki dil için Tam İlmihâl’in adı ve bağlantısı (langs.js); sayfa numaraları Türkçe baskıya göredir
   function bookLine(L) { const b = G.HRLangs ? G.HRLangs.get(L).book : null; return b ? `<em>${esc(b.title)}</em>: <a href="${b.page}" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>${b.pdf ? ` (<a href="${b.pdf}" target="_blank" rel="noopener">PDF</a>)` : ''}.` : ''; }
   function sourcesHtml(L) {
-    const tr = L === 'tr';
-    return '<ul>' + [
-      tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
-         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): EB IV, pp. 135–195, 284; V, pp. 54–61, 79, 117, 133–142.',
-      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : L === 'en' ? 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. It is published in six fascicles. References such as “EB V, p. 137” mean Endless Bliss, Fifth Fascicle, page 137. Editions used: Fourth Fascicle, 21st edition, and Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).' : bookLine(L),
-      tr ? 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.'
-         : 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
-      tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
-      '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
-      'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
-      'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.',
-      tr ? 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).' : 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).'
-    ].map(x => `<li>${x}</li>`).join('') + '</ul>';
+    const x = gx(L);
+    return '<ul>' + [x.srcBook, x.srcRead || bookLine(L), x.srcCongress, x.srcAbidin, PRAY, YALLOP, FATOOHI, x.srcMap].map(v => `<li>${v}</li>`).join('') + '</ul>';
   }
-  const CANON_EN = G.HR_CANON_EN || [];
+  const CANON = { tr: G.HR_CANON_TR || [], en: G.HR_CANON_EN || [] };
   function canonHtml(L) {
-    const canon = L === 'tr' ? (G.HR_CANON_TR || []) : CANON_EN;
-    const note = L === 'tr' ? '' : '<p class="small">English rendering of the Turkish canonical text. The Turkish text is authoritative.</p>';
-    return note + canon.map(p => `<p>${esc(p)}</p>`).join('');
+    const canon = PK(CANON, L), note = gx(L).canonNote;
+    return (note ? `<p class="small">${note}</p>` : '') + canon.map(p => `<p>${esc(p)}</p>`).join('');
   }
+  if (G.HRLangs) { G.HRLangs.reg('TOPICS', TOPICS); G.HRLangs.reg('PLAN', PLAN); G.HRLangs.reg('GX', GX); G.HRLangs.reg('CANON', CANON); }
   function render(L, t, mode) {
     const ids = Object.keys(PK(TOPICS, L));
     return `<div class="guide-grid">
@@ -2979,6 +3039,11 @@ window.HR_CANON_EN = [
     prOptsMap3: 'World map: three nights (each night on its own A4)'
   });
   T.tr.mapLand = T.tr.landOnly; T.en.mapLand = T.en.landOnly;
+  // Sıkıştırılmış dil paketleri (fr, es, bs)
+  T.tr.packOld = 'Bu dil paketi bu tarayıcıda açılamıyor (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ gerekir). İngilizce gösteriliyor.';
+  T.tr.packFail = 'Dil paketi açılamadı; İngilizce gösteriliyor.';
+  T.en.packOld = 'This language pack cannot be opened in this browser (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ needed). Showing English.';
+  T.en.packFail = 'The language pack could not be opened; showing English.';
   T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });
   T.en.prOpts = Object.assign({}, T.en.prOpts, { map3: T.en.prOptsMap3 });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -3100,6 +3165,7 @@ window.HR_CANON_EN = [
   };
   LONG.tr.nakli = NAKLI_LONG.tr; LONG.en.nakli = NAKLI_LONG.en;
   G.HRGuide.LONG = LONG;
+  if (G.HRLangs) G.HRLangs.reg('LONG', LONG);
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
 /* Yıldız ve takımyıldız verisi: d3-celestial 0.7.35 (Olaf Frohn, BSD-3-Clause) — Hipparcos tabanlı, J2000.
@@ -5641,15 +5707,17 @@ var qrcode = function() {
     return isFinite(v) ? v : null;
   }
   // Görüntüleme: ondalık (yerel ayraç) + yarım küre harfi
+  // Yarım küre harfleri ve ondalık ayracı. Fransızca, İspanyolca ve Boşnakçada N/S/E/W kalır (okuyucu bunları her dilde tanır;
+  // Boşnakçanın S = sjever harfi güneyle karışırdı), ondalık ayracı virgüldür.
+  const HLET = { tr: ['K', 'G', 'D', 'B', ','], en: ['N', 'S', 'E', 'W', '.'], fr: ['N', 'S', 'E', 'W', ','], es: ['N', 'S', 'E', 'W', ','], bs: ['N', 'S', 'E', 'W', ','] };
+  const hemi = (v, kind, lang) => { const x = HLET[lang] || HLET.en; return [kind === 'lat' ? (v >= 0 ? x[0] : x[1]) : (v >= 0 ? x[2] : x[3]), x[4]]; };
   function format(v, kind, lang) {
-    const tr = lang === 'tr', a = Math.abs(v);
-    const h = kind === 'lat' ? (v >= 0 ? (tr ? 'K' : 'N') : (tr ? 'G' : 'S')) : (v >= 0 ? (tr ? 'D' : 'E') : (tr ? 'B' : 'W'));
-    return a.toFixed(4).replace(/0+$/, '').replace(/\.$/, '').replace('.', tr ? ',' : '.') + ' ' + h;
+    const a = Math.abs(v), [h, dec] = hemi(v, kind, lang);
+    return a.toFixed(4).replace(/0+$/, '').replace(/\.$/, '').replace('.', dec) + ' ' + h;
   }
   function dms(v, kind, lang) {
-    const tr = lang === 'tr', a = Math.abs(v), d = Math.floor(a), mf = (a - d) * 60, m = Math.floor(mf), s = (mf - m) * 60;
-    const h = kind === 'lat' ? (v >= 0 ? (tr ? 'K' : 'N') : (tr ? 'G' : 'S')) : (v >= 0 ? (tr ? 'D' : 'E') : (tr ? 'B' : 'W'));
-    return `${d}° ${String(m).padStart(2, '0')}′ ${s.toFixed(1).replace('.', tr ? ',' : '.')}″ ${h}`;
+    const a = Math.abs(v), d = Math.floor(a), mf = (a - d) * 60, m = Math.floor(mf), s = (mf - m) * 60, [h, dec] = hemi(v, kind, lang);
+    return `${d}° ${String(m).padStart(2, '0')}′ ${s.toFixed(1).replace('.', dec)}″ ${h}`;
   }
   G.HRCoord = { parse, parseNum, format, dms };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -5682,6 +5750,7 @@ var qrcode = function() {
       where: (dx, side, fx, up, fu) => `The crescent is ${dx}° ${side} of the sunset point (${fx}), ${up}° above the horizon (${fu}).`,
       full: 'Full horizon', sun: 'Sun', moon: 'Moon', moonBelow: a => `Moon ${a}° below the horizon`, sunUp: 'Sun above the horizon' }
   };
+  if (G.HRLangs) { G.HRLangs.reg('SKYNAMES', NAMES); G.HRLangs.reg('CARD16', CARD); G.HRLangs.reg('SX', SX); }
   const skyTx = L => (G.HRLangs ? G.HRLangs.pick(SX, L) : (SX[L] || SX.en));
   const n1 = (v, L) => v.toFixed(1).replace('.', skyTx(L).dec);
   // Yön etiketinin yanında küçük derece değeri (semt; kuzeyden saat yönünde)
@@ -5897,6 +5966,7 @@ var qrcode = function() {
       lr: (n, r) => `${n}° to the ${r ? 'right' : 'left'}`, ud: (n, u) => `${n}° ${u ? 'above' : 'below'}`, refMoon: 'the crescent', refSun: 'the sunset point',
       rel: (ref, parts) => `${parts || 'right next to'} ${ref}`, west: 'Western sky, selected evening', lim5: 'Tam İlmihâl limit (EB V, p. 137)', fist: '1 fist', dec: '.' }
   };
+  if (G.HRLangs) G.HRLangs.reg('STX', STX);
   const smTx = L => (G.HRLangs ? G.HRLangs.pick(STX, L) : (STX[L] || STX.en));
   let UID = 0;   // her çizime ayrı SVG kimliği: aynı sayfadaki iki çizim birbirinin gradyanını kullanmasın
   const A = G.Astronomy, C = () => G.HRCore;
@@ -6548,6 +6618,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     ['Pasifik', 'Pacific', -30, 25, -178, -140], ['Avrupa', 'Europe', 36, 60, -10, 40], ['Afrika', 'Africa', -35, 35, -17, 50],
     ['Orta Doğu', 'Middle East', 12, 40, 35, 62], ['Asya', 'Asia', 5, 55, 62, 145], ['Okyanusya', 'Oceania', -45, -5, 110, 178]
   ];
+  const RN = {};   // dil paketlerinden bölge adları: RN[dil] = [REGIONS sırasıyla]
   const S = {
     tr: {
       pg: n => `s. ${n}`, recSeenShort: 'kaydınız: görüldü', recNotShort: 'kaydınız: görülmedi',
@@ -6672,13 +6743,13 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   function regions(C, conj, ymd) {
     const k = conj.ut.toFixed(4) + ymd; if (regCache.has(k)) return regCache.get(k);
     const [y, m, d] = ymd.split('-').map(Number), day = Date.UTC(y, m - 1, d);
-    const out = REGIONS.map(([tr, en, s, n, w, e]) => {
+    const out = REGIONS.map(([tr, en, s, n, w, e], i) => {
       let best = 'noSunset';
       for (let la = s; la <= n; la += 5) for (let lo = w; lo <= e; lo += 8) {
         let c; try { c = C.cell(la, lo, day, conj, false).code; } catch (er) { c = 'noSunset'; }
         if (RANK[c] > RANK[best]) best = c;
       }
-      return { tr, en, best };
+      return { tr, en, i, best };
     });
     regCache.set(k, out); return out;
   }
@@ -6800,19 +6871,19 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   // Dünya kısımları: tarama bitince doldurulur (seçili akşam ve tablodaki akşamlar)
   function worldHtml(X, d, L) {
     const s = S[L] || S.en, reg = regions(X.C, d.conj, d.ymd);
-    const nm = x => x[L] || x.en;
+    const nm = x => x[L] || (RN[L] && RN[L][x.i]) || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return `<p>${X.esc(s.worldNone)}</p>`;
     return (poss.length ? `<p>${X.esc(s.worldPoss(poss.join(', ')))}</p>` : '') + (vis.length ? `<p>${X.esc(s.worldVis(vis.join(', ')))}</p>` : '') + `<p class="cap">${X.esc(s.worldNote)}</p>`;
   }
   function worldCell(X, d, ymd, L) {
-    const s = S[L] || S.en, reg = regions(X.C, d.conj, ymd), nm = x => x[L] || x.en;
+    const s = S[L] || S.en, reg = regions(X.C, d.conj, ymd), nm = x => x[L] || (RN[L] && RN[L][x.i]) || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return { txt: s.wNone, vis: false };
     return { txt: [vis.length ? s.wVis(vis.join(', ')) : '', poss.length ? s.wPoss(poss.join(', ')) : ''].filter(Boolean).join(' · '), vis: vis.length > 0 };
   }
 
-  if (G.HRLangs) G.HRLangs.chain(S);
+  if (G.HRLangs) { G.HRLangs.chain(S); G.HRLangs.reg('S', S); G.HRLangs.reg('REGIONS', RN); }
   G.HRExplain = { S, data, html, worldHtml, worldCell, regions, firstDayOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 
@@ -6840,6 +6911,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
       Sirius: 'Sirius (Şi’râ)', Canopus: 'Canopus (Süheyl)', Polaris: 'Kutup yıldızı (Polaris)', Vega: 'Vega (Vâkı’)', Altair: 'Altair (Tâir)', Aldebaran: 'Aldebaran (Deberân)', Regulus: 'Regulus (Kalbü’l-esed)', Spica: 'Spica (Simâk-ı a’zel)', Arcturus: 'Arcturus (Simâk-ı râmih)', Antares: 'Antares (Kalbü’l-akreb)', Fomalhaut: 'Fomalhaut (Femü’l-hût)', Deneb: 'Deneb (Zeneb)' },
     en: { Sun: 'Sun', Moon: 'Moon' }
   };
+  if (G.HRLangs) G.HRLangs.reg('GOK', NAMES);
   const nameOf = (id, L) => (NAMES[L] && NAMES[L][id]) || id;
   const D2R = Math.PI / 180, R2D = 180 / Math.PI, SID = 1.00273790935;
   const mod = (x, m) => ((x % m) + m) % m;
@@ -6964,7 +7036,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDf5f94394beba4c7f';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDa81eac506a9744ae';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -7008,7 +7080,14 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
   st.date = todayYmd(st.tz); // açılışta her zaman içinde bulunulan an
-  const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang] || !I.T[st.lang]) st.lang = 'tr';
+  const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang]) st.lang = 'tr';
+  // Sıkıştırılmış dil paketi (fr, es, bs) açılana kadar İngilizce gösterilir; açılınca seçili dile geçilir (bind sonunda)
+  const packLang = I.T[st.lang] ? null : st.lang; if (packLang) st.lang = LG.packed(packLang) ? 'en' : 'tr';
+  // Şehir adları: CITIES[].tr/en, diğer diller dil paketinden (“CITIES”: { id: ad }); harita şehirleri “MAPCITIES” (sırayla)
+  const MAPCITY = {};
+  LG.reg('CITIES', {}, (c, names) => { for (const x of CITIES) if (names[x.id]) x[c] = names[x.id]; });
+  LG.reg('MAPCITIES', MAPCITY);
+  const mapCityName = c => st.lang === 'tr' ? c[0] : ((MAPCITY[st.lang] || [])[G.HRMap.CITIES.indexOf(c)] || c[1]);
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
   let records = load('hr-records') || [];
@@ -7071,7 +7150,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     set('hRec', t.record); set('lRecNote', t.notes); set('lRecAt', t.recAt); set('recSaw', t.saw); set('recNot', t.notSaw); set('hRecList', t.records); set('recInfo', t.recNote); set('hCheck', t.checklist);
     set('fNight', t.nightMode); set('fWake', t.wake); set('fCompass', t.compass); set('dlgClose', t.close);
     document.documentElement.lang = st.lang; document.documentElement.dir = LG.get(st.lang).dir;
-    $('langSeg').innerHTML = LG.ORDER.filter(c => I.T[c]).map(c => `<button id="lang${c[0].toUpperCase() + c.slice(1)}" type="button" data-lang="${c}" lang="${c}" title="${esc(LG.LANGS[c].name)}" aria-pressed="${st.lang === c}">${esc(LG.LANGS[c].short)}</button>`).join('');
+    $('langSeg').innerHTML = LG.ORDER.filter(c => I.T[c] || LG.packed(c)).map(c => `<button id="lang${c[0].toUpperCase() + c.slice(1)}" type="button" data-lang="${c}" lang="${c}" title="${esc(LG.LANGS[c].name)}" aria-pressed="${st.lang === c}">${esc(LG.LANGS[c].short)}</button>`).join('');
     $('theme').innerHTML = [['auto', t.thAuto], ['light', t.thLight], ['dark', t.thDark], ['sun', t.thSun], ['night', t.thNight]].map(([v, l]) => `<option value="${v}"${st.theme === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc((c[st.lang] || c.en))}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
     $('city').value = st.city;
@@ -7249,7 +7328,16 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   }
   function setTmin(m, anchor) { st.tmin = Math.max(0, Math.min(TB_MAX, Math.round(m))); st.anchor = anchor || null; if (!anchor || anchor !== 'now') setLive(false); renderTime(); if (view === 'harita' && st.mapMode === 'instant') renderBigMap(); }
 
-  function setLang(c) { if (!I.T[c] || !LG.LANGS[c]) return; st.lang = c; t = I.T[c]; save(); fillStatic(); update(); }
+  function setLang(c) {
+    if (!LG.LANGS[c]) return;
+    if (!I.T[c]) {   // sıkıştırılmış paket: önce açılır; açılamazsa (eski tarayıcı) İngilizce kalır
+      if (!LG.packed(c)) return;
+      if (!LG.canLoad()) { toast(t.packOld, 9000); return; }
+      LG.load(c).then(() => { if (I.T[c]) setLang(c); }).catch(() => toast(t.packFail, 9000));
+      return;
+    }
+    st.lang = c; t = I.T[c]; save(); fillStatic(); update();
+  }
   function bind() {
     $('langSeg').onclick = e => { const b = e.target.closest('[data-lang]'); if (b) setLang(b.dataset.lang); };
     $('theme').onchange = e => { st.theme = e.target.value; save(); applyTheme(); repaintAll(); };
@@ -8109,7 +8197,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     return { mode: 'evening', layer, res: st.mapRes, conj, dayUTC, marks, borders: st.mapBorders, landOnly: st.mapLand,
       m18: st.map18 ? C.moment18(conj, 0) : null, book: st.mapBook && layer !== 'first', bookLabels: t.bookLbl,
       value: layer !== 'first' && st.mapValue !== 'none' ? st.mapValue : null, valueLabel: valLbl,
-      grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]),
+      grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: mapCityName,
       firstPts: st.mapFirst, firstLabel: (k, pt) => `${t.firstLbl[k]} · ${hhmmUT(pt.ss)}`, relief: st.mapRelief, hatch: st.mapHatch };
   }
   function firstNote(fp) {
@@ -8142,7 +8230,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     const ageD = (dayUTC - conj.date.getTime()) / 86400000;
     const mid = !inst && st.mapLayer !== 'first' && (ageD > 4.5 || ageD < -2);
     if (inst) {
-      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub, grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]), relief: st.mapRelief });
+      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub, grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: mapCityName, relief: st.mapRelief });
       $('mapNote').textContent = t.mapInstantNote + ' ' + `${t.mapTime}: ${fmtDT(selT())}${st.timeFmt === 'both' ? ' · ' + fmtUTC(selT()) : ''} · ${t.darkOpt[st.darkKey]}`;
     } else {
       MAPP = big.render(Object.assign(mapParams(st.mapLayer, conj, dayUTC, marks), { message: mid ? t.midHint : '' }));
@@ -9187,6 +9275,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : ''; };
   const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', map3: 'dunya-haritasi-uc-gece', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
     en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', map3: 'world-map-three-nights', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  LG.reg('SLUG', KIND_SLUG);
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
@@ -9312,8 +9401,13 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
 
   // ---- Doğrulama ----
   let testsDone = false;
+  let packWait = false;
   function runTests() {
-    if (testsDone) return; testsDone = true;
+    if (testsDone) return;
+    // Dil eşliği testi için sıkıştırılmış dil paketleri önce açılır
+    const miss = LG.ORDER.filter(c => !LG.ready(c));
+    if (miss.length && LG.canLoad() && !packWait) { packWait = true; Promise.all(miss.map(c => LG.load(c).catch(() => null))).then(runTests); return; }
+    testsDone = true;
     const rows = [], add = (c, qq, exp, got, tol, ok) => rows.push({ c, q: qq, exp, got, tol, ok: !!ok });
     const utc = at => at.date.toISOString().slice(0, 19).replace('T', ' ');
     const dmin = (a, b) => Math.abs(a.ut - b.ut) * 1440, TT = s => A.MakeTime(new Date(s));
@@ -9366,9 +9460,12 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     const xk = G.HRExplain.data(XE, '2026-11-10'), hk = G.HRExplain.html(XE, xk, 'tr');
     add('Açıklama', 'Cemâziyelâhır 1448: 1. gün iki ihtimal; önceki ayla arası 29 veya 30 gün; “başlamıştır” yok', '2026-11-10 / 2026-11-11 · 29–30 · yok', `${xk.H} / ${xk.H2} · ${xk.gap} · ${/başlamıştır/.test(hk) ? 'var' : 'yok'}`, '—', xk.H === '2026-11-10' && xk.H2 === '2026-11-11' && (xk.gap === 29 || xk.gap === 30) && !/başlamıştır/.test(hk) && xk.rows.length === 3);
     // Çok dilli altyapı: her dilde aynı anahtarlar ve aynı türler (metin / işlev / liste) bulunmalı
-    const parity = (a, b) => { const out = []; for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (!(k in a) || !(k in b)) out.push(k); else if (typeof a[k] !== typeof b[k] || Array.isArray(a[k]) !== Array.isArray(b[k])) out.push(k + ':tür'); } return out; };
-    const pT = parity(I.T.tr, I.T.en), pS = parity(G.HRExplain.S.tr, G.HRExplain.S.en), pG = parity(G.HRGuide.TOPICS ? G.HRGuide.TOPICS.tr : {}, G.HRGuide.TOPICS ? G.HRGuide.TOPICS.en : {});
-    add('çok dilli', 'Türkçe ve İngilizce metinlerde aynı anahtarlar (arayüz · açıklama · rehber konuları) ve dil kaydında her dilin Tam İlmihâl bağlantısı', '0 · 0 · 0 · tam', `${pT.length} · ${pS.length} · ${pG.length} · ${LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page) ? 'tam' : 'eksik'}`, pT.concat(pS, pG).slice(0, 6).join(', ') || '—', !pT.length && !pS.length && !pG.length && LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page));
+    const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+    const parity = (a, b) => { const out = []; for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (!own(a, k) || !own(b, k)) out.push(k); else if (typeof a[k] !== typeof b[k] || Array.isArray(a[k]) !== Array.isArray(b[k])) out.push(k + ':tür'); } return out; };
+    const others = LG.ORDER.filter(c => c !== 'tr'), missL = others.filter(c => !I.T[c]);
+    const pAll = (d) => others.filter(c => d[c]).flatMap(c => parity(d.tr, d[c]).map(k => c + '.' + k));
+    const pT = pAll(I.T).concat(missL.map(c => c + ': paket açılamadı')), pS = pAll(G.HRExplain.S), pG = G.HRGuide.TOPICS ? pAll(G.HRGuide.TOPICS) : [];
+    add('çok dilli', `${LG.ORDER.length} dilde (${LG.ORDER.join(', ')}) aynı anahtarlar (arayüz · açıklama · rehber konuları) ve dil kaydında her dilin Tam İlmihâl bağlantısı`, '0 · 0 · 0 · tam', `${pT.length} · ${pS.length} · ${pG.length} · ${LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page) ? 'tam' : 'eksik'}`, pT.concat(pS, pG).slice(0, 6).join(', ') || '—', !pT.length && !pS.length && !pG.length && LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page));
     const xz = G.HRExplain.data(XE, '2027-05-07');
     add('Açıklama', 'Zilhicce 1448: 1. gün Işık usulüyle bulunan gün veya bir gün sonrası (s. 326)', `${ymdOf(CAL.methods(1448, 12).isik)} / +1 gün`, `${xz.H} / ${xz.H2}`, '—', xz.isik && xz.H === ymdOf(CAL.methods(1448, 12).isik) && xz.H2 === addDays(xz.H, 1));
     const gk = G.HRGok.at({ lat: 41.0, lon: 29.0, elev: 0 }, TT('2026-12-10T18:00Z')), pol2 = gk.list.find(o => o.id === 'Polaris'), jup = gk.list.find(o => o.id === 'Jupiter');
@@ -9512,6 +9609,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   function paintDateBoxes() { DATE_BOXES.forEach(b => { b.paint(); b.btn.title = t.datePick; b.btn.setAttribute('aria-label', t.datePick); }); }
   ['date', 'mDate', 'recAt', 'ntAt'].forEach(enhanceDate);
   fillStatic(); bind(); route(); setLive(true); update();
+  if (packLang) setLang(packLang);
   applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
   G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, buildPrint, official: () => OFFICIAL, notice: () => NOTICE };

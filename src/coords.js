@@ -86,15 +86,17 @@
     return isFinite(v) ? v : null;
   }
   // Görüntüleme: ondalık (yerel ayraç) + yarım küre harfi
+  // Yarım küre harfleri ve ondalık ayracı. Fransızca, İspanyolca ve Boşnakçada N/S/E/W kalır (okuyucu bunları her dilde tanır;
+  // Boşnakçanın S = sjever harfi güneyle karışırdı), ondalık ayracı virgüldür.
+  const HLET = { tr: ['K', 'G', 'D', 'B', ','], en: ['N', 'S', 'E', 'W', '.'], fr: ['N', 'S', 'E', 'W', ','], es: ['N', 'S', 'E', 'W', ','], bs: ['N', 'S', 'E', 'W', ','] };
+  const hemi = (v, kind, lang) => { const x = HLET[lang] || HLET.en; return [kind === 'lat' ? (v >= 0 ? x[0] : x[1]) : (v >= 0 ? x[2] : x[3]), x[4]]; };
   function format(v, kind, lang) {
-    const tr = lang === 'tr', a = Math.abs(v);
-    const h = kind === 'lat' ? (v >= 0 ? (tr ? 'K' : 'N') : (tr ? 'G' : 'S')) : (v >= 0 ? (tr ? 'D' : 'E') : (tr ? 'B' : 'W'));
-    return a.toFixed(4).replace(/0+$/, '').replace(/\.$/, '').replace('.', tr ? ',' : '.') + ' ' + h;
+    const a = Math.abs(v), [h, dec] = hemi(v, kind, lang);
+    return a.toFixed(4).replace(/0+$/, '').replace(/\.$/, '').replace('.', dec) + ' ' + h;
   }
   function dms(v, kind, lang) {
-    const tr = lang === 'tr', a = Math.abs(v), d = Math.floor(a), mf = (a - d) * 60, m = Math.floor(mf), s = (mf - m) * 60;
-    const h = kind === 'lat' ? (v >= 0 ? (tr ? 'K' : 'N') : (tr ? 'G' : 'S')) : (v >= 0 ? (tr ? 'D' : 'E') : (tr ? 'B' : 'W'));
-    return `${d}° ${String(m).padStart(2, '0')}′ ${s.toFixed(1).replace('.', tr ? ',' : '.')}″ ${h}`;
+    const a = Math.abs(v), d = Math.floor(a), mf = (a - d) * 60, m = Math.floor(mf), s = (mf - m) * 60, [h, dec] = hemi(v, kind, lang);
+    return `${d}° ${String(m).padStart(2, '0')}′ ${s.toFixed(1).replace('.', dec)}″ ${h}`;
   }
   G.HRCoord = { parse, parseNum, format, dms };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

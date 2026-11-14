@@ -63,6 +63,11 @@
     prOptsMap3: 'World map: three nights (each night on its own A4)'
   });
   T.tr.mapLand = T.tr.landOnly; T.en.mapLand = T.en.landOnly;
+  // Sıkıştırılmış dil paketleri (fr, es, bs)
+  T.tr.packOld = 'Bu dil paketi bu tarayıcıda açılamıyor (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ gerekir). İngilizce gösteriliyor.';
+  T.tr.packFail = 'Dil paketi açılamadı; İngilizce gösteriliyor.';
+  T.en.packOld = 'This language pack cannot be opened in this browser (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ needed). Showing English.';
+  T.en.packFail = 'The language pack could not be opened; showing English.';
   T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });
   T.en.prOpts = Object.assign({}, T.en.prOpts, { map3: T.en.prOptsMap3 });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

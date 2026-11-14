@@ -1,5 +1,5 @@
 """Uçtan uca tarama: diller, temalar, sekmeler, diyaloglar, uç konumlar; hata, taşma, NaN, dış istek."""
-import asyncio, pathlib, json, sys
+import asyncio, pathlib, json, os, sys
 from playwright.async_api import async_playwright
 PAGE = (pathlib.Path(__file__).resolve().parent.parent / 'dist' / 'mahinev.html').as_uri()
 LOCS = [('İstanbul', 41.0082, 28.9784, 40, 'Europe/Istanbul', '2026-12-10'),
@@ -16,14 +16,15 @@ async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch()
         for vp in [(1280, 900), (390, 844)]:
-            for lang in ['tr', 'en']:
+            for lang in os.environ.get('HR_LANGS', 'tr,en,fr,es,bs').split(','):
                 pg = await b.new_page(viewport={'width': vp[0], 'height': vp[1]})
                 errs, ext = [], []
                 pg.on('pageerror', lambda e: errs.append(str(e)))
                 pg.on('console', lambda m: errs.append('console: ' + m.text) if m.type == 'error' else None)
                 pg.on('request', lambda r: ext.append(r.url) if not r.url.startswith(('file:', 'data:', 'blob:')) else None)
                 await pg.goto(PAGE); await pg.wait_for_timeout(1500)
-                await pg.evaluate(f"document.getElementById('lang{lang.capitalize()}').click()"); await pg.wait_for_timeout(400)
+                await pg.evaluate(f"document.getElementById('lang{lang.capitalize()}').click()"); await pg.wait_for_timeout(1500)
+                if await pg.evaluate("document.documentElement.lang") != lang: issues.append(f'{vp} {lang}: dil seçilemedi (paket açılmadı)')
                 for theme in ['light', 'dark', 'sun', 'night', 'auto']:
                     await pg.evaluate(f"(() => {{ const e = document.getElementById('theme'); e.value = '{theme}'; e.dispatchEvent(new Event('change')); }})()")
                     for tab in ['plan', 'harita', 'saha', 'rehber', 'dogrulama']:

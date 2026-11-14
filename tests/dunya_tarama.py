@@ -45,7 +45,7 @@ async def worker(b, locs, issues, done):
     await pg.goto(PAGE); await pg.wait_for_timeout(2000)
     await pg.evaluate("Object.assign(HRUI.st, { introDone: true }); HRUI.update()")
     lang = os.environ.get('HR_LANG', 'tr')
-    if lang != 'tr': await pg.evaluate(f"document.querySelector('[data-lang=\"{lang}\"]').click()"); await pg.wait_for_timeout(500)
+    if lang != 'tr': await pg.evaluate(f"document.querySelector('[data-lang=\"{lang}\"]').click()"); await pg.wait_for_timeout(1500)
 
     async def scan(where, sel_list):
         for sel in sel_list:

@@ -15,6 +15,7 @@
     ['Pasifik', 'Pacific', -30, 25, -178, -140], ['Avrupa', 'Europe', 36, 60, -10, 40], ['Afrika', 'Africa', -35, 35, -17, 50],
     ['Orta Doğu', 'Middle East', 12, 40, 35, 62], ['Asya', 'Asia', 5, 55, 62, 145], ['Okyanusya', 'Oceania', -45, -5, 110, 178]
   ];
+  const RN = {};   // dil paketlerinden bölge adları: RN[dil] = [REGIONS sırasıyla]
   const S = {
     tr: {
       pg: n => `s. ${n}`, recSeenShort: 'kaydınız: görüldü', recNotShort: 'kaydınız: görülmedi',
@@ -139,13 +140,13 @@
   function regions(C, conj, ymd) {
     const k = conj.ut.toFixed(4) + ymd; if (regCache.has(k)) return regCache.get(k);
     const [y, m, d] = ymd.split('-').map(Number), day = Date.UTC(y, m - 1, d);
-    const out = REGIONS.map(([tr, en, s, n, w, e]) => {
+    const out = REGIONS.map(([tr, en, s, n, w, e], i) => {
       let best = 'noSunset';
       for (let la = s; la <= n; la += 5) for (let lo = w; lo <= e; lo += 8) {
         let c; try { c = C.cell(la, lo, day, conj, false).code; } catch (er) { c = 'noSunset'; }
         if (RANK[c] > RANK[best]) best = c;
       }
-      return { tr, en, best };
+      return { tr, en, i, best };
     });
     regCache.set(k, out); return out;
   }
@@ -267,18 +268,18 @@
   // Dünya kısımları: tarama bitince doldurulur (seçili akşam ve tablodaki akşamlar)
   function worldHtml(X, d, L) {
     const s = S[L] || S.en, reg = regions(X.C, d.conj, d.ymd);
-    const nm = x => x[L] || x.en;
+    const nm = x => x[L] || (RN[L] && RN[L][x.i]) || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return `<p>${X.esc(s.worldNone)}</p>`;
     return (poss.length ? `<p>${X.esc(s.worldPoss(poss.join(', ')))}</p>` : '') + (vis.length ? `<p>${X.esc(s.worldVis(vis.join(', ')))}</p>` : '') + `<p class="cap">${X.esc(s.worldNote)}</p>`;
   }
   function worldCell(X, d, ymd, L) {
-    const s = S[L] || S.en, reg = regions(X.C, d.conj, ymd), nm = x => x[L] || x.en;
+    const s = S[L] || S.en, reg = regions(X.C, d.conj, ymd), nm = x => x[L] || (RN[L] && RN[L][x.i]) || x.en;
     const vis = reg.filter(x => x.best === 'visible').map(nm), poss = reg.filter(x => x.best === 'possible').map(nm);
     if (!vis.length && !poss.length) return { txt: s.wNone, vis: false };
     return { txt: [vis.length ? s.wVis(vis.join(', ')) : '', poss.length ? s.wPoss(poss.join(', ')) : ''].filter(Boolean).join(' · '), vis: vis.length > 0 };
   }
 
-  if (G.HRLangs) G.HRLangs.chain(S);
+  if (G.HRLangs) { G.HRLangs.chain(S); G.HRLangs.reg('S', S); G.HRLangs.reg('REGIONS', RN); }
   G.HRExplain = { S, data, html, worldHtml, worldCell, regions, firstDayOf };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

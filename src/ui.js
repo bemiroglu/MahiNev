@@ -54,7 +54,14 @@
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
   st.date = todayYmd(st.tz); // açılışta her zaman içinde bulunulan an
-  const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang] || !I.T[st.lang]) st.lang = 'tr';
+  const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang]) st.lang = 'tr';
+  // Sıkıştırılmış dil paketi (fr, es, bs) açılana kadar İngilizce gösterilir; açılınca seçili dile geçilir (bind sonunda)
+  const packLang = I.T[st.lang] ? null : st.lang; if (packLang) st.lang = LG.packed(packLang) ? 'en' : 'tr';
+  // Şehir adları: CITIES[].tr/en, diğer diller dil paketinden (“CITIES”: { id: ad }); harita şehirleri “MAPCITIES” (sırayla)
+  const MAPCITY = {};
+  LG.reg('CITIES', {}, (c, names) => { for (const x of CITIES) if (names[x.id]) x[c] = names[x.id]; });
+  LG.reg('MAPCITIES', MAPCITY);
+  const mapCityName = c => st.lang === 'tr' ? c[0] : ((MAPCITY[st.lang] || [])[G.HRMap.CITIES.indexOf(c)] || c[1]);
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
   let records = load('hr-records') || [];
@@ -117,7 +124,7 @@
     set('hRec', t.record); set('lRecNote', t.notes); set('lRecAt', t.recAt); set('recSaw', t.saw); set('recNot', t.notSaw); set('hRecList', t.records); set('recInfo', t.recNote); set('hCheck', t.checklist);
     set('fNight', t.nightMode); set('fWake', t.wake); set('fCompass', t.compass); set('dlgClose', t.close);
     document.documentElement.lang = st.lang; document.documentElement.dir = LG.get(st.lang).dir;
-    $('langSeg').innerHTML = LG.ORDER.filter(c => I.T[c]).map(c => `<button id="lang${c[0].toUpperCase() + c.slice(1)}" type="button" data-lang="${c}" lang="${c}" title="${esc(LG.LANGS[c].name)}" aria-pressed="${st.lang === c}">${esc(LG.LANGS[c].short)}</button>`).join('');
+    $('langSeg').innerHTML = LG.ORDER.filter(c => I.T[c] || LG.packed(c)).map(c => `<button id="lang${c[0].toUpperCase() + c.slice(1)}" type="button" data-lang="${c}" lang="${c}" title="${esc(LG.LANGS[c].name)}" aria-pressed="${st.lang === c}">${esc(LG.LANGS[c].short)}</button>`).join('');
     $('theme').innerHTML = [['auto', t.thAuto], ['light', t.thLight], ['dark', t.thDark], ['sun', t.thSun], ['night', t.thNight]].map(([v, l]) => `<option value="${v}"${st.theme === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc((c[st.lang] || c.en))}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
     $('city').value = st.city;
@@ -295,7 +302,16 @@
   }
   function setTmin(m, anchor) { st.tmin = Math.max(0, Math.min(TB_MAX, Math.round(m))); st.anchor = anchor || null; if (!anchor || anchor !== 'now') setLive(false); renderTime(); if (view === 'harita' && st.mapMode === 'instant') renderBigMap(); }
 
-  function setLang(c) { if (!I.T[c] || !LG.LANGS[c]) return; st.lang = c; t = I.T[c]; save(); fillStatic(); update(); }
+  function setLang(c) {
+    if (!LG.LANGS[c]) return;
+    if (!I.T[c]) {   // sıkıştırılmış paket: önce açılır; açılamazsa (eski tarayıcı) İngilizce kalır
+      if (!LG.packed(c)) return;
+      if (!LG.canLoad()) { toast(t.packOld, 9000); return; }
+      LG.load(c).then(() => { if (I.T[c]) setLang(c); }).catch(() => toast(t.packFail, 9000));
+      return;
+    }
+    st.lang = c; t = I.T[c]; save(); fillStatic(); update();
+  }
   function bind() {
     $('langSeg').onclick = e => { const b = e.target.closest('[data-lang]'); if (b) setLang(b.dataset.lang); };
     $('theme').onchange = e => { st.theme = e.target.value; save(); applyTheme(); repaintAll(); };
@@ -1155,7 +1171,7 @@
     return { mode: 'evening', layer, res: st.mapRes, conj, dayUTC, marks, borders: st.mapBorders, landOnly: st.mapLand,
       m18: st.map18 ? C.moment18(conj, 0) : null, book: st.mapBook && layer !== 'first', bookLabels: t.bookLbl,
       value: layer !== 'first' && st.mapValue !== 'none' ? st.mapValue : null, valueLabel: valLbl,
-      grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]),
+      grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: mapCityName,
       firstPts: st.mapFirst, firstLabel: (k, pt) => `${t.firstLbl[k]} · ${hhmmUT(pt.ss)}`, relief: st.mapRelief, hatch: st.mapHatch };
   }
   function firstNote(fp) {
@@ -1188,7 +1204,7 @@
     const ageD = (dayUTC - conj.date.getTime()) / 86400000;
     const mid = !inst && st.mapLayer !== 'first' && (ageD > 4.5 || ageD < -2);
     if (inst) {
-      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub, grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: c => (st.lang === 'tr' ? c[0] : c[1]), relief: st.mapRelief });
+      MAPP = big.render({ mode: 'instant', t: selT(), darkKey: st.darkKey, borders: st.mapBorders, marks, sunLabel: t.sunSub, moonLabel: t.moonSub, grat: st.mapGrat, gratLabel: gratLbl, cities: st.mapCities, cityName: mapCityName, relief: st.mapRelief });
       $('mapNote').textContent = t.mapInstantNote + ' ' + `${t.mapTime}: ${fmtDT(selT())}${st.timeFmt === 'both' ? ' · ' + fmtUTC(selT()) : ''} · ${t.darkOpt[st.darkKey]}`;
     } else {
       MAPP = big.render(Object.assign(mapParams(st.mapLayer, conj, dayUTC, marks), { message: mid ? t.midHint : '' }));
@@ -2233,6 +2249,7 @@
   const curPlaceName = () => { const c = CITIES.find(x => x.id === st.city); return c ? (c[st.lang] || c.en) : ''; };
   const KIND_SLUG = { tr: { plan: 'rasad-plani', sky: 'gokyuzu-haritasi', skyEve: 'gokyuzu-aksam', raw: 'ham-veri', rawCsv: 'aksamlar', month: 'aylik-cizelge', map: 'dunya-haritasi', map3: 'dunya-haritasi-uc-gece', tut: 'tutanak', blank: 'bos-tutanak', pages: 'sayfalar', record: 'ruyet-kaydi', backup: 'kayit-yedegi' },
     en: { plan: 'watch-plan', sky: 'sky-chart', skyEve: 'sky-evening', raw: 'raw-data', rawCsv: 'evenings', month: 'monthly-chart', map: 'world-map', map3: 'world-map-three-nights', tut: 'sighting-report', blank: 'blank-report', pages: 'pages', record: 'sighting-record', backup: 'records-backup' } };
+  LG.reg('SLUG', KIND_SLUG);
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
@@ -2358,8 +2375,13 @@
 
   // ---- Doğrulama ----
   let testsDone = false;
+  let packWait = false;
   function runTests() {
-    if (testsDone) return; testsDone = true;
+    if (testsDone) return;
+    // Dil eşliği testi için sıkıştırılmış dil paketleri önce açılır
+    const miss = LG.ORDER.filter(c => !LG.ready(c));
+    if (miss.length && LG.canLoad() && !packWait) { packWait = true; Promise.all(miss.map(c => LG.load(c).catch(() => null))).then(runTests); return; }
+    testsDone = true;
     const rows = [], add = (c, qq, exp, got, tol, ok) => rows.push({ c, q: qq, exp, got, tol, ok: !!ok });
     const utc = at => at.date.toISOString().slice(0, 19).replace('T', ' ');
     const dmin = (a, b) => Math.abs(a.ut - b.ut) * 1440, TT = s => A.MakeTime(new Date(s));
@@ -2412,9 +2434,12 @@
     const xk = G.HRExplain.data(XE, '2026-11-10'), hk = G.HRExplain.html(XE, xk, 'tr');
     add('Açıklama', 'Cemâziyelâhır 1448: 1. gün iki ihtimal; önceki ayla arası 29 veya 30 gün; “başlamıştır” yok', '2026-11-10 / 2026-11-11 · 29–30 · yok', `${xk.H} / ${xk.H2} · ${xk.gap} · ${/başlamıştır/.test(hk) ? 'var' : 'yok'}`, '—', xk.H === '2026-11-10' && xk.H2 === '2026-11-11' && (xk.gap === 29 || xk.gap === 30) && !/başlamıştır/.test(hk) && xk.rows.length === 3);
     // Çok dilli altyapı: her dilde aynı anahtarlar ve aynı türler (metin / işlev / liste) bulunmalı
-    const parity = (a, b) => { const out = []; for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (!(k in a) || !(k in b)) out.push(k); else if (typeof a[k] !== typeof b[k] || Array.isArray(a[k]) !== Array.isArray(b[k])) out.push(k + ':tür'); } return out; };
-    const pT = parity(I.T.tr, I.T.en), pS = parity(G.HRExplain.S.tr, G.HRExplain.S.en), pG = parity(G.HRGuide.TOPICS ? G.HRGuide.TOPICS.tr : {}, G.HRGuide.TOPICS ? G.HRGuide.TOPICS.en : {});
-    add('çok dilli', 'Türkçe ve İngilizce metinlerde aynı anahtarlar (arayüz · açıklama · rehber konuları) ve dil kaydında her dilin Tam İlmihâl bağlantısı', '0 · 0 · 0 · tam', `${pT.length} · ${pS.length} · ${pG.length} · ${LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page) ? 'tam' : 'eksik'}`, pT.concat(pS, pG).slice(0, 6).join(', ') || '—', !pT.length && !pS.length && !pG.length && LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page));
+    const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+    const parity = (a, b) => { const out = []; for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (!own(a, k) || !own(b, k)) out.push(k); else if (typeof a[k] !== typeof b[k] || Array.isArray(a[k]) !== Array.isArray(b[k])) out.push(k + ':tür'); } return out; };
+    const others = LG.ORDER.filter(c => c !== 'tr'), missL = others.filter(c => !I.T[c]);
+    const pAll = (d) => others.filter(c => d[c]).flatMap(c => parity(d.tr, d[c]).map(k => c + '.' + k));
+    const pT = pAll(I.T).concat(missL.map(c => c + ': paket açılamadı')), pS = pAll(G.HRExplain.S), pG = G.HRGuide.TOPICS ? pAll(G.HRGuide.TOPICS) : [];
+    add('çok dilli', `${LG.ORDER.length} dilde (${LG.ORDER.join(', ')}) aynı anahtarlar (arayüz · açıklama · rehber konuları) ve dil kaydında her dilin Tam İlmihâl bağlantısı`, '0 · 0 · 0 · tam', `${pT.length} · ${pS.length} · ${pG.length} · ${LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page) ? 'tam' : 'eksik'}`, pT.concat(pS, pG).slice(0, 6).join(', ') || '—', !pT.length && !pS.length && !pG.length && LG.ORDER.every(c => LG.LANGS[c].book && LG.LANGS[c].book.page));
     const xz = G.HRExplain.data(XE, '2027-05-07');
     add('Açıklama', 'Zilhicce 1448: 1. gün Işık usulüyle bulunan gün veya bir gün sonrası (s. 326)', `${ymdOf(CAL.methods(1448, 12).isik)} / +1 gün`, `${xz.H} / ${xz.H2}`, '—', xz.isik && xz.H === ymdOf(CAL.methods(1448, 12).isik) && xz.H2 === addDays(xz.H, 1));
     const gk = G.HRGok.at({ lat: 41.0, lon: 29.0, elev: 0 }, TT('2026-12-10T18:00Z')), pol2 = gk.list.find(o => o.id === 'Polaris'), jup = gk.list.find(o => o.id === 'Jupiter');
@@ -2558,6 +2583,7 @@
   function paintDateBoxes() { DATE_BOXES.forEach(b => { b.paint(); b.btn.title = t.datePick; b.btn.setAttribute('aria-label', t.datePick); }); }
   ['date', 'mDate', 'recAt', 'ntAt'].forEach(enhanceDate);
   fillStatic(); bind(); route(); setLive(true); update();
+  if (packLang) setLang(packLang);
   applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
   G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, buildPrint, official: () => OFFICIAL, notice: () => NOTICE };

@@ -163,16 +163,57 @@
     ]
   };
 
+  // Rehber’in sabit metinleri: konu başlıkları, kurallar tablosu, kaynaklar, kanonik metin notu (yeni dil: dil paketi “GX”)
+  const PRAY = '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)';
+  const YALLOP = 'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.';
+  const FATOOHI = 'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.';
+  const GX = {
+    tr: {
+      lbFiqh: 'Fıkhî esas (Tam İlmihâl)', lbSci: 'Bilimsel açıklama', lbFiqhD: 'Fıkhî esas — ayrıntı', lbSciD: 'Bilimsel açıklama — ayrıntı', more: 'Ayrıntılı açıklama',
+      rulesHead: ['Gurûbdaki durum (sırayla denetlenir)', 'Ana görünüm', 'Rü’yet beyanına karşılık'],
+      rules: [
+        ['İctimâ olmamış veya ay güneşten önce batıyor', 'Hilâl doğmamış', 'Kesin red (Sübkî, s. 360)'],
+        ['Gurûbda beynûnet < 8°', 'Görülemez (Tam İlmihâl, s. 360); ek bilgi: modern sınır 7,5°', 'Kesin red (Sübkî, s. 360)'],
+        ['Hilâlin görünen irtifâı < 5°', 'Görülemez: ufka 5°’den yakın (s. 360)', 'Uyarı'],
+        ['8° ≤ beynûnet < 18°', 'Görülmesi mümkün; dikkatli rasad gerekir', 'Kabul edilebilir'],
+        ['Beynûnet ≥ 18°', 'Hesâba göre görülebilir (hava müsaitse)', 'Kabul edilebilir']
+      ],
+      srcBook: 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.',
+      srcRead: 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).',
+      srcCongress: 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.',
+      srcAbidin: 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).',
+      srcMap: 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).',
+      canonNote: ''
+    },
+    en: {
+      lbFiqh: 'Legal basis (Tam İlmihâl)', lbSci: 'Scientific explanation', lbFiqhD: 'Legal basis — detail', lbSciD: 'Scientific explanation — detail', more: 'Detailed explanation',
+      rulesHead: ['Condition at sunset (checked in order)', 'Main label', 'Response to a sighting claim'],
+      rules: [
+        ['No conjunction yet, or the Moon sets before the Sun', 'Crescent not yet born', 'Rejected (Subkî, EB V, p. 137)'],
+        ['Beynûnet < 8° at sunset', 'Not visible (Tam İlmihâl, EB V, p. 137); additional: modern limit 7.5°', 'Rejected (Subkî, EB V, p. 137)'],
+        ['Apparent altitude of the crescent < 5°', 'Not visible: closer than 5° to the horizon (EB V, p. 137)', 'Warning'],
+        ['8° ≤ beynûnet < 18°', 'Possible; careful observation needed', 'Acceptable'],
+        ['Beynûnet ≥ 18°', 'Visible by calculation (if the sky is clear)', 'Acceptable']
+      ],
+      srcBook: 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): EB IV, pp. 135–195, 284; V, pp. 54–61, 79, 117, 133–142.',
+      srcRead: 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. It is published in six fascicles. References such as “EB V, p. 137” mean Endless Bliss, Fifth Fascicle, page 137. Editions used: Fourth Fascicle, 21st edition, and Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).',
+      srcCongress: 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
+      srcAbidin: 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
+      srcMap: 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).',
+      canonNote: 'English rendering of the Turkish canonical text. The Turkish text is authoritative.'
+    }
+  };
+  const gx = L => PK(GX, L);
   // Kısa not; mode: 'short' (yalnız kısa), 'long' (ayrıntı da açık), 'more' (ayrıntı katlanmış olarak altta)
   function topicHtml(L, id, mode) {
     const t = PK(TOPICS, L)[id]; if (!t) return '';
-    const lb = t[3] || [];   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
-    const fk = lb[0] || (L === 'tr' ? 'Fıkhî esas (Tam İlmihâl)' : 'Legal basis (Tam İlmihâl)'), bl = lb[1] || (L === 'tr' ? 'Bilimsel açıklama' : 'Scientific explanation');
+    const lb = t[3] || [], x = gx(L);   // konu kendi başlıklarını taşıyabilir (ör. Naklî deliller: kaynak tebliğdir)
+    const fk = lb[0] || x.lbFiqh, bl = lb[1] || x.lbSci;
     let h = `<h3>${esc(t[0])}</h3><p class="lab">${fk}</p><p>${esc(t[1])}</p><p class="lab">${bl}</p><p>${esc(t[2])}</p>`;
     const lg = G.HRGuide.LONG && PK(G.HRGuide.LONG, L)[id];
     if (lg && mode && mode !== 'short') {
-      const body = `<p class="lab">${lb[2] || (L === 'tr' ? 'Fıkhî esas — ayrıntı' : 'Legal basis — detail')}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || (L === 'tr' ? 'Bilimsel açıklama — ayrıntı' : 'Scientific explanation — detail')}</p><p>${esc(lg[1])}</p>`;
-      h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${L === 'tr' ? 'Ayrıntılı açıklama' : 'Detailed explanation'}</summary>${body}</details>`;
+      const body = `<p class="lab">${lb[2] || x.lbFiqhD}</p><p>${esc(lg[0])}</p><p class="lab">${lb[3] || x.lbSciD}</p><p>${esc(lg[1])}</p>`;
+      h += mode === 'long' ? `<div class="tlong">${body}</div>` : `<details class="tmore"><summary>${x.more}</summary>${body}</details>`;
     }
     return h;
   }
@@ -180,46 +221,21 @@
     return PK(PLAN, L).map(([h, items]) => `<h3>${esc(h)}</h3><ul class="check">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join('');
   }
   function rulesHtml(L) {
-    const tr = L === 'tr';
-    const rows = tr ? [
-      ['İctimâ olmamış veya ay güneşten önce batıyor', 'Hilâl doğmamış', 'Kesin red (Sübkî, s. 360)'],
-      ['Gurûbda beynûnet < 8°', 'Görülemez (Tam İlmihâl, s. 360); ek bilgi: modern sınır 7,5°', 'Kesin red (Sübkî, s. 360)'],
-      ['Hilâlin görünen irtifâı < 5°', 'Görülemez: ufka 5°’den yakın (s. 360)', 'Uyarı'],
-      ['8° ≤ beynûnet < 18°', 'Görülmesi mümkün; dikkatli rasad gerekir', 'Kabul edilebilir'],
-      ['Beynûnet ≥ 18°', 'Hesâba göre görülebilir (hava müsaitse)', 'Kabul edilebilir']
-    ] : [
-      ['No conjunction yet, or the Moon sets before the Sun', 'Crescent not yet born', 'Rejected (Subkî, EB V, p. 137)'],
-      ['Beynûnet < 8° at sunset', 'Not visible (Tam İlmihâl, EB V, p. 137); additional: modern limit 7.5°', 'Rejected (Subkî, EB V, p. 137)'],
-      ['Apparent altitude of the crescent < 5°', 'Not visible: closer than 5° to the horizon (EB V, p. 137)', 'Warning'],
-      ['8° ≤ beynûnet < 18°', 'Possible; careful observation needed', 'Acceptable'],
-      ['Beynûnet ≥ 18°', 'Visible by calculation (if the sky is clear)', 'Acceptable']
-    ];
-    const head = tr ? ['Gurûbdaki durum (sırayla denetlenir)', 'Ana görünüm', 'Rü’yet beyanına karşılık'] : ['Condition at sunset (checked in order)', 'Main label', 'Response to a sighting claim'];
-    return `<div class="scroll"><table class="t"><thead><tr>${head.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    const x = gx(L);
+    return `<div class="scroll"><table class="t"><thead><tr>${x.rulesHead.map(v => `<th>${v}</th>`).join('')}</tr></thead><tbody>${x.rules.map(r => `<tr>${r.map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   }
   // Kayıttaki dil için Tam İlmihâl’in adı ve bağlantısı (langs.js); sayfa numaraları Türkçe baskıya göredir
   function bookLine(L) { const b = G.HRLangs ? G.HRLangs.get(L).book : null; return b ? `<em>${esc(b.title)}</em>: <a href="${b.page}" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>${b.pdf ? ` (<a href="${b.pdf}" target="_blank" rel="noopener">PDF</a>)` : ''}.` : ''; }
   function sourcesHtml(L) {
-    const tr = L === 'tr';
-    return '<ul>' + [
-      tr ? 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (Ocak 2026 baskısı): s. 175–203, 314–317, 326, 344, 358–362, 360.'
-         : 'Hüseyn Hilmi Işık, <em>Tam İlmihâl Se’âdet-i Ebediyye</em>, Hakîkat Kitâbevi (January 2026 printing): EB IV, pp. 135–195, 284; V, pp. 54–61, 79, 117, 133–142.',
-      tr ? 'Tam İlmihâl’i okuyun veya indirin: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=001" target="_blank" rel="noopener">Hakîkat Kitâbevi</a> (<a href="https://www.hakikatkitabevi.net/downloads/001.pdf" target="_blank" rel="noopener">PDF</a>).' : L === 'en' ? 'Read or download <em>Endless Bliss</em>, the English version of Tam İlmihâl Se’âdet-i Ebediyye: <a href="https://www.hakikatkitabevi.net/book.php?bookCode=025" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>. It is published in six fascicles. References such as “EB V, p. 137” mean Endless Bliss, Fifth Fascicle, page 137. Editions used: Fourth Fascicle, 21st edition, and Fifth Fascicle, 17th edition (Hakîkat Kitâbevi, Istanbul, August 2020).' : bookLine(L),
-      tr ? 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.'
-         : 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
-      tr ? 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).' : 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
-      '<a href="https://praytimes.net/documents/RasadHakkindaZaruriMalumat.pdf">Rasad Hakkında Zarûrî Malûmat</a> (praytimes.net)',
-      'Yallop, B. D. (1997), NAO Technical Note 69. Odeh, M. Sh. (2004), Experimental Astronomy 18.',
-      'Fatoohi, Stephenson, Al-Dargazelli (1998); Sultan, A. H. (2007), The Observatory 127.',
-      tr ? 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).' : 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).'
-    ].map(x => `<li>${x}</li>`).join('') + '</ul>';
+    const x = gx(L);
+    return '<ul>' + [x.srcBook, x.srcRead || bookLine(L), x.srcCongress, x.srcAbidin, PRAY, YALLOP, FATOOHI, x.srcMap].map(v => `<li>${v}</li>`).join('') + '</ul>';
   }
-  const CANON_EN = G.HR_CANON_EN || [];
+  const CANON = { tr: G.HR_CANON_TR || [], en: G.HR_CANON_EN || [] };
   function canonHtml(L) {
-    const canon = L === 'tr' ? (G.HR_CANON_TR || []) : CANON_EN;
-    const note = L === 'tr' ? '' : '<p class="small">English rendering of the Turkish canonical text. The Turkish text is authoritative.</p>';
-    return note + canon.map(p => `<p>${esc(p)}</p>`).join('');
+    const canon = PK(CANON, L), note = gx(L).canonNote;
+    return (note ? `<p class="small">${note}</p>` : '') + canon.map(p => `<p>${esc(p)}</p>`).join('');
   }
+  if (G.HRLangs) { G.HRLangs.reg('TOPICS', TOPICS); G.HRLangs.reg('PLAN', PLAN); G.HRLangs.reg('GX', GX); G.HRLangs.reg('CANON', CANON); }
   function render(L, t, mode) {
     const ids = Object.keys(PK(TOPICS, L));
     return `<div class="guide-grid">

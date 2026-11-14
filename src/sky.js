@@ -26,6 +26,7 @@
       where: (dx, side, fx, up, fu) => `The crescent is ${dx}° ${side} of the sunset point (${fx}), ${up}° above the horizon (${fu}).`,
       full: 'Full horizon', sun: 'Sun', moon: 'Moon', moonBelow: a => `Moon ${a}° below the horizon`, sunUp: 'Sun above the horizon' }
   };
+  if (G.HRLangs) { G.HRLangs.reg('SKYNAMES', NAMES); G.HRLangs.reg('CARD16', CARD); G.HRLangs.reg('SX', SX); }
   const skyTx = L => (G.HRLangs ? G.HRLangs.pick(SX, L) : (SX[L] || SX.en));
   const n1 = (v, L) => v.toFixed(1).replace('.', skyTx(L).dec);
   // Yön etiketinin yanında küçük derece değeri (semt; kuzeyden saat yönünde)

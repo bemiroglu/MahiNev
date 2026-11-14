@@ -10,6 +10,8 @@ Bu araçlar programın parçası değildir; geliştirme sırasında kullanılır
 - `pg.py`, `align.py`: Endless Bliss’te bir ifadenin sayfasını bulur; Türkçe ve İngilizce sayfaları sayılarla eşler.
 - `glossary.py`: Fransızca, İspanyolca, Boşnakça kitaplardan terim adaylarını çıkarır (sonuç: `docs/dil-terimleri.md`).
 - `dump_en.py`: İngilizce metinlerin kaba dökümü.
+- `pack_dump.py`: Türkçe ve İngilizce metinleri dil paketi yapısında, altı parçaya (ui1, ui2, ui3, misc, guide, long) bölerek döker; çevirinin kaynağıdır. `python3 build.py && python3 tools/dil/pack_dump.py DİZİN` (tarayıcı yolu gerekirse `HR_CHROME`).
+- `pack_check.js`: bir çeviri parçasını İngilizce parçayla yapı bakımından karşılaştırır (`node pack_check.js x.fr.js x.en.js`); `--build DİZİN fr src/lang/fr.js` parçaları birleştirir, denetler ve dil paketini yazar. Çeviri yönergesi ve terimler: `docs/ceviri-yonergesi.md`.
 
 ## tools/gorsel — ekran ve çıktı denetimi
 - `map14.py`, `map14m.py`: harita ekranları, üç gece, PNG kaydı (masaüstü ve telefon).

@@ -22,6 +22,7 @@
       Sirius: 'Sirius (Şi’râ)', Canopus: 'Canopus (Süheyl)', Polaris: 'Kutup yıldızı (Polaris)', Vega: 'Vega (Vâkı’)', Altair: 'Altair (Tâir)', Aldebaran: 'Aldebaran (Deberân)', Regulus: 'Regulus (Kalbü’l-esed)', Spica: 'Spica (Simâk-ı a’zel)', Arcturus: 'Arcturus (Simâk-ı râmih)', Antares: 'Antares (Kalbü’l-akreb)', Fomalhaut: 'Fomalhaut (Femü’l-hût)', Deneb: 'Deneb (Zeneb)' },
     en: { Sun: 'Sun', Moon: 'Moon' }
   };
+  if (G.HRLangs) G.HRLangs.reg('GOK', NAMES);
   const nameOf = (id, L) => (NAMES[L] && NAMES[L][id]) || id;
   const D2R = Math.PI / 180, R2D = 180 / Math.PI, SID = 1.00273790935;
   const mod = (x, m) => ((x % m) + m) % m;

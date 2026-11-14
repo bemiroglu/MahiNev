@@ -126,4 +126,5 @@
     }
   };
   G.HRI18N = { T, MONTHS };
+  if (G.HRLangs) { G.HRLangs.reg('T', T); G.HRLangs.reg('MONTHS', MONTHS); }
 })(typeof globalThis !== 'undefined' ? globalThis : window);
