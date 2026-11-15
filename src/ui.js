@@ -302,12 +302,12 @@
   }
   function setTmin(m, anchor) { st.tmin = Math.max(0, Math.min(TB_MAX, Math.round(m))); st.anchor = anchor || null; if (!anchor || anchor !== 'now') setLive(false); renderTime(); if (view === 'harita' && st.mapMode === 'instant') renderBigMap(); }
 
-  function setLang(c) {
+  function setLang(c, quiet) {   // quiet: açılışta kayıtlı dil (çeviri uyarısı yalnız elle seçilince kısa bildirim olarak çıkar)
     if (!LG.LANGS[c]) return;
     if (!I.T[c]) {   // sıkıştırılmış paket: önce açılır; açılamazsa (eski tarayıcı) İngilizce kalır
       if (!LG.packed(c)) return;
       if (!LG.canLoad()) { toast(t.packOld, 9000); return; }
-      LG.load(c).then(() => { if (I.T[c]) setLang(c); }).catch(() => toast(t.packFail, 9000));
+      LG.load(c).then(() => { if (I.T[c]) { setLang(c); if (!quiet && I.T[c].mtNote) toast(I.T[c].mtNote, 9000); } }).catch(() => toast(t.packFail, 9000));
       return;
     }
     st.lang = c; t = I.T[c]; save(); fillStatic(); update();
@@ -2050,12 +2050,12 @@
   const bookOf = () => LG.get(st.lang).book;
   const bookLinksHtml = () => { const b = bookOf(); return `${esc(t.bookLinks)} ${extLink(b.page, t.bookPage)}${b.pdf ? ' · ' + extLink(b.pdf, t.bookPdf) : ''}`; };
   function aboutHtml() {
-    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>`;
+    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>` + (t.mtNote ? `<p class="small">${esc(t.mtNote)}</p>` : '');
   }
   function noticeHtml() {
     const n = NOTICE || {};
     return `<span class="src">${extLink(bookOf().page, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
-      (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>`;
+      (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>` + (t.mtNote ? `<br><span class="small">${esc(t.mtNote)}</span>` : '');
   }
   function licHtml() {
     const n = NOTICE || {};
@@ -2583,7 +2583,7 @@
   function paintDateBoxes() { DATE_BOXES.forEach(b => { b.paint(); b.btn.title = t.datePick; b.btn.setAttribute('aria-label', t.datePick); }); }
   ['date', 'mDate', 'recAt', 'ntAt'].forEach(enhanceDate);
   fillStatic(); bind(); route(); setLive(true); update();
-  if (packLang) setLang(packLang);
+  if (packLang) setLang(packLang, true);
   applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
   G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, buildPrint, official: () => OFFICIAL, notice: () => NOTICE };

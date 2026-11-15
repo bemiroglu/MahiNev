@@ -2077,7 +2077,7 @@ window.HR_CANON_EN = [
       srcCongress: 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.',
       srcAbidin: 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).',
       srcMap: 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).',
-      canonNote: ''
+      canonNote: '', mtNote: ''
     },
     en: {
       lbFiqh: 'Legal basis (Tam İlmihâl)', lbSci: 'Scientific explanation', lbFiqhD: 'Legal basis — detail', lbSciD: 'Scientific explanation — detail', more: 'Detailed explanation',
@@ -2094,7 +2094,7 @@ window.HR_CANON_EN = [
       srcCongress: 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
       srcAbidin: 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
       srcMap: 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).',
-      canonNote: 'English rendering of the Turkish canonical text. The Turkish text is authoritative.'
+      canonNote: 'English rendering of the Turkish canonical text. The Turkish text is authoritative.', mtNote: ''
     }
   };
   const gx = L => PK(GX, L);
@@ -2122,7 +2122,7 @@ window.HR_CANON_EN = [
   function bookLine(L) { const b = G.HRLangs ? G.HRLangs.get(L).book : null; return b ? `<em>${esc(b.title)}</em>: <a href="${b.page}" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>${b.pdf ? ` (<a href="${b.pdf}" target="_blank" rel="noopener">PDF</a>)` : ''}.` : ''; }
   function sourcesHtml(L) {
     const x = gx(L);
-    return '<ul>' + [x.srcBook, x.srcRead || bookLine(L), x.srcCongress, x.srcAbidin, PRAY, YALLOP, FATOOHI, x.srcMap].map(v => `<li>${v}</li>`).join('') + '</ul>';
+    return (x.mtNote ? `<p class="small">${x.mtNote}</p>` : '') + '<ul>' + [x.srcBook, x.srcRead || bookLine(L), x.srcCongress, x.srcAbidin, PRAY, YALLOP, FATOOHI, x.srcMap].map(v => `<li>${v}</li>`).join('') + '</ul>';
   }
   const CANON = { tr: G.HR_CANON_TR || [], en: G.HR_CANON_EN || [] };
   function canonHtml(L) {
@@ -3044,6 +3044,8 @@ window.HR_CANON_EN = [
   T.tr.packFail = 'Dil paketi açılamadı; İngilizce gösteriliyor.';
   T.en.packOld = 'This language pack cannot be opened in this browser (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ needed). Showing English.';
   T.en.packFail = 'The language pack could not be opened; showing English.';
+  // Otomatik çeviri uyarısı: yalnız dil paketlerinde (fr, es, bs) dolu; Türkçe ve İngilizcede boş kalır, gösterilmez
+  T.tr.mtNote = ''; T.en.mtNote = '';
   T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });
   T.en.prOpts = Object.assign({}, T.en.prOpts, { map3: T.en.prOptsMap3 });
 })(typeof globalThis !== 'undefined' ? globalThis : window);
@@ -7036,7 +7038,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD657bc38932e3eba4';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD0e3e5bd83e8ce48d';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -7328,12 +7330,12 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   }
   function setTmin(m, anchor) { st.tmin = Math.max(0, Math.min(TB_MAX, Math.round(m))); st.anchor = anchor || null; if (!anchor || anchor !== 'now') setLive(false); renderTime(); if (view === 'harita' && st.mapMode === 'instant') renderBigMap(); }
 
-  function setLang(c) {
+  function setLang(c, quiet) {   // quiet: açılışta kayıtlı dil (çeviri uyarısı yalnız elle seçilince kısa bildirim olarak çıkar)
     if (!LG.LANGS[c]) return;
     if (!I.T[c]) {   // sıkıştırılmış paket: önce açılır; açılamazsa (eski tarayıcı) İngilizce kalır
       if (!LG.packed(c)) return;
       if (!LG.canLoad()) { toast(t.packOld, 9000); return; }
-      LG.load(c).then(() => { if (I.T[c]) setLang(c); }).catch(() => toast(t.packFail, 9000));
+      LG.load(c).then(() => { if (I.T[c]) { setLang(c); if (!quiet && I.T[c].mtNote) toast(I.T[c].mtNote, 9000); } }).catch(() => toast(t.packFail, 9000));
       return;
     }
     st.lang = c; t = I.T[c]; save(); fillStatic(); update();
@@ -9076,12 +9078,12 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   const bookOf = () => LG.get(st.lang).book;
   const bookLinksHtml = () => { const b = bookOf(); return `${esc(t.bookLinks)} ${extLink(b.page, t.bookPage)}${b.pdf ? ' · ' + extLink(b.pdf, t.bookPdf) : ''}`; };
   function aboutHtml() {
-    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>`;
+    return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>` + (t.mtNote ? `<p class="small">${esc(t.mtNote)}</p>` : '');
   }
   function noticeHtml() {
     const n = NOTICE || {};
     return `<span class="src">${extLink(bookOf().page, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
-      (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>`;
+      (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>` + (t.mtNote ? `<br><span class="small">${esc(t.mtNote)}</span>` : '');
   }
   function licHtml() {
     const n = NOTICE || {};
@@ -9609,7 +9611,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   function paintDateBoxes() { DATE_BOXES.forEach(b => { b.paint(); b.btn.title = t.datePick; b.btn.setAttribute('aria-label', t.datePick); }); }
   ['date', 'mDate', 'recAt', 'ntAt'].forEach(enhanceDate);
   fillStatic(); bind(); route(); setLive(true); update();
-  if (packLang) setLang(packLang);
+  if (packLang) setLang(packLang, true);
   applyFonts();
   if (st.autoLoc) setTimeout(() => autoLocate(false), 300);
   G.HRUI = { runTests, update, st, setDate, setTmin, goNow, goNight, printPages, buildPrint, official: () => OFFICIAL, notice: () => NOTICE };

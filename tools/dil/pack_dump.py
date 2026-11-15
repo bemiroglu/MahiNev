@@ -8,9 +8,8 @@ import asyncio, json, pathlib, re, sys
 from playwright.async_api import async_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
 
-JS = r'''([L, CIT]) => {
+JS = r'''([L, CIT, MODE]) => {
   const R = HRLangs.REG, I = HRI18N;
   const isId = k => /^[A-Za-z_$][\w$]*$/.test(k);
   const ser = (v, ind) => {
@@ -38,6 +37,16 @@ JS = r'''([L, CIT]) => {
     : ['North America', 'Central and South America', 'Pacific', 'Europe', 'Africa', 'Middle East', 'Asia', 'Oceania'];
   out.CITIES = Object.fromEntries(CIT.map(c => [c[0], L === 'tr' ? c[1] : c[2]]));
   out.MAPCITIES = HRMap.CITIES.map(c => L === 'tr' ? c[0] : c[1]);
+  if (MODE === 'all') return ser(out, 0);
+  if (MODE === 'units') {   // eşleme birimleri: nesnelerde ikinci düzey anahtar, listelerde sıra; PLAN ve CANON bütün olarak
+    const u = {};
+    for (const k of Object.keys(out)) {
+      const v = out[k];
+      if (Array.isArray(v)) { if (k === 'CANON' || k === 'PLAN') u[k] = ser(v, 0); else v.forEach((x, i) => { u[`${k}[${i}]`] = ser(x, 0); }); }
+      else for (const kk of Object.keys(v)) u[`${k}.${kk}`] = ser(v[kk], 0);
+    }
+    return u;
+  }
   const T = out.T, keys = Object.keys(T), n = keys.length;
   const part = (a, b) => Object.fromEntries(keys.slice(a, b).map(k => [k, T[k]]));
   // parçalar (yaklaşık eşit büyüklükte)
@@ -52,7 +61,29 @@ JS = r'''([L, CIT]) => {
   return Object.fromEntries(Object.entries(chunks).map(([k, v]) => [k, ser(v, 0)]));
 }'''
 
+def chrome_kw():
+    import os
+    return {'executable_path': os.environ['HR_CHROME']} if os.environ.get('HR_CHROME') else {}
+
+
+async def source(modes):
+    """Derlenmiş dosyayı açar; her dil (tr, en) ve kip için JS sonucunu döndürür: {(dil, kip): sonuç}."""
+    res = {}
+    async with async_playwright() as p:
+        b = await p.chromium.launch(args=['--no-sandbox'], **chrome_kw())
+        pg = await b.new_page()
+        await pg.goto((ROOT / 'dist' / 'mahinev.html').as_uri())
+        await pg.wait_for_function('window.HRUI')
+        cit = re.findall(r"id: '(\w+)', tr: '([^']+)', en: '([^']+)'", (ROOT / 'src' / 'ui.js').read_text(encoding='utf-8'))
+        for L in ('tr', 'en'):
+            for m in modes:
+                res[(L, m)] = await pg.evaluate(JS, [L, cit, m])
+        await b.close()
+    return res
+
+
 async def main():
+    OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
     async with async_playwright() as p:
         import os; b = await p.chromium.launch(args=['--no-sandbox'], **({'executable_path': os.environ['HR_CHROME']} if os.environ.get('HR_CHROME') else {}))
         pg = await b.new_page()
@@ -61,11 +92,12 @@ async def main():
         await pg.wait_for_function('window.HRUI')
         cit = re.findall(r"id: '(\w+)', tr: '([^']+)', en: '([^']+)'", (ROOT / 'src' / 'ui.js').read_text(encoding='utf-8'))
         for L in ('tr', 'en'):
-            res = await pg.evaluate(JS, [L, cit])
+            res = await pg.evaluate(JS, [L, cit, 'chunks'])
             for k, v in res.items():
                 (OUT / f'{k}.{L}.js').write_text(v + '\n', encoding='utf-8')
                 print(k, L, len(v.encode()))
         await b.close()
         if errs: print('HATA', errs)
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())

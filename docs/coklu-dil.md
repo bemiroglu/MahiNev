@@ -19,6 +19,28 @@ Her modül kendi sözlüğünü bir adla kaydeder (`HRLangs.reg(ad, sözlük)`).
 
 **Araçlar.** `tools/dil/pack_dump.py` Türkçe ve İngilizce metinleri paket yapısında parçalara bölerek döker (çeviri kaynağı); `tools/dil/pack_check.js` bir çeviri parçasının yapısını İngilizceyle karşılaştırır (anahtarlar, türler, liste uzunlukları, işlev parametreleri, `${…}` ifadeleri, HTML etiketleri) ve `--build` ile parçaları birleştirip `src/lang/<kod>.js` yazar.
 
+## Programı değiştirirken: çevirilerin kontrollü güncellenmesi
+
+Beş dilli programda Türkçe veya İngilizce bir metin değişince, yeni bir metin eklenince ya da bir metin silinince Fransızca, İspanyolca ve Boşnakça paketler de aynı ölçüde güncellenir. Bunu üç katman güvenceye alır:
+
+1. **Program bozulmaz.** Pakette eksik kalan bir metin çalışırken İngilizceden gelir (yedek zinciri). Paket açılamazsa program İngilizce çalışır.
+2. **Anahtar eşliği testi.** Doğrulama sekmesindeki "çok dilli" testi paketleri açar; beş dilde arayüz, açıklama ve Rehber anahtarları birebir aynı değilse test geçmez (CI de geçmez).
+3. **Kaynak eşlemesi (`tools/dil/pack_sync.py`).** Her çeviri birimi için, çevrildiği andaki Türkçe + İngilizce kaynağın özeti `src/lang/<dil>.ozet.json` dosyasında durur. `durum` komutu her dilde değişen kaynakları, eksik ve fazla birimleri listeler; biri bile varsa hata verir. GitHub'daki CI her itmede bu denetimi çalıştırır. Böylece bir metnin anlamı Türkçede değişip çevirisi eski kalırsa fark edilmeden yayına çıkmaz.
+
+Güncelleme adımları (her değişiklikten sonra):
+
+```
+python3 build.py
+python3 tools/dil/pack_sync.py durum              # neler değişti?
+python3 tools/dil/pack_sync.py is fr /tmp/is-fr   # yalnız değişen / eksik birimler: is.tr.js, is.en.js, is.fr.js
+#   is.fr.js çevrilir (docs/ceviri-yonergesi.md); gerekirse geri çeviriyle denetlenir
+python3 tools/dil/pack_sync.py uygula fr /tmp/is-fr/is.fr.js   # pakete yazar, bütün paketi denetler, özetleri günceller
+#   es ve bs için aynı
+python3 build.py && python3 tests/run_tests.py && HR_LANGS=fr,es,bs python3 tests/ui_tarama.py
+```
+
+`uygula`, İngilizcede artık bulunmayan birimleri paketten siler ve bütün paketin yapısını (anahtarlar, türler, işlev parametreleri, `${…}` ifadeleri) İngilizceyle karşılaştırır; hata varsa paketi yazmaz. `kaydet` bütün özetleri yeniden yazar; yalnız tam bir çeviri ve geri çeviri denetiminden sonra kullanılır. Kod değişikliği metinlere dokunmuyorsa (hesap, çizim, düzen) `durum` "güncel" der ve çeviri işi çıkmaz.
+
 ## Dosyalar
 
 | Dosya | İçerik | Yeni dilde yapılacak |

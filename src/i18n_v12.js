@@ -68,6 +68,8 @@
   T.tr.packFail = 'Dil paketi açılamadı; İngilizce gösteriliyor.';
   T.en.packOld = 'This language pack cannot be opened in this browser (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ needed). Showing English.';
   T.en.packFail = 'The language pack could not be opened; showing English.';
+  // Otomatik çeviri uyarısı: yalnız dil paketlerinde (fr, es, bs) dolu; Türkçe ve İngilizcede boş kalır, gösterilmez
+  T.tr.mtNote = ''; T.en.mtNote = '';
   T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });
   T.en.prOpts = Object.assign({}, T.en.prOpts, { map3: T.en.prOptsMap3 });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

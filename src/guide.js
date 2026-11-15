@@ -183,7 +183,7 @@
       srcCongress: 'Türkiye Takvimi Vakit Hesaplama Heyeti, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: Uluslararası Kamer Aybaşları ve Hicrî Takvîm Birliği Kongresi tebliği, İstanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>). Programda “Kongre tebliği” diye anılır.',
       srcAbidin: 'İbni Âbidîn, <em>Redd-ül-muhtâr</em>, Kitâb-us-savm (Ahmed Davudoğlu tercümesi).',
       srcMap: 'Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomik motor: Astronomy Engine 2.1.19 (MIT).',
-      canonNote: ''
+      canonNote: '', mtNote: ''
     },
     en: {
       lbFiqh: 'Legal basis (Tam İlmihâl)', lbSci: 'Scientific explanation', lbFiqhD: 'Legal basis — detail', lbSciD: 'Scientific explanation — detail', more: 'Detailed explanation',
@@ -200,7 +200,7 @@
       srcCongress: 'Türkiye Takvimi Prayer Times Committee, <em>Naklî ve Aklî Delîllerle Rü’yet-i Hilâl</em>: paper to the International Congress on Lunar Month Beginnings and Hijri Calendar Unity, Istanbul, 2016 (<a href="https://www.turktakvim.com/pdf/HilalKongreTR.pdf" target="_blank" rel="noopener">PDF</a>, Turkish). Cited in the program as the “congress paper”.',
       srcAbidin: 'Ibni ’Âbidîn, <em>Radd al-Muhtar</em>, Kitab al-Sawm (tr. Ahmed Davudoğlu).',
       srcMap: 'Map: Natural Earth 1:110m (public domain); relief: NASA Earth Observatory Blue Marble (public domain). Astronomy: Astronomy Engine 2.1.19 (MIT).',
-      canonNote: 'English rendering of the Turkish canonical text. The Turkish text is authoritative.'
+      canonNote: 'English rendering of the Turkish canonical text. The Turkish text is authoritative.', mtNote: ''
     }
   };
   const gx = L => PK(GX, L);
@@ -228,7 +228,7 @@
   function bookLine(L) { const b = G.HRLangs ? G.HRLangs.get(L).book : null; return b ? `<em>${esc(b.title)}</em>: <a href="${b.page}" target="_blank" rel="noopener">Hakîkat Kitâbevi</a>${b.pdf ? ` (<a href="${b.pdf}" target="_blank" rel="noopener">PDF</a>)` : ''}.` : ''; }
   function sourcesHtml(L) {
     const x = gx(L);
-    return '<ul>' + [x.srcBook, x.srcRead || bookLine(L), x.srcCongress, x.srcAbidin, PRAY, YALLOP, FATOOHI, x.srcMap].map(v => `<li>${v}</li>`).join('') + '</ul>';
+    return (x.mtNote ? `<p class="small">${x.mtNote}</p>` : '') + '<ul>' + [x.srcBook, x.srcRead || bookLine(L), x.srcCongress, x.srcAbidin, PRAY, YALLOP, FATOOHI, x.srcMap].map(v => `<li>${v}</li>`).join('') + '</ul>';
   }
   const CANON = { tr: G.HR_CANON_TR || [], en: G.HR_CANON_EN || [] };
   function canonHtml(L) {

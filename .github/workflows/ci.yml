@@ -10,5 +10,7 @@ jobs:
       - run: pip install playwright cryptography && playwright install --with-deps chromium
       - run: python3 build.py
       - run: python3 tests/run_tests.py
+      # Dil paketleri kaynakla eşleşmeli: Türkçe / İngilizce metin değişince fr, es, bs çevirisi de güncellenmeli
+      - run: python3 tools/dil/pack_sync.py durum
       - uses: actions/upload-artifact@v4
         with: { name: mahinev, path: dist/mahinev.html }

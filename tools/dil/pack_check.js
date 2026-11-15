@@ -1,6 +1,9 @@
 // Dil paketi parçası denetimi ve birleştirme.
 //   node tools/dil/pack_check.js ÇEVİRİ.js KAYNAK.en.js        → yapı denetimi (anahtar, tür, liste uzunluğu, işlev parametreleri, ${…} ifadeleri)
 //   node tools/dil/pack_check.js --build DİZİN DİL ÇIKIŞ.js       → DİZİN/<parça>.<DİL>.js dosyalarını birleştirip denetler, src/lang/<DİL>.js yazar
+//   node tools/dil/pack_check.js --units PAKET.js                 → paketin eşleme birimleri (JSON: yol → kaynak metni)
+//   node tools/dil/pack_check.js --apply PAKET.js İŞ.js EN.js     → İŞ.js'teki birimleri ({ "T.x": …, "MONTHS[3]": … }) pakete yazar,
+//                                                                   İngilizcede artık olmayan anahtarları siler, bütün paketi EN.js ile denetler
 const fs = require('fs'), path = require('path');
 const load = f => new Function('"use strict"; return (' + fs.readFileSync(f, 'utf8') + '\n);')();
 const kind = v => Array.isArray(v) ? 'array' : v === null ? 'null' : typeof v;
@@ -41,8 +44,44 @@ function ser(v, ind) {
   if (Array.isArray(v)) return '[' + v.map(x => ser(x, ind + 1)).join(', ') + ']';
   return '{\n' + Object.keys(v).map(k => pad + (isId(k) ? k : JSON.stringify(k)) + ': ' + ser(v[k], ind + 1)).join(',\n') + '\n' + end + '}';
 }
+function units(P) {   // pack_dump.py'deki birim düzeniyle aynı
+  const u = {};
+  for (const k of Object.keys(P)) {
+    const v = P[k];
+    if (Array.isArray(v)) { if (k === 'CANON' || k === 'PLAN') u[k] = v; else v.forEach((x, i) => { u[`${k}[${i}]`] = x; }); }
+    else for (const kk of Object.keys(v)) u[`${k}.${kk}`] = v[kk];
+  }
+  return u;
+}
+function setUnit(P, path, val) {
+  let m = path.match(/^(\w+)\[(\d+)\]$/);
+  if (m) { (P[m[1]] = P[m[1]] || [])[+m[2]] = val; return; }
+  m = path.match(/^(\w+)\.(.+)$/);
+  if (m) { (P[m[1]] = P[m[1]] || {})[m[2]] = val; return; }
+  P[path] = val;
+}
+const header = L => `/* Dil paketi: ${L}. Derlemede sıkıştırılıp gömülür (build.py). Güncelleme: tools/dil/pack_sync.py (bkz. docs/coklu-dil.md) */\n`;
 const a = process.argv.slice(2);
-if (a[0] === '--build') {
+if (a[0] === '--units') {
+  const u = units(load(a[1]));
+  process.stdout.write(JSON.stringify(Object.fromEntries(Object.entries(u).map(([k, v]) => [k, ser(v, 0)]))));
+} else if (a[0] === '--apply') {
+  const [, packF, workF, enF] = a, P = load(packF), W = load(workF), E = load(enF);
+  for (const [k, v] of Object.entries(W)) setUnit(P, k, v);
+  // İngilizcede olmayanları sil; sırayı İngilizceye göre düzenle
+  const out = {};
+  for (const k of Object.keys(E)) {
+    if (Array.isArray(E[k])) out[k] = (P[k] || []).slice(0, E[k].length);
+    else if (E[k] && typeof E[k] === 'object') { out[k] = {}; for (const kk of Object.keys(E[k])) if (P[k] && kk in P[k]) out[k][kk] = P[k][kk]; }
+    else out[k] = P[k];
+  }
+  const L = (packF.match(/(\w+)\.js$/) || [])[1] || '?';
+  const { errs, warns } = check(out, E, L);
+  warns.forEach(w => console.log('uyarı:', w)); errs.forEach(w => console.log('HATA:', w));
+  if (errs.length) { console.log('Paket yazılmadı.'); process.exit(1); }
+  fs.writeFileSync(packF, header(L) + ser(out, 0) + '\n');
+  console.log(`${L}: ${Object.keys(W).length} birim uygulandı · yapı tamam · ${warns.length} uyarı`);
+} else if (a[0] === '--build') {
   const [, dir, L, outFile] = a, CH = ['ui1', 'ui2', 'ui3', 'misc', 'guide', 'long'];
   const pack = {}, ref = {};
   for (const c of CH) {
@@ -55,7 +94,7 @@ if (a[0] === '--build') {
   warns.forEach(w => console.log('uyarı:', w));
   errs.forEach(w => console.log('HATA:', w));
   if (errs.length) process.exit(1);
-  fs.writeFileSync(outFile, `/* Dil paketi: ${L}. Derlemede sıkıştırılıp gömülür (build.py). Kaynak: tools/dil/pack_check.js --build */\n` + ser(pack, 0) + '\n');
+  fs.writeFileSync(outFile, header(L) + ser(pack, 0) + '\n');
   console.log(`${L}: ${fs.statSync(outFile).size} bayt, ${errs.length} hata, ${warns.length} uyarı`);
 } else {
   const [f, e] = a; let x, y;
