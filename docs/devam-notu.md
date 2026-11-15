@@ -66,6 +66,12 @@ Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni b
 - **Kalan:** kullanıcı onayıyla GitHub (`gelistirme`); yerel `gelistirme` dalı güncel tutuluyor.
 - Ortam notu: Bu ortamda pip ile gelen playwright yeni tarayıcı sürümü istiyor; `/opt/pw-browsers/chromium_headless_shell-1255` → `-1243` bağlantısı kuruldu (yalnız bu oturum).
 
+### Bağımsız inceleme (v0.14.0) — 15 Kasım
+- Değerlendirme: `docs/inceleme-degerlendirmesi.md`. Kullanıcı A bölümünü (A1–A8) yayından önce uygulattı; C bölümü sonraki sürüme (ufuk profili: kullanıcı amatörü yoracağından çekiniyor, getirisi çok yüksekse uygun biçimde; saha kartı: kullanıcı zamanda ileri-geri gidememeyi sevmedi; pusula göstergesi ekranı doldurmadan; bağımsız astronomik testler kabul; "diğerleri" değerlendirilecek). D: ana katman ve çerçeve Tam İlmihâl.
+- **A1–A8 yapıldı:** `recProblems` + içe aktarma raporu (`importReport`), çatışma; rozetler (imzasız / imza geçersiz) ve `vfScope`; göz güvenliği (Saha: Güneş ufuk üstündeyken her zaman; Plan: oturumluk gizleme, `safetyOff` saklanmaz); `lagTxt` ve core'da ≤ 12 saatlik son batış; `csvCell`; `C.wallStatus` + `dstGap/dstFold`; hijri ölü kod silindi; yerel bütünlük özeti astronomi + stil + program betiği (`build.py` ve `ui.js` SELF), ifadeler "yerel bütünlük denetimi"; README'de SHA-256 ile karşılaştırma.
+- 15 yeni/değişen metin `pack_sync` ile bulundu, yardımcı çevirdi, ayrı yardımcı geri çeviriyle denetledi (3 düzeltme; rapor `docs/ceviri-denetimi/guncelleme-A/`). İspanyolcada hilâl "la creciente" (sel anlamı) → bütün pakette "el creciente" (146 yer); yönergeye yazıldı.
+- **Yayın öncesi yapılacak:** sürüm numarası (0.14.1 → 0.15.0 önerisi) ve sürüm notu; yayımlanan dosyanın SHA-256 özeti sürüm notuna ve README'ye.
+
 ### Önceki kararlar
 Kullanıcının 15 Kasım kararları:
 - Ek diller **sıkıştırılmış dil paketi** olarak eklenecek. Türkçe ve İngilizce açık kalır; yeni diller dosyada sıkıştırılmış (deflate-raw + base64) durur, dil seçilince tarayıcının `DecompressionStream` özelliğiyle açılır (Chrome/Edge 103+, Firefox 113+, Safari 16.4+; desteklenmezse İngilizce). İnternet gerekmez.
