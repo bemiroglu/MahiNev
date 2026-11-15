@@ -6,9 +6,11 @@ Kullanım:  python3 build.py
 Kanonik kural metni docs/kanonik-metin.md dosyasından okunur ve programın içine gömülür.
 
 Resmî sürüm bildirimi (telif, lisans, GitHub adresi) şifrelenip dört parçaya bölünerek
-farklı modüllere gömülür; ayrıca modül betiğinin özeti (FNV-1a, 2×32 bit) hesaplanıp
-programa yazılır. Program açılışta özeti yeniden hesaplar; eşleşmezse "resmî olmayan
-kopya" uyarısı gösterir. Bu bir caydırıcıdır, kriptografik koruma değildir.
+farklı modüllere gömülür; ayrıca astronomi betiği, stil ve program betiğinin birlikte özeti
+(FNV-1a, 2×32 bit) hesaplanıp programa yazılır. Program açılışta özeti yeniden hesaplar;
+eşleşmezse "değiştirilmiş kopya" uyarısı gösterir. Bu yerel bir bütünlük denetimidir ve
+caydırıcıdır; kriptografik imza değildir, dosyanın yayımlanan özgün dosya olduğunu tek başına
+ispatlamaz. Bunun için sürüm notunda ve README'de yayımlanan SHA-256 özeti kullanılır.
 """
 import base64, json, pathlib, re, zlib
 
@@ -92,11 +94,12 @@ body = tpl.replace('/*MODULES*/', mods)
 m = re.search(r'<script>\n(window\.HR_SRC.*?)</script>', body, re.S)
 assert m, 'modül betiği bulunamadı'
 script_text = '\n' + m.group(1)  # <script> etiketinden hemen sonraki satır sonu da textContent'e dahildir
-digest = 'HRD' + fnv2(script_text)
-body = body.replace(ZERO, digest)
-
 lib = (R / 'vendor' / 'astronomy.browser.min.js').read_text(encoding='utf-8').replace('</script', '<\\/script')
 lic = '/* Astronomy Engine 2.1.19 - Copyright (c) 2019-2024 Don Cross - MIT License - https://github.com/cosinekitty/astronomy */\n'
+# Yerel bütünlük özeti: astronomi betiği + bütün <style> içerikleri + program betiği (ui.js içindeki SELF ile aynı sıra)
+styles = re.findall(r'<style>(.*?)</style>', body.split('<script>')[0], re.S)
+digest = 'HRD' + fnv2((lic + lib) + '\x00' + '\x00'.join(styles) + '\x00' + script_text)
+body = body.replace(ZERO, digest)
 out = body.replace('<!--ASTRONOMY-->', '<script>' + lic + lib + '</script>')
 ver = re.findall(r"HR_VERSION = '([^']+)'", mods)[-1]
 out = out.replace('@@VERSION@@', ver)

@@ -102,7 +102,7 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 
 ## Yayın adresi ve bütünlük
 
-Programın özgün dosyası yalnızca [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev) adresinde yayımlanır. Her HTML dosyasında lisans bilgisi ve bu adres bulunur.
+Programın özgün dosyası yalnızca [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev) adresinde yayımlanır. Her HTML dosyasında lisans bilgisi ve bu adres bulunur. Program açılışta kendi içinde yerel bir bütünlük denetimi yapar ve dosya değiştirilmiş görünüyorsa uyarır; bu denetim kriptografik imza değildir. İndirdiğiniz dosyanın yayımlanan dosyanın aynısı olduğunu, sürüm notunda yazılı SHA-256 özetiyle karşılaştırarak denetleyebilirsiniz (ör. `sha256sum mahinev.html`, Windows'ta `certutil -hashfile mahinev.html SHA256`).
 
 Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse ekranın üstünde **"değiştirilmiş kopya"** uyarısı çıkar. Aynı ibare baskı çıktılarına ve rü'yet kayıtlarına da yazılır.
 
@@ -240,7 +240,7 @@ Mâh-ı Nev is a single HTML file. Nothing to install: download it and open it i
 
 ## Published address and integrity
 
-The original file is published only at [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev). Every HTML file carries the licence and this address.
+The original file is published only at [github.com/bemiroglu/MahiNev](https://github.com/bemiroglu/MahiNev). Every HTML file carries the licence and this address. On opening, the program runs a local integrity check and warns if the file appears to have been changed; this check is not a cryptographic signature. To confirm that your download is identical to the published file, compare it with the SHA-256 digest given in the release notes (e.g. `sha256sum mahinev.html`, on Windows `certutil -hashfile mahinev.html SHA256`).
 
 On opening, the program checks its own integrity. If the file has been altered, a **"modified copy"** warning appears at the top of the screen, and the same words are written on printouts and sighting records.
 

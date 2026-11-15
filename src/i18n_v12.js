@@ -70,6 +70,29 @@
   T.en.packFail = 'The language pack could not be opened; showing English.';
   // Otomatik çeviri uyarısı: yalnız dil paketlerinde (fr, es, bs) dolu; Türkçe ve İngilizcede boş kalır, gösterilmez
   T.tr.mtNote = ''; T.en.mtNote = '';
+  // Bağımsız inceleme düzeltmeleri (A1–A8)
+  Object.assign(T.tr, {
+    lagBefore: m => `Ay güneşten önce battı (${m} önce)`, lagBeforeNone: 'Ay güneşten önce battı',
+    recImportBig: 'Dosya çok büyük ya da çok fazla kayıt içeriyor (en çok 25 MB, 5.000 kayıt).',
+    recImpTitle: 'Kayıtların içe aktarılması', recImpBad: 'Biçimi hatalı olduğu için alınmayan kayıtlar (hatalı alanlar):',
+    recImpConf: 'Kayıt çatışması: aynı kimlikte, içeriği farklı kayıtlar. Birleştirilmedi; cihazdaki kayıt korundu.',
+    recImpItem: n => `${n}. kayıt`, recDamaged: 'Bozuk kayıt (biçimi hatalı)',
+    recSigBad: 'imza geçersiz', recUnsigned: 'imzasız',
+    dstGap: (loc, u) => `Bu yerel saat, yaz saatine geçiş yüzünden bu tarihte yaşanmaz; ${loc} olarak alındı (${u}).`,
+    dstFold: u => `Bu yerel saat, yaz saatinden dönüşte bu tarihte iki kez yaşanır; ilki alındı (${u}).`,
+    vfScope: 'Doğrulama yalnız kaydın sonradan değiştirilmediğini (ve imzalıysa hangi cihaz anahtarıyla mühürlendiğini) gösterir; hilâlin görüldüğünü veya gözlemcinin kimliğini doğrulamaz.'
+  });
+  Object.assign(T.en, {
+    lagBefore: m => `The Moon set before the Sun (${m} earlier)`, lagBeforeNone: 'The Moon set before the Sun',
+    recImportBig: 'The file is too large or contains too many records (at most 25 MB, 5,000 records).',
+    recImpTitle: 'Importing records', recImpBad: 'Records not imported because their format is invalid (invalid fields):',
+    recImpConf: 'Record conflict: records with the same ID but different content. Not merged; the record on this device was kept.',
+    recImpItem: n => `Record ${n}`, recDamaged: 'Damaged record (invalid format)',
+    recSigBad: 'signature invalid', recUnsigned: 'unsigned',
+    dstGap: (loc, u) => `This local time does not exist on this date because of the change to summer time; it was taken as ${loc} (${u}).`,
+    dstFold: u => `This local time occurs twice on this date because of the change back from summer time; the first was taken (${u}).`,
+    vfScope: 'Verification only shows that the record has not been changed afterwards (and, if signed, which device key sealed it); it does not verify that the crescent was seen or who the observer is.'
+  });
   T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });
   T.en.prOpts = Object.assign({}, T.en.prOpts, { map3: T.en.prOptsMap3 });
 })(typeof globalThis !== 'undefined' ? globalThis : window);

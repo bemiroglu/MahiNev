@@ -130,6 +130,13 @@
     const ok = [...new Set([oB, oA])].map(o => wall - o * 60000).filter(t => wall - tzOffsetMin(tz, new Date(t)) * 60000 === t);
     return ok.length ? Math.min(...ok) : wall - oB * 60000;   // iki kez yaşanan saat → ilki; olmayan saat → geçişten sonraki karşılığı
   }
+  // Yerel saatin durumu: 'gap' = yaz saati geçişinde bu saat yaşanmaz, 'fold' = iki kez yaşanır (kullanıcıya söylenir)
+  function wallStatus(ymd, minutes, tz) {
+    const [y, m, d] = ymd.split('-').map(Number), wall = Date.UTC(y, m - 1, d) + minutes * 60000;
+    const oB = tzOffsetMin(tz, new Date(wall - 86400000)), oA = tzOffsetMin(tz, new Date(wall + 86400000));
+    const ok = [...new Set([oB, oA])].map(o => wall - o * 60000).filter(t => wall - tzOffsetMin(tz, new Date(t)) * 60000 === t);
+    return { kind: ok.length === 0 ? 'gap' : ok.length > 1 ? 'fold' : 'ok', ut: localToUT(ymd, minutes, tz) };
+  }
   // Saat diliminin yerel gece yarısı (UTC ms)
   function tzMidnight(ymd, tz) { return localToUT(ymd, 0, tz); }
   function localNoon(ymd, tz) {
@@ -158,7 +165,10 @@
     r.illum = A.Illumination('Moon', ss).phase_fraction * 100;
     r.moonUp = upperLimbAboveVisible('Moon', ss, obs, hObs) > 0;
     if (r.moonUp) { r.moonset = zahiriSet('Moon', obs, hObs, ss, 1); }
-    else { r.moonset = lastSetBefore('Moon', obs, hObs, ss); }
+    else {   // ay gurûbda ufkun altında: yalnız aynı gündeki (≤ 12 saat önceki) batışı al; yüksek enlemde dünkü batış "fark" sayılmaz
+      const ls = lastSetBefore('Moon', obs, hObs, ss);
+      r.moonset = ls && (ss.ut - ls.ut) * 24 <= 12 ? ls : null;
+    }
     r.lagMin = r.moonset ? (r.moonset.ut - ss.ut) * 1440 : null;
     // Şer'î gurûb, temkin
     r.seri = seriGurub(obs, hMax, noon);
@@ -478,5 +488,5 @@
   }
 
   const Q = '@@N1@@'; // sürüm bildirimi parçası (build.py)
-  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, cellX, firstEvening, skyObjects, twilight, at, crescentData, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
+  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, wallStatus, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, cellX, firstEvening, skyObjects, twilight, at, crescentData, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

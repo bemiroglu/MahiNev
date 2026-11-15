@@ -9,7 +9,15 @@
 
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
-  const SELF = (document.currentScript && document.currentScript.textContent) || '';
+  // Yerel bütünlük denetimi: astronomi betiği + stil + program betiği birlikte özetlenir (build.py ile aynı sıra).
+  // Bu, dosyanın değiştirilip değiştirilmediğini yakalamaya yarayan bir denetimdir; kriptografik imza değildir,
+  // dosyanın yayımlanan özgün dosya olduğunu tek başına ispatlamaz (karşılaştırma için sürüm notundaki SHA-256 özeti).
+  const SELF = (() => {
+    const cur = document.currentScript; if (!cur) return '';
+    const others = [...document.scripts].filter(s => s !== cur).map(s => s.textContent).join('\u0000');
+    const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\u0000');
+    return others + '\u0000' + css + '\u0000' + cur.textContent;
+  })();
   const Q4 = '@@N4@@', DIG = 'HRD0000000000000000';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
@@ -52,7 +60,7 @@
     darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', layout: 'sade', level: 'all', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
-  st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false;
+  st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false; st.safetyOff = false;   // göz güvenliği uyarısı her açılışta görünür
   st.date = todayYmd(st.tz); // açılışta her zaman içinde bulunulan an
   const LG = G.HRLangs; G.HRLangs.chain(I.T); if (!LG.LANGS[st.lang]) st.lang = 'tr';
   // Sıkıştırılmış dil paketi (fr, es, bs) açılana kadar İngilizce gösterilir; açılınca seçili dile geçilir (bind sonunda)
@@ -68,7 +76,7 @@
   const REC_WARN = 150; // sınır yok; bu sayıdan sonra yedek alma hatırlatılır
 
   function load(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
-  function save() { try { const o = Object.assign({}, st); delete o.tmin; delete o.anchor; delete o.live; delete o.frozen; delete o.locAuto; localStorage.setItem('hr-v05', JSON.stringify(o)); } catch (e) { /* depolama yok */ } }
+  function save() { try { const o = Object.assign({}, st); delete o.tmin; delete o.anchor; delete o.live; delete o.frozen; delete o.locAuto; delete o.safetyOff; localStorage.setItem('hr-v05', JSON.stringify(o)); } catch (e) { /* depolama yok */ } }
   // kayıt saklama başarısı denetlenir; başarısızlık sessiz geçilmez
   function storeRecs(list) { try { localStorage.setItem('hr-records', JSON.stringify(list)); return true; } catch (e) { return false; } }
   function saveRec() { const ok = storeRecs(records); if (!ok && typeof toast === 'function') toast(t.recStoreFail, 8000); return ok; }
@@ -460,8 +468,8 @@
     el.textContent = on.length ? t.netOn(on.join(' · ')) : t.netNone;
   }
   // Göz güvenliği uyarısı yalnız rü’yetin mümkün olduğu akşamlarda gösterilir; kullanıcı kapatabilir (Ayarlar’dan geri açılır)
-  const sightPossible = r => !!(r && r.ok && r.cls && ['possible', 'visible'].includes(r.cls.code));
-  function paintSafety() { const el = $('safety'); if (el) el.hidden = !!st.safetyOff || !sightPossible(R); }
+  // Plan’daki uyarı her akşam görünür; gizleme yalnız bu oturum içindir (st.safetyOff saklanmaz)
+  function paintSafety() { const el = $('safety'); if (el) el.hidden = !!st.safetyOff; }
   // ---- Sade görünüm: ikincil kartlar katlı başlar; her kart başlığa dokunarak açılıp kapanır, seçim hatırlanır ----
   const FOLDABLE = ['locCard', 'dateCard', 'upCard', 'tbCard', 'wxCard', 'skyCard', 'stripCard', 'detailCard', 'monthCard'];
   const SADE_FOLDED = ['locCard', 'dateCard', 'tbCard', 'wxCard', 'stripCard', 'detailCard', 'monthCard'];
@@ -671,11 +679,13 @@
     const loc = LOC || locObj(), out = { schema: 'mahinev-ham-veri/1', app: { name: 'Mâh-ı Nev', version: G.HR_VERSION, source: HOME }, rules: G.HR_RULES, created: new Date().toISOString(), place: { name: curPlaceName(), lat: loc.lat, lon: loc.lon, elev: loc.elev, hObs: loc.hObs, tz: st.tz }, note: t.notCalendar || '', evening: rawEvening(R, st.date) };
     saveFile(fileBase('raw') + '.json', JSON.stringify(out, null, 2), 'application/json');
   }
+  // CSV (RFC 4180): virgül, tırnak veya satır sonu içeren alan tırnak içine alınır, içteki tırnak ikilenir; metin kaybolmaz
+  const csvCell = v => { if (v == null) return ''; const x = String(v); return /[",\r\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
   function exportRawCsv() {
     const loc = LOC || locObj(), conj = C.nearestNewMoon(C.solarNoon(st.date, loc.lon)), cd = conj.date, base = ymdOf(new Date(Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate())));
     const rows = []; let cols = null;
-    for (let k = -3; k <= 29; k++) { const y = addDays(base, k), o = rawEvening(eveningCached(loc, y), y); if (!cols) cols = Object.keys(o); rows.push(cols.map(c => o[c] == null ? '' : String(o[c]).replace(/[",\n]/g, ' ')).join(',')); }
-    saveFile(fileBase('rawCsv') + '.csv', [cols.join(','), ...rows].join('\n') + '\n', 'text/csv');
+    for (let k = -3; k <= 29; k++) { const y = addDays(base, k), o = rawEvening(eveningCached(loc, y), y); if (!cols) cols = Object.keys(o); rows.push(cols.map(c => csvCell(o[c])).join(',')); }
+    saveFile(fileBase('rawCsv') + '.csv', [cols.map(csvCell).join(','), ...rows].join('\r\n') + '\r\n', 'text/csv');
   }
   // Kâdîhân kontrolü: İmâm-ı a’zam (−19°, esas) ve İmâmeyn (−17°, alternatif) birlikte (Tam İlmihâl s. 178, 194, 316)
   function kadihanHtml(r, compact) {
@@ -691,7 +701,7 @@
     h += kv(t.gurub + ' ' + q('gurub'), fmtTime(r.gurub), utcSub(r.gurub));
     if (r.seri && r.seri.seri) h += kv(t.seri, fmtTime(r.seri.seri), `${t.temkin} ${num(r.seri.temkinMin, 1)} ${t.min}`);
     h += kv(t.moonset, fmtTime(r.moonset), utcSub(r.moonset));
-    h += kv(t.lag, hm(r.lagMin));
+    h += kv(t.lag, lagTxt(r));
     h += kv(t.age, ageTxt(r.ageH));
     h += kv(t.lastConj + ' ' + q('ictima'), fmtDT(r.ictimaPrev), utcSub(r.ictimaPrev));
     h += kv(t.beyn + ' ' + q('beynunet'), degf(r.beynunet));
@@ -1410,7 +1420,8 @@
     const city = CITIES.find(c => c.id === st.city);
     // Güneş ufkun üstündeyken göz güvenliği uyarısı; pusula açıkken yaklaşıklık notu
     let sunUp = false; try { sunUp = C.at(now, loc).sun.alt > -1; } catch (e) { /* */ }
-    const fShow = !pv && sunUp && !st.safetyOff && sightPossible(eveningCached(loc, today)); $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = true;
+    // Göz güvenliği: Güneş ufkun üstündeyken hilâlin sınıfından bağımsız her zaman (önizlemede de); Saha’da gizlenemez
+    const fShow = sunUp; $('fSafety').hidden = !fShow; if (fShow) $('fSafety').textContent = t.safety; $('fCompassNote').hidden = true;
     $('fDate').textContent = `${fmtCivil(civil(today))} · ${city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : degf(st.lat, 2) + ', ' + degf(st.lon, 2))}`;
     if (!FR || !FR.ok) { $('fStatus').innerHTML = ''; $('fBig').textContent = t.none; return; }
     // Büyük durum satırı: şimdi ne yapmalı
@@ -1588,7 +1599,16 @@
     if (ev && ev.sunrise && at.ut < ev.sunrise.ut) { const p = addDays(d, -1); return { ymd: p, r: eveningCached(loc, p), day: false }; }
     return { ymd: d, r, day: true };
   }
-  function showRecEvening() { const e = recEveningOf(recTime()); $('recEvLbl').textContent = e.day ? t.recDayLbl : t.recEvening(fmtCivil(civil(e.ymd))); }
+  function showRecEvening() {
+    const e = recEveningOf(recTime()); let txt = e.day ? t.recDayLbl : t.recEvening(fmtCivil(civil(e.ymd)));
+    // Yaz saati geçişi: girilen yerel saat yoksa veya iki kez yaşanıyorsa söylenir; kayıt her zaman UTC olarak saklanır
+    const v = $('recAt').value;
+    if (v && v.includes('T')) {
+      const [d, hmv] = v.split('T'), [hh, mm] = hmv.split(':').map(Number), w = C.wallStatus(d, hh * 60 + mm, st.tz);
+      if (w.kind !== 'ok') { const u = new Date(w.ut).toISOString().slice(0, 16).replace('T', ' ') + ' UTC'; txt += ' · ' + (w.kind === 'gap' ? t.dstGap(fmtTime(A.MakeTime(new Date(w.ut))), u) : t.dstFold(u)); }
+    }
+    $('recEvLbl').textContent = txt;
+  }
   // ---- Rü’yet kaydı v2: ICOP benzeri alanlar + fıkhî alanlar, SHA-256 özeti, cihaz imzası ----
   function evaluateRecord(result, at) {
     const saw = !['not', 'noObs'].includes(result), e = recEveningOf(at), r = e.r;
@@ -1722,16 +1742,76 @@
     const data = { schema: 'mahinev-kayit-yedegi/1', created: new Date().toISOString(), app: { name: 'Mâh-ı Nev', version: G.HR_VERSION }, records };
     saveFile(fileBase('backup', { ymd: todayYmd(st.tz), hhmm: hhmmTz(new Date(), st.tz), place: '' }) + '.json', JSON.stringify(data, null, 2), 'application/json');
   }
+  // İçe aktarılan kaydın biçim denetimi (docs/kayit-semasi.md, schemas/hilal-ruyet-kaydi-1.schema.json).
+  // Hatalı alanların listesini döndürür; boş liste = kayıt kullanılabilir. Özet ve imza ayrıca doğrulanır (rozetler).
+  const REC_RESULTS = ['naked', 'aidedNaked', 'aided', 'photo', 'doubt', 'not', 'noObs'], REC_SKY = ['clear', 'partly', 'cloud', 'haze'], REC_SITE = ['open', 'high', 'city'];
+  const REC_MAX_BYTES = 25e6, REC_MAX_COUNT = 5000;
+  function recProblems(x) {
+    const P = [], obj = v => v && typeof v === 'object' && !Array.isArray(v), str = v => typeof v === 'string', num = v => typeof v === 'number' && isFinite(v);
+    const date = v => str(v) && v.length <= 40 && !isNaN(Date.parse(v)), ymd = v => str(v) && /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(Date.parse(v + 'T12:00:00Z'));
+    const tzOk = v => { if (!str(v)) return false; try { new Intl.DateTimeFormat('en', { timeZone: v }); return true; } catch (e) { return false; } };
+    const optStr = (v, max) => v == null || (str(v) && v.length <= max);
+    if (!obj(x)) return ['—'];
+    if (!x.schema) {   // eski biçim (0.4 öncesi): ts ve saat dilimi yeter
+      if (!date(x.ts)) P.push('ts'); if (x.tz != null && !tzOk(x.tz)) P.push('tz'); return P;
+    }
+    if (x.schema !== 'hilal-ruyet-kaydi/1') P.push('schema');
+    if (!str(x.id) || !x.id || x.id.length > 100) P.push('id');
+    if (!date(x.created)) P.push('created');
+    if (x.hash != null && (!str(x.hash) || !/^[0-9a-f]{64}$/.test(x.hash))) P.push('hash');   // mühürsüz kayıt (eski tarayıcı) geçerli, ama rozetsiz
+    if (!obj(x.observer)) P.push('observer'); else { if (!optStr(x.observer.name, 200)) P.push('observer.name'); if (!optStr(x.observer.contact, 200)) P.push('observer.contact'); }
+    const pl = x.place;
+    if (!obj(pl)) P.push('place');
+    else {
+      if (!num(pl.lat) || Math.abs(pl.lat) > 90) P.push('place.lat');
+      if (!num(pl.lon) || Math.abs(pl.lon) > 180) P.push('place.lon');
+      if (!tzOk(pl.tz)) P.push('place.tz');
+      if (pl.elev != null && (!num(pl.elev) || pl.elev < -500 || pl.elev > 9000)) P.push('place.elev');
+      if (pl.site != null && !REC_SITE.includes(pl.site)) P.push('place.site');
+      if (!optStr(pl.name, 200)) P.push('place.name');
+    }
+    const o = x.observation;
+    if (!obj(o)) P.push('observation');
+    else {
+      if (!date(o.at)) P.push('observation.at');
+      if (!ymd(o.evening)) P.push('observation.evening');
+      if (!REC_RESULTS.includes(o.result)) P.push('observation.result');
+      if (o.sky != null && !REC_SKY.includes(o.sky)) P.push('observation.sky');
+      for (const k of ['firstSeen', 'lastSeen']) if (o[k] != null && !optStr(o[k], 40)) P.push('observation.' + k);
+      for (const k of ['companions', 'seers']) if (o[k] != null && (!Number.isInteger(o[k]) || o[k] < 0 || o[k] > 10000)) P.push('observation.' + k);
+      if (!optStr(o.note, 5000)) P.push('observation.note');
+    }
+    if (x.computed != null && !obj(x.computed)) P.push('computed');
+    if (x.photo != null && (!obj(x.photo) || !str(x.photo.sha256) || !/^[0-9a-f]{64}$/.test(x.photo.sha256))) P.push('photo');
+    if (x.sig != null && !str(x.sig)) P.push('sig');
+    if (x.signer != null && !obj(x.signer)) P.push('signer');
+    if (x.notices != null && (!Array.isArray(x.notices) || x.notices.some(n => !obj(n)))) P.push('notices');
+    return P;
+  }
+  function importReport(add, dup, bad, conf) {
+    const li = a => a.map(s => `<li>${s}</li>`).join('');
+    let h = `<h3>${esc(t.recImpTitle)}</h3><p>${esc(t.recImported(add, dup))}</p>`;
+    if (conf.length) h += `<p class="lab">${esc(t.recImpConf)}</p><ul class="small">${li(conf.map(c => `${esc(c.id)} · ${esc(t.recHash)}: <span class="hash">${esc(String(c.have).slice(0, 12))}…</span> ≠ <span class="hash">${esc(String(c.got).slice(0, 12))}…</span>`))}</ul>`;
+    if (bad.length) h += `<p class="lab">${esc(t.recImpBad)}</p><ul class="small">${li(bad.slice(0, 50).map(b => `${esc(t.recImpItem(b.i + 1))}: ${esc(b.p.join(', '))}`))}</ul>${bad.length > 50 ? `<p class="small">… ${bad.length - 50}</p>` : ''}`;
+    $('dlgBody').innerHTML = h;
+    const d = $('dlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
+  }
   async function importRecords(ev) {
     const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
     let list = null;
+    if (f.size > REC_MAX_BYTES) { toast(t.recImportBig, 8000); return; }
     try { const j = JSON.parse(await f.text()); list = Array.isArray(j) ? j : j && Array.isArray(j.records) ? j.records : j && j.schema === 'hilal-ruyet-kaydi/1' ? [j] : null; } catch (e) { list = null; }
     if (!list) { toast(t.recImportBad); return; }
-    const have = new Set(records.map(x => x.id || x.ts)); let add = 0, dup = 0;
-    for (const x of list) {
-      if (!x || !(x.schema || x.ts)) continue; const k = x.id || x.ts;
-      if (have.has(k)) {   // aynı kayıt: yalnız yeni bildirim eklerini al
-        const cur = records.find(r => (r.id || r.ts) === k), ids = new Set(((cur && cur.notices) || []).map(n => n.id));
+    if (list.length > REC_MAX_COUNT) { toast(t.recImportBig, 8000); return; }
+    const have = new Set(records.map(x => x.id || x.ts)); let add = 0, dup = 0; const bad = [], conf = [];
+    for (const [i, x] of list.entries()) {
+      const pr = recProblems(x);
+      if (pr.length) { bad.push({ i, p: pr }); continue; }   // geçersiz kayıt depoya alınmaz
+      const k = x.id || x.ts;
+      if (have.has(k)) {   // aynı kayıt: yalnız yeni bildirim eklerini al; özeti farklıysa çatışma (birleştirilmez)
+        const cur = records.find(r => (r.id || r.ts) === k);
+        if (x.schema && cur && cur.hash !== x.hash) { conf.push({ id: k, have: cur.hash, got: x.hash }); continue; }
+        const ids = new Set(((cur && cur.notices) || []).map(n => n.id));
         const extra = (x.notices || []).filter(n => n && n.id && !ids.has(n.id) && cur && n.recordHash === cur.hash);
         if (extra.length) cur.notices = [...(cur.notices || []), ...extra];
         dup++; continue;
@@ -1739,7 +1819,9 @@
       have.add(k); records.push(x); add++;
     }
     records.sort((a, b) => String((b.observation && b.observation.at) || b.ts).localeCompare(String((a.observation && a.observation.at) || a.ts)));
-    if (saveRec()) toast(t.recImported(add, dup)); renderRecords(true);
+    if (!saveRec()) return;
+    renderRecords(true);
+    if (bad.length || conf.length) importReport(add, dup, bad, conf); else toast(t.recImported(add, dup));
   }
   async function checkPhoto(ev) {
     const f = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!f) return;
@@ -1778,7 +1860,7 @@
         ${code ? kv(t.vfCodeRow, esc(!codeOk ? t.vfCodeBad : v.hash ? t.vfCodeOk : t.vfCodeChanged), '', 'txt') : ''}
         ${(x.notices || []).length ? kv(t.ntRow, (await Promise.all(x.notices.map(async n => `${(await noticeOk(n, x)) ? '✓' : '✗'} ${esc(noticeLine(n, x))}`))).join('<br>'), '', 'txt') : ''}</dl></div>`);
     }
-    out.innerHTML = rows.join('');
+    out.innerHTML = rows.join('') + `<p class="small">${esc(t.vfScope)}</p>`;
   }
   // Kayıt listesinde her kaydın özeti ve imzası yeniden doğrulanır
   async function noticeOk(n, x) { try { const v = await G.HRSig.verify(n); return v.hash && (!n.sig || v.sig) && n.record === x.id && n.recordHash === x.hash; } catch (e) { return false; } }
@@ -1791,7 +1873,9 @@
     for (const el of els) {
       const x = records[+el.dataset.ver]; if (!x || !x.hash) continue;
       let v = { hash: false, sig: false }; try { v = await G.HRSig.verify(x); } catch (e) { /* */ }
-      el.innerHTML = v.hash ? `<span class="pill p-ok">✓ ${esc(t.recVerified)}${v.sig ? ' · ECDSA' : ''}</span>` : `<span class="pill p-bad">✗ ${esc(t.recBroken)}</span>`;
+      // Teknik durum: özet bozuk / imza geçersiz / imzalı ve bütün / imzasız (bütün). Rü’yeti veya kimliği doğrulamaz.
+      el.innerHTML = !v.hash ? `<span class="pill p-bad">✗ ${esc(t.recBroken)}</span>` : x.sig && !v.sig ? `<span class="pill p-bad">✗ ${esc(t.recSigBad)}</span>`
+        : `<span class="pill p-ok" title="${esc(t.vfScope)}">✓ ${esc(t.recVerified)}${x.sig ? ' · ECDSA' : ' · ' + esc(t.recUnsigned)}</span>`;
     }
   }
   let recShown = -1;
@@ -1799,6 +1883,7 @@
     if (!force && recShown === records.length) return; recShown = records.length;
     if (!records.length) { $('recList').innerHTML = `<p class="small">${esc(t.noRecords)}</p>`; return; }
     $('recList').innerHTML = `<table class="t"><tbody>${records.map((x, i) => {
+      if (recProblems(x).length) return `<tr><td colspan="4"><span class="pill p-bad">✗ ${esc(t.recDamaged)}</span> <span class="small">${esc(recProblems(x).join(', '))}</span> <button class="btn" type="button" data-del="${i}">${esc(t.del || '✕')}</button></td></tr>`;
       if (!x.schema) return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(x.ts)))}<br><span class="small">${esc(t.recLegacy)}</span></td><td><span class="pill ${x.cls}">${esc(x.saw ? t.saw : t.notSaw)}</span></td><td>${esc(x.ev)}</td><td><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></td></tr>`;
       const o = x.observation;
       return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.place.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at)))}<br><span class="small">${esc(t.recEvening(fmtCivil(civil(o.evening), true)))}</span></td>
@@ -1841,13 +1926,9 @@
     const day = after ? addDays(ymd, 1) : ymd, h = hijriOf(day);
     if (!h) return null;
     // Kapsam kitabınkidir: Zilhicce dışında dünya geneli (s. 315), Zilhiccede Işık usulü (s. 326). Yerel hesap ayrı satır olarak yazılmaz.
-    const l = null, diff = false;
-    // Yerel kapsam yalnız dünya genelinden farklıysa ikinci satır olarak yazılır
-    const html2 = diff ? `<span class="hjl">${esc(t.hjGlobal)}: ${h.html}<br>${esc(t.hjLocal)}: ${l.html}</span>` : h.html;
     // tagged: aynı metin, sonunda "(hesâbî)" etiketiyle — ay başı rü'yetle kesinleşir; bant dışındaki her yerde bu kullanılır
-    const tag = `<span class="hjh">(${esc(t.hjHesabi)})</span>`;
-    const tagged = diff ? `<span class="hjl">${esc(t.hjGlobal)}: ${h.html}<br>${esc(t.hjLocal)}: ${l.html} ${tag}</span>` : `${h.html} ${tag}`;
-    return Object.assign({ after, local: diff ? l : null, html2, tagged, why: hijriWhy(day), day }, h);
+    const tagged = `${h.html} <span class="hjh">(${esc(t.hjHesabi)})</span>`;
+    return Object.assign({ after, tagged, why: hijriWhy(day), day }, h);
   }
   function renderBarClock() {
     if (!st.live) return;
@@ -1865,7 +1946,7 @@
     $('mbDate').textContent = new Intl.DateTimeFormat(locale(), { timeZone: st.tz, weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }).format(at.date);
     $('mbTime').innerHTML = (live && !frozen ? fmtTime(at).slice(0, 5) + `<span class="s">:${fmtTime(at).slice(6, 8)}</span>` : hhmm(at)) + (st.timeFmt === 'both' ? ' · ' + at.date.toISOString().slice(11, 16) + ' UTC' : '');
     const hj = hijriAt(at);
-    $('mbHijri').innerHTML = hj ? `${hj.local ? hj.html2 : hj.html} <span class="note" title="${esc(t.hjNote + (hj.why ? '\n' + t.hjWhyLead + ' ' + hj.why : ''))}">· ${esc(t.hjHesabi)}${hj.after ? ' · ' + esc(t.hjAfter) : ''}</span> ${q('hicri')}` : '';
+    $('mbHijri').innerHTML = hj ? `${hj.html} <span class="note" title="${esc(t.hjNote + (hj.why ? '\n' + t.hjWhyLead + ' ' + hj.why : ''))}">· ${esc(t.hjHesabi)}${hj.after ? ' · ' + esc(t.hjAfter) : ''}</span> ${q('hicri')}` : '';
     const city = CITIES.find(c => c.id === st.city);
     const chips = [`<button type="button" class="chip loc" id="mbLoc" title="${esc((st.locAuto ? t.chipLocAuto : t.chipLocMan) + ' · ' + t.location)}">${st.locAuto ? '⌖' : '◎'} ${esc(city ? (city[st.lang] || city.en) : (st.locAuto ? t.myPlace : `${num(st.lat, 2)}, ${num(st.lon, 2)}`))} ✎</button>`];
     if (ON.sandboxed) chips.push(`<span class="chip off" title="${esc(t.sandboxNote)}">${esc(t.chipSandbox)}</span>`);
@@ -2049,6 +2130,11 @@
   // Her dilde Tam İlmihâl’in kendi adı ve bağlantıları dil kaydından gelir (langs.js)
   const bookOf = () => LG.get(st.lang).book;
   const bookLinksHtml = () => { const b = bookOf(); return `${esc(t.bookLinks)} ${extLink(b.page, t.bookPage)}${b.pdf ? ' · ' + extLink(b.pdf, t.bookPdf) : ''}`; };
+  // Fark (ay güneşten sonra): ay gurûbda ufkun altındaysa eksi sayı yazılmaz
+  function lagTxt(r) {
+    if (!r || r.lagMin == null) return r && !r.moonUp ? t.lagBeforeNone : t.none;
+    return r.lagMin > 0 ? hm(r.lagMin) : t.lagBefore(hm(-r.lagMin));
+  }
   function aboutHtml() {
     return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>` + (t.mtNote ? `<p class="small">${esc(t.mtNote)}</p>` : '');
   }
@@ -2095,7 +2181,7 @@
     const rng = eveningRange(r, LOC);
     const svgs = withTheme('light', () => ({ w: mid ? G.HRSky.panorama(LOC, tA, st.lang, {}).svg : G.HRSky.draw(r, LOC, tA, st.lang, {}).svg }));
     const row = (k, v) => `<tr><th>${k}</th><td>${v}</td></tr>`;
-    const tbl1 = row(t.gurub.replace(/\(.*\)/, ''), hhmm(r.gurub)) + row(t.seri.replace(/\(.*\)/, ''), r.seri && r.seri.seri ? hhmm(r.seri.seri) : t.none) + row(esc(t.stWindow), !mid && r.windowEnd ? `${hhmm(r.gurub)} – ${hhmm(r.windowEnd)}` : t.none) + row(esc(t.evSearch), rng ? `${hhmm(rng[0])} – ${hhmm(rng[1])}` : t.none) + row(t.moonset.replace(/\(.*\)/, ''), hhmm(r.moonset)) + row(t.lag.replace(/\(.*\)/, ''), hm(r.lagMin)) + row(esc(t.stBest), !mid && r.best ? `${hhmm(r.best)}${r.windowEnd && r.best.ut > r.windowEnd.ut ? `<br><span class="small">${esc(t.cdBestLate)}</span>` : ''}` : t.none);
+    const tbl1 = row(t.gurub.replace(/\(.*\)/, ''), hhmm(r.gurub)) + row(t.seri.replace(/\(.*\)/, ''), r.seri && r.seri.seri ? hhmm(r.seri.seri) : t.none) + row(esc(t.stWindow), !mid && r.windowEnd ? `${hhmm(r.gurub)} – ${hhmm(r.windowEnd)}` : t.none) + row(esc(t.evSearch), rng ? `${hhmm(rng[0])} – ${hhmm(rng[1])}` : t.none) + row(t.moonset.replace(/\(.*\)/, ''), hhmm(r.moonset)) + row(t.lag.replace(/\(.*\)/, ''), lagTxt(r)) + row(esc(t.stBest), !mid && r.best ? `${hhmm(r.best)}${r.windowEnd && r.best.ut > r.windowEnd.ut ? `<br><span class="small">${esc(t.cdBestLate)}</span>` : ''}` : t.none);
     const tbl2 = row(t.beyn.replace(/\(.*\)/, ''), degf(r.beynunet)) + row(t.alt.replace(/\(.*\)/, ''), degf(r.moonAlt)) + row(t.az.replace(/\(.*\)/, ''), `${degf(r.moonAz, 1)} (${G.HRSky.card(r.moonAz, st.lang)}) · ${t.daz} ${degf(r.daz, 1)}`) + row(t.age.replace(/\(.*\)/, ''), ageTxt(r.ageH)) + row(t.illum.replace(/\(.*\)/, ''), num(r.illum, 2) + ' %') + row(t.lastConj.replace(/\(.*\)/, ''), fmtDT(r.ictimaPrev)) + row(t.kadihan.replace(/\(.*\)/, ''), r.kadihan19 ? `${esc(r.kadihan19 === 'first' ? t.kdFirst : t.kdSecond)} (−19°, ${hhmm(r.safak19)})<br><span class="small">${esc(t.kdB)}: ${esc(r.kadihan17 === 'first' ? t.kdFirst : t.kdSecond)} (${hhmm(r.safak17)})</span>` : t.none);
     const hj = hijriAt(r.gurub.AddDays(1 / 1440));
     return `<section class="a4">${pgHead(t.pgPlanTitle, `${locLine()}<br><strong>${esc(t.thisEvening(fmtCivil(civil(st.date))))}</strong>${sought ? ' · ' + esc(t.planMonth(sought)) : ''}${hj ? ' · ' + hj.tagged : ''}`)}
@@ -2551,7 +2637,7 @@
     // harita, üç gece: önceki akşam, birinci gece (H − 1), ikinci gece (H)
     { const cR = C.nearestNewMoon(A.MakeTime(new Date('2026-12-10T12:00:00Z'))), ns = nights3(cR, CAL.monthForConjunction(cR.date));
       add('harita, üç gece', 'Receb 1448: önceki akşam / birinci gece / ikinci gece', '2026-12-08 / 2026-12-09 / 2026-12-10', ns ? ns.map(n => n.ev).join(' / ') : '—', '', ns && ns.map(n => n.ev).join() === '2026-12-08,2026-12-09,2026-12-10'); }
-    add('özgün dosya', 'Gömülü bildirim çözülür; modül özeti eşleşir', `${bare(HOME)} · özgün`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'özgün' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
+    add('yerel bütünlük', 'Gömülü bildirim çözülür; astronomi betiği, stil ve program betiğinin özeti eşleşir (yerel denetim; kriptografik imza değildir)', `${bare(HOME)} · eşleşiyor`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'eşleşiyor' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
     const ok = rows.filter(x => x.ok).length;
     $('tests').innerHTML = `<caption class="small" style="text-align:left;padding-bottom:8px">${ok} / ${rows.length} ${t.pass.toLowerCase()}</caption>
       <thead><tr><th>${t.tCase}</th><th>${t.tQty}</th><th>${t.tExp}</th><th>${t.tGot}</th><th>${t.tTol}</th><th>${t.tRes}</th></tr></thead><tbody>` +

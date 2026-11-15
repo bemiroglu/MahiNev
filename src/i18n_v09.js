@@ -28,7 +28,7 @@
     bandBelow5: 'Bu akşam görülemez: hilâl 5°’nin altında (s. 360)', bandTonight: w => `Bu akşam rü’yet mümkün · arama ${w}`,
     bandNow: w => `Şu an hilâl aranabilir · ${w}`, bandSel: w => `Seçili anda hilâl aranabilir · ${w}`, bandPast: w => `Bu akşamın arama penceresi geçti (${w})`,
     // Göz güvenliği
-    safetyHide: 'Uyarıyı gizle', safetyHidden: 'Göz güvenliği uyarısı gizlendi; Ayarlar’dan yeniden açabilirsiniz.', optSafety: 'Göz güvenliği uyarısını göster',
+    safetyHide: 'Uyarıyı gizle', safetyHidden: 'Göz güvenliği uyarısı Plan’da bu oturum için gizlendi; program yeniden açılınca tekrar görünür. Saha’da Güneş ufkun üstündeyken her zaman görünür.', optSafety: 'Göz güvenliği uyarısını Plan’da göster',
     // Hava ifadeleri: yalnız havayı anlatır, rü’yete dair hüküm içermez
     wxLevel: { good: 'Hava: batı ufku açık görünüyor', fair: 'Hava: parçalı; batıda bulut veya pus olabilir', poor: 'Hava: kapalı veya yağışlı görünüyor' },
     wxNoSight: 'Hesaba göre bu akşam hilâl görülemez; hava tahmini yalnız bilgi içindir.',
@@ -87,7 +87,7 @@
     bandNone: 'No sunset on this date', bandMid: 'Not a month-start evening', bandReject: 'No sighting possible this evening (definite rejection, EB V, p. 137)',
     bandBelow5: 'Not visible this evening: crescent below 5° (EB V, p. 137)', bandTonight: w => `Sighting possible this evening · search ${w}`,
     bandNow: w => `Search for the crescent now · ${w}`, bandSel: w => `Crescent searchable at the selected moment · ${w}`, bandPast: w => `This evening’s search window has passed (${w})`,
-    safetyHide: 'Hide warning', safetyHidden: 'Eye-safety warning hidden; you can turn it back on in Settings.', optSafety: 'Show the eye-safety warning',
+    safetyHide: 'Hide warning', safetyHidden: 'Eye-safety warning hidden on Plan for this session; it returns when the program is reopened. In the Field tab it always shows while the Sun is above the horizon.', optSafety: 'Show the eye-safety warning on Plan',
     wxLevel: { good: 'Weather: western horizon looks clear', fair: 'Weather: partly cloudy; cloud or haze possible in the west', poor: 'Weather: overcast or wet' },
     wxNoSight: 'By calculation the crescent cannot be seen this evening; the forecast is for information only.',
     aboutTitle: 'About this tool',
