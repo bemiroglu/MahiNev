@@ -1,0 +1,15 @@
+T.safetyHidden	Göz güvenliği uyarısı bu oturum boyunca Plan'da gizlendi; program yeniden açılınca tekrar görünür. Saha sekmesinde Güneş ufkun üzerindeyken her zaman gösterilir.
+T.optSafety	Plan'da göz güvenliği uyarısını göster
+T.lagBefore	Ay Güneş'ten önce battı (${m} önce)
+T.lagBeforeNone	Ay Güneş'ten önce battı
+T.recImportBig	Dosya çok büyük veya çok fazla kayıt içeriyor (en fazla 25 MB, 5000 kayıt).
+T.recImpTitle	Kayıtların içe aktarılması
+T.recImpBad	Biçimi geçerli olmadığı için içe aktarılmayan kayıtlar (geçerli olmayan alanlar):
+T.recImpConf	Kayıt çatışması: aynı kimlikli fakat farklı içerikli kayıtlar. Birleştirilmedi; bu cihazın kaydı korundu.
+T.recImpItem	Kayıt ${n}
+T.recDamaged	Bozuk kayıt (geçerli olmayan biçim)
+T.recSigBad	geçerli olmayan imza
+T.recUnsigned	imzasız
+T.dstGap	Bu yerel saat, yaz saatine geçiş nedeniyle bu tarihte mevcut değil; ${loc} (${u}) olarak alındı.
+T.dstFold	Bu yerel saat, yaz saatinin geri dönüşü nedeniyle bu tarihte iki kez olur; birincisi alındı (${u}).
+T.vfScope	Doğrulama yalnızca kaydın sonradan değiştirilmediğini (ve imzalıysa hangi cihaz anahtarının mühürlediğini) gösterir; hilâlin görüldüğünü ve rasıdın kimliğini doğrulamaz.

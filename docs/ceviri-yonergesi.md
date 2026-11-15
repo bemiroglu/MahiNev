@@ -53,7 +53,7 @@ The S.pg function (page label) adapts the same way. "EB" stays "EB". Fascicle nu
 ## Terms (use consistently)
 | Turkish | English (program) | French | Spanish | Bosnian |
 |---|---|---|---|---|
-| hilâl | crescent (new moon in EB) | croissant (lunaire) — never "nouvelle lune" for the crescent | creciente (lunar) — never "luna nueva" for the crescent | hilal (mlađak); use "hilal" |
+| hilâl | crescent (new moon in EB) | croissant (lunaire) — never "nouvelle lune" for the crescent | el creciente (lunar) — MASCULINE ("la creciente" means a flood); never "luna nueva" for the crescent | hilal (mlađak); use "hilal" |
 | rü’yet | sighting (ru’yat) | observation, vue du croissant (ru’yat) | avistamiento (ru’yat) | viđenje (ru’jet) |
 | rasad / râsıd | observation / observer (râsid) | observation / observateur | observación / observador | osmatranje / osmatrač |
 | ictimâ | conjunction (ijtimâ’) | conjonction (ijtimâ’) | conjunción (ijtimâ’) | konjunkcija (idžtima’) |
