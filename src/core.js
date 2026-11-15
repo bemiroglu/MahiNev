@@ -488,5 +488,5 @@
   }
 
   const Q = '@@N1@@'; // sürüm bildirimi parçası (build.py)
-  G.HRCore = { Q, K, DARK, solarNoon, tzMidnight, localToUT, wallStatus, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, cellX, firstEvening, skyObjects, twilight, at, crescentData, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
+  G.HRCore = { Q, K, DARK, classify, solarNoon, tzMidnight, localToUT, wallStatus, morning, dayEvents, instant, altFast, searchable, phaseOf, observationNights, sunsetLon, cell, cellX, firstEvening, skyObjects, twilight, at, crescentData, evening, classify, moment18, earliestDay, lastNewMoonBefore, nextNewMoonAfter, nearestNewMoon, beynunet, topo, localNoon, tzOffsetMin, dipBook, seriGurub };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

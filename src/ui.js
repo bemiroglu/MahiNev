@@ -2637,6 +2637,37 @@
     // harita, üç gece: önceki akşam, birinci gece (H − 1), ikinci gece (H)
     { const cR = C.nearestNewMoon(A.MakeTime(new Date('2026-12-10T12:00:00Z'))), ns = nights3(cR, CAL.monthForConjunction(cR.date));
       add('harita, üç gece', 'Receb 1448: önceki akşam / birinci gece / ikinci gece', '2026-12-08 / 2026-12-09 / 2026-12-10', ns ? ns.map(n => n.ev).join(' / ') : '—', '', ns && ns.map(n => n.ev).join() === '2026-12-08,2026-12-09,2026-12-10'); }
+    // ---- Bağımsız denetimler: Astropy (ERFA + yerleşik efemeris) ile hesaplanmış sabit değerler (tools/dogrulama/astropy_referans.py) ----
+    { const REF = {"conj":["2026-06-15T02:54:15Z","2026-12-09T00:51:51Z","2027-03-08T09:29:31Z","2027-05-06T10:58:39Z","2027-11-28T03:24:30Z","2016-04-07T11:23:46Z"],"pos":[{"loc":"istanbul","t":"2026-12-10T14:00:00Z","sunAlt":4.7883,"sunAz":233.7554,"moonAlt":10.6001,"moonAz":217.7001,"elongGeo":17.2369},{"loc":"mekke","t":"2027-05-07T15:45:00Z","sunAlt":-0.0894,"sunAz":288.2051,"moonAlt":15.2326,"moonAz":291.4746,"elongGeo":16.5905},{"loc":"jakarta","t":"2027-03-09T11:20:00Z","sunAlt":-3.681,"sunAz":265.0754,"moonAlt":4.612,"moonAz":274.2647,"elongGeo":13.0119},{"loc":"newyork","t":"2026-06-16T00:40:00Z","sunAlt":-2.5762,"sunAz":304.1874,"moonAlt":8.5198,"moonAz":297.9713,"elongGeo":13.5952}],"sunset":[{"loc":"istanbul","day":"2026-12-10","utc":"2026-12-10T14:35:38Z"},{"loc":"mekke","day":"2027-05-07","utc":"2027-05-07T15:48:22Z"},{"loc":"jakarta","day":"2027-03-09","utc":"2027-03-09T11:08:30Z"},{"loc":"newyork","day":"2026-06-15","utc":"2026-06-16T00:28:59Z"}]};
+      const LOCS = { istanbul: [41.0082, 28.9784, 40], mekke: [21.4225, 39.8262, 277], jakarta: [-6.2088, 106.8456, 8], newyork: [40.7128, -74.006, 10] };
+      const dc = REF.conj.map(s => { const c = A.SearchMoonPhase(0, TT(new Date(Date.parse(s) - 3 * 86400e3).toISOString()), 6); return c ? Math.abs(c.date - Date.parse(s)) / 60000 : 999; });
+      add('bağımsız efemeris', `${REF.conj.length} ictimâ anı (2016–2027), Astropy ile`, '≤ 2 dk', num(Math.max(...dc), 2) + ' dk (en büyük fark)', '±2 dk', Math.max(...dc) <= 2);
+      let dPos = 0, dEl = 0;
+      for (const p of REF.pos) {
+        const [la, lo, h] = LOCS[p.loc], ob = new A.Observer(la, lo, h), tt = TT(p.t);
+        for (const [b, ka, kz] of [['Sun', 'sunAlt', 'sunAz'], ['Moon', 'moonAlt', 'moonAz']]) {
+          const eq = A.Equator(b, tt, ob, true, true), hz = A.Horizon(tt, ob, eq.ra, eq.dec, null);
+          dPos = Math.max(dPos, Math.abs(hz.altitude - p[ka]), Math.abs(((hz.azimuth - p[kz] + 540) % 360) - 180) * Math.cos(hz.altitude * Math.PI / 180));
+        }
+        dEl = Math.max(dEl, Math.abs(A.AngleFromSun('Moon', tt) - p.elongGeo));
+      }
+      add('bağımsız efemeris', `Güneş ve Ay'ın topozentrik yükseklik ve semti (havasız), ${REF.pos.length} yer ve an, Astropy ile`, '≤ 0,03°', degf(dPos, 4), '±0,03°', dPos <= 0.03);
+      add('bağımsız efemeris', 'Jeosentrik beynûnet (Ay–Güneş açısı), aynı anlar', '≤ 0,03°', degf(dEl, 4), '±0,03°', dEl <= 0.03);
+      const dS = REF.sunset.map(x => { const [la, lo] = LOCS[x.loc], ob = new A.Observer(la, lo, 0), s = A.SearchRiseSet('Sun', ob, -1, TT(x.day + 'T00:00:00Z').AddDays(-lo / 360), 1.2); return s ? Math.abs(s.date - Date.parse(x.utc)) / 60000 : 999; });
+      add('bağımsız efemeris', 'Standart gün batımı (merkez −0,8333°, aynı tanım), 4 yer, Astropy ile', '≤ 1 dk', num(Math.max(...dS), 2) + ' dk', '±1 dk', Math.max(...dS) <= 1);
+    }
+    // ---- Eşik testleri: Tam İlmihâl ölçülerinin iki yanı (s. 360) ----
+    { const base = { ageH: 30, ictimaNext: null, gurub: A.MakeTime(new Date('2026-12-10T14:36:00Z')), moonUp: true, lagMin: 60 };
+      const cl = (b, a) => C.classify(Object.assign({}, base, { beynunet: b, moonAlt: a })).code;
+      const got = [cl(7.999, 10), cl(8.0, 10), cl(17.999, 10), cl(18.0, 10), cl(10, 4.999), cl(10, 5.0)].join(' · ');
+      const exp = 'below8 · possible · possible · visible · below5 · possible';
+      add('eşik testleri', 'Beynûnet 7,999° / 8° / 17,999° / 18° ve irtifâ 4,999° / 5°', exp, got, '—', got === exp); }
+    // ---- Yaz saati ve tarih çizgisi ----
+    { const g = C.wallStatus('2026-03-29', 150, 'Europe/Berlin').kind, f = C.wallStatus('2026-10-25', 150, 'Europe/Berlin').kind, o = C.wallStatus('2026-07-01', 150, 'Europe/Berlin').kind;
+      add('yaz saati', 'Berlin 02:30: 29.3.2026 yaşanmaz · 25.10.2026 iki kez · 1.7.2026 olağan', 'gap · fold · ok', `${g} · ${f} · ${o}`, '—', g === 'gap' && f === 'fold' && o === 'ok');
+      const iso = (tz) => new Date(C.tzMidnight('2026-11-10', tz)).toISOString().slice(0, 16);
+      const k = iso('Pacific/Kiritimati'), a = iso('Pacific/Apia'), hn = iso('Pacific/Honolulu');
+      add('tarih çizgisi', '10.11.2026 yerel gece yarısı (UTC): Kiritimati (UTC+14) · Apia (UTC+13) · Honolulu (UTC−10)', '2026-11-09T10:00 · 2026-11-09T11:00 · 2026-11-10T10:00', `${k} · ${a} · ${hn}`, '—', k === '2026-11-09T10:00' && a === '2026-11-09T11:00' && hn === '2026-11-10T10:00'); }
     add('yerel bütünlük', 'Gömülü bildirim çözülür; astronomi betiği, stil ve program betiğinin özeti eşleşir (yerel denetim; kriptografik imza değildir)', `${bare(HOME)} · eşleşiyor`, `${NOTICE ? bare(NOTICE.u) : '—'} · ${OFFICIAL === true ? 'eşleşiyor' : OFFICIAL === false ? 'eşleşmiyor' : 'denetlenemedi'}`, '—', !!NOTICE && OFFICIAL === true);
     const ok = rows.filter(x => x.ok).length;
     $('tests').innerHTML = `<caption class="small" style="text-align:left;padding-bottom:8px">${ok} / ${rows.length} ${t.pass.toLowerCase()}</caption>
