@@ -1,0 +1,239 @@
+T.printGen	Hazırlandı
+T.locAutoDone	Konum otomatik olarak alındı.
+T.locSandbox	Konum claude.ai içinde kapalıdır; dosyayı tarayıcıda açın.
+T.myPlace	Konumum
+T.settings	Ayarlar
+T.liveInt	Canlı modda ekran yenilemesi
+T.liveInts.1	Her saniye
+T.liveInts.10	Her 10 saniyede
+T.liveInts.60	Her dakika
+T.freeze	Dondur
+T.modeFrozen	Şimdi (dondurulmuş)
+T.prevNight	◀ Önceki ay
+T.hjGlobal	Bütün dünya
+T.hjLocal	Burada
+T.hjShort	Kamerî gün şer’î batışla başlar (EB IV, str. 165).
+T.stWindow	Tam İlmihâl'e göre arama
+T.stBest	Yallop'un önerisi (ek)
+T.stAfterWin	pencereden sonra; Tam İlmihâl'e göre hilal o zaman 5°'nin altındadır
+T.stNoWindow	Bu akşam Tam İlmihâl'deki pencere yok
+T.liveTag	Şimdi
+T.thisEvening	${d} gününün akşamı
+T.fNowOk	Hilal şimdi aranabilir
+T.fNowWait	Aramanın başlamasına ${m}
+T.fNowAfter	Bu akşamın arama penceresi bitti
+T.fNowNo	Bu akşam hilal gözlemi yok
+T.fNowWin	Tam İlmihâl'e göre arama: ${a} – ${b}
+T.fNowLook	Nereye bakılır
+T.fTonight	Bu akşam için hesaplanmış tahmin
+T.fTrackNote	Akşam grafiği: sarı şerit Tam İlmihâl'deki pencere, yeşil şerit arama aralığı, dikey çizgi şimdiki an.
+T.recResult	Sonuç
+T.recRes.naked	Çıplak gözle görüldü
+T.recRes.aidedNaked	Dürbünle bulundu, sonra çıplak gözle görüldü
+T.recRes.aided	Yalnızca dürbün/teleskopla görüldü
+T.recRes.photo	Yalnızca fotoğrafla tespit edildi
+T.recRes.doubt	Şüpheli: cismin hilal olduğundan emin değilim
+T.recRes.not	Dikkatle arandı, görülmedi
+T.recRes.noObs	Gözlem mümkün olmadı (bulutlar, kapalı ufuk vb.)
+T.recFirst	İlk görüldüğü saat
+T.recLast	Son görüldüğü saat
+T.recSky	Gökyüzü
+T.recSkyOpts.clear	Açık
+T.recSkyOpts.partly	Parçalı bulutlu
+T.recSkyOpts.cloud	Bulutlu (hilal bulutlar arasında)
+T.recSkyOpts.haze	Pus / toz
+T.recPlace	Gözlem yeri
+T.recPlaceOpts.open	Şehir dışında, açık arazi
+T.recPlaceOpts.high	Yüksek yer
+T.recPlaceOpts.city	Şehir içinde
+T.recName	Gözlemcinin adı soyadı
+T.recContact	İletişim (isteğe bağlı)
+T.recWith	Birlikte gözlem yapan kişi sayısı
+T.recSeers	Bunlardan gören
+T.recPhoto	Fotoğraf (isteğe bağlı)
+T.recSave	Kayıt oluştur
+T.recPrint	Rapor (A4)
+T.recCopy	Metni kopyala
+T.recCopied	Rapor metni panoya kopyalandı.
+T.recSaved	Kayıt oluşturuldu; bütünlük özeti hesaplandı.
+T.recHash	Bütünlük özeti (SHA-256)
+T.recSig	İmza anahtarının parmak izi
+T.recNoSig	bu ortamda imza yok
+T.recIntro	Kayıtlar bu cihazda saklanır. Yazdırılan rapor imzalanıp sorumlu kişiye veya heyete verilebilir; JSON dosyası ve rapor metni ağlara gönderilebilir. „Görülmedi“ kayıtları da önemlidir: otuz günün tamamlanmasını desteklerler.
+T.recNets	Rapor kabul eden açık ağlar
+T.recNetsNote	Bu ağlar bu programdan bağımsızdır ve raporları kendi ölçütlerine göre değerlendirir. Şer’î hüküm yetkili makama aittir.
+T.recNeedName	Rapor için gözlemcinin adı gereklidir.
+T.evAided	Tam İlmihâl'e göre görme çıplak gözledir; dürbün ve fotoğraflar yalnızca yardımcıdır (Rasad Hakkında Zarûrî Malûmat).
+T.recLegacy	eski biçimde kayıt
+T.recVerified	özet doğrulandı
+T.recBroken	özet uyuşmuyor!
+T.tutTitle	Hilal görme raporu
+T.tutSub	Gözlemcinin beyanı ve hesapla karşılaştırma
+T.tutObs	Gözlem
+T.tutComp	Hesaplanmış veriler (karşılaştırma için)
+T.tutPeople	Gözlemci ve beraberindekiler
+T.tutSign	İmza
+T.tutWitness	Birlikte gözlem yapanlar (ad, imza)
+T.tutFiqh	Şer’î hatırlatma
+T.tutFiqhTxt	Bulutlu havada Ramazan hilali bir âdil Müslüman „Gördüm“ deyince sabit olur, açık havada ise birçok kişinin haberiyle; bayram için iki âdil şahit (iki erkek veya bir erkek ve iki kadın) ve „Şehâdet ederim“ sözü gerekir; kadı olmayan yerde de aynısı geçerlidir (Tam İlmihâl, EB V, str. 55–58). Şehir dışında veya yüksek yerden gören tek başına da kabul edilebilir; muvakkitin (hesap yapanların) sözü delil değildir; başkalarının gördüğünü nakletmek şehâdet değil rivayettir (Redd-ül-muhtâr, Kitâb-üs-savm, hilalin sübûtu bâbı). Bu rapor gözlemcinin beyanını belgeler; hüküm yetkili makama aittir.
+T.tutBlank	Boş rapor formu
+T.tutResult	Sonuç
+T.tutCalc	Hesaba göre
+T.tutRecId	Kayıt no.
+T.prTitle	Yazdır / PDF
+T.prIntro	Her seçenek tek bir A4 sayfasına göre düzenlenmiştir. Birden fazlasını seçerseniz her biri ayrı sayfada yazdırılır.
+T.prGo	Hazırla
+T.prOpts.plan	Gözlem planı (seçilen akşam)
+T.prOpts.sky	Gök haritası (seçilen an)
+T.prOpts.month	Aylık görme imkânı tablosu
+T.prOpts.map	Görme imkânının dünya haritası (yatay)
+T.prOpts.tut	Görme raporu (son kayıt)
+T.prOpts.blank	Boş rapor formu
+T.prOpts.skyEve	Gök haritası (seçilen akşam)
+T.prOpts.map3	Dünya haritası: üç gece (her gece ayrı A4'te)
+T.prNote	Bağımsız dosyada tarayıcının yazdırma penceresi açılır („PDF olarak kaydet“ mevcuttur). claude.ai içinde sayfa HTML dosyası olarak kaydedilir.
+T.pgPlanTitle	Hilal gözlem planı
+T.pgMonthTitle	Aylık görme imkânı tablosu
+T.pgCheck	Gözlem sırasında
+T.pgChecklist[0]	Güneş batmadan 20 dakika önce yerinizde olun; batı ufkunun açık olduğunu kontrol edin.
+T.pgChecklist[1]	Pusulayla batış noktasını ve hilalin azimutunu işaretleyin; el ölçüsünü kullanın.
+T.pgChecklist[2]	Gözlerin alışmasına izin verin; çıplak gözle arayın.
+T.pgChecklist[3]	Arama hilal 5°'ye ulaşınca biter (EB V, str. 137).
+T.pgChecklist[4]	Görürseniz zamanı, yeri ve şartları hemen kaydedin; görmezseniz de kaydedin.
+T.pgCols[0]	Akşam
+T.pgCols[1]	Batış
+T.pgCols[2]	Beynûnet
+T.pgCols[3]	Yükseklik
+T.pgCols[4]	Fark
+T.pgCols[5]	Sınıf
+T.kdTitle	Kâdîhân'a göre kontrol (EB V, str. 58)
+T.kdA	İmâm-ı A’zam: beyazlık, −19° (esas)
+T.kdB	İmâmeyn: kızıllık, −17° (alternatif)
+T.kdFirst	birinci gecenin hilali
+T.kdSecond	ikinci gecenin hilali
+T.kdSafak	şafağın sonu
+T.kdDiffer	İki görüş farklı sonuç veriyor. Esas olan, Tam İlmihâl'in ihtiyatlı yol dediği İmâm-ı A’zam'ın görüşüdür (EB IV, str. 177); İmâmeyn'in görüşü bilgi için gösterilmiştir.
+T.kdSame	Her iki görüş de aynı sonucu veriyor.
+T.kdNone	Hilal güneş batarken ufkun altında; Kâdîhân kontrolü uygulanmaz.
+T.safakA	Şafağın sonu · İmâm-ı A’zam (−19°, şer’î)
+T.safakB	Şafağın sonu · İmâmeyn (−17°, şer’î)
+T.safakNote	gerçek zaman + ${t} dk temkin (EB IV, str. 138, 183)
+T.explain	Yeni kullanıcılar için açıklamaları göster
+T.explainNote	Açık olduğunda her kart, ne olduğu, neden önemli olduğu ve şer’î dayanağının ne olduğu hakkında kısa bir notla başlar. Tecrübeli kullanıcılar kapatabilir.
+T.introTitle	Nasıl kullanılır
+T.introClose	Anladım, gizle
+T.introSteps[0]	<b>Konumunuzu</b> girin veya „Konumumu kullan“a dokunun. Enlem ve boylam herhangi bir alışılmış biçimde girilebilir (41,0082 · 41.0082 N · 41°00′29″N).
+T.introSteps[1]	<b>Yaklaşan ay başı gözlemi</b> kartında gözlem gecesini seçin. Program her akşam için hilalin Tam İlmihâl'e göre görülüp görülemeyeceğini söyler (EB V, str. 137).
+T.introSteps[2]	O akşam <b>Arazi</b> kartını açın: orada zaman, geri sayımlar, nereye bakılacağı ve gökyüzü görünümü vardır. Görseniz de görmeseniz de bir <b>görme kaydı</b> oluşturun.
+T.introSteps[3]	Unutmayın: program <b>takvim (kalendar) değildir</b>. Ay hesapla değil, çıplak gözle görme ve şahitlikle başlar (Tam İlmihâl, EB V, str. 54).
+T.hints.loc	Gözlem yeriniz. Görünürlük yere bağlıdır; yükseklik ufku alçaltır (EB IV, str. 159). Şehrin en yüksek noktası şer’î batış ve temkin için gereklidir (EB IV, str. 159–161).
+T.hints.date	Planladığınız akşam. Gün okları (◀ ▶) üst çubukta da bulunur; ↶ önceki seçime, ↷ sonrakine döner. „◀ Önceki ay başı / Sonraki ay başı ▶“ ay başı gözlem gecelerine götürür: hilal 29. günün güneş batışında aranır (EB V, str. 55).
+T.hints.up	Bugünün hesaplanmış hicrî tarihi ve sonraki gözlem gecesi. Kamerî gün şer’î batışla başlar (EB IV, str. 165); ay görmeyle başlar.
+T.hints.status	Seçilen akşam Tam İlmihâl'e göre: kavuşum, uzanım 8° ve 18°, ufkun 5° üstü (EB V, str. 137). „Reddedildi“, hesabın görülemeyeceğini gösterdiği anlamına gelir; diğer durumlarda hüküm şahitliğe dayanır.
+T.hints.tb	Herhangi bir saat için: hilal şimdi aranabilir mi, değilse neden? Sarı şerit Tam İlmihâl'deki penceredir (güneş batışından hilal 5°'ye düşene kadar).
+T.hints.wx	İsteğe bağlı hava tahmini. Şahitlik şartları bulutlu ve açık havada farklıdır (EB V, str. 56); tahmin hükme esas değildir.
+T.hints.sky	Nereye bakılır: batış noktasının solu/sağı ve yükseklik, karış olarak. Parlak yıldızlar ve gezegenler yön bulmak için listelenmiştir.
+T.hints.strip	Aydaki bütün akşamlar bir bakışta: renk o akşamın sınıfıdır. O akşamı planlamak için kutuya dokunun.
+T.hints.detail	Güneş batışı, şer’î batış (temkinli), Ay'ın batışı ve hilalin ölçüleri. Kâdîhân kontrolü Ay'ın şafağın sonundan önce mi sonra mı battığını gösterir (EB V, str. 58).
+T.hints.month	Bu kavuşumla başlayan ay ve hesaplanmış en erken gün: ay ondan önce başlayamaz (EB V, str. 57). Aritmetik takvimler yalnızca takvim bilgisidir.
+T.hints.map	Her yerin kendi güneş batışındaki hilal. Herhangi bir yerde görülen Ramazan hilali her yerde bağlayıcıdır (EB V, str. 56); kurban için esas kapsam yereldir.
+T.hints.fieldTop	Arazide ne yapılır: geri sayımlar, Tam İlmihâl'deki pencere ve nereye bakılır. Canlı mod şimdiki anı, plan modu seçilen anı gösterir.
+T.hints.fieldRec	Gözleminizi kaydedin. Kayıt ve yazdırılan rapor beyanınızı belgeler; hüküm yetkili makama aittir. Bulutlu/açık gök ve gözlem yeri şer’an önemlidir (EB V, str. 55–58).
+T.coordOk	Anlaşıldı: ${d} (${dms})
+T.coordPair	Enlem ve boylam birlikte girildi; her iki alan dolduruldu.
+T.coordSwap	Bu değer boylam olarak anlaşıldı ve boylam alanına taşındı.
+T.coordErr.empty	Boş değer.
+T.coordErr.letter	„${b}“ harfi anlaşılmadı. N/S/E/W (veya K/G/D/B) kullanın.
+T.coordErr.mixed	Bir değerde hem enlem hem boylam harfleri var.
+T.coordErr.format	Biçim anlaşılmadı. Örnek: 41.0082 · 41.0082 N · 41°00′29″N
+T.coordErr.minsec	Dakika ve saniye 60'tan küçük olmalı.
+T.coordErr.range	Aralık dışında: enlem ±90°, boylam ±180°.
+T.numErr	Sayı anlaşılmadı (örnek: 40 · 40,5 · 40 m).
+T.fsNext.gurub	batışa kadar
+T.fsNext.win	aramaya kadar
+T.fsNext.end	pencerenin sonuna kadar
+T.fsNext.set	Ay'ın batışına kadar
+T.fsNone	Bu akşam gözlem yok
+T.appFull	Mâh-ı Nev — Hilal görme yardımcısı
+T.dlHtml	HTML indir
+T.dlHtmlTip	Programın bu sürümünü tek bir HTML dosyası olarak indirin; internetsiz çalışır.
+T.dlDone	İndirme başladı.
+T.dlFail	Bu ortamda indirme mümkün değil.
+T.upPrev	Önceki hilal gözlemi
+T.upPrevGo	O geceyi aç
+T.upNextNote	Bu akşamın arama penceresi geçti; sonraki ay başı gözlemi gösteriliyor.
+T.licTitle	Bu araç, kaynağı ve lisansı
+T.licText	Ticari olmayan kullanım için, değiştirilmeden ve kaynak belirtilerek paylaşılabilir. Değiştirilmiş kopyalar dağıtılamaz.
+T.licOfficial	Programın orijinal dosyası yalnızca şurada yayımlanır:
+T.licThird	Gömülü üçüncü taraf bileşenler kendi lisanslarıyla gelir
+T.tamper	Bu kopya yayımlanan orijinal dosyayla uyuşmuyor ve değiştirilmiş olabilir. Sonuçlara güvenmeden önce orijinali indirin:
+T.tamperShort	değiştirilmiş kopya
+T.safety	Göz güvenliği: Güneş tamamen batmadan batı ufkuna dürbün, teleskop, kamera vizörü veya telefon zumu ile bakmayın. Optikten görülen güneş ışığı gözlere kalıcı zarar verebilir. Güneş'in battığından emin olun; hilali çıplak gözle arayın.
+T.safetyShort	Güneş batmadan dürbünü batıya çevirmeyin.
+T.safetyMobile	Göz güvenliği: güneş batmadan batıya dürbün, kamera veya teleskopla bakmayın; bu göze kalıcı zarar verebilir. Çıplak gözle arayın.
+T.evDoubt	Şüpheli gözlem görme iddiası değildir; yalnızca bilgi için saklanır.
+T.evNoObs	Kaydedildi: gözlem mümkün olmadı. Bu kayıt hilalin gökte olmadığını göstermez.
+T.recErrSeers	Görme bildiriyorsunuz; onu gören kişi sayısı en az 1 olmalı.
+T.recErrOrder	İlk görme zamanı son görme zamanından sonra olamaz.
+T.recErrFuture	Kayıt zamanı gelecekte görünüyor; saati kontrol edin.
+T.recAnon	İsimsiz beyan: gözlemci adı yok. Kayıt bilgi için saklanır; şahidin imzalı raporunun yerini tutmaz.
+T.recStoreFail	Kayıt bu tarayıcıda saklanamadı (hafıza dolu olabilir). JSON dosyası olarak indiriliyor; onu saklayın, yedek alın ve eski kayıtları silin.
+T.recMany	${n} kayıt. Tarayıcı hafızası sınırlıdır; „Bütün kayıtların yedeği“ni kullanın.
+T.recBackup	Bütün kayıtların yedeği
+T.recImport	Yedekten geri yükle
+T.recPhotoCheck	Fotoğrafı kontrol et
+T.recImported	Eklenen kayıt: ${a}, zaten var olan: ${b}.
+T.recImportBad	Dosya okunamıyor veya Mâh-ı Nev programının kaydı değil.
+T.recPhotoMatch	Bu fotoğraf ${d} tarihli kayda aittir. Özet uyuşuyor.
+T.recPhotoNone	Bu fotoğrafın özeti hiçbir kayıtla uyuşmuyor.
+T.recPhotoKeep	Fotoğrafın orijinal dosyasını ayrıca saklayın. Kayıt yalnızca onun özetini (SHA-256) ve küçük bir önizlemeyi içerir; orijinal „Fotoğrafı kontrol et“ ile yeniden bağlanabilir.
+T.recThumbDropped	hafıza yetersizliği yüzünden önizleme kaydedilmedi
+T.recBackupNote	Kayıtlar yalnızca bu tarayıcıda bulunur ve tarayıcı verileri silinirse kaybolur. Düzenli olarak yedek alın.
+T.hjBook	Hesaplanmış tarih. Ayın 1. günü hesaplanan gün veya bir gün sonrasıdır; asla bir gün önce değil (EB V, str. 57). Hangisi olduğu görmeyle belirlenir.
+T.globalScope	Bütün dünya: belli bir takvim gününün en geç güneş batışı tarih çizgisinin hemen doğusundadır, bu yüzden arama orada, kutup daireleri (±66°) arasında yapılır. Bütün dünyanın taranmasıyla aynı günü verdiği doğrulanmıştır.
+T.hMaxUnset	Şehrin en yüksek noktası girilmedi (0 m alındı); şer’î batış ve temkin onsuz hesaplandı (EB IV, str. 159–161). Biliyorsanız girin.
+T.compassNote	Pusula yaklaşıktır: telefonun manyetik okumasıdır, manyetik sapma düzeltmesi yoktur ve araçların, gemilerin ve çelik yapıların yakınında yanıltır. Yönü kılavuz yıldızlarla doğrulayın.
+T.precisionNote	Hesabın doğruluğu gözlemin doğruluğuyla aynı şey değildir. Konumlar yaklaşık 1 yay dakikası doğrulukla hesaplanır, ancak ufka yakın kırılma sıcaklık, basınç ve havanın tabakalaşmasıyla değişir. Bu yüzden batış zamanları gerçekte 1–2 dakika sapabilir, deniz üzerinde daha fazla. Zamanlar dakikaya göre verilir.
+T.privacyNote	Gizlilik: Mâh-ı Nev siz bağlantıyı açmadıkça internete asla bağlanmaz. Konumunuz, kayıtlarınız, adınız, iletişim bilgileriniz ve fotoğraf önizlemeleri yalnızca bu tarayıcıda saklanır ve asla sunucuya gönderilmez. Açabileceğiniz bağlantılar yukarıda listelenmiştir: tahmin yaklaşık konumu open-meteo.com'a gönderir; web fontları Google sunucularına bağlanır; otomatik konum internet kullanmaz. GitHub ve lisans bağlantıları yalnızca tıkladığınızda açılır. Program reklam, sayaç veya takip kodu içermez.
+T.traceRules	Kural seti
+T.traceEngine	Astronomi çekirdeği
+T.introToggle	Nasıl kullanılır (göster / gizle)
+T.noteFull	notun tamamı JSON kaydındadır
+T.netIntro	Bütün astronomik hesaplar internetsiz çalışır. İnternet bağlantıları (tahmin, fontlar) varsayılan olarak kapalıdır ve yalnızca siz açarsanız kullanılır. Otomatik konum internet kullanmaz; tarayıcının konum izniyle çalışır.
+T.netWx	Açık olduğunda yaklaşık konum (≈1 km) open-meteo.com'a gönderilir; otomatik konum için zeminin deniz seviyesinden yüksekliği de orada sorulur.
+T.optFonts	Fontları internetten yükle (Google Fonts)
+T.netFonts	Açık olduğunda tarayıcınız fonts.googleapis.com ve fonts.gstatic.com'a bağlanır; bunlar IP adresinizi görür. Kapalı olduğunda cihazın kendi fontları kullanılır.
+T.netLoc	İnternet kullanmaz: onu cihazın konum hizmeti verir ve cihazdan asla çıkmaz. Tarayıcı ilk kullanımda izin ister.
+T.netNone	Şu anda hiçbir internet bağlantısı açık değil.
+T.tzOff	UTC farkı
+T.tzOffTip	Farkı yazın: +3, -5, +5:30, UTC+2 vb. Ona karşılık gelen sabit dilim seçilir.
+T.tzRegional	Bölgesel saat dilimleri (yaz saatini takip eder)
+T.tzFixed	Sabit fark (yaz saati olmadan)
+T.tzFixedNote	Sabit fark UTC${o}: yaz saati olmadan. Bölgeniz yaz saati kullanıyorsa listeden bölgesel dilimi seçin.
+T.tzDstNote	${z}: kışın UTC${w}, yaz saatinde UTC${s}. Seçilen tarihte UTC${o}.
+T.tzStdNote	${z}: UTC${o}; bu dilimde yaz saati yoktur.
+T.tzOffErr	Fark anlaşılmadı. Örnekler: +3, -5, +5:30 (−12 ile +14 arasında).
+T.tzAuto	Konum seçilen saat diliminden uzak; fark boylamdan hesaplandı: UTC${o}. Orada farklı saat kullanılıyorsa „UTC farkı“ alanıyla veya listeden düzeltin.
+T.stripHesabi	· hesaplanmış
+T.stripDay	Gündüz
+T.stripEve	Batıştan sonra
+T.stripHesabiLong	Hicrî tarihler hesaplanmıştır; ay görmeyle sabit olur (EB V, str. 137).
+T.detailLvl	Açıklamalar („?“ notları)
+T.detailShort	Kısa (varsayılan)
+T.detailLong	Ayrıntılı
+T.skyTTip	Zamanı kaydırın: bütün sayfa (Plan, Harita, durum çubuğu) bu anı takip eder.
+T.bandNone	Bu tarihte güneş batışı yok
+T.bandMid	Ay başı akşamı değil
+T.bandReject	Bu akşam görme mümkün değil (kesin ret, EB V, str. 137)
+T.bandBelow5	Bu akşam görünmez: hilal 5°'nin altında (EB V, str. 137)
+T.bandTonight	Bu akşam görme mümkün · arama ${w}
+T.bandNow	Hilali şimdi arayın · ${w}
+T.bandSel	Seçilen anda hilal aranabilir · ${w}
+T.bandPast	Bu akşamın arama penceresi geçti (${w})
+T.safetyHide	Uyarıyı gizle
+T.safetyHidden	Göz güvenliği uyarısı gizlendi; Ayarlar'dan yeniden açabilirsiniz.
+T.optSafety	Göz güvenliği uyarısını göster
+T.wxNoSight	Hesaba göre hilal bu akşam görülemez; tahmin yalnızca bilgi içindir.
+T.aboutTitle	Bu araç hakkında
+T.aboutText	Mâh-ı Nev, Tam İlmihâl Se’âdet-i Ebediyye kitabına dayanarak hazırlanmış bir gözlem yardımcısıdır. Hilal gözleminin planlanmasını ve arazide yapılmasını kolaylaştırmak için yapılmıştır. Fıkıh kaynağı değildir ve kaynağın yerini tutmaz. Fıkıh esastır ve belirleyici ilimdir: bu programda Tam İlmihâl'e ve fıkha uymayan her şey bâtıldır. Hükümler için doğrudan Tam İlmihâl'e başvurun.
+T.editionNote	„EB V, str. 137“ gibi atıflar, altı ciltlik İngilizce Tam İlmihâl olan Endless Bliss'e işaret eder (burada: beşinci cilt, sayfa 137). Kullanılan baskılar: dördüncü cilt, 21. baskı; beşinci cilt, 17. baskı (Hakîkat Kitâbevi, İstanbul, Ağustos 2020).

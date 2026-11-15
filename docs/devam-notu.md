@@ -56,14 +56,14 @@ Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni b
 
 ## 8. ŞU ANKİ İŞ: Fransızca, İspanyolca, Boşnakça
 
-### Durum (15 Kasım, ikinci oturum)
-- Kullanıcı çeviri ve geri çeviri denetimini ayrı yardımcılara (subagent) yaptırmaya izin verdi; yardımcılar sonucu yalnız dosyaya yazar.
-- **Yapıldı:** altyapı (`langs.js`: `reg`/`load`/`packed`, `HR_PACKS`; `build.py`: `PACK_LANGS`, deflate-raw + base64; modüller sözlüklerini `HRLangs.reg` ile kaydeder; `guide.js` kurallar/kaynaklar `GX` sözlüğüne, kanonik metin `CANON`'a taşındı; `coords.js` `HLET`; `ui.js` şehirler, harita şehirleri, `SLUG`, açılışta paket yükleme, `setLang` paketi açar). Çeviriler 9 yardımcıyla yapıldı: `src/lang/fr.js`, `es.js`, `bs.js` (her biri ≈ 55 KB base64; dosya ≈ 1,17 MB). Yapı denetimi 0 hata; 63/63 test (dil eşliği beş dilde); `HR_LANGS=fr,es,bs` arayüz taraması yalnız açıklama penceresinde Türkçe sayfa numarası buldu → düzeltildi (`S.pg` artık 315/326/360'ı EB V, 57/79/137'ye çevirir; İngilizcede de vardı).
-- Araçlar: `tools/dil/pack_dump.py` (kaynak döküm: ui1, ui2, ui3, misc, guide, long parçaları; `.tr.js` + `.en.js`), `tools/dil/pack_check.js` (yapı denetimi; `--build` paketi yazar). Çeviri yönergesi ve terim tablosu: `docs/ceviri-yonergesi.md`; geri çeviri yönergesi: `docs/ceviri-denetimi/YONERGE-geri-ceviri.md`.
-- Kanonik metin: çeviriler İngilizcenin 26 paragraf düzenini izler (Türkçe 28; iki çift birleşik, "(YENİ) Rü'yet-i Hilâl linkine tıklayınız" cümlesi İngilizcedeki gibi yok).
-- **Yarıda:** geri çeviri denetimi. 9 denetçi kullanım sınırına takıldı. Kör geri çeviriler (Türkçe) `docs/ceviri-denetimi/geri/*.geri.txt`'de saklı (eksik: ui2.fr, ui2.bs, ui3.bs, misc.bs, long.bs). Karşılaştırma ve raporlar (`*.rapor.md`) henüz yok; düzeltmeler uygulanmadı.
-- Devam için: kaynakları yeniden dök (`python3 build.py && python3 tools/dil/pack_dump.py DİZİN/kaynak`), çevirileri paketten parçalara ayırmak gerekirse `src/lang/<dil>.js` tek nesnedir (T anahtarları ui1–ui3'e bölünür). Denetimi bitir, düzeltmeleri uygula, `--build` ile paketleri yeniden yaz; sonra dünya taraması (her dil), A4 denetimi, boyut raporu, deneme dosyası kullanıcıya.
-- Yerel commit'ler var; GitHub'a (gelistirme) yükleme kullanıcının sözüyle.
+### Durum (15 Kasım, ikinci oturum sonu)
+- **Tamamlandı:** fr, es, bs çevirileri (9 yardımcı) ve bağımsız geri çeviri denetimi (9 yardımcı); özet `docs/ceviri-denetimi/OZET.md`, raporlar ve kör geri çeviriler `docs/ceviri-denetimi/geri/`. Paketler: `src/lang/fr.js`, `es.js`, `bs.js` (ana kaynak budur; parçalar yalnız çalışma kopyasıydı). Dosya ≈ 1,17 MB.
+- **Kullanıcı isteği (15 Kasım):** Türkçe ve İngilizce dışındaki dillerde, metinlerin Endless Bliss'ten alındığı ve otomatik çevrildiği, çeviri hataları olabileceği küçük ve geri planda ama unutulmayacak biçimde yazılmalı → `T.mtNote` (alt bilgi, Hakkında) ve `GX.mtNote` (Kaynaklar), dil elle seçilince kısa bildirim. Not: çeviri internet hizmetiyle değil, yapay zekâ (Claude) ile yapıldı; metin "yapay zekâ ile otomatik çeviri" der.
+- **Kullanıcı isteği (15 Kasım):** İleride program değişince çeviriler kontrollü güncellenmeli, değişiklik diğer dilleri bozmamalı → üç katman: İngilizce yedek zinciri; beş dilli anahtar eşliği testi; `tools/dil/pack_sync.py` (kaynak özetleri `src/lang/<dil>.ozet.json`; `durum` / `is` / `uygula` / `kaydet`; CI adımı). Usul: `docs/coklu-dil.md` → "Programı değiştirirken". Her metin değişikliğinden sonra `durum` çalıştırılır; çıkan birimler `is` ile çevrilip `uygula` ile pakete yazılır.
+- Çalışma: `uygula` İngilizcede olmayan birimi siler, bütün paketi yapı bakımından denetler. `kaydet` yalnız tam çeviri + denetimden sonra.
+- Testler: 63/63; `pack_sync durum` üç dilde güncel. Türkçe kaynakta küçük tutarsızlık: `hints.date` düğme adı "◀ Önceki ay başı" der, Plan düğmesi "◀ Önceki ay"dır (kullanıcıya soruldu).
+- **Kalan:** dünya taraması her dil için (`HR_LANG=fr` …), A4 denetimi, deneme dosyası; kullanıcı onayıyla GitHub (`gelistirme`).
+- Ortam notu: Bu ortamda pip ile gelen playwright yeni tarayıcı sürümü istiyor; `/opt/pw-browsers/chromium_headless_shell-1255` → `-1243` bağlantısı kuruldu (yalnız bu oturum).
 
 ### Önceki kararlar
 Kullanıcının 15 Kasım kararları:
