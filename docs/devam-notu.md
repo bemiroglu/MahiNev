@@ -62,7 +62,8 @@ Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni b
 - **Kullanıcı isteği (15 Kasım):** İleride program değişince çeviriler kontrollü güncellenmeli, değişiklik diğer dilleri bozmamalı → üç katman: İngilizce yedek zinciri; beş dilli anahtar eşliği testi; `tools/dil/pack_sync.py` (kaynak özetleri `src/lang/<dil>.ozet.json`; `durum` / `is` / `uygula` / `kaydet`; CI adımı). Usul: `docs/coklu-dil.md` → "Programı değiştirirken". Her metin değişikliğinden sonra `durum` çalıştırılır; çıkan birimler `is` ile çevrilip `uygula` ile pakete yazılır.
 - Çalışma: `uygula` İngilizcede olmayan birimi siler, bütün paketi yapı bakımından denetler. `kaydet` yalnız tam çeviri + denetimden sonra.
 - Testler: 63/63; `pack_sync durum` üç dilde güncel. Türkçe kaynakta küçük tutarsızlık: `hints.date` düğme adı "◀ Önceki ay başı" der, Plan düğmesi "◀ Önceki ay"dır (kullanıcıya soruldu).
-- **Kalan:** dünya taraması her dil için (`HR_LANG=fr` …), A4 denetimi, deneme dosyası; kullanıcı onayıyla GitHub (`gelistirme`).
+- Dünya taraması fr, es, bs: 47/47 sorunsuz. A4: plan ve tutanak fr/es/en'de taşıyordu → `fitPages` (yazdırma sayfası taşarsa `--fs` ile %95…%80); beş dilde bütün çıktılar sığıyor. `ui_tarama` 'null' kalıbı kelime sınırıyla (Fransızca "nulle part" yanlış alarmı).
+- **Kalan:** kullanıcı onayıyla GitHub (`gelistirme`); yerel `gelistirme` dalı güncel tutuluyor.
 - Ortam notu: Bu ortamda pip ile gelen playwright yeni tarayıcı sürümü istiyor; `/opt/pw-browsers/chromium_headless_shell-1255` → `-1243` bağlantısı kuruldu (yalnız bu oturum).
 
 ### Önceki kararlar

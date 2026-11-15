@@ -7038,7 +7038,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
   // ---- Yayın bildirimi ve bütünlük denetimi (build.py ile eş) ----
   // Bildirim dört parçaya bölünüp şifreli olarak farklı modüllere gömülüdür; modül betiğinin özeti açılışta yeniden hesaplanır.
   const SELF = (document.currentScript && document.currentScript.textContent) || '';
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDaba543cd13a7000e';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDfe77bfa09f8c900d';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -9241,33 +9241,33 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
       ${pgFoot(blank ? '' : `${t.tutRecId} ${x.id.slice(0, 8)}`)}</section>`;
   }
   const PRINT_CSS = `@page { size: A4; margin: 0; } @page land { size: A4 landscape; margin: 0; } .hjh { font-size: .8em; color: #666; font-weight: 400; }
-    html { font-size: 10pt; } body { background: #e8e8e8; margin: 0; color: #111; font-family: var(--font-body); }
+    html { font-size: calc(10pt * var(--fs, 1)); } body { background: #e8e8e8; margin: 0; color: #111; font-family: var(--font-body); }
     .a4 { width: 210mm; height: 297mm; padding: 11mm 13mm 9mm; box-sizing: border-box; overflow: hidden; background: #fff; margin: 6mm auto; position: relative; display: flex; flex-direction: column; gap: 2.6mm; break-after: page; page-break-after: always; }
     .a4.land { width: 297mm; height: 210mm; page: land; }
     .a4:last-child { break-after: auto; page-break-after: auto; }
     @media print { body { background: #fff; } .a4 { margin: 0; box-shadow: none; } }
     .ph { display: flex; justify-content: space-between; gap: 6mm; border-bottom: 1.2pt solid #142030; padding-bottom: 2.5mm; }
-    .ph h1 { font: 600 15pt/1.15 var(--font-display); margin: 0 0 1mm; } .ph p { margin: 0; font-size: 9pt; line-height: 1.4; } .phr { text-align: right; font-size: 8pt; color: #555; white-space: nowrap; }
-    h2 { font: 600 12.5pt/1.2 var(--font-display); margin: 0 0 1mm; } h3 { font-size: 9.5pt; margin: 1mm 0; text-transform: uppercase; letter-spacing: .04em; color: #333; }
-    .pbox { border: 1pt solid #bbb; border-left: 3mm solid #888; border-radius: 2mm; padding: 2mm 3.5mm; } .pbox p { margin: .6mm 0; font-size: 9pt; }
+    .ph h1 { font: 600 15pt/1.15 var(--font-display); margin: 0 0 1mm; } .ph p { margin: 0; font-size: calc(9pt * var(--fs, 1)); line-height: 1.4; } .phr { text-align: right; font-size: calc(8pt * var(--fs, 1)); color: #555; white-space: nowrap; }
+    h2 { font: 600 12.5pt/1.2 var(--font-display); margin: 0 0 1mm; } h3 { font-size: calc(9.5pt * var(--fs, 1)); margin: 1mm 0; text-transform: uppercase; letter-spacing: .04em; color: #333; }
+    .pbox { border: 1pt solid #bbb; border-left: 3mm solid #888; border-radius: 2mm; padding: 2mm 3.5mm; } .pbox p { margin: .6mm 0; font-size: calc(9pt * var(--fs, 1)); }
     .pbox.s-ok { border-left-color: var(--ok); } .pbox.s-warn { border-left-color: var(--warn); } .pbox.s-bad { border-left-color: var(--bad); } .pbox.s-info { border-left-color: var(--info); }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; } .tcols { grid-template-columns: 1.05fr 1fr; }
-    table.pt { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } .tut .pt th { min-width: 27mm; } .tut .pt .blank { max-width: 100%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
+    table.pt { width: 100%; border-collapse: collapse; font-size: calc(8.8pt * var(--fs, 1)); } table.pt th { text-align: left; font-weight: 600; color: #444; padding: .9mm 2mm .9mm 0; vertical-align: top; width: 42%; } .tut .pt th { min-width: 27mm; } .tut .pt .blank { max-width: 100%; } table.pt td { padding: .9mm 0; border-bottom: .4pt solid #ddd; vertical-align: top; }
     .pfig { height: 68mm; } .pfig svg { width: 100%; height: 100%; display: block; }
     .psky { width: 172mm; height: 172mm; margin: 0 auto; } .psky svg { width: 100%; height: 100%; } .psky.eve { width: 178mm; height: auto; } table.mt.eve { margin-top: 2mm; } table.mt.eve td, table.mt.eve th { padding: 1.2mm 2mm; }
     .pmap img { width: 100%; max-height: 140mm; object-fit: contain; display: block; }
-    ol.pl { margin: 0; padding-left: 5mm; font-size: 8.6pt; } ol.pl li { margin: .6mm 0; } .guides { font-size: 8.6pt; margin: 0; }
+    ol.pl { margin: 0; padding-left: 5mm; font-size: calc(8.6pt * var(--fs, 1)); } ol.pl li { margin: .6mm 0; } .guides { font-size: calc(8.6pt * var(--fs, 1)); margin: 0; }
     .lines { margin-top: auto; } .lines i { display: block; border-bottom: .5pt solid #999; height: 6mm; }
-    table.mt { width: 100%; border-collapse: collapse; font-size: 8.4pt; } table.mt th { text-align: left; border-bottom: 1pt solid #333; padding: 1mm; } table.mt td { padding: .75mm 1mm; border-bottom: .3pt solid #ddd; } table.mt tr.sel td { background: #fff3cf; font-weight: 600; }
+    table.mt { width: 100%; border-collapse: collapse; font-size: calc(8.4pt * var(--fs, 1)); } table.mt th { text-align: left; border-bottom: 1pt solid #333; padding: 1mm; } table.mt td { padding: .75mm 1mm; border-bottom: .3pt solid #ddd; } table.mt tr.sel td { background: #fff3cf; font-weight: 600; }
     .sw { display: inline-block; width: 3mm; height: 3mm; border-radius: .6mm; margin-right: 1.5mm; vertical-align: middle; }
-    .pf { margin-top: auto; display: flex; justify-content: space-between; gap: 6mm; font-size: 7.2pt; color: #555; border-top: .5pt solid #aaa; padding-top: 1.5mm; }
+    .pf { margin-top: auto; display: flex; justify-content: space-between; gap: 6mm; font-size: calc(7.2pt * var(--fs, 1)); color: #555; border-top: .5pt solid #aaa; padding-top: 1.5mm; }
     .blank { display: inline-block; border-bottom: .6pt solid #555; height: 4.5mm; vertical-align: bottom; }
-    table.sig { width: 100%; border-collapse: collapse; font-size: 8.8pt; } table.sig th { text-align: left; font-weight: 600; color: #444; padding: 1.6mm 2mm .8mm 0; white-space: nowrap; } table.sig td { padding: 1.6mm 0 .8mm; }
-    .fiqh { border: .6pt solid #c9b27a; background: #fbf6e8; border-radius: 2mm; padding: 2mm 3mm; } .fiqh p { margin: 0; font-size: 8.3pt; line-height: 1.45; }
+    table.sig { width: 100%; border-collapse: collapse; font-size: calc(8.8pt * var(--fs, 1)); } table.sig th { text-align: left; font-weight: 600; color: #444; padding: 1.6mm 2mm .8mm 0; white-space: nowrap; } table.sig td { padding: 1.6mm 0 .8mm; }
+    .fiqh { border: .6pt solid #c9b27a; background: #fbf6e8; border-radius: 2mm; padding: 2mm 3mm; } .fiqh p { margin: 0; font-size: calc(8.3pt * var(--fs, 1)); line-height: 1.45; }
     .integ { display: flex; gap: 4mm; align-items: center; } .qr svg { width: 26mm; height: 26mm; display: block; } .hash { font: 500 7.6pt var(--font-mono); word-break: break-all; margin: .5mm 0; color: #333; }
-    .vfline { font-size: 7pt; color: #555; margin: .8mm 0 0; } .edn { font-size: 6.5pt; color: #777; }
+    .vfline { font-size: calc(7pt * var(--fs, 1)); color: #555; margin: .8mm 0 0; } .edn { font-size: calc(6.5pt * var(--fs, 1)); color: #777; }
     .pph { margin: 2mm 0 0; } .pph img { max-width: 100%; max-height: 26mm; display: block; border-radius: 1mm; } .pph figcaption { margin-top: .6mm; }
-    .cap { font-size: 8pt; color: #444; margin: 0; } .small { font-size: 8pt; color: #555; } .legend { font-size: 8pt; }
+    .cap { font-size: calc(8pt * var(--fs, 1)); color: #444; margin: 0; } .small { font-size: calc(8pt * var(--fs, 1)); color: #555; } .legend { font-size: calc(8pt * var(--fs, 1)); }
     button, .q { display: none !important; }`;
   // ---- Dosya adları: MahiNev_YYYY-AA-GG_SSDD_Yer_tür — tarih önde olduğu için klasörde sıralanır, “MahiNev” ile ayırt edilir ----
   const TRMAP = { 'ı': 'i', 'İ': 'I', 'ş': 's', 'Ş': 'S', 'ğ': 'g', 'Ğ': 'G', 'ü': 'u', 'Ü': 'U', 'ö': 'o', 'Ö': 'O', 'ç': 'c', 'Ç': 'C', 'â': 'a', 'Â': 'A', 'î': 'i', 'û': 'u' };
@@ -9308,7 +9308,27 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     }
     const css = Array.from(document.querySelectorAll('style')).map(x => x.textContent).join('\n');
     const html = `<!DOCTYPE html><html lang="${st.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(pagesBase(kinds, rec))}</title><style>${css}\n${PRINT_CSS}</style></head><body class="th-light">${parts.join('')}</body></html>`;
-    return html;
+    return fitPages(html);
+  }
+  // A4’e sığdırma: bir sayfa taşarsa (uzun çeviriler, uzun yer adları) yazı boyutu kademeli küçültülür (--fs, en çok %80)
+  function fitPages(html) {
+    return new Promise(res => {
+      const f = document.createElement('iframe'); let done = false;
+      f.style.cssText = 'position:fixed;left:-10000px;top:0;width:900px;height:1200px;border:0;visibility:hidden';
+      const finish = h => { if (done) return; done = true; f.remove(); res(h); };
+      f.onload = () => {
+        try {
+          const d = f.contentDocument; let changed = false;
+          for (const pg of d.querySelectorAll('.a4')) {
+            const over = () => pg.scrollHeight > pg.clientHeight + 1 || pg.scrollWidth > pg.clientWidth + 1;
+            for (const fs of [0.95, 0.9, 0.86, 0.82, 0.8]) { if (!over()) break; pg.style.setProperty('--fs', fs); changed = true; }
+          }
+          finish(changed ? '<!DOCTYPE html>' + d.documentElement.outerHTML : html);
+        } catch (e) { finish(html); }
+      };
+      setTimeout(() => finish(html), 4000);
+      f.srcdoc = html; document.body.appendChild(f);
+    });
   }
   async function printPages(kinds, rec) {
     toast(t.printing);

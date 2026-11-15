@@ -47,7 +47,7 @@ async def main():
                     await pg.evaluate("location.hash = '#plan'"); await pg.wait_for_timeout(500)
                     if await pg.query_selector('#statusBody [data-ex]'):
                         await pg.click('#statusBody [data-ex]'); await pg.wait_for_timeout(2500)
-                        bad = await pg.evaluate("""() => { const tx = document.getElementById('exBody').innerText; const m = tx.match(/.{0,30}(undefined|NaN|\\[object Object\\]|Invalid Date|null).{0,30}/); return m ? m[0] : null; }""")
+                        bad = await pg.evaluate("""() => { const tx = document.getElementById('exBody').innerText; const m = tx.match(/.{0,30}(undefined|NaN|\\[object Object\\]|Invalid Date|\\bnull\\b).{0,30}/); return m ? m[0] : null; }""")
                         wide = await pg.evaluate("(() => { const d = document.getElementById('exDlg'); return d.scrollWidth - d.clientWidth; })()")
                         if bad: issues.append(f'{vp} {lang} {name} açıklama: şüpheli metin «{bad}»')
                         if wide > 2: issues.append(f'{vp} {lang} {name} açıklama: yatay taşma {wide}px')
@@ -55,7 +55,7 @@ async def main():
                     # rasad geceleri listesi
                     if await pg.query_selector('#mList'):
                         await pg.click('#mList'); await pg.wait_for_timeout(6000)
-                        bad = await pg.evaluate("""() => { const tx = document.getElementById('rnBody').innerText; const m = tx.match(/.{0,30}(undefined|NaN|\\[object Object\\]|Invalid Date|null).{0,30}/); return m ? m[0] : null; }""")
+                        bad = await pg.evaluate("""() => { const tx = document.getElementById('rnBody').innerText; const m = tx.match(/.{0,30}(undefined|NaN|\\[object Object\\]|Invalid Date|\\bnull\\b).{0,30}/); return m ? m[0] : null; }""")
                         if bad: issues.append(f'{vp} {lang} {name} rasad geceleri: şüpheli metin «{bad}»')
                         await pg.keyboard.press('Escape'); await pg.wait_for_timeout(200)
                 await pg.evaluate("location.hash = '#plan'")
