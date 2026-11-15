@@ -1,6 +1,6 @@
 # Devam notu (çalışma hafızası)
 
-Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni bir oturumda önce bu dosya, sonra `docs/endless-bliss-esleme.md`, `docs/dil-terimleri.md`, `docs/kanonik-rapor.md` (D1–D19) ve `docs/yol-haritasi.md` okunur. Son güncelleme: 15 Kasım 2026.
+Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni bir oturumda önce bu dosya, sonra `docs/endless-bliss-esleme.md`, `docs/dil-terimleri.md`, `docs/kanonik-rapor.md` (D1–D19) ve `docs/yol-haritasi.md` okunur. Son güncelleme: 15 Kasım 2026 (fr/es/bs çevirileri yapıldı; geri çeviri denetimi yarıda).
 
 ## 1. Proje
 - **Mâh-ı Nev — Hilâl Rasad Yardımcısı.** Tek dosya, internetsiz, çok dilli HTML5 hilâl rasad yardımcısı.
@@ -54,7 +54,18 @@ Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni b
 - İmâm-ı Sübkî’nin uzun sözü Endless Bliss’te yok; orada bizim çevirimiz kalır. Kanonik metnin “hilâlin doğması” kavramı olduğu gibi kalır.
 - 162 atıf Endless Bliss sayfalarıyla tek tek denetlendi. Sayfa ve terim eşlemesi: `docs/endless-bliss-esleme.md`.
 
-## 8. ŞU ANKİ İŞ: Fransızca, İspanyolca, Boşnakça (yeni sohbette yapılacak)
+## 8. ŞU ANKİ İŞ: Fransızca, İspanyolca, Boşnakça
+
+### Durum (15 Kasım, ikinci oturum)
+- Kullanıcı çeviri ve geri çeviri denetimini ayrı yardımcılara (subagent) yaptırmaya izin verdi; yardımcılar sonucu yalnız dosyaya yazar.
+- **Yapıldı:** altyapı (`langs.js`: `reg`/`load`/`packed`, `HR_PACKS`; `build.py`: `PACK_LANGS`, deflate-raw + base64; modüller sözlüklerini `HRLangs.reg` ile kaydeder; `guide.js` kurallar/kaynaklar `GX` sözlüğüne, kanonik metin `CANON`'a taşındı; `coords.js` `HLET`; `ui.js` şehirler, harita şehirleri, `SLUG`, açılışta paket yükleme, `setLang` paketi açar). Çeviriler 9 yardımcıyla yapıldı: `src/lang/fr.js`, `es.js`, `bs.js` (her biri ≈ 55 KB base64; dosya ≈ 1,17 MB). Yapı denetimi 0 hata; 63/63 test (dil eşliği beş dilde); `HR_LANGS=fr,es,bs` arayüz taraması yalnız açıklama penceresinde Türkçe sayfa numarası buldu → düzeltildi (`S.pg` artık 315/326/360'ı EB V, 57/79/137'ye çevirir; İngilizcede de vardı).
+- Araçlar: `tools/dil/pack_dump.py` (kaynak döküm: ui1, ui2, ui3, misc, guide, long parçaları; `.tr.js` + `.en.js`), `tools/dil/pack_check.js` (yapı denetimi; `--build` paketi yazar). Çeviri yönergesi ve terim tablosu: `docs/ceviri-yonergesi.md`; geri çeviri yönergesi: `docs/ceviri-denetimi/YONERGE-geri-ceviri.md`.
+- Kanonik metin: çeviriler İngilizcenin 26 paragraf düzenini izler (Türkçe 28; iki çift birleşik, "(YENİ) Rü'yet-i Hilâl linkine tıklayınız" cümlesi İngilizcedeki gibi yok).
+- **Yarıda:** geri çeviri denetimi. 9 denetçi kullanım sınırına takıldı. Kör geri çeviriler (Türkçe) `docs/ceviri-denetimi/geri/*.geri.txt`'de saklı (eksik: ui2.fr, ui2.bs, ui3.bs, misc.bs, long.bs). Karşılaştırma ve raporlar (`*.rapor.md`) henüz yok; düzeltmeler uygulanmadı.
+- Devam için: kaynakları yeniden dök (`python3 build.py && python3 tools/dil/pack_dump.py DİZİN/kaynak`), çevirileri paketten parçalara ayırmak gerekirse `src/lang/<dil>.js` tek nesnedir (T anahtarları ui1–ui3'e bölünür). Denetimi bitir, düzeltmeleri uygula, `--build` ile paketleri yeniden yaz; sonra dünya taraması (her dil), A4 denetimi, boyut raporu, deneme dosyası kullanıcıya.
+- Yerel commit'ler var; GitHub'a (gelistirme) yükleme kullanıcının sözüyle.
+
+### Önceki kararlar
 Kullanıcının 15 Kasım kararları:
 - Ek diller **sıkıştırılmış dil paketi** olarak eklenecek. Türkçe ve İngilizce açık kalır; yeni diller dosyada sıkıştırılmış (deflate-raw + base64) durur, dil seçilince tarayıcının `DecompressionStream` özelliğiyle açılır (Chrome/Edge 103+, Firefox 113+, Safari 16.4+; desteklenmezse İngilizce). İnternet gerekmez.
 - **Her şey çevrilecek:** arayüz, açıklamalar, Rehber ve kanonik metin.

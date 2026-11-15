@@ -11,7 +11,7 @@
 [![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-0.13.0-9a5a12)](CHANGELOG.md)
 [![Lisans](https://img.shields.io/badge/lisans-CC%20BY--NC--ND%204.0-555)](LICENSE)
 ![İnternetsiz](https://img.shields.io/badge/internetsiz-%C3%A7al%C4%B1%C5%9F%C4%B1r-2e7d4f)
-![Dil](https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%C2%B7%20English-3d5a80)
+![Dil](https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%C2%B7%20English%20%C2%B7%20Fran%C3%A7ais%20%C2%B7%20Espa%C3%B1ol%20%C2%B7%20Bosanski-3d5a80)
 
 **[▶ Çevrimiçi aç](https://bemiroglu.github.io/MahiNev/)** &nbsp;·&nbsp;
 **[⬇ İndir (v0.14.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.14.0.html)** &nbsp;·&nbsp;
@@ -50,7 +50,7 @@ Mâh-ı Nev tek bir HTML dosyasıdır. Kurulum gerektirmez: indirip tarayıcıda
 
 ## Nasıl başlarım?
 
-1. [Çevrimiçi adresi](https://bemiroglu.github.io/MahiNev/) açın veya dosyayı indirip tarayıcıda açın.
+1. [Çevrimiçi adresi](https://bemiroglu.github.io/MahiNev/) açın veya dosyayı indirip tarayıcıda açın. Arayüz dili **TR · EN · FR · ES · BS** düğmeleriyle seçilir (Fransızca, İspanyolca ve Boşnakça dosyada sıkıştırılmış durur, seçilince açılır; atıfları Endless Bliss'e yapılır).
 2. **Konum:** Şehrinizi seçin ya da "Konumumu kullan"a dokunun. Arz ve tûlü dilediğiniz biçimde yazabilirsiniz (41,0082 · 41°00'29"K).
 3. **Yaklaşan ay başı rasadı** kartında rasad gecesini görün; "Bu geceyi planla" ile o akşama gidin.
 4. Rasad akşamı telefondan **Saha** sekmesini açın: saat, geri sayım, bakılacak yön ve gökyüzü çizimi oradadır.
@@ -109,7 +109,7 @@ Program açılışta kendi bütünlüğünü denetler. Dosya değiştirilmişse 
 ## Doğrulama
 
 - **Program içinde:** Doğrulama sekmesinde 61 test bulunur. Testler Tam İlmihâl'deki örnekleri (Receb 1400, s. 360), Kongre tebliğindeki Receb 1437 vakasını, iki gece esasını (Zilhiccede Işık usulü dahil), gök cisimleri hesabını, şafak ve temkin usulünü (s. 178, 197), yaz saati geçişlerini, Yallop ölçütünü, küresel kapsamı ve kayıt bütünlüğünü sınar.
-- **Uçtan uca tarama:** `tests/ui_tarama.py`; 2 ekran boyutu, 2 dil, 5 tema, bütün sekmeler, diyaloglar ve 9 uç konum (kutup gecesi, tarih çizgisi, yaz saati, Mekke). Hata, taşma ve dış istek arar.
+- **Uçtan uca tarama:** `tests/ui_tarama.py`; 2 ekran boyutu, 5 dil, 5 tema, bütün sekmeler, diyaloglar ve 9 uç konum (kutup gecesi, tarih çizgisi, yaz saati, Mekke). Hata, taşma ve dış istek arar.
 - **Dünya taraması:** `tests/dunya_tarama.py`; 47 uç konum (kutuplar, tarih çizgisinin iki yanı, yarım ve çeyrek saatli dilimler, yaz saati geçişleri, deniz seviyesinin altı ve Everest) ve 7 tarihte bütün sekmeler, açıklama penceresi ve A4 çıktıları, Türkçe ve İngilizce.
 - **Küresel kapsam:** `tools/kuresel_dogrulama.py`
 - **Rü'yet kaydı:** `tools/verify_record.py` ile bir kaydın özeti, imzası ve QR kodu bilgisayarda doğrulanır.
@@ -204,7 +204,7 @@ It is not a source of fiqh and does not replace Tam İlmihâl. Fiqh is the essen
 
 ## One file, every screen
 
-Mâh-ı Nev is a single HTML file. Nothing to install: download it and open it in a browser. The same file runs on a computer, a tablet and a phone, and needs no internet once opened. Switch the interface between Turkish and English with the **TR / EN** buttons.
+Mâh-ı Nev is a single HTML file. Nothing to install: download it and open it in a browser. The same file runs on a computer, a tablet and a phone, and needs no internet once opened. Switch the interface language with the **TR / EN / FR / ES / BS** buttons. French, Spanish and Bosnian are stored compressed inside the file and unpacked in the browser when selected (no internet needed); their references point to *Endless Bliss*.
 
 ## Getting started
 

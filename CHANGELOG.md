@@ -2,6 +2,9 @@
 
 ## 0.14.1 — geliştirmede
 
+- **Fransızca, İspanyolca ve Boşnakça:** Arayüz, "Bu akşam ne demek?" açıklamaları, Rehber (konular, ayrıntılı açıklamalar, kurallar tablosu, kaynaklar), kanonik metin, çizim yazıları, şehir adları ve dosya adları bu üç dilde de vardır. Dil düğmeleri: TR · EN · FR · ES · BS. Bu dillerde Tam İlmihâl tercümesi olmadığından anlamda esas Türkçe metin, terimlerde ve kitaptan aktarılan cümlelerde Endless Bliss'tir; atıflar Endless Bliss'e yapılır (FR "EB V, p. 137", ES "EB V, pág. 137", BS "EB V, str. 137") ve kitaptan aktarılan sözlerin Endless Bliss'ten tercüme olduğu Kaynaklar'da belirtilir. Hilâl için ictimâ ile karışan "nouvelle lune" / "luna nueva" kullanılmaz (croissant, creciente, hilal); Boşnakçada yerleşik İslâmî terimler kullanılır (Ramazan, bajram, kurban, akšam, jacija, temkin). Çeviriler Türkçeye geri çevrilerek aslıyla anlam bakımından karşılaştırılmıştır.
+- **Sıkıştırılmış dil paketleri:** Fransızca, İspanyolca ve Boşnakça metinler dosyada sıkıştırılmış durur (dil başına ≈ 55 KB) ve dil seçilince tarayıcıda açılır; internet gerekmez (Chrome/Edge 103+, Firefox 113+, Safari 16.4+; daha eski tarayıcıda İngilizce kalır). Seçili dil hatırlanır.
+- **Doğrulama:** "Çok dilli" testi paketleri açar ve beş dilde arayüz, açıklama ve Rehber anahtarlarının eşliğini denetler. `tests/ui_tarama.py` beş dili tarar.
 - **İngilizce metinler Endless Bliss’e göre:** İngilizce arayüz, Tam İlmihâl’in İngilizcesi Endless Bliss’in terimlerini kullanır (Ramadân, Sha’bân, Dhu’l-hijja, ’Arafa, ’Iyd of Qurbân, ijtimâ’ = conjunction, muhâq, shar’î sunset, Tamkin, adhânî, Qâdî-Khân, Ibni ’Âbidîn, Imâm-i Subkî, Uluğ Bey, Abuzziyâ). Atıflar Endless Bliss’in fasikül ve sayfasını verir (ör. EB V, p. 137). Kanonik metnin İngilizcesinde kitaptan aktarılan cümleler Endless Bliss’teki hâliyle yazılır; Işık usulünün beyti Endless Bliss’teki İngilizce beyittir.
 
 ## 0.14.0 — 13 Kasım 2026

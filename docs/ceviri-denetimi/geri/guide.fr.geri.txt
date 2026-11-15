@@ -1,0 +1,90 @@
+TOPICS.hesap[0]|||Hesap ve gözlem
+TOPICS.hesap[1]|||Ay hilâlin görülmesiyle başlar; onu hesapla veya takvimle başlatmak câiz değildir (EB V, s. 54–55; Fetâvâ-yı Hindiyye). Hesap, hilâlin görülebileceği geceyi gösterir, ayın başladığı ânı değil (EB V, s. 137, İmâm-ı Sübkî). Hilâlin görülmesiyle başlangıç hesaptan bir gün sonra olabilir, asla önce olamaz (EB V, s. 57).
+TOPICS.hesap[2]|||İçtimâ ânı ve Ay'ın konumu saniye ve yay dakikası hassasiyetiyle hesaplanır. Hilâlin görülüp görülmemesi ise havanın durumuna, gökyüzünün parlaklığına ve gözlemcinin gözüne bağlıdır; bu yüzden ancak bir ihtimal olarak öngörülebilir.
+TOPICS.ictima[0]|||İçtimâ ve muhâk
+TOPICS.ictima[1]|||Ay, Güneş ve Dünya aynı hizaya gelince (içtimâ-ı neyyireyn = kavuşum), Ay'ın bize bakan yüzü karanlıktır. Ay'ın görünmediği süreye muhâk denir; 28 ile 72 saat sürer ve içtimâ bunun ortasıdır (EB V, s. 136). İbni Dakîk'e göre içtimâdan 1–2 gün geçmeden hilâl görülmez (EB V, s. 55).
+TOPICS.ictima[2]|||İçtimâ, Ay'ın ekliptik boylamının Güneş'inkine eşit olduğu andır. Ay yörüngesi ekliptiğe yaklaşık 5,1° eğik olduğundan, içtimâ anında bile Ay Güneş'ten 0–5° uzakta bulunabilir. İki içtimâ arasındaki ortalama süre 29 g 12 sa 44 dk'dır; gerçekte 29,3 ile 29,8 gün arasında değişir.
+TOPICS.beynunet[0]|||Beynûnet: 8° ve 18°
+TOPICS.beynunet[1]|||Beynûnet 8°'den az olduğu sürece hilâl hiçbir yerde görülemez. En çok 18° olunca hilâl güneş batarken batıda görünür; o anda Güneş'in battığı boylamda ve onun batısında görülebilir (EB V, s. 137). 18° değeri Osmanlı âlimlerinin kabul ettiği değerdir.
+TOPICS.beynunet[2]|||Beynûnet, Dünya'nın merkezinden bakıldığında Ay ile Güneş arasındaki açıdır (elongasyon). Küçük elongasyonda aydınlık yay son derece incedir ve uçları kaybolur. Modern çalışmalar çıplak göz sınırını 7,5° civarında koyar (Danjon sınırı ≈7°). Ay Güneş'ten günde yaklaşık 12,2° uzaklaşır.
+TOPICS.besderece[0]|||Ufka yakınlık: 5°
+TOPICS.besderece[1]|||57′ ihtilâf-ı manzar sebebiyle hilâl ufka 5° yaklaşınca artık görülemez (EB V, s. 137). Tam İlmihâl'in gözlem penceresi güneş batışından hilâl 5°'ye inene kadar uzanır.
+TOPICS.besderece[2]|||Ufka yakın yerde ışık çok kalın bir hava tabakasını geçer; sönümlenme ve pus hilâlin zayıf ışığını siler. Ay'ın paralaksı (yaklaşık 57′) onu Dünya merkezinden görüldüğünden yaklaşık 1° daha alçak gösterir. Program görünür yüksekliği paralaks ve kırılmayı hesaba katarak hesaplar.
+TOPICS.gurub[0]|||Güneş batışı ve Temkin
+TOPICS.gurub[1]|||Üç güneş batışı vardır: hakîkî, zâhirî ve şer'î. Güneşin batışını görebilen için zâhirî batış esastır; göremeyen için hakîkî batışa Temkin eklenerek bulunan şer'î batış esastır (EB IV, s. 151, 160; V, s. 61). Temkin bir ihtiyat payı değildir (EB V, s. 59).
+TOPICS.gurub[2]|||Zâhirî batış, Güneş'in üst kenarının görünür ufkun altında kaybolduğu andır. Kırılma (yaklaşık 34′) ve Güneş yarıçapı (yaklaşık 16′) onu geometrik batıştan birkaç dakika sonraya iter. Yüksek bir yerden ufuk alçalır; Tam İlmihâl bunun için 106,92″ × √h formülünü verir (EB IV, s. 159).
+TOPICS.safak[0]|||Şafak ve Kâdîhân kuralı
+TOPICS.safak[1]|||Kâdîhân: hilâl şafak bittikten sonra batarsa ikinci gecenin hilâlidir; önce batarsa birinci gecenin (EB V, s. 58). Tam İlmihâl yatsı namazının vaktini anlatırken iki görüşü de nakleder (EB IV, s. 143). İmâmeyn'e (ve diğer üç mezhebe) göre batıda kırmızılık kaybolunca, yani Güneş'in üst kenarı ufkun 17° altında olunca başlar. İmâm-ı a'zama göre beyazlık kaybolunca, 19°'de başlar. Tam İlmihâl ikindi ve yatsı namazlarını İmâm-ı a'zamın ictihâdına göre kılmanın ihtiyatlı olduğunu (EB IV, s. 177) ve beyazlığın kaybolmasını beklemenin daha iyi olduğunu (EB IV, s. 284) bildirir. Kâdîhân kuralı için hangi şafak olduğunu belirtmez. Program bu yüzden asıl olarak İmâm-ı a'zamın ihtiyat görüşünü (−19°) alır ve yanında alternatif olarak İmâmeyn'e göre sonucu (−17°) gösterir. İki görüş farklı sonuç verdiğinde bunu açıkça belirtir.
+TOPICS.safak[2]|||Şafak vakitleri Tam İlmihâl'in hesap yöntemini izler: önce Güneş merkezinin hakîkî ufka göre −19° veya −17°'ye ulaştığı hakîkî vakit hesaplanır, sonra şer'î vakti bulmak için Temkin eklenir (EB IV, s. 138, 143, 183; İstanbul'da yaklaşık 8–10 dakika). İkinci gecenin hilâli daha kalın ve daha yüksektir ve daha geç batar; kural bu olguya dayanır. Böylece "birinci gece gördüm" iddiası Ay'ın batış vaktiyle kontrol edilebilir.
+TOPICS.kuresel[0]|||Ramazan küresel, kurban yerel
+TOPICS.kuresel[1]|||Şa'bânın 30. gecesi bir şehirde hilâl görülünce, dünyanın her yerinde oruca başlamak lâzımdır (EB V, s. 56); gözlemin şâhitlerle, kâdı hükmüyle veya yaygın haberle sâbit olması şartıyla. Hac Mekke'deki gözleme tâbidir; kurban ve namaz vakitleri bulunulan yere tâbidir (Redd-ül-muhtâr, Kitâb-us-savm).
+TOPICS.kuresel[2]|||Hilâl önce batıdaki yerlerde görülebilir: aynı yerel tarihte güneş batıda daha geç batar ve bu arada Ay Güneş'ten daha çok uzaklaşır. Bu yüzden dünya genelinde en erken gözlem genellikle Amerika kıtalarında ve Pasifik'te mümkündür.
+TOPICS.sahitlik[0]|||Şâhitlik
+TOPICS.sahitlik[1]|||Bulutlu havada Ramazan hilâlini tek bir âdil müslümanın görmesi yeter; açık havada çok kişinin şâhitliği gerekir. Kâdı bulunmayan yerde Ramazan bir âdil kişinin sözüyle, bayram iki kişinin sözüyle başlar. Bulutlu havada Şevvâl iki erkek veya bir erkek ve iki kadın ister (EB V, s. 55–58).
+TOPICS.sahitlik[2]|||Programın kaydı kullanıcının beyânıdır; gözlemin saatini, yerini ve şartlarını belgelemeye yardım eder. Hesaba göre hilâlin görülmesinin imkânsız olduğu bir akşam için yapılan beyân kesin olarak reddedilir (İmâm-ı Sübkî, EB V, s. 137).
+TOPICS.ciplak[0]|||Çıplak göz şartı
+TOPICS.ciplak[1]|||Rü'yet, yeni ayı (nouvelle lune) gökte görmektir. Gözlem ve hilâlin görülmesi çıplak gözle yapılmalıdır; aletlerle yapılan gözlem geçerli değildir (Rasad Hakkında Zarûrî Malûmat).
+TOPICS.ciplak[2]|||Dürbünler ve teleskoplar çıplak göz sınırının altında bile zayıf bir hilâli gösterebilir; modern modellerin "optik alet gerekli" sınıfları bu durumu anlatır. Programın ana sınıfları çıplak gözle ilgilidir.
+TOPICS.enerken[0]|||Hesaplanan en erken gün
+TOPICS.enerken[1]|||Ayın başı hesapla bulunan gün veya ertesi gündür; asla bir gün önce değil (EB V, s. 57, 137). Ramazan için bütün dünya, kurban için sizin yeriniz, Hac için Mekke esas alınır.
+TOPICS.enerken[2]|||Program beynûnet ≥ 8° ve görünür yükseklik ≥ 5° şartlarının birlikte sağlandığı ilk akşamı arar; en erken gün o akşamın ertesi günüdür. Bir tarihin en geç güneş batışı tarih değiştirme çizgisinin hemen doğusunda olduğundan, dünya genelinde en erken akşam genellikle Pasifik'tedir.
+TOPICS.isik[0]|||Işık yöntemi
+TOPICS.isik[1]|||Hüseyn Hilmi Işık'ın bulduğu bu yöntem, birkaç adımda herhangi bir arabî ayın ilk gününü verir: yılın sayısından bir çıkarılıp 4,367 ile çarpılır, tam kısmına ayın sayısı eklenir, sonra toplam yediye bölünür; kalan, günü cumadan itibaren sayar. On iki ayın sayıları, ebced hesabına (hurûf-i cümel) göre bir beytin büyük harfli kelimelerinin baş harfleriyle verilir; Endless Bliss'te: "[İngilizce beyit]" (Tam İlmihâl'de: "Hilmi Bu Dünyâya Hiç Zahmet Etme! Cemâl-i Dünyâyı, Vefâsız Zen Buldu Cümle." — aynı on iki baş harf H B D H Z E / C D V Z B C, ebced değerleri 8 2 4 5 7 1 / 3 4 6 7 2 3 ayların sayılarıdır). Tam İlmihâl bu yöntemin çok emin ve doğru olduğunu bildirir (EB V, s. 135–136). Şâhitlerle sâbit olmayan yerde Kurban Bayramı böyle bulunan gün veya ertesi gündür (EB V, s. 79).
+TOPICS.isik[2]|||4,367, 354,367 günlük kamerî yılın haftalık artığıdır (EB V, s. 133): 354,367 gün = 50 hafta + 4,367 gün. Her yıl ay başları haftada o kadar ilerler; ayların sayıları 29 ve 30 günlük ayların meydana getirdiği kaymayı hesaba katar. Böylece tek bir çarpma ve tek bir bölmeyle, asırlar boyunca herhangi bir ay başının haftanın hangi günü olduğu bulunur. Program bu yöntemle Zilhicce'nin 1. gününü ve Kurban Bayramını gösterir.
+TOPICS.ulugbey[0]|||Uluğ Bey cetveli
+TOPICS.ulugbey[1]|||Semerkand rasathânesiyle tanınan Uluğ Bey'in kamerî ay cetvelleri, Tam İlmihâl'e Ahmed Ziyâ Bey'in kitabından alınmıştır. Tam İlmihâl, ay başını bulmaya yarayan yöntemler arasında en güvenilirinin Uluğ Bey'inki olduğunu bildirir (EB V, s. 139–142). Hicrî yıl 210'a bölünür; kalan birinci cetvelde Muharrem'in ilk gününü verir, ikinci cetvel de aranan ayın ilk gününü verir.
+TOPICS.ulugbey[2]|||210 kamerî yıl, aritmetik takvimin yedi adet 30 yıllık devridir. Otuz yıl 10 631 gün sürer ve haftada 5 günlük artık bırakır; yedi devirde bu artık tam haftalar oluşturur ve haftanın günleri aynı sırayla döner. Böylece iki küçük cetvel her hicrî yılın her ayı için haftanın gününü verir.
+TOPICS.kindi[0]|||Ebüzziyâ / Kindî cetveli
+TOPICS.kindi[1]|||Ebüzziyâ takviminde (1310 [M. 1893]) verilen ve İbni İshak Ya'kûb Kindî'nin cetveline dayanan bu yöntemde hicrî yıl sekize bölünür. Kalan sütunu, ay satırı gösterir; kesiştikleri yerdeki sayı günü cumadan itibaren sayar (EB V, s. 138–139).
+TOPICS.kindi[2]|||Sekiz kamerî yıl (üçü 355 günlük, beşi 354 günlük) 2 835 gün, yani tam 405 hafta eder. Haftanın günleri bu yüzden her sekiz yılda aynı sırayla döner ve bütün ay başları sekiz sütunlu tek bir cetvele sığar. Hesap yapmadan bir bakışta cevap veren pratik bir araçtır.
+TOPICS.tabular[0]|||Aritmetik (tablo) takvim
+TOPICS.tabular[1]|||Hicrî kamerî târih 1. yılın 1 Muharrem'inde başlar: Cuma, 16 Temmuz 622 (EB V, s. 133). Aritmetik takvim ayları sırayla 30 ve 29 gün sayar ve her 30 yılın 11'ini 355, diğerlerini 354 gün alır.
+TOPICS.tabular[2]|||Bu şemada ortalama ay 29,530556 gündür, gerçek ortalama aydan (29,530589 gün) sadece yaklaşık üç saniye farklıdır. Bu yüzden asırlar boyunca ay başlarını gerçek Ay'a çok yakın tutar. Tarih dönüşümünde ve takvimlerde yaygın kullanılır; program onu karşılaştırma için gösterir.
+TOPICS.madde88[0]|||Hicrî yılın ilk günü (×5 ÷ 8)
+TOPICS.madde88[1]|||Muharrem'in ilk gününü bulmak için yılın sayısı beşle çarpılır ve sekize bölünür; kalan, günü perşembeden itibaren sayar. Örnek: 1357 × 5 = 6785; sekize bölme 1 bırakır, demek ki Muharrem perşembe başlar (EB V, s. 135).
+TOPICS.madde88[2]|||Kindî cetveli gibi yöntem sekiz yıllık devre dayanır: sekiz kamerî yıl tam 405 haftadır. Kalanın sıfır olduğu yıllar için program Uluğ Bey sonucunu gösterir.
+TOPICS.modern[0]|||Modern modeller (Yallop, Odeh)
+TOPICS.modern[1]|||Sadece ek bilgidir; ondan hiçbir hüküm çıkmaz. Ana panelde yalnız en iyi gözlem ânı (güneş batışı + 4/9 × fark) gösterilir.
+TOPICS.modern[2]|||Yallop (1997) ve Odeh (2004), yüzlerce kayıtlı gözleme göre ayarlanmış kriterlerdir. İkisi de Ay ile Güneş arasındaki yükseklik farkını (ARCV) hilâlin genişliğiyle (W) karşılaştırır. Sınıflar "çıplak gözle kolayca görülür"den "teleskopla bile görülmez"e kadar uzanır.
+TOPICS.karanlik[0]|||Güneş ufkun ne kadar altında olmalı?
+TOPICS.karanlik[1]|||Tam İlmihâl hilâlin güneş batışından sonra arandığını ve ufka 5° yaklaşınca artık görülemeyeceğini bildirir (EB V, s. 137); aramaya başlamadan önce Güneş'in ne kadar derine inmiş olması gerektiği için ayrı bir sınır koymaz. Program bu yüzden ne Tam İlmihâl sınıflarını ne de ret kuralını bu seçime bağlar.
+TOPICS.karanlik[2]|||Güneş batışından hemen sonra gökyüzü hâlâ aydınlıktır; Güneş birkaç derece indikçe ince hilâlin gökyüzüne karşı kontrastı artar, bu sırada hilâl ufka yaklaşır. En iyi denge çoğu zaman güneş batışından birkaç dakika sonradır (Yallop: batış + farkın 4/9'u). Sivil alacakaranlık Güneş −6°'deyken biter. Bu seçim zaman çubuğundaki yeşil "arama aralığı" bandını, seçilen ânın haritasını, canlı haritayı ve arazi modunu birlikte değiştirir.
+TOPICS.hicri[0]|||Kamerî gün, ay adı ve hicrî yıl
+TOPICS.hicri[1]|||Ezânî gün, Güneş'in üst kenarının şer'î ufkun altına iki şer'î batışı arasındaki zamandır (EB IV, s. 165); program bu yüzden kamerî günü şer'î batışta değiştirir. Ay hilâlin görülmesiyle başlar, hesap veya takvimle değil (EB V, s. 54). Gündüz görülen hilâl sonraki geceye aittir (EB V, s. 56).
+TOPICS.hicri[2]|||Program her ay için hesaplanan en erken günü bulur; yeni ay ondan önce başlayamaz. O gün ve ertesi gün için iki ihtimal (1 | 29/30) birlikte yazılır. Ay adı ve yıl içtimâya göre aritmetik takvimden gelir; Muharrem'de yeni yıl ancak hilâl görülünce kesinleştiğinden, o zamana kadar eski ve yeni yıl yan yana gösterilir.
+TOPICS.hava[0]|||Hava, bulut ve görüş mesafesi
+TOPICS.hava[1]|||Bulutlu havada Ramazan hilâli tek bir âdil müslüman "gördüm" deyince sâbit olur; açık havada çok kişinin şâhitliğiyle; bayram için iki âdil şâhit gerekir (EB V, s. 56). Hava tahmini sadece gözleme hazırlığa yarar; hüküm gerçek gözleme bağlıdır.
+TOPICS.hava[2]|||İnce hilâl alçak ve zayıftır: alçak bulutlar, pus ve toz başlıca engellerdir. Program iki nokta için tahmin alır: sizin yeriniz ve hilâlin battığı yönde yaklaşık 25 km uzaktaki bir nokta (5° yükseklikteki bir görüş hattı bu mesafede 2 km'deki bir bulut tabanına rastlar). 20 km'den fazla görüş mesafesi ve 0,2'den az aerosol optik kalınlığı ile ufuk genellikle açıktır.
+TOPICS.rasad[0]|||Gözlem gecesi ve en elverişli akşam
+TOPICS.rasad[1]|||Şa'bânın 29. akşamı hilâli aramak vâcib-i kifâyedir; görülmezse ay otuza tamamlanır (EB V, s. 55). Ramazan hilâlini gökte aramak bir ibâdettir. Hesap, hilâlin görülebileceği geceyi bilmeye yarar, ayın başladığı ânı değil (EB V, s. 137).
+TOPICS.rasad[2]|||Gözlem gecesi (A): sizin yerinizde hilâlin görülmesinin mümkün olduğu ilk akşam (güneş batışında elongasyon ≥ 8° ve hilâl ufkun 5° üstünde). En elverişli akşam (B): elongasyonun 18°'ye ulaştığı ilk akşam. İkisi de hesaplanmış ihtimallerdir; hiçbiri hilâlin görüldüğünü göstermez.
+TOPICS.dogrulama[0]|||Bir kaydı doğrulamak
+TOPICS.dogrulama[1]|||Bir gözlem kaydı veya tutanak şâhitlik değildir; şâhitliğin değerlendirilmesi yetkili makama aittir (EB V, s. 55–58). Doğrulama yalnızca kaydın sonradan değiştirilmediğini gösterir; hilâlin görüldüğünü ispat etmez.
+TOPICS.dogrulama[2]|||Parmak izi (SHA-256), kaydın içeriğinden hesaplanan 64 karakterlik bir parmak izidir; tek bir harf değişirse tamamen değişir. Kâğıt tek başına doğrulanamaz: doğrulayan kişi gözlemcinin JSON kaydını alır ve program parmak izini yeniden hesaplayıp kâğıttaki kodla karşılaştırır.
+TOPICS.nakli[0]|||Naklî deliller
+TOPICS.nakli[1]|||Kamerî ayların, özellikle Ramazan ve Zilhicce'nin başı hilâlin görülmesine bağlıdır. Kur'ân hilâllerin insanlar ve Hac için vakit ölçüleri olduğunu bildirir (Bakara 189). Hadîsler hilâli görünce oruca başlamayı, tekrar görünce bitirmeyi ve hava kapalıysa Şa'bânı otuza tamamlamayı emreder (Buhârî, Müslim, Nesâî, Dârimî, Muvatta, Müsned). Ramazanın hilâlin görülmesiyle veya Şa'bânı otuza tamamlamakla sâbit olduğunda icmâ vardır (Tebyîn-ül-hakâık, İ'ânet-üt-tâlibîn). Açık nas bulunan yerde ictihâda yer yoktur (Mecelle, md. 14). Kaynak: kongre tebliği, s. 3. Tam İlmihâl'deki hükümler: EB V, s. 54–58, 137.
+TOPICS.nakli[2]|||İstanbul Teknik Üniversitesi'nden Prof. Hamit Dilgan, 1963'te Diyanet İşleri Başkanlığına verdiği bir cevapta, hesaplanan şartlar sağlansa bile yeni hilâlin fiilen görülmeyebileceğini ve görülme imkânının fiilî görülmeden ayırt edilmesi gerektiğini yazdı. ABD Deniz Rasathânesi (USNO) da aynı şekilde, içtimâ ânı tam hesaplanabilse de hilâlin görünürlüğünün birçok etkene bağlı olduğunu ve kesinlikle öngörülemeyeceğini belirtir (kongre tebliği, s. 5, 8). Bu yüzden program "mümkün" der, asla "görüldü" demez.
+TOPICS.nakli[3][0]|||Nas ve icmâ (kongre tebliği)
+TOPICS.nakli[3][1]|||Astronomların beyânları
+TOPICS.nakli[3][2]|||Âlimlerin naklettikleri — ayrıntı
+TOPICS.nakli[3][3]|||Astronomi kaynakları — ayrıntı
+PLAN[0][0]|||Yola çıkmadan önce
+PLAN[0][1][0]|||Bu akşamın sınıfına bakın. "Hilâl henüz doğmadı" veya "görülemez" diyorsa gözlem beklenmez; sonraki akşamı planlayın.
+PLAN[0][1][1]|||Havayı kontrol edin: batı ve güneybatı ufku bulut, pus ve tozdan arınmış olmalı.
+PLAN[0][1][2]|||Batı ufku açık bir yer seçin: deniz kenarı, tepe veya yüksek bina, şehir ışıklarından uzak.
+PLAN[0][1][3]|||Harita sekmesinde yerinizin rengine ve en erken akşama bakın.
+PLAN[0][1][4]|||Zâhirî güneş batışından en az 20 dakika önce yerinizde olun.
+PLAN[1][0]|||Arazide
+PLAN[1][1][0]|||Güneşin battığı noktayı bir ağaç, bina veya tepe yardımıyla belirleyin.
+PLAN[1][1][1]|||Hilâlin yerini elle bulun: kol tam uzatılmışken bir yumruk yaklaşık 10°, üç parmak yaklaşık 5°, serçe parmak yaklaşık 1°.
+PLAN[1][1][2]|||En iyi andan 10–15 dakika önce aramaya başlayın. Gökyüzü karardıkça hilâl iner ve 5°'nin altında kaybolur.
+PLAN[1][1][3]|||Yatay şeritler hâlinde yavaşça tarayın. Zayıf cisimler biraz yanına bakınca daha iyi görülür (kaçık bakış).
+PLAN[1][1][4]|||20–30 saniye bakın, sonra gözlerinizi dinlendirin. Güneşin battığı noktaya uzun süre bakmayın.
+PLAN[1][1][5]|||Ekranı gece moduna alın; parlak ışık gözün karanlığa uyumunu bozar.
+PLAN[2][0]|||Hilâli tanımak
+PLAN[2][1][0]|||Hilâl ince bir yaydır; parlak kenarı güneşin battığı noktaya dönüktür ve boynuzları Güneş'in tersine, yukarı bakar.
+PLAN[2][1][1]|||Venüs ve Merkür güneş batışından sonra batıda parlak noktalar olarak görünür; bunlar noktadır, yay değil. Onları hilâl sanmayın.
+PLAN[2][1][2]|||Uçak izleri, ince bulut kenarları ve ufuktaki ışıklar hilâle benzeyebilir. Şüphe hâlinde şeklin birkaç dakika aynı kalıp kalmadığını kontrol edin.
+PLAN[3][0]|||Gözlemden sonra
+PLAN[3][1][0]|||Saati, yeri, havayı, ne kadar süre gördüğünüzü ve yanınızdaki şâhitleri not edin.
+PLAN[3][1][1]|||Programın kaydı kullanıcının beyânıdır. Şer'î hüküm, şâhitlik şartlarına göre şâhitlerle sâbit olur (EB V, s. 55–58).

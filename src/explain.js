@@ -76,7 +76,7 @@
       plan: 'Bu geceyi planla'
     },
     en: {
-      pg: n => `p. ${n}`, recSeenShort: 'your record: seen', recNotShort: 'your record: not seen',
+      pg: n => ({ 315: 'EB V, p. 57', 326: 'EB V, p. 79', 360: 'EB V, p. 137' })[n] || `p. ${n}`, /* Tam İlmihâl sayfası → Endless Bliss */ recSeenShort: 'your record: seen', recNotShort: 'your record: not seen',
       btn: 'What does this evening mean?', btnShort: 'Explain', title: 'Explanation for this selection',
       head: (d, p) => `Evening of ${d} · ${p}`, monthLine: (m, c) => `Start of ${m} · Conjunction: ${c}`,
       here: 'This evening here', world: 'This evening worldwide', start: 'Start of the month: two nights', scope: 'Scope and ruling', more: 'Detailed explanation',

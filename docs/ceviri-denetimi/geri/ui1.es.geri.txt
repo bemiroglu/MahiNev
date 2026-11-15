@@ -1,0 +1,413 @@
+T.appSub	Hilâl gözetleme yardımcısı · Tam İlmihâl Se’âdet-i Ebediyye'ye dayalı
+T.notCalendar	Bu program bir takvim değildir. Kamerî ay, hilâl çıplak gözle görüldüğünde (rü’yet) başlar; burada gösterilen hesaplanmış imkândır.
+T.tabRuyet	Gözetleme
+T.tabHelp	Yardım ve kanonik metin
+T.tabTests	Doğrulama
+T.location	Konum
+T.city	Şehir
+T.custom	Elle gir
+T.lat	Arz (enlem, °K)
+T.lon	Tûl (boylam, °D)
+T.elev	Arazi yüksekliği (m)
+T.hObs	Gözlemcinin (râsid) yüksekliği (m)
+T.hMax	Şehrin en yüksek noktası (m, Temkin için)
+T.tz	Saat dilimi
+T.useMyLoc	Konumumu kullan
+T.locFail	Konum alınamadı. Enlem ve boylamı elle girin.
+T.date	… akşamı
+T.today	Bugün
+T.prevDay	Önceki gün
+T.nextDay	Sonraki gün
+T.nextNight	Sonraki ay ▶
+T.evening	Akşam
+T.status	Hesaplanmış görülme imkânı
+T.cls.notBorn_beforeConj[0]	Hilâl henüz doğmadı
+T.cls.notBorn_beforeConj[1]	Kavuşum (ictimâ) henüz gerçekleşmedi.
+T.cls.notBorn_moonFirst[0]	Hilâl henüz doğmadı
+T.cls.notBorn_moonFirst[1]	Ay Güneş'ten önce batıyor.
+T.cls.below8[0]	Görülemez (Tam İlmihâl)
+T.cls.below8[1]	Güneş batışında beynûnet (uzanım) 8°'den az; hilâl hiçbir yerde görülemez (EB V, s. 137).
+T.cls.below5[0]	Görülemez: ufuktan 5°'den az
+T.cls.below5[1]	Güneş batışında hilâlin görünen yüksekliği 5°'den az (EB V, s. 137).
+T.cls.possible[0]	Mümkün; dikkatli gözlem gerekir
+T.cls.possible[1]	Beynûnet 8° ile 18° arasında (EB V, s. 137).
+T.cls.visible[0]	Hesaba göre görülebilir
+T.cls.visible[1]	Beynûnet 18° veya fazla; gökyüzü açıksa görülebilir (EB V, s. 137, Osmanlı ölçütü).
+T.cls.midMonth[0]	Ay başı gözlem gecesi değil
+T.cls.midMonth[1]	Hilâl birkaç gecedir gökyüzünde; bu akşam ay başı gözlemi yapılmaz.
+T.claim	Bu akşam için görme beyanı
+T.claimReject	Tam İlmihâl'e göre kabul edilmez (İmâm-ı Sübkî, EB V, s. 137)
+T.claimWarn	Uyarı: Tam İlmihâl'e göre görülemez
+T.claimOk	Hesapla çelişmiyor; hüküm şahitliğin şartlarına bağlıdır
+T.bestTime	En iyi gözlem anı
+T.bestSrc	Yallop 1997: Güneş batışı + 4/9 × gecikme
+T.gurub	Görünen Güneş batışı (zâhirî gurûb)
+T.seri	Şer’î batış (Temkinli)
+T.temkin	Temkin
+T.moonset	Ay batışı
+T.lag	Gecikme (Ay Güneş'ten sonra)
+T.age	Ay'ın yaşı (kavuşumdan beri)
+T.lastConj	Son ictimâ (kavuşum)
+T.beyn	Beynûnet (uzanım)
+T.alt	Görünen yükseklik (irtifâ)
+T.geoAlt	yer merkezli
+T.az	Semt (azimut)
+T.daz	Güneş'e göre azimut farkı
+T.illum	Aydınlanma
+T.kadihan	Kâdîhan kontrolü (EB V, s. 58)
+T.kFirst	Ay, alacakaranlığın bitiminden önce batıyor: birinci gecenin hilâli
+T.kSecond	Ay, alacakaranlığın bitiminden sonra batıyor: ikinci gecenin hilâli
+T.guide	Nereye bakmalı
+T.guideTxt	Yallop'un önerdiği anda (ek bilgi) hilâl, Güneş'in battığı noktanın ${d}° ${side}, ufkun ${h}° üzerindedir.
+T.left	solunda (güney)
+T.right	sağında (kuzey)
+T.sameDir	aynı hizada
+T.horizon	Batı ufku
+T.horizonCap	En iyi gözlem anındaki gökyüzü. Kesikli çizgi: Tam İlmihâl'in 5° sınırı.
+T.sunLabel	Güneş
+T.moonLabel	Hilâl
+T.month	Ay başı bilgisi
+T.monthName	Bu kavuşumla başlayan ay
+T.monthNote	Ayın adı aritmetik takvimden gelir.
+T.conj	İctimâ (kavuşum)
+T.m18	18° anı (Osmanlı ölçütü)
+T.m18lon	O anda Güneş'in battığı boylam (sizin enleminizde)
+T.earliestGlobal	Mümkün olan en erken gün (dünya geneli)
+T.earliestLocal	Mümkün olan en erken gün (konumunuz)
+T.earliestMecca	Mümkün olan en erken gün (Mekke, Hac için)
+T.arefe	Arefe (Hac): en erken
+T.earliestRule	Beynûnetin ≥ 8° ve görünen yüksekliğin ≥ 5° olduğu ilk akşamın ertesi günü. Ay bu günden önce başlayamaz; rü’yete göre bir gün sonra başlayabilir (EB V, s. 57, 137).
+T.eveningAt	akşam
+T.at	yer
+T.isikLabel	Işık yöntemi
+T.isikDiff	Işık yöntemi mümkün olan en erken günden farklı; hüküm rü’yete bağlıdır.
+T.lunarDay	Kamerî gün (hesaplanmış)
+T.lunarDayNote	Ay, en erken günde veya ertesi gün başlayabilir; bu yüzden iki değer gösterilir.
+T.scope	Kullanılan kapsam
+T.scopeGlobal	Dünya geneli (Ramazan: bir yerde görülünce her yerde bağlayıcı, EB V, s. 56)
+T.scopeLocal	Konumunuz (Kurban yereldir; Redd-ül Muhtâr, Kitâb-us-Savm)
+T.otherMethods	Diğer takvim yöntemleri (yalnızca takvim bilgisi)
+T.ulugbey	Uluğ Bey cetveli
+T.kindi	Abuzziyâ / Kindî cetveli
+T.tabular	Aritmetik (tablolu) takvim
+T.madde88	Hicrî yılın ilk günü (×5 ÷ 8)
+T.undefinedInBook	Tam İlmihâl'de tanımlı değil; Uluğ Bey sonucu
+T.extra	Ek bilgi
+T.extraNote	Modern görünürlük modelleri ve Tam İlmihâl'in gözlem penceresi. Hüküm vermezler.
+T.yallop	Yallop q (modern görünürlük modeli)
+T.odeh	Odeh V (modern görünürlük modeli)
+T.yallopCls.A	Çıplak gözle kolayca görülür
+T.yallopCls.B	Mükemmel şartlarda görülür
+T.yallopCls.C	Hilâli bulmak için optik yardım gerekebilir
+T.yallopCls.D	Optik yardım gerekecek (çıplak gözle değil)
+T.yallopCls.E	Teleskopla görülmez
+T.yallopCls.F	Görülmez, Danjon sınırının altında
+T.odehCls.A	Çıplak gözle görülür
+T.odehCls.B	Optik yardımla görülür; çıplak gözle görülebilir
+T.odehCls.C	Yalnızca optik yardımla görülür (çıplak gözle değil)
+T.odehCls.D	Optik yardımla bile görülmez
+T.bookWindow	Tam İlmihâl gözlem penceresi
+T.bookWindowTxt	görünen Güneş batışından hilâlin görünen yüksekliği 5°'ye inene kadar (EB V, s. 137). Tam İlmihâl'e göre hilâl Güneş batışından sonraki 45 dakika içinde görünür.
+T.noWindow	pencere yok (Güneş batışında hilâl 5°'nin altında)
+T.modernLimit	Modern sınır (Fatoohi 1998, Sultan 2007)
+T.modernBelow	uzanım 7,5°'den az: fiziksel olarak görülemez
+T.modernAbove	uzanım 7,5°'den fazla
+T.safak17	Kâdîhan, İmâmeyn'in şafağı (−17°, kırmızılık)
+T.safak17Note	İmâmeyn'e ve diğer üç mezhebe göre şafak, kırmızılık kaybolunca biter (EB IV, s. 143); bu ölçüyle daha erken biter.
+T.width	Hilâl genişliği W (Yallop / Odeh)
+T.arcl	ARCL (yer merkezli, Yallop / yüzey merkezli, Odeh)
+T.arcv	ARCV (yer merkezli, Yallop / yüzey merkezli, Odeh)
+T.dip	Ufkun alçalması (inhitât-ı ufk)
+T.zaviye	Yükseklik açısı (şer’î batış)
+T.local	yerel
+T.min	dk
+T.h	sa
+T.d	g
+T.computing	hesaplanıyor…
+T.testsTitle	Doğrulama vakaları
+T.testsIntro	Program açılışta bu vakaları yeniden hesaplar. Beklenen değerler Tam İlmihâl örneklerinden, Jamry'nin ekran görüntüsünden ve bağımsız bir Python hesabından gelir.
+T.tCase	Vaka
+T.tQty	Büyüklük
+T.tExp	Beklenen
+T.tGot	Hesaplanan
+T.tTol	Tolerans
+T.tRes	Sonuç
+T.pass	Doğru
+T.fail	Hata
+T.helpRules	Programın kuralları
+T.helpCanon	Kuralın kanonik metni
+T.helpSources	Kaynaklar
+T.helpTerms	Terimler
+T.tabPlan	Plan
+T.tabMap	Harita
+T.tabField	Saha
+T.tabGuide	Rehber
+T.theme	Görünüm
+T.thAuto	Otomatik
+T.thLight	Açık
+T.thDark	Koyu
+T.thNight	Gece (kırmızı)
+T.help	Açıklama
+T.close	Kapat
+T.skyTitle	Batı ufku: nereye bakmalı
+T.skyTime	Gösterilen an
+T.skyAtGurub	Güneş batışı
+T.skyAtBest	Yallop önerisi
+T.skyAtWinEnd	5° anı
+T.skyNow	Şimdi
+T.skyNote	Eşit ölçek: 1° yatayda ve dikeyde aynı uzunluktadır. Kalın sarı çizgi Tam İlmihâl'in gözlem penceresidir; noktalar 10 dakikada bir. Hilâl simgesi büyütülmüştür; parlak kenarı Güneş'e bakar.
+T.phase	Gökyüzü
+T.moonPos	Hilâlin konumu
+T.planetsNear	Yakındaki parlak gezegenler
+T.noPlanets	yok
+T.planetWarn	Venüs ve Merkür nokta gibi parlar; onları hilâlle karıştırmayın.
+T.mapTitle	Dünya görülme imkânı haritası
+T.mapEvening	Akşam
+T.mapLayer	Katman
+T.mapRes	Çözünürlük
+T.lySeadet	Tam İlmihâl sınıfları
+T.lyFirst	İlk görülebilirlik akşamı
+T.lyYallop	Yallop (ek)
+T.lyOdeh	Odeh (ek)
+T.mapAge	Ay yaşı çizgileri (saat)
+T.mapBorders	Sınırlar
+T.map18	18°'de batış boylamı
+T.mapNoteSeadet	Her nokta kendi yerel Güneş batışında değerlendirilir; tarih o yerin yerel tarihidir. Yeşil ve sarı bölgelerde hilâl hesaba göre görülebilir; gerçekten görülüp görülmediği yalnızca gözlemle bilinir.
+T.mapNoteFirst	Hesaba göre her bölge için bu ayın ilk uygun akşamı (beynûnet ≥ 8° ve yükseklik ≥ 5°). Hilâl o akşam görülür ve sabit olursa ay ertesi gün başlar; daha önce başlayamaz, rü’yete göre daha sonra başlayabilir (EB V, s. 57, 137).
+T.mapNoteModern	Modern görünürlük modeli; ek bilgi, hüküm yok.
+T.lgVisible	Görülebilir (≥ 18°)
+T.lgPossible	Mümkün; dikkatli gözlem (8°–18°)
+T.lgBelow5	Görülemez: 5°'nin altında
+T.lgBelow8	Görülemez: beynûnet < 8°
+T.lgNotBorn	Hilâl henüz doğmadı
+T.lgNoSun	Güneş batmıyor
+T.lgFirst	${k + 1}. akşam
+T.lgLater	Bu ayın ilk 3 gününde değil
+T.yA	A: kolay, çıplak gözle
+T.yB	B: mükemmel şartlar
+T.yC	C: bulmak için optik yardım
+T.yD	D: yalnızca optik yardımla
+T.yEF	E–F: görülmez
+T.oA	A: çıplak gözle
+T.oB	B: optik yardım, belki çıplak gözle
+T.oC	C: yalnızca optik yardımla
+T.oD	D: görülmez
+T.youHere	Siz
+T.earliestHere	Dünya genelinde en erken
+T.meccaLbl	Mekke
+T.pick	Seçilen nokta
+T.pickUse	Bu konumu kullan
+T.mapOpen	Haritada aç
+T.miniTitle	İlk görülebilirlik haritası
+T.miniGlobal	Ayın 1. günü (iki ihtimal)
+T.miniLocal	Burada mümkün ilk akşam
+T.miniHow	Renk, hesaba göre her bölgede hilâlin görülebileceği ilk akşamı gösterir. O akşam görülür ve sabit olursa ay ertesi gün başlar; daha önce başlayamaz, rü’yete göre daha sonra başlayabilir (EB V, s. 57, 137).
+T.fieldTitle	Saha modu
+T.fieldTonight	Bu akşam
+T.fieldNotToday	Seçilen akşam bugün değil.
+T.fieldToToday	Bugüne geç
+T.cdGurub	Güneş batışına kadar
+T.cdBest	Yallop önerisi (ek)
+T.cdWin	5° anına kadar (pencerenin sonu)
+T.cdSet	Ay batışına kadar
+T.passed	geçti
+T.whereNow	Şimdi nereye bakmalı
+T.nightMode	Gece modu
+T.wake	Ekranı açık tut
+T.wakeOn	Ekran açık
+T.wakeFail	Bu görünümde ekran açık tutulamıyor.
+T.compass	Pusula
+T.compassFail	Pusula bu cihazda veya bu görünümde kullanılamıyor.
+T.heading	Yönünüz
+T.turn	Hilâle yönelmek için ${…}° ${'sola'/'sağa'} dönün.
+T.record	Kayıt ve rü’yet tutanağı
+T.saw	Gördüm
+T.notSaw	Görülmedi
+T.notes	Not (hava, şahitler, süre)
+T.records	Kayıtlar
+T.del	Sil
+T.noRecords	Henüz kayıt yok.
+T.evReject	Tam İlmihâl'e göre hilâl bu akşam görülemez: hesapla bilinen kesindir ve bu şartlarda bir görme beyanı kabul edilmez (İmâm-ı Sübkî, EB V, s. 137). Beyanı değerlendirmek yetkili makama aittir.
+T.evWarn5	Uyarı: o anda hilâl 5°'nin altındaydı; Tam İlmihâl'e göre görülemez (EB V, s. 137).
+T.evDay	Güneş batışından önce kaydedildi: gündüz görülen hilâl sonraki geceye aittir (EB V, s. 56).
+T.evAfterSet	O anda Ay zaten batmıştı; saati kontrol edin.
+T.evOk	Hesapla tutarlı. Ay, şartları taşıyan şahitlerle ve yetkili makamın kararıyla sabit olur (EB V, s. 55–58).
+T.evNotSaw	Kaydedildi: açık havada arandı ve hilâl görülmedi. Bu kayıt tek başına ayın otuz güne tamamlandığını ispat etmez.
+T.recNote	Kayıtlar yalnızca bu tarayıcıda saklanır.
+T.gPlan	Gözlem planı ve teknikleri
+T.gTopics	Fıkhî ve ilmî açıklamalar
+T.checklist	Saha kontrol listesi
+T.now	Şimdi
+T.timeBar	Seçilen an: günün herhangi bir saati
+T.live	Canlı
+T.nowBtn	Şimdi
+T.tbHint	Kaydırıcı seçilen günün 00:00'ından ertesi günün 03:00'üne kadar gider. Koyu bant: gece; sarı bant: Tam İlmihâl penceresi; yeşil bant: hilâlin aranabileceği aralık.
+T.evSunrise	Güneş doğuşu
+T.evGurub	Güneş batışı
+T.evMoonrise	Ay doğuşu
+T.evMoonset	Ay batışı
+T.evSafak	Alacakaranlığın sonu (−19°)
+T.evWin	Tam İlmihâl penceresi
+T.evSearch	Arama aralığı
+T.prefs	Görüntüleme tercihleri
+T.darkLbl	Aramaya başlamak için Güneş ufkun ne kadar altına inmiş olmalı?
+T.darkOpt.gurub	Güneş batışında (Tam İlmihâl penceresi)
+T.darkOpt.m3	Güneş 3° aşağıda (gökyüzü biraz daha karanlık)
+T.darkOpt.m6	Güneş 6° aşağıda (sivil alacakaranlığın sonu)
+T.darkHelp	Bu seçenek yalnızca "arama aralığı"nın gösterimini değiştirir (zaman çubuğu, seçilen an, canlı harita, saha modu). Tam İlmihâl sınıflarını ve kesin ret kuralını değiştirmez.
+T.timeFmt	Saat biçimi
+T.tfLocal	Yalnızca seçilen saat dilimi
+T.tfBoth	Saat dilimi ve UTC birlikte
+T.landOnly	Yalnızca kara alanlarını renklendir
+T.nightA	Gözlem gecesi (mümkün ilk akşam)
+T.nightB	En iyi akşam (beynûnet ≥ 18°)
+T.nightNone	Önümüzdeki aylarda uygun akşam bulunamadı.
+T.nightGo	Git
+T.nightChoice	Ay başı gözlemi
+T.midHint	Seçilen akşam ayın ortasında; hilâl gözlemi yapılmaz.
+T.midGo	En yakın gözlem gecesine git
+T.momentTitle	Bu andaki gözlem
+T.obsOk	Şimdi hilâl aranabilir.
+T.obsNo	Şimdi hilâl aranamaz:
+T.why.age	hilâl dönemi değil (kavuşumdan sonraki ilk 4 günün dışında)
+T.why.sun	Güneş henüz seçilen eşiğin altına inmedi
+T.why.elong	beynûnet 8°'den az (EB V, s. 137)
+T.why.moonDown	Ay ufkun altında
+T.why.low	hilâl 5°'nin altında (Tam İlmihâl'e göre görülemez, EB V, s. 137)
+T.todayRange	Bu günün arama aralığı
+T.noRange	bu gün arama aralığı yok
+T.sunL	Güneş
+T.moonL	Ay
+T.elongNow	Beynûnet (şimdi)
+T.ageNow	Ay'ın yaşı (şimdi)
+T.phaseL	Evre
+T.riseSet	Doğuş / batış
+T.phaseName.new	Yeni ay (muhâk, kavuşuma yakın)
+T.phaseName.waxCres	Hilâl (büyüyen)
+T.phaseName.firstQ	İlk dördün
+T.phaseName.waxGib	Büyüyen şişkin ay
+T.phaseName.full	Dolunay
+T.phaseName.wanGib	Küçülen şişkin ay
+T.phaseName.lastQ	Son dördün
+T.phaseName.wanCres	Küçülen (sabah)
+T.morningTitle	Sabah hilâli (kavuşumdan önce)
+T.morningCode.possible	Eski hilâl Güneş doğmadan önce doğuda görülebilir.
+T.morningCode.below5	Eski hilâl Güneş doğuşunda 5°'nin altında; görülmesi beklenmez.
+T.morningCode.below8	Beynûnet 8°'den az; eski hilâl görülmez.
+T.morningCode.moonBelow	Güneş doğuşunda Ay ufkun altında.
+T.morningNote	Sabah görülen hilâl biten aya aittir; yeni ayın delili değildir, yalnızca kavuşumun yakın olduğunu gösterir.
+T.panoTitle	Tam ufuk (360°)
+T.panoNote	Seçilen an batı penceresinin dışında, bu yüzden tam ufuk gösteriliyor. Dikey ölçek sıkıştırılmıştır.
+T.stripTitle	Aylık görülme şeridi
+T.stripNote	Her kutu bir akşamdır; rengi Güneş batışındaki sınıftır. A: gözlem gecesi, B: en iyi akşam; "m" sabah hilâlinin görülebildiği günleri işaretler. O günü seçmek için bir kutuya dokunun.
+T.stripLoading	Hesaplanıyor…
+T.tzWarn	Seçilen saat dilimi (${tz}) bu konumun güneş saatinden ${h} saat farklı. Saatler ${tz} ile gösteriliyor; doğru dilimi seçmeniz önerilir.
+T.mapMode	Harita modu
+T.mmEvening	Akşam (her yer kendi batışında)
+T.mmInstant	Seçilen an (canlı)
+T.play	Canlı
+T.pause	❚❚ Duraklat
+T.mapTime	Seçilen an
+T.mapInstantNote	Seçilen anda: aydınlık taraf gündüzdür; koyulaşan gölge alacakaranlık ve gecedir. Yeşil bölgede şimdi hilâl aranabilir; turuncu bölgede Ay ufkun üzerinde ama 5°'nin altındadır. ☀ ve ☾ Güneş'in ve Ay'ın başucunda olduğu yeri işaretler.
+T.lgDayNight	Gece–gündüz çizgisi
+T.lgMoonHz	Ay'ın ufku (kesikli)
+T.lgSearch	Şimdi aranabilir
+T.lgLow	Ay ufkun üzerinde, 5°'nin altında
+T.lgNight	Gece
+T.lgOutline	İnce çizgi: sınıf sınırı
+T.sunSub	Güneş başucunda
+T.moonSub	Ay başucunda
+T.prevMonth	Önceki ay
+T.nextMonth	Sonraki ay
+T.recAt	Kayıt saati
+T.recEvening	${d} akşamına aittir
+T.recDayLbl	gündüz (Güneş batışından önce)
+T.fSearch	Şimdi aranabilir mi?
+T.fMorning	Sabah
+T.bestAfterWin	Bu akşam Yallop'un en iyi anı, hilâl 5°'nin altına indikten sonra geliyor. Tam İlmihâl'e göre hilâl ${a} ile ${b} arasında aranır (EB V, s. 137); zaman çubuğu bu aralıkta açılır.
+T.modeLive	Şimdi
+T.modePlan	Gözlem planı
+T.backNow	Şimdiye dön
+T.printBtn	Yazdır / PDF
+T.hjAfter	Güneş batışından sonra: yeni kamerî gün
+T.hjHesabi	hesaplanmış
+T.hjNote	Kamerî gün şer’î batışta başlar (ezânî gün, EB IV, s. 165). Ayın adı ve hicrî yıl hesaplanmıştır; ay rü’yetle başlar. Yeni hicrî yıl Muharrem hilâli görülünce başlar; o zamana kadar iki ihtimal de gösterilir.
+T.hjOr	veya
+T.hjEnd	ay sonu
+T.upTitle	Sonraki ay başı gözlemi
+T.upA	Gözlem gecesi (mümkün ilk akşam)
+T.upB	En iyi akşam (≥ 18°)
+T.upIn	n<=0: bu akşam; n==1: yarın akşam; aksi: ${n} gün içinde
+T.upPlan	Bu geceyi planla
+T.upMonth	${m} hilâli
+T.upWin	Arama
+T.upToday	Bugün (kamerî, hesaplanmış)
+T.upLoading	Hesaplanıyor…
+T.planTag	Planlama
+T.planFor	${d} akşamı için gözlem planı
+T.planMonth	Aranan hilâl: ${m}
+T.chipOffline	Bağlantısız
+T.chipSandbox	claude.ai görünümü
+T.chipLocAuto	Konum: otomatik
+T.chipLocMan	Konum: elle
+T.fontSize	Yazı boyutu
+T.fsOpts	Normal / Büyük / Çok büyük
+T.thSun	Güneş ışığı (yüksek kontrast)
+T.hOnline	İnternet bağlantıları ve izinler
+T.optWx	Hava ve görüş mesafesi tahmini (Open-Meteo)
+T.optAutoLoc	Konumu otomatik al (cihaz izniyle)
+T.onlineNote	Tüm astronomik hesaplar internet ve konum olmadan çalışır.
+T.sandboxNote	Bu sayfa claude.ai içinde açık: burada internet, konum ve doğrudan yazdırma kapalıdır. Tüm işlevler için "Dosya olarak kaydet"i kullanıp bir tarayıcıda açın.
+T.saveSelf	Dosya olarak kaydet
+T.wxTitle	Hava ve görüş mesafesi (tahmin)
+T.wxOff	Tahmin kapalı; ⚙ Ayarlar → "İnternet ve konum"dan açın.
+T.wxSandbox	claude.ai görünümünde dış bağlantılar kapalıdır; tahmin indirilen dosyada çalışır.
+T.wxOffline	İnternet yok; tahmin yok. Hesaplar etkilenmez.
+T.wxLoading	Tahmin alınıyor…
+T.wxErr	Tahmin alınamıyor (bağlantı veya servis).
+T.wxOutRange	Tahmin ${a} – ${b} arasını kapsıyor; seçilen akşam dışarıda kalıyor.
+T.wxHead	Saat / Bulut: toplam / alçak / Görüş mesafesi / Nem / Yağış
+T.wxHere	Konumunuz
+T.wxWest	Batı ufkuna doğru (~25 km, azimut ${az}°)
+T.wxLevel.good	Hava: batı ufku açık görünüyor
+T.wxLevel.fair	Hava: parçalı bulutlu; batıda bulut veya pus olabilir
+T.wxLevel.poor	Hava: kapalı veya yağışlı
+T.wxReason.rain	yüksek yağış ihtimali
+T.wxReason.low	alçak bulutlar
+T.wxReason.lowSome	biraz alçak bulut
+T.wxReason.cloud	kapalı gökyüzü
+T.wxReason.cloudSome	parçalı bulutlu
+T.wxReason.haze	düşük görüş (pus/sis)
+T.wxReason.hazeSome	orta görüş
+T.wxReason.aod	yoğun aerosol/toz
+T.wxReason.aodSome	hafif pus/toz
+T.wxReason.humid	yüksek nem
+T.wxAod	Pus (aerosol optik derinliği)
+T.wxFor	Seçilen akşamın Güneş batışı saati
+T.wxFiqh	Tam İlmihâl'e göre bulutlu havada Ramazan hilâli, âdil bir Müslümanın "gördüm" demesiyle sabit olur; açık havada çok kişinin şahitliğiyle; Bayram için iki âdil şahit gerekir (EB V, s. 56). Tahmin hükme dayanak değildir; gerçek gökyüzü gözlenir.
+T.wxSrc	Kaynak: Open-Meteo (açık veri). Değerler saatlik ve noktasaldır; yine de batı ufku kontrol edilmelidir.
+T.openSM	Gök haritası
+T.smTitle	Gök haritası
+T.smFace	Aşağıdaki yön
+T.faces.0	Kuzey
+T.faces.90	Doğu
+T.faces.180	Güney
+T.faces.270	Batı
+T.smLines	Takımyıldız çizgileri
+T.smNames	Yıldız adları
+T.smCons	Takımyıldız adları
+T.smEcl	Ekliptik
+T.smNote	Haritayı başınızın üzerinde, alt kenarı baktığınız yöne gelecek şekilde tutun. Kesikli çember: ufkun 5° üzeri (Tam İlmihâl sınırı, EB V, s. 137). Noktalı çizgi: ekliptik; Ay ve gezegenler ona yakındır. Yıldız verisi: d3-celestial (Hipparcos, BSD lisansı).
+T.guidesTitle	Yön bulmak için parlak cisimler
+T.guidesNone	Yakında öne çıkan parlak cisim yok.
+T.fSM	Gök haritası
+T.fLoc	Konumum
+T.printing	Yazdırma sayfası hazırlanıyor…
+T.printSaved	Yazdırma sayfası kaydedildi; açın ve tarayıcının "PDF olarak kaydet"ini kullanın.
+T.printNA	Bu görünümde yazdırma ve kaydetme kullanılamıyor.
+T.printDeclined	Kaydetme iptal edildi.
+T.printTitle.plan	Gözlem planı
+T.printTitle.sky	Gök haritası
+T.printTitle.map	Dünya görülme imkânı haritası
+T.printTitle.field	Saha özeti
+T.printFooter	Bu çıktı bir takvim değildir. Kamerî ay, hilâl çıplak gözle görüldüğünde (rü’yet) başlar; burada verilen hesaplanmış imkândır (Tam İlmihâl, EB V, s. 54, 137).

@@ -1,0 +1,137 @@
+MONTHS	Muharrem | Safer | Rebî'ul-evvel | Rebî'ul-âhır | Cemâzil-ûlâ | Cemâzil-âhıra | Receb | Şa'bân | Ramazan | Şevvâl | Zil-ka'de | Zil-hicce
+S.pg	s. ${n}
+S.recSeenShort	kaydınız: görüldü
+S.recNotShort	kaydınız: görülmedi
+S.btn	Bu akşam ne anlama geliyor?
+S.btnShort	Açıkla
+S.title	Bu seçimin açıklaması
+S.head	${d} akşamı · ${p}
+S.monthLine	${m} başı · İçtimâ: ${c}
+S.here	Bu akşam burada
+S.world	Bu akşam dünyada
+S.start	Ay başı: iki gece
+S.scope	Kapsam ve hüküm
+S.more	Ayrıntılı açıklama
+S.claim	Görme beyanı
+S.worldCalc	Dünya taranıyor…
+S.worldNone	Bu akşam hesaba göre hilâl dünyanın hiçbir yerinde görülemez. Bu akşam onu gördüğü beyanı kabul edilmez (EB V, s. 57, 137).
+S.worldPoss	Hesapla mümkün olduğu bölgeler (uzanım 8°–18°): ${x}.
+S.worldVis	Görünür olduğu bölgeler (uzanım ≥ 18°): ${x}.
+S.worldNote	Bölgeler yaklaşık bir taramadan gelir (deniz seviyesi, standart güneş batışı). Daha fazla ayrıntı için Harita sekmesine bakın.
+S.lead	Tam İlmihâl'e göre yeni ay hesabın gösterdiği gecede doğar, fakat o gece yerine ertesi gece görülebilir (EB V, s. 138). Görmeyle başlamak hesabın gösterdiğinden bir gün sonra olabilir, asla bir gün önce değil (EB V, s. 57). Bu yüzden ayın 1'i iki günden biridir:
+S.leadZh	Şahitlerle sabit olmayan yerde Zilhiccenin 1'i Işık usûlüyle bulunur. Bayram hesaplanan gün veya bir gün sonrasıdır, asla bir gün önce değil (EB V, s. 79). Bu yüzden ayın 1'i iki günden biridir:
+S.optEq	${m}'in 1'i = ${d}
+S.optA	Hilâl ${e} akşamı (birinci gece) dünyanın herhangi bir yerinde görülür ve sabit olursa.
+S.optB	Hilâl ${e} akşamı görülmezse; ikinci gece, ${e2} akşamı görülebilir (EB V, s. 137).
+S.optAZh	Işık usûlüyle bulunan gün (EB V, s. 79).
+S.optBZh	Veya bir gün sonrası (EB V, s. 79).
+S.kurban	Kurban Bayramının ilk günü: ${a} veya ${b}.
+S.notBefore	${m}'in 1'i ${d}'den önce olamaz (${p}).
+S.b18	${e} akşamı hilâl birçok yerde 18°yi aşar; Osmanlı âlimlerinin kabul ettiğine göre bu uzanımla görülür (EB V, s. 137).
+S.prevLead	Önceki ayın (${m}) başı da iki günden biridir; bir ay asla 29'dan az, 30'dan fazla olmaz (EB V, s. 55):
+S.prev30	Önceki ay ${p}'de başladıysa ${e} onun 30. günüdür: ay otuza tamamlanır ve ${m}'in 1'i ${d}'dir.
+S.prev29	Önceki ay ${p}'de başladıysa ${e} akşamı onun 28. akşamıdır: bir ay 29 günden az olmaz ve ${m}'in 1'i ${d}'dir.
+S.prevOpen	Önceki ay ${p}'de başladıysa ${e} akşamı gözlem akşamıdır (29. günün akşamı); ${m}'in 1'i görmeye göre bu iki günden biridir.
+S.todayL	Bugün (${d}):
+S.tBefore	${m} henüz başlamadı; yukarıda gösterilen ilk günden önce başlayamaz. Hesaplanan gün: ${h}.
+S.tFirst	ya ${m}'in 1'i ya da ${pm}'in son günü.
+S.tN	${m}'in ${n}'i (${m}'in 1'i ${d1} ise) veya ${m}'in ${n-1}'i (${m}'in 1'i ${d2} ise).
+S.th	Akşam | Burada | Dünyada | Hilâl o akşam görülür ve sabit olursa
+S.thHere	Hilâl o akşam burada görülür ve sabit olursa
+S.rPrev	önceki akşam
+S.rA	birinci gece
+S.rB	ikinci gece
+S.tonight	seçilen akşam
+S.fReject	kabul edilmez (${p})
+S.fDay	${m}'in 1'i = ${d}
+S.wNone	hiçbir yerde mümkün değil
+S.zhAstro	"Burada" sütunu ek bilgidir: bu yer için astronomik hesap (Zilhicce yereldir).
+S.recHead	Sizin görmeniz
+S.recSeenA	Kaydınıza göre hilâli ${e} akşamı, birinci gece gördünüz. Bu görme sabit olursa ${m}'in 1'i = ${d}.
+S.recSeenB	Kaydınıza göre hilâli ${e} akşamı, ikinci gece gördünüz. Bu görme sabit olursa ${m}'in 1'i = ${d}. Hilâl ${e0} akşamı başka bir yerde görülüp sabit olduysa ${m}'in 1'i = ${d0}.
+S.recBad	Tam İlmihâl kaydınızdaki ${e} akşamı görmeyi kabul etmez: o akşam hesaba göre hilâl hiçbir yerde görülemez (EB V, s. 57, 137).
+S.recNot	Kaydınız: ${e} akşamı görülmedi.
+S.recRam	Görme, "gördüm" diyenin haberiyle sabit olur: Ramazan için bulutlu havada bir âdil müslüman yeter; açık havada çok kişi; kadı olmayan yerde bir âdil kimse "gördüm" deyince Ramazan başlar (EB V, s. 56).
+S.recSev	Bayram için iki âdil kimse "gördüm" demelidir (EB V, s. 56); Şevvâl hilâlini yalnız gören bayram yapamaz (EB V, s. 58).
+S.recGen	Bir kayıt şahitliğin yerini tutmaz. Görme, "gördüm" diyenin haberiyle sabit olur; Tam İlmihâl şartları açıklar (EB V, s. 56).
+S.sGlobal	Hilâl bir şehirde görülünce bütün dünyada oruca başlanmalıdır (EB V, s. 56). Program bu kapsamı Zilhicce dışındaki bütün aylarda kullanır.
+S.sRamazan	Ramazan için hilâl Şa'bânın 29. günü güneş batarken aranır; görülmezse Şa'bân otuza tamamlanır (EB V, s. 55).
+S.sSevval	Bayram hilâli iki âdil şahit ister (EB V, s. 56). Şevvâl hilâlini yalnız gören bayram yapamaz (EB V, s. 58).
+S.sKaza	Ramazana görmeyle değil takvimle başlandıysa, bayramdan sonra kazâ orucu gerekir (EB V, s. 56–57): Şa'bân görmeyle başladıysa bir gün; değilse iki (Hindiyye, Kâdîhân).
+S.sHajj	Hac, kurban ve namaz vakitleri yereldir (Redd-ül Muhtâr; kongre tebliği, s. 7–8). Hac Mekke'deki görmeye uyar; Arefe hesaplanan gün veya bir gün sonrasıdır, asla önce değil (EB V, s. 57, 138).
+S.sDay	Gündüz görülen hilâl ertesi geceye aittir (EB V, s. 56).
+S.kSecond	Hilâl bu akşam görülürse Kâdîhân'a göre ikinci gecenin hilâlidir: şafak bittikten sonra batar (EB V, s. 58).
+S.kFirst	Hilâl bu akşam görülürse Kâdîhân'a göre birinci gecenin hilâlidir: şafak bitmeden önce batar (EB V, s. 58).
+S.kInfo	Bu ölçü bilgi için gösterilir; program ay başını buna göre seçmez.
+S.kNoEarly	Ay hesaplanan günden önce başlayamayacağı için (EB V, s. 57), bu ölçü başlangıcı öne almaz.
+S.kLocal	Kâdîhân ölçüsü bu yerdeki hilâle aittir; yukarıda gösterilen birinci ve ikinci gece dünya ölçeğindedir.
+S.mIbni	İbni Âbidîn, kıble bahsinde: yeni ay hesabın gösterdiği gecede doğar, fakat o gece yerine ertesi gece görülebilir. Oruç, görüldüğü gece başlar, hesaba göre doğması gereken gece değil (EB V, s. 138).
+S.mDilgan	Prof. Hamit Dilgan (İTÜ, 1963): hilâli görme imkânı fiilen görülmesinden ayırt edilmelidir (kongre tebliği, s. 5). Bu yüzden program "mümkün" der, asla "görüldü" demez.
+S.mReceb	Örnek, 1437 Receb'i: 7 Nisan 2016 akşamı hilâl hesaba göre yalnızca Amerika'nın batısında ve Pasifik'te mümkündü; hiçbir yerde görülmedi. 8 Nisan'da görüldü ve ay 9 Nisan'da başladı. Hesaplanan en erken gün 8 Nisan'dı: ay iki günün ikincisinde başladı (kongre tebliği, s. 9).
+S.mLink	Deliller: Rehber → Naklî deliller
+S.foot	Bu açıklama hesaplanan imkânı anlatır. Hesap, hilâlin görülebileceği geceyi bilmeye yarar, ayın başladığı anı değil (EB V, s. 137). Hükmü, şahitlik şartlarına göre yetkili makam verir (EB V, s. 56).
+S.mid	Bu akşam ay başı gözlemi yok. Hesaplanan hicrî gün: <b>${h}</b>.
+S.midWhy	Neden iki sayı: ${x}.
+S.midNext	Sonraki ay başı gözlem gecesi: <b>${d}</b>.
+S.plan	Bu geceyi planla
+REGIONS	Kuzey Amerika | Orta ve Güney Amerika | Pasifik | Avrupa | Afrika | Orta Doğu | Asya | Okyanusya
+SX.finger	${n} parmak
+SX.fist	≈ ${v} yumruk
+SX.twUp	Güneş ufkun üstünde
+SX.twCivil	Sivil alacakaranlık
+SX.twNaut	Denizci alacakaranlığı
+SX.twRed	Kızıllık sürüyor
+SX.twWhite	Kızıllık yok, beyazlık sürüyor
+SX.twNight	Gece (şafağın sonu)
+SX.west	Batı ufku
+SX.lim5	Tam İlmihâl sınırı (EB V, s. 137)
+SX.sunsetPt	batış noktası
+SX.left	sol
+SX.right	sağ
+SX.up	yukarı
+SX.fistScale	Uzatılmış kolla 1 yumruk
+SX.toLeft	solda
+SX.toRight	sağda
+SX.below	Hilâl ufkun altında
+SX.below5	Hilâl 5°nin altında: Tam İlmihâl'e göre görünmez
+SX.notSet	Güneş henüz batmadı
+SX.where	Hilâl güneşin battığı noktanın ${side} ${dx}° (${fx}), ufkun ${up}° üstünde (${fu}).
+SX.full	Bütün ufuk
+SX.sun	Güneş
+SX.moon	Ay
+SX.moonBelow	Ay ufkun ${a}° altında
+SX.sunUp	Güneş ufkun üstünde
+STX.chart	Gök haritası
+STX.sun	Güneş
+STX.moon	Ay
+STX.crescent	Hilâl
+STX.sunsetPt	batış noktası
+STX.lr	${n}° sağda/solda
+STX.ud	${n}° yukarıda/aşağıda
+STX.refMoon	hilâlin
+STX.refSun	güneşin battığı noktanın
+STX.rel	${ref} ${parts || 'hemen yanında'}
+STX.west	Batı göğü, seçilen akşam
+STX.lim5	Tam İlmihâl sınırı (EB V, s. 137)
+STX.fist	1 yumruk
+GOK.Polaris	Kutup Yıldızı (Polaris)
+GOK.Spica	Başak (Spica)
+SKYNAMES.Polaris	Kutup
+SLUG	gozlem-plani | gok-haritasi | aksam-gogu | ham-veriler | aksamlar | aylik-tablo | dunya-haritasi | dunya-haritasi-uc-gece | gorme-tutanagi | bos-tutanak | sayfalar | gorme-kaydi | kayit-yedegi
+GX.lbFiqh	Fıkhî dayanak (Tam İlmihâl)
+GX.lbSci	İlmî açıklama
+GX.lbFiqhD	Fıkhî dayanak — ayrıntı
+GX.lbSciD	İlmî açıklama — ayrıntı
+GX.more	Ayrıntılı açıklama
+GX.rulesHead	Güneş batışındaki durum (sırayla kontrol edilir) | Ana etiket | Görme beyanına cevap
+GX.rules[0]	Henüz içtimâ yok veya Ay Güneş'ten önce batıyor | Hilâl henüz doğmadı | Reddedilir (Sübkî, EB V, s. 137)
+GX.rules[1]	Güneş batışında beynûnet < 8° | Görünmez (Tam İlmihâl, EB V, s. 137); ek: modern sınır 7,5° | Reddedilir (Sübkî, EB V, s. 137)
+GX.rules[2]	Hilâlin görünen yüksekliği < 5° | Görünmez: ufka 5°den az (EB V, s. 137) | Uyarı
+GX.rules[3]	8° ≤ beynûnet < 18° | Mümkün; dikkatli gözlem gerekir | Kabul edilebilir
+GX.rules[4]	Beynûnet ≥ 18° | Hesapla görünür (gök açıksa) | Kabul edilebilir
+GX.srcBook	Hüseyn Hilmi Işık, Tam İlmihâl Se'âdet-i Ebediyye, Hakîkat Kitâbevi (Ocak 2026 baskısı): EB IV, s. 135–195, 284; V, s. 54–61, 79, 117, 133–142.
+GX.srcRead	Tam İlmihâl Se'âdet-i Ebediyye'nin İngilizce versiyonu Endless Bliss'i okuyun veya indirin: Hakîkat Kitâbevi. Altı fasikül halinde yayımlanır. "EB V, s. 137" gibi atıflar Endless Bliss, Beşinci Fasikül, sayfa 137 demektir. Kullanılan baskılar: Dördüncü Fasikül, 21. baskı ve Beşinci Fasikül, 17. baskı (Hakîkat Kitâbevi, İstanbul, Ağustos 2020). Tam İlmihâl'den alıntılanan pasajlar Endless Bliss'ten çevrilmiştir.
+GX.srcCongress	Türkiye Takvimi Vakit Heyeti, Naklî ve Aklî Delîllerle Rü'yet-i Hilâl: Uluslararası Kamerî Ay Başları ve Hicrî Takvim Birliği Kongresi'nde sunulan tebliğ, İstanbul, 2016 (PDF, Türkçe). Programda "kongre tebliği" olarak atıf yapılır.
+GX.srcAbidin	İbni Âbidîn, Redd-ül Muhtâr, Kitâb-üs-Savm (terc. Ahmed Davudoğlu).
+GX.srcMap	Harita: Natural Earth 1:110m (kamu malı); kabartma: NASA Earth Observatory Blue Marble (kamu malı). Astronomi: Astronomy Engine 2.1.19 (MIT).
+GX.canonNote	Türkçe kanonik metnin İspanyolca versiyonu. Yetkili olan Türkçe metindir.

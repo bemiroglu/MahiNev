@@ -1,0 +1,303 @@
+T.bookLinks	Tam İlmihâl'in İngilizce versiyonu Endless Bliss'i okuyun veya indirin (Hakîkat Kitâbevi):
+T.bookPage	Endless Bliss sayfası
+T.srcLine	Kaynak: Tam İlmihâl Se'âdet-i Ebediyye (İngilizcesi: Endless Bliss, Hakîkat Kitâbevi)
+T.pageEdition	Sayfa no.: Ocak 2026 baskısı.
+T.zhIsik	Zilhicce ayının ilk günü (Işık usulü)
+T.zhIsikSub	Şahitlerle sabit olmayan yerde esas budur (EB V, s. 79).
+T.zhKurban	Kurban Bayramının ilk günü
+T.zhKurbanSub	Bu hesapla bulunan gün veya bir gün sonrası; daha önce değil (EB V, s. 79).
+T.zhAstro	Astronomik hesap (ek)
+T.zhAstroSub	Hesaplanan en erken gün, konumunuz.
+T.layoutLbl	Görünüm
+T.layoutSade	Sade (önerilen): yan kartlar kapalı başlar
+T.layoutTam	Tam: tüm kartlar açık
+T.layoutNote	Açmak veya kapatmak için kart başlığına dokunun; seçiminiz hatırlanır. Her zaman "Tam" görünüme dönebilirsiniz.
+T.foldToggle	Kartı aç / kapat
+T.foldOpen	açmak için dokunun
+T.vfBtn	Kaydı doğrula
+T.vfTitle	Kayıt doğrulama
+T.vfIntro	Tutanaktaki kod, kaydın dijital kopyasının (JSON) parmak izidir. Kâğıttaki kodu yazın veya QR koddan okunan metni yapıştırın ve gözlemciden alınan JSON kaydını seçin.
+T.vfCode	Kâğıttaki kod (QR metni veya SHA-256 özeti)
+T.vfFile	Kayıt dosyası (JSON); yoksa bu cihazdaki kayıtlar aranır
+T.vfGo	Doğrula
+T.vfNote	Doğrulama internetsiz çalışır. Bilgisayarda: python3 tools/verify_record.py zapis.json --kod "HRK1|…"
+T.vfBadCode	Kod anlaşılmadı: "HRK1|kayıt-no|özet" veya 64 karakterlik özet olmalı.
+T.vfNeed	Kâğıttaki kodu yazın veya JSON kaydını seçin.
+T.vfNotHere	Bu kodun kaydı bu cihazda yok. Gözlemciden JSON kaydını isteyip seçin.
+T.vfNoMatch	Seçilen dosyada bu kodun kaydı yok.
+T.vfOk	Doğrulandı: kayıt değiştirilmemiş
+T.vfFail	Doğrulanmadı
+T.vfHashOk	eşleşiyor
+T.vfHashBad	EŞLEŞMİYOR: kayıt değiştirilmiş
+T.vfSigOk	geçerli (bu parmak izli cihazda imzalanmış)
+T.vfSigBad	GEÇERSİZ
+T.vfCodeRow	Kâğıttaki kod
+T.vfCodeOk	bu kayda ait
+T.vfCodeBad	BU KAYDA AİT DEĞİL
+T.vfCodeChanged	kodu taşıyor ama içerik SONRADAN DEĞİŞTİRİLMİŞ
+T.vfSigNA	içerik değiştirilmiş, bu yüzden imza ona kefil olmaz
+T.vfPrint	Doğrulama: Mâh-ı Nev › Saha › Kaydı doğrula — JSON kaydı ve bu kodla.
+T.jpgGo	JPG resim olarak kaydet
+T.jpgMaking	JPG hazırlanıyor…
+T.jpgDone	n>1: JPG (ZIP) olarak hazırlanan sayfa sayısı: ${n}. / değilse: Sayfa JPG olarak hazırlandı.
+T.jpgFail	Bu tarayıcıda JPG yapılamıyor. PDF kaydetmek için "Yazdır / PDF"yi kullanın.
+T.jpgNote	JPG: her A4 sayfa ayrı bir resim olur (yaklaşık 240 dpi); birden çok sayfa ZIP dosyası olarak iner.
+T.netOn	Açık bağlantılar: ${s}
+T.lvlLbl	Kullanım seviyesi
+T.lvlQuick	Seviye
+T.lvlOpts.all	Tüm seviyeler
+T.lvlOpts.basic	Başlangıç
+T.lvlOpts.mid	Tecrübeli
+T.lvlOpts.expert	Uzman
+T.lvlNote	Seviye yalnız neyin açık başladığını ve ne kadar ayrıntı gösterildiğini değiştirir; hesap aynıdır. Tam İlmihâl hükmü (sınıf, kesin ret, arama penceresi, görme iddiası) her seviyede görünür. Kapalı kartlar başlığa dokunarak açılır. A4 çıktılar her zaman tamdır. "Tüm seviyeler"de kartlar "Görünüm" ayarına göre açık veya kapalı başlar.
+T.lvlHelp.all	Hepsi; kartlar Görünüm ayarına göre.
+T.lvlHelp.basic	Bu akşam bakmalı mıyım, ne zaman, nereye, kaç yumruk yukarı, ne zamana kadar.
+T.lvlHelp.mid	Ayrıca yükseklik, azimut, elongasyon, hilalin yaşı, Kadıhan kontrolü, aylık şerit.
+T.lvlHelp.expert	Ayrıca toposentrik/jeosentrik değerler, Yallop/Odeh parametreleri, ham veriler (JSON/CSV).
+T.lvlIntro	Seviyenizi seçin (sonra üst çubuktan değiştirebilirsiniz):
+T.qaTitle	Kısa cevap
+T.qaNo	Bu akşam gözlem yok: ${why}${nx ? Sonraki gözlem gecesi: ${nx}.}
+T.qaMid	Bu akşam ay başı için gözlem yok.${nx ? Sonraki gözlem gecesi: ${nx}.}
+T.qaYes	Bakın: güneş batışından (${a}) hilal 5°'ye inene kadar (${b}).
+T.qaWhere	Nereye: ${tm} civarında, ${dir} yönüne (azimut ${az}°), batış noktasının ${side} ${d}° (≈ ${df} yumruk), ufkun ${h}° (≈ ${hf} yumruk) üstünde.
+T.qaHow	Çıplak gözle arayın; Güneş batmadan önce asla dürbün veya kamerayla batıya bakmayın.
+T.rawTitle	Ham veriler
+T.rawJson	⬇ Bu akşam (JSON)
+T.rawCsv	⬇ Ayın akşamları (CSV)
+T.rawNote	Ondalık nokta; zamanlar UTC (ISO 8601). Açılar derece; W yay dakikası.
+T.stBestNote	Modern kriter; esas Tam İlmihâl'deki arama penceresidir.
+T.cdBestLate	pencereden sonra; Tam İlmihâl'e göre hilal o zaman 5°'nin altındadır
+T.mPrev	◀ Önceki ay başı
+T.mNext	Sonraki ay başı ▶
+T.mList	☰ Gözlem geceleri
+T.mSelA	Seçilen akşam: ${m} için gözlem gecesi (ilk mümkün akşam, bu konum)
+T.mSelB	Seçilen akşam: ${m} için en iyi akşam (bu konum)
+T.rnTitle	Ay başı için gözlem geceleri
+T.rnIntro	Her satır bir kamerî ayın başıdır. Gözlem gecesi ve en iyi akşam bu konum için hesaplanmıştır. Tam İlmihâl'e göre ayın 1. günü hesaplanan gün veya bir gün sonrasıdır, asla daha önce değil (EB V, s. 57, 79, 137). Hangisi olduğu görmeyle belirlenir. O akşamı planlamak için tarihe dokunun.
+T.rnPrev	◀ Önceki 12 ay
+T.rnNext	Sonraki 12 ay ▶
+T.rnNow	Bugüne dön
+T.rnCalc	Hesaplanıyor…
+T.rnCols[0]	Kamerî ay (hesaplanan)
+T.rnCols[1]	İçtima
+T.rnCols[2]	Gözlem gecesi (burada)
+T.rnCols[3]	En iyi akşam (burada)
+T.rnCols[4]	1. gün (iki ihtimal)
+T.rnNone	burada uygun akşam yok
+T.rnSel	seçili
+T.introTip	Hazırlık için büyük ekran (bilgisayar veya tablet) öneriyoruz. Telefon ekranı sahada küçüktür: gözlem planını ve gök haritalarını önceden <b>Yazdır → PDF</b> ile kaydedip yanınıza alın; internetsiz çalışır ve bir bakışta okunur.
+T.fieldTip	Sahada telefon ekranı küçük kalabilir. Gözlem planını ve akşam gök haritasını önceden PDF olarak kaydederseniz iş kolaylaşır (⎙ Yazdır).
+T.fieldTipClose	Gizle
+T.smEveTitle	Gök haritası (seçilen akşam)
+T.smEveAt	Harita saati: ${h} (${why})
+T.smEveWhyWin	Tam İlmihâl penceresinin ortası
+T.smEveWhyLag	güneş batışı ile ay batışı arası
+T.smEveWhyNone	güneş batışından 30 dakika sonra
+T.smEveNote	Batı göğü, batış noktasına dönük olunca görüldüğü gibi: güney solda, kuzey sağda. Yıldızlar ve gezegenler harita saatinde gösterilir. Noktalar hilalin akşam boyunca konumlarıdır; turuncu noktalar güneş batışını, ufkun 5° üstünü ve ay batışını gösterir. Kesikli daire o andaki Güneş'tir.
+T.smEveCols	Saat | Güneş | Hilal yüksekliği | Hilal azimutu | Batış noktasından | Not
+T.smEveLeft	${d}° solda
+T.smEveRight	${d}° sağda
+T.smEveFist	≈ ${f} yumruk
+T.smEveGurub	güneş batışı
+T.smEve5	ufkun 5° üstü (pencere sonu)
+T.smEveSet	ay batışı
+T.smEveDown	hilal ufkun altında
+T.smEveNoMoon	Bu akşam güneş batışında hilal ufkun altındadır; tablo batıştan sonraki göğü gösterir.
+T.smEveBtn	Akşam haritası
+T.cpTitle	Pusula
+T.cpWait	Pusula sensörü bekleniyor… Telefonu tutun ve biraz hareket ettirin.
+T.cpNone	Pusula sensörü bu cihazda veya tarayıcıda çalışmıyor. Kadran kuzeyi yukarıda gösterir; yönü batış noktasına ve kılavuz yıldızlara göre belirleyin.
+T.cpNoneFile	Bazı tarayıcılar dosyadan açılan sayfalarda sensörü engeller; programı internet (https) adresinden açmayı deneyin.
+T.cpDenied	Hareket ve yönelim sensörü izni verilmedi. İzin vermek için Pusula'ya tekrar dokunun veya tarayıcı ayarlarını kontrol edin.
+T.cpFlat	Telefonu yatay tutun; üst kenarı baktığınız yönü gösterir.
+T.cpUp	Telefonu dik tutun; arka kamera baktığınız yönü gösterir.
+T.cpHead	Yönünüz: ${h}° (${c})
+T.cpTarget.moon	Hilal
+T.cpTarget.gurub	Batış noktası
+T.cpTarget.sun	Güneş
+T.cpTurn	Hedefe doğru ${|d|}° ${d<0 ? sola : sağa} dönün: ${n}
+T.cpAhead	${n} tam önde
+T.cpUpAlt	ufkun ${a}° üstünde (${f})
+T.cpBelow	Hilal ufkun altında; batış noktası gösteriliyor.
+T.cpCal	Güneş'e göre kalibre et
+T.cpCalGurub	Batış noktasına göre kalibre et
+T.cpCalReset	Kalibrasyonu kaldır
+T.cpCalHelp	Manyetik pusula gerçek kuzeyden birkaç derece sapar, araç ve demir yakınında daha çok. Güneş batarken telefonu Güneş'e (veya batış noktasına) yöneltip "kalibre et"e dokunun: program farkı hesaplar ve düzeltir. Asla dürbün veya kamerayla Güneş'e bakmayın.
+T.cpCalDone	Kalibre edildi: düzeltme ${±d}°
+T.cpRaw	Kalibre edilmemiş (manyetik yön; sapma düzeltilmedi)
+T.cpAcc	Sensör doğruluğu ±${a}°: telefonu sekiz şeklinde hareket ettirin.
+T.ntBtn	Bildirim ekle
+T.ntTitle	Bildirim: kime, ne zaman
+T.ntIntro	Hilali gören, bunu yetkili makama bildirmekle yükümlüdür (vâcib) (Redd-ul-muhtar; kongre tebliği, s. 7). Burada bildirdiğiniz kişiyi veya makamı kaydedin. Kayıt mühürlü kalır; bildirim ona bağlı ayrı imzalı bir ek olarak saklanır.
+T.ntTo	Kime
+T.ntToKind	Bildirilen
+T.ntToKinds.authority	Yetkili makam (müftülük vb.)
+T.ntToKinds.committee	Gözlem / takvim komisyonu
+T.ntToKinds.person	Kişi (âlim, hoca vb.)
+T.ntToKinds.network	Hilal görme bildirim ağı
+T.ntToKinds.other	Diğer
+T.ntToName	İsim / makam
+T.ntAt	Ne zaman
+T.ntChannel	Nasıl
+T.ntChannels.inPerson	Şahsen
+T.ntChannels.phone	Telefon
+T.ntChannels.message	Mesaj / e-posta
+T.ntChannels.paper	Basılı tutanak
+T.ntChannels.network	Bildirim ağı
+T.ntChannels.other	Diğer
+T.ntRef	Referans / belge no. (isteğe bağlı)
+T.ntNote	Not (isteğe bağlı)
+T.ntSave	Bildirimi kaydet
+T.ntCancel	Vazgeç
+T.ntNeed	Kime bildirdiğinizi yazın.
+T.ntSaved	Bildirim kayda eklendi.
+T.ntLine	Bildirildi: ${to} · ${at} · ${ch}
+T.ntNone	Henüz kaydedilmiş bildirim yok.
+T.ntOk	bildirim doğrulandı
+T.ntBad	bildirim bozuk
+T.ntRow	Bildirildi (kime / ne zaman / nasıl)
+T.ntNetNote	Hilal görme bildirim ağı kurulduğunda, bildirimler oraya bu şekilde (kayıt + imzalı bildirim eki) gönderilebilecek.
+T.pgMonthNote	Her satır bir akşamdır. Sınıf, o akşam güneş batışında hesaplanan görülme ihtimalidir (EB V, s. 137); hilalin gerçekten görülüp görülmediği ancak gözlemle anlaşılır. A: gözlem gecesi, B: en iyi akşam; "j": sabah hilali görülebilir.
+T.hjWhyN	1. ${m} ${d1} ise ${n}; ${d2} ise ${n-1}
+T.hjWhy1	1. ${m} ${d1} ise bugün 1. ${m}; ${d2} ise bugün ${pm} ayının son günü
+T.hjWhyLead	Neden iki sayı:
+T.hDetail	Güneş batışı ve hilal
+T.hHelp	Talimatlar
+T.accTitle	Hesap ve gözlemin doğruluğu
+T.polarNightH	Güneş burada bu tarihte doğmaz (kutup gecesi).
+T.polarDayH	Güneş burada bu tarihte batmaz.
+T.polarSub	Güneş batışı olmadan hilal gözlemi olmaz. Tam İlmihâl, günlerin yirmi dört saatten uzun olduğu yerde oruç için günü o kadar uzun olmayan bir şehre uyulur der (EB V, s. 56–57); planlamak için en yakın böyle yeri girin.
+T.mtagPossible	j (sabah)
+T.arefeSub	veya ertesi gün (EB V, s. 138)
+T.isikRef	Tam İlmihâl, EB V, s. 79, 135–136
+T.card4	K, D, G, B
+T.daysAgo	${n} gün önce
+T.dustLbl	toz
+T.selLoc	Seçilen konum
+T.atObs	gözlem anında
+T.tutBlankCalc	Hesaplanan verileri program kayıt oluşturulurken doldurur.
+T.dateFmtLbl	Tarih biçimi (giriş alanları)
+T.dateFmtOpts.dmy/	gün/ay/yıl (13/11/2026)
+T.dateFmtOpts.dmy.	gün.ay.yıl (13.11.2026)
+T.dateFmtOpts.ymd-	yıl-ay-gün (2026-11-13)
+T.dateFmtOpts.mdy/	ay/gün/yıl (11/13/2026)
+T.datePh	gg/aa/yyyy … + ss:dd
+T.dateBad	Tarih okunamıyor. Biçim: ${ph}
+T.datePick	Takvimden seç
+T.todayEve	Bu akşam
+T.navBack	Geri: önceki seçime dön
+T.navFwd	İleri
+T.navToNow	Şimdiye dön
+T.navNowToast	Şimdiki ana geçildi. Önceki seçime dönmek için üst çubukta ↶'ya dokunun.
+T.dateNoteNext	Seçilen an ${b} sabahıdır; gece, ${a} akşamından sonraki gece olarak gösterildi.
+T.fPreview	Önizleme (planlama): ${d}, ${h}. Planlama modunda Saha kartı seçilen anı gösterir; kayıt formu gerçek saati kullanır.
+T.tbTitleSky	Seçilen an: gök ve gök cisimleri
+T.gokTitle	Gök cisimleri (seçilen an)
+T.gokTitleR	Gök cisimleri (seçilen an · ek)
+T.gokF	Göster
+T.gokFOpts.vis	Şimdi görünenler
+T.gokFOpts.sol	Güneş, Ay ve gezegenler
+T.gokFOpts.all	Hepsi
+T.gokCols	Cisim | Yön · yükseklik | Durum | Doğuş · meridyen geçişi · batış | Kadir | Takımyıldız | Sağ açıklık · dik açıklık | Güneş'ten açı | Uzaklık
+T.gokSt.vis	Görünür
+T.gokSt.bright	Gök çok aydınlık
+T.gokSt.low	Ufka çok yakın
+T.gokSt.down	Ufkun altında
+T.gokSt.near	Güneş'e çok yakın
+T.gokSt.sun	Ufkun üstünde · bakmayın
+T.gokAlways	hiç batmaz
+T.gokNever	burada hiç doğmaz
+T.gokNight	Bu gece çıplak gözle (güneş batışı ${a} – güneş doğuşu ${b}):
+T.gokBest	${f}–${to}, en yüksek ${b} (${dir}, ${alt}°)
+T.gokBestAll	bütün gece, en yüksek ${b} (${dir}, ${alt}°)
+T.gokStars	ve parlak yıldızlar: ${n}
+T.gokNone	gezegen yok
+T.gokCalc	Gece taranıyor…
+T.gokTw	Güneş doğuşu ${r} · batış ${s} · sivil alacakaranlık sonu ${c} · denizcilik ${n} · astronomik gece ${a}–${a2} · sabah denizcilik ${n2} · sivil ${c2}
+T.gokGo	Seçilen anı buraya taşı
+T.gokTw2	Güneş doğuşu ${sr} / Güneş bugün doğmuyor · batış ${ss} / bugün batmıyor · sivil alacakaranlık sonu ${civ} / sivil alacakaranlık bütün gece sürüyor · denizcilik ${nau} / denizcilik alacakaranlığı bütün gece sürüyor · astronomik gece ${ast}–${ast2} / astronomik gece yok · sabah denizcilik ${nau2} · sivil ${civ2}
+T.gokPolarN	Güneş bugün doğmuyor (kutup gecesi); en yüksek ${a}°.
+T.gokPolarD	Güneş bugün batmıyor (kutup günü); en düşük ${a}°.
+T.gokWhole	Bugün çıplak gözle (bütün gün tarandı; güneş batışı yok):
+T.gokCap	Ek bilgi (Astronomy Engine). Durum sütunu, Güneş'in yüksekliği, cismin parlaklığı ve ufuk üstü yüksekliğine dayanan çıplak göz için kaba bir tahmindir; hava (atmosfer şartları), ışık kirliliği ve gözün karanlığa uyumu dahil değildir. Hilal için yukarıdaki tahmin önceliklidir (Tam İlmihâl, EB V, s. 137). Asla Güneş'e doğrudan veya dürbünle bakmayın.
+T.miniFirstEve	Dünyada ilk mümkün akşam: ${e} (${w})
+T.miniIsik	Işık usulü (EB V, s. 79)
+T.miniLocalSub	Bu konumdaki ilk gözlem akşamı; tek başına ay başını belirlemez (EB V, s. 55–57).
+T.stStart	Ay başı
+T.stStartVal	1. ${m}: ${a} veya ${b}
+T.stStartSub	Birinci gece: ${e1} akşamı · ikinci gece: ${e2} akşamı. Hangisi olduğu görmeyle belirlenir; asla daha önce değil (EB V, s. 57, 137).
+T.stStartSubZh	Işık usulüyle bulunan gün veya bir gün sonrası; asla daha önce değil (EB V, s. 79).
+T.qaStart	Ay başı: 1. ${m}, ${a} veya ${b}'dir; hangisi olduğu görmeyle belirlenir.
+T.fPvOk	Hilal seçilen anda aranabilir
+T.fPvTag	önizleme
+T.mapOpts	Görünüm
+T.mapBook	Tam İlmihâl ölçü çizgileri (8°, 18°, 5°)
+T.mapFirst	İlk mümkün / görünür yer
+T.mapGrat	Enlem ve boylam ağı
+T.mapCities	Şehirler
+T.mapRelief	Kabartma
+T.mapHatch	Kesin reddi tarala
+T.mapValue	Değer çizgisi (ek)
+T.mapValueOpts.none	Hiçbiri
+T.mapValueOpts.elong	Beynûnet (elongasyon, °)
+T.mapValueOpts.alt	Batışta yükseklik (°)
+T.mapValueOpts.age	Ay'ın yaşı (saat)
+T.mapValueOpts.win	Batıştan 5° yüksekliğe (dk)
+T.mapValueOpts.lag	Güneş batışından ay batışına (dk)
+T.mapValueOpts.width	Hilal kalınlığı (′)
+T.bookLbl.e8	beynûnet 8°
+T.bookLbl.e18	beynûnet 18°
+T.bookLbl.a5	yükseklik 5°
+T.gratDir	K, G, D, B
+T.mapView	Akşamlar
+T.mapViewOpts.one	Seçilen akşam
+T.mapViewOpts.three	Üç gece yan yana
+T.night3.prev	Önceki akşam
+T.night3.A	Birinci gece
+T.night3.B	İkinci gece
+T.night3Sub.prev	${ev} akşamı · ay bundan önce başlayamaz (EB V, s. 57)
+T.night3Sub.A	${ev} akşamı · görülürse 1. gün ${d}
+T.night3Sub.B	${ev} akşamı · birinci gece görülmezse 1. gün ${d}
+T.map3Note	Aynı ayın üç akşamı. Ayın 1. günü birinci geceden sonraki gün (hesaplanan gün) veya bir gün sonrasıdır; daha önce olamaz (EB V, s. 57). Bu ikisinden hangisi olduğu görmeyle kesinleşir.
+T.map3First	"İlk görünürlük akşamı" katmanı zaten dört akşamı tek haritada gösterir; üç gece görünümü Tam İlmihâl sınıflarını çizer.
+T.firstLbl.poss	İlk mümkün yer
+T.firstLbl.vis	İlk görünür yer
+T.firstSub	batış ${tm} · beynûnet ${b}
+T.lgBook8	Beynûnet 8° çizgisi (altı: kesin ret)
+T.lgBook18	Beynûnet 18° çizgisi (üstü: görünür)
+T.lgBook5	Güneş batışında 5° yükseklik (kesikli)
+T.lgUp0	Güneş batışında Ay ufukta (noktalı)
+T.lgHatch	Taralı: kesin ret
+T.lgFirst8	İlk mümkün yer (bu akşamın en erken batışı)
+T.lgFirst18	İlk görünür yer (bu akşamın en erken batışı)
+T.lgValue	İnce çizgi: ${v}
+T.lgYallopLine	Yallop q sınırları (ince çizgi)
+T.lgOdehLine	Odeh V sınırları (ince çizgi)
+T.lgGrat	Ağ: 20°
+T.mapPng	PNG kaydet
+T.mapPngTip	Haritayı seçilen dilde, başlık, gösterge ve kaynakla resim olarak kaydeder.
+T.mapWait	Harita hazırlanıyor…
+T.mapSaved	Resim kaydedildi.
+T.pngSrc	Kaynak: ${b}, Beşinci cilt, s. 57, 137 · Hesap: Astronomy Engine · Kabartma: NASA Blue Marble · Mâh-ı Nev ${v}
+T.pngNote	Hesaplanan ihtimal haritası; ay görmeyle başlar.
+T.pickMore	Ek bilgi (bu nokta, batışta)
+T.hcTitle	Hilal verileri (güneş batışında)
+T.hcNote	Ek bilgi; hüküm Tam İlmihâl ölçülerine ve görmeye tabidir.
+T.hcSunAzAlt	Güneş: azimut / yükseklik
+T.hcMoonAzAlt	Ay: azimut / yükseklik
+T.hcDaz	DAZ (azimut farkı)
+T.hcSd	Ay'ın görünür yarıçapı (SD)
+T.hcHp	Ay'ın ufuk paralaksı (HP)
+T.hcDist	Ay'ın uzaklığı (merkez)
+T.hcIllum	Aydınlanmış kısım
+T.hcElongGeo	Beynûnet (jeosentrik / toposentrik)
+T.hcConj	İçtima (yerel / UTC)
+T.hcWin	Batıştan 5° yüksekliğe
+T.hcMoonset	Ay batışı
+T.hcArcv	ARCV (batışta, toposentrik)
+T.hcWidth	Hilal kalınlığı (batışta)
+T.hcDistSub	Dünya merkezinden / gözlemciden
+T.prOptsMap3	Dünya haritası: üç gece (her gece kendi A4'ünde)
+T.mapLand	Yalnız kara yüzeylerini boya
+T.packOld	Bu dil paketi bu tarayıcıda açılamıyor (Chrome/Edge 103+, Firefox 113+, Safari 16.4+ gerekli). İngilizce gösteriliyor.
+T.packFail	Dil paketi açılamadı; İngilizce gösteriliyor.
