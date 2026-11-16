@@ -60,7 +60,7 @@ Programın özgün dosyası yalnız bu depoda ve [bemiroglu.github.io/MahiNev](h
 Yayımlanan özetler: [sürüm notları](https://github.com/bemiroglu/MahiNev/releases) ve [SHA256SUMS.txt](https://bemiroglu.github.io/MahiNev/SHA256SUMS.txt). v0.15.0:
 
 ```
-@@SHA256@@  mahinev.html
+1445797f97aff54a0aa3e0a7f033c6da32a275aa465d7c12db82947b7a8f2f24  mahinev.html
 ```
 
 Dosyayı tarayıcının "Farklı kaydet → Web sayfası, tamamı" seçeneğiyle kaydetmeyin (tarayıcı dosyayı değiştirir); sürüm sayfasındaki dosyayı indirin. Program ayrıca açılışta yerel bir bütünlük denetimi yapar ve değiştirilmiş görünen kopyada uyarır; bu denetim kriptografik imza değildir.

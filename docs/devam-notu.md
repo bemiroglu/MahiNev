@@ -66,6 +66,11 @@ Bu dosya, işin bir sohbetten ötekine kayıpsız geçmesi için tutulur. Yeni b
 - **Kalan:** kullanıcı onayıyla GitHub (`gelistirme`); yerel `gelistirme` dalı güncel tutuluyor.
 - Ortam notu: Bu ortamda pip ile gelen playwright yeni tarayıcı sürümü istiyor; `/opt/pw-browsers/chromium_headless_shell-1255` → `-1243` bağlantısı kuruldu (yalnız bu oturum).
 
+### 0.15.0 (16 Kasım) — yayın
+- C bölümünden yapılanlar: isteğe bağlı batı ufku engeli (`st.obst`, `obstInfo/obstHtml`), pusula rozeti (`cpTrust*`), hava tahmini zamanı (`WX.at`, `wxAt`), paylaşma + gizlilik (`openShare`), deneme kipi (`setDemo`, `DEMO_SC`, depo `hr-records-demo`), fotoğraf EXIF (`exifOf`, `photo.exif`), SHA-256 doğrulama kartı (`shaCardHtml`), bağımsız testler (`tools/dogrulama/astropy_referans.py` → Doğrulama; 70 test). Saha kartı yapılmadı (kullanıcı istemedi).
+- README beş dilli ve kısa; temel amaç cümlesi kullanıcının sözleriyle. Pages artık depodaki `dist/mahinev.html`'i olduğu gibi yayımlar ve `SHA256SUMS.txt` ile denetler (yeniden derleme, zlib farkı yüzünden özeti değiştirebilirdi). Her derleme `dist/SHA256SUMS.txt` yazar; README'deki özet her sürümde güncellenir.
+- Son denetim: 70/70, `pack_sync` güncel, arayüz taraması beş dil, dünya taraması beş dil, A4 beş dil: sorun yok.
+
 ### Bağımsız inceleme (v0.14.0) — 15 Kasım
 - Değerlendirme: `docs/inceleme-degerlendirmesi.md`. Kullanıcı A bölümünü (A1–A8) yayından önce uygulattı; C bölümü sonraki sürüme (ufuk profili: kullanıcı amatörü yoracağından çekiniyor, getirisi çok yüksekse uygun biçimde; saha kartı: kullanıcı zamanda ileri-geri gidememeyi sevmedi; pusula göstergesi ekranı doldurmadan; bağımsız astronomik testler kabul; "diğerleri" değerlendirilecek). D: ana katman ve çerçeve Tam İlmihâl.
 - **A1–A8 yapıldı:** `recProblems` + içe aktarma raporu (`importReport`), çatışma; rozetler (imzasız / imza geçersiz) ve `vfScope`; göz güvenliği (Saha: Güneş ufuk üstündeyken her zaman; Plan: oturumluk gizleme, `safetyOff` saklanmaz); `lagTxt` ve core'da ≤ 12 saatlik son batış; `csvCell`; `C.wallStatus` + `dstGap/dstFold`; hijri ölü kod silindi; yerel bütünlük özeti astronomi + stil + program betiği (`build.py` ve `ui.js` SELF), ifadeler "yerel bütünlük denetimi"; README'de SHA-256 ile karşılaştırma.
