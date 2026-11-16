@@ -80,6 +80,12 @@
     recSigBad: 'imza geçersiz', recUnsigned: 'imzasız',
     dstGap: (loc, u) => `Bu yerel saat, yaz saatine geçiş yüzünden bu tarihte yaşanmaz; ${loc} olarak alındı (${u}).`,
     dstFold: u => `Bu yerel saat, yaz saatinden dönüşte bu tarihte iki kez yaşanır; ilki alındı (${u}).`,
+    obstLbl: 'Batı ufku engeli (°, isteğe bağlı)',
+    obstNote: 'Batı ufkunda dağ veya bina varsa yüksekliğini derece olarak yazın (kol uzatılmış bir yumruk ≈ 10°). Hesap ve Tam İlmihâl’in sınıfı değişmez; program yalnız hilâlin engelin üstünde kalıp kalmadığını ayrıca söyler. Boş veya 0: kullanılmaz.',
+    obstRow: 'Ufuk engeli', obstAbove: (d, tm) => `Gurûbda hilâl engelin ${d} üstünde; ${tm} sularında engelin arkasına iner.`,
+    obstAboveAll: d => `Gurûbda hilâl engelin ${d} üstünde; batana kadar engelin üstünde kalır.`,
+    obstBehind: 'Gurûbda hilâl engelin arkasında kalıyor; bu yerden görülemez. Batı ufku açık bir yer seçin.',
+    obstNow: d => `engelin ${d} üstünde`, obstHidden: 'engelin arkasında',
     vfScope: 'Doğrulama yalnız kaydın sonradan değiştirilmediğini (ve imzalıysa hangi cihaz anahtarıyla mühürlendiğini) gösterir; hilâlin görüldüğünü veya gözlemcinin kimliğini doğrulamaz.'
   });
   Object.assign(T.en, {
@@ -91,6 +97,12 @@
     recSigBad: 'signature invalid', recUnsigned: 'unsigned',
     dstGap: (loc, u) => `This local time does not exist on this date because of the change to summer time; it was taken as ${loc} (${u}).`,
     dstFold: u => `This local time occurs twice on this date because of the change back from summer time; the first was taken (${u}).`,
+    obstLbl: 'Western horizon obstruction (°, optional)',
+    obstNote: 'If a hill or building blocks the western horizon, enter its height in degrees (a fist at arm’s length ≈ 10°). The calculation and the Tam İlmihâl class do not change; the program only tells you separately whether the crescent stays above the obstruction. Empty or 0: not used.',
+    obstRow: 'Horizon obstruction', obstAbove: (d, tm) => `At sunset the crescent is ${d} above the obstruction; it goes behind it around ${tm}.`,
+    obstAboveAll: d => `At sunset the crescent is ${d} above the obstruction; it stays above it until it sets.`,
+    obstBehind: 'At sunset the crescent is behind the obstruction; it cannot be seen from this place. Choose a place with an open western horizon.',
+    obstNow: d => `${d} above the obstruction`, obstHidden: 'behind the obstruction',
     vfScope: 'Verification only shows that the record has not been changed afterwards (and, if signed, which device key sealed it); it does not verify that the crescent was seen or who the observer is.'
   });
   T.tr.prOpts = Object.assign({}, T.tr.prOpts, { map3: T.tr.prOptsMap3 });

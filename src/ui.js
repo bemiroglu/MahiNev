@@ -57,7 +57,7 @@
   const DEF = { lang: 'tr', theme: 'auto', city: 'istanbul', lat: 41.0082, lon: 28.9784, elev: 40, hObs: 0, hMax: 267, tz: 'Europe/Istanbul', date: null,
     mapLayer: 'seadet', mapRes: 3, mapValue: 'none', mapBorders: true, map18: true, mapMode: 'evening', mapLand: false,
     mapBook: true, mapFirst: true, mapGrat: false, mapCities: true, mapRelief: true, mapHatch: true, mapView: 'one', mapOptsOpen: false,
-    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, detail: 'short', layout: 'sade', level: 'all', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
+    darkKey: 'gurub', timeFmt: 'local', nightKind: 'A', fontSize: 1, wx: false, webFonts: false, safetyOff: false, obst: 0, detail: 'short', layout: 'sade', level: 'all', fold: null, autoLoc: true, liveInt: 10, recName: '', recContact: '', explain: true, introDone: false };
   const old = load('hr-v05') || Object.assign(load('hr-v04') || load('hr-v03') || load('hr-v02') || {}, { wx: false }); // hava tahmini başlangıçta kapalı
   const st = Object.assign({}, DEF, old);
   st.tmin = null; st.anchor = null; st.live = true; st.frozen = false; st.locAuto = false; st.safetyOff = false;   // göz güvenliği uyarısı her açılışta görünür
@@ -109,7 +109,7 @@
     const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
     set('appTitle', t.appTitle); set('appSub', t.appSub); set('notCalendar', t.notCalendar); set('lTheme', t.theme);
     set('tabPlan', t.tabPlan); set('tabMap', t.tabMap); set('tabField', t.tabField); set('tabGuide', t.tabGuide); set('tabTests', t.tabTests);
-    set('hLoc', t.location); set('lCity', t.city); set('lLat', t.lat); set('lLon', t.lon); set('lElev', t.elev); set('lHObs', t.hObs); set('lHMax', t.hMax); set('lTz', t.tz);
+    set('hLoc', t.location); set('lCity', t.city); set('lLat', t.lat); set('lLon', t.lon); set('lElev', t.elev); set('lHObs', t.hObs); set('lHMax', t.hMax); set('lObst', t.obstLbl); $('obst').title = t.obstNote; set('lTz', t.tz);
     set('myLoc', t.useMyLoc); set('hDate', t.evening); set('lDate', t.date);
     set('prevDay', '◀ ' + t.prevDay); set('today', t.todayEve); set('nextDay', t.nextDay + ' ▶'); $('nightKind').setAttribute('aria-label', t.nightChoice); $('nightKind').title = t.nightChoice;
     $('mbBack').title = t.navBack; $('mbFwd').title = t.navFwd; $('mbPrevD').title = t.prevDay; $('mbNextD').title = t.nextDay; ['mbBack', 'mbFwd', 'mbPrevD', 'mbNextD'].forEach(id => $(id).setAttribute('aria-label', $(id).title)); set('fPrevNow', '⟲ ' + t.navToNow);
@@ -137,7 +137,7 @@
     $('city').innerHTML = CITIES.map(c => `<option value="${c.id}">${esc((c[st.lang] || c.en))}</option>`).join('') + `<option value="custom">${esc(t.custom)}</option>`;
     $('city').value = st.city;
     fillTz();
-    showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('date').value = st.date; $('mDate').value = st.date;
+    showCoords(); $('elev').value = numTxt(st.elev); $('hObs').value = numTxt(st.hObs); $('hMax').value = numTxt(st.hMax); $('obst').value = st.obst ? numTxt(st.obst) : ''; $('date').value = st.date; $('mDate').value = st.date;
     $('mLayer').innerHTML = [['seadet', t.lySeadet], ['first', t.lyFirst], ['yallop', t.lyYallop], ['odeh', t.lyOdeh]].map(([v, l]) => `<option value="${v}"${st.mapLayer === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
     $('mRes').value = String(st.mapRes); MAP_CHK.forEach(([id, k]) => { $(id).checked = !!st[k]; }); $('mOptsBox').open = !!st.mapOptsOpen;
     $('mValue').innerHTML = Object.entries(t.mapValueOpts).map(([v, l]) => `<option value="${v}"${st.mapValue === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
@@ -241,6 +241,7 @@
   }
   function readInputs(id) {
     if (id === 'lat' || id === 'lon') return readCoord(id);
+    if (id === 'obst') { if (!$('obst').value.trim()) { st.obst = 0; return true; } const ok = readNum(id); st.obst = Math.min(30, st.obst || 0); $('obst').value = st.obst ? numTxt(st.obst) : ''; return ok; }
     if (['elev', 'hObs', 'hMax'].includes(id)) return readNum(id);
     st.tz = $('tz').value; st.date = $('date').value || st.date; return true;
   }
@@ -325,7 +326,7 @@
     $('theme').onchange = e => { st.theme = e.target.value; save(); applyTheme(); repaintAll(); };
     $('city').onchange = e => { st.city = e.target.value; const c = CITIES.find(x => x.id === st.city); if (c) { Object.assign(st, { lat: c.lat, lon: c.lon, elev: c.elev, hMax: c.hMax, tz: c.tz }); fillStatic(); } save(); update(); };
     $('tzOff').addEventListener('change', setTzOff);
-    ['lat', 'lon', 'elev', 'hObs', 'hMax', 'tz', 'date'].forEach(id => $(id).addEventListener('change', () => { if (id === 'date') remember(); if (!readInputs(id)) return; if (['lat', 'lon'].includes(id)) { st.city = 'custom'; $('city').value = 'custom'; st.locAuto = false; tzFromLon(); } if (id === 'tz' || id === 'date') showTzOff(); $('mDate').value = st.date; if (id === 'date' || id === 'tz') { if (st.live) st.anchor = 'auto'; setLive(false); } save(); update(); }));
+    ['lat', 'lon', 'elev', 'hObs', 'hMax', 'obst', 'tz', 'date'].forEach(id => $(id).addEventListener('change', () => { if (id === 'date') remember(); if (!readInputs(id)) return; if (['lat', 'lon'].includes(id)) { st.city = 'custom'; $('city').value = 'custom'; st.locAuto = false; tzFromLon(); } if (id === 'tz' || id === 'date') showTzOff(); $('mDate').value = st.date; if (id === 'date' || id === 'tz') { if (st.live) st.anchor = 'auto'; setLive(false); } save(); update(); }));
     const shift = k => setDate(addDays(st.date, k));
     $('prevDay').onclick = () => shift(-1); $('nextDay').onclick = () => shift(1);
     $('mapPrev').onclick = () => mapShift(-1); $('mapNext').onclick = () => mapShift(1);
@@ -638,7 +639,7 @@
     const best = !mid && r.best ? `<span class="mono">${hhmm(r.best)}</span>${late ? ` <span class="small">${esc(t.stAfterWin)}</span>` : ''}` : `<span>${t.none}</span>`;
     $('statusBody').innerHTML = `<p class="hint">ⓘ ${esc(t.hints.status)}</p>` + head + `<h2>${esc(title)} ${q(CLS_TOPIC[r.cls.code])}</h2><p class="sub">${esc(sub)}</p>${quickAnswer(r)}
       <div class="meta"><span class="small">${t.claim}:</span><span class="pill ${ccls}">${esc(claim)}</span>${q('hesap')}${exBtn(st.date)}</div>
-      ${startRow()}<p class="st-row"><b>${esc(t.stWindow)}</b>${win} ${q('besderece')}</p>${mid ? '' : kadihanHtml(r)}
+      ${startRow()}<p class="st-row"><b>${esc(t.stWindow)}</b>${win} ${q('besderece')}</p>${mid ? '' : obstHtml(r)}${mid ? '' : kadihanHtml(r)}
       <p class="st-row ek" data-lvl="3"><b>${esc(t.stBest)}</b>${best} ${q('modern')}<br><span class="small">${esc(t.stBestNote)}</span></p>`;
   }
   // Başlangıç düzeyi için kısa cevap: bakılacak mı, ne zaman, nereye, kaç yumruk yukarı, ne zamana kadar (kitabın penceresiyle)
@@ -1457,7 +1458,8 @@
       if (inWin) { out = G.HRSky.draw(FR, loc, now, st.lang, { compact: narrow, scale: st.fontSize || 1 }); $('fSky').innerHTML = narrow ? `<div class="pano-scroll west">${out.svg}</div>` : out.svg; }
       else { out = G.HRSky.panorama(loc, now, st.lang, narrow ? { W: 1100, wide: true, scale: st.fontSize || 1 } : { scale: st.fontSize || 1 }); $('fSky').innerHTML = narrow ? `<div class="pano-scroll">${out.svg}</div>` : out.svg; }
       const box = $('fSky').firstChild; if (box && box.classList && box.classList.contains('pano-scroll')) requestAnimationFrame(() => { const sv = box.querySelector('svg'); box.scrollLeft = out.read.mx != null ? Math.max(0, out.read.mx * sv.clientWidth - box.clientWidth / 2) : (box.scrollWidth - box.clientWidth) / 2; });
-      const where = out.read.where || `${t.moonL}: ${degf(out.read.moonAz, 0)} ${out.read.card}, ${degf(out.read.moonAlt, 1)}`;
+      let where = out.read.where || `${t.moonL}: ${degf(out.read.moonAz, 0)} ${out.read.card}, ${degf(out.read.moonAlt, 1)}`;
+      if (+st.obst > 0 && out.read.moonAlt != null && out.read.moonAlt > -1) { const d = out.read.moonAlt - st.obst; where += ' · ' + (d > 0 ? t.obstNow(degf(d, 1)) : t.obstHidden); }
       $('fWhere').innerHTML = `<strong>${esc(t.fNowLook)} · ${hhmm(now)}${pv ? ' (' + esc(t.fPvTag) + ')' : ''}:</strong> ${esc(where)} ${out.read.flags.length ? `<span class="flag">${esc(out.read.flags.join(' · '))}</span>` : ''}`;
       fieldTick.moonAz = out.read.moonAz;
       $('fGuides').innerHTML = guidesHtml(now, loc);
@@ -2130,6 +2132,20 @@
   // Her dilde Tam İlmihâl’in kendi adı ve bağlantıları dil kaydından gelir (langs.js)
   const bookOf = () => LG.get(st.lang).book;
   const bookLinksHtml = () => { const b = bookOf(); return `${esc(t.bookLinks)} ${extLink(b.page, t.bookPage)}${b.pdf ? ' · ' + extLink(b.pdf, t.bookPdf) : ''}`; };
+  // İsteğe bağlı batı ufku engeli (°): Tam İlmihâl'in sınıfı ve 5° penceresi değişmez; yalnız hilâlin engelin üstünde
+  // kalıp kalmadığı ve ne zaman engelin arkasına indiği ayrıca söylenir.
+  function obstInfo(r) {
+    const o = +st.obst || 0; if (!o || !r || !r.ok || !r.moonUp) return null;
+    const above = r.moonAlt - o; if (above <= 0) return { above, behind: r.gurub };
+    const end = r.moonset ? r.moonset.ut : r.gurub.ut + 4 / 24, loc = LOC || locObj();
+    for (let m = 1; r.gurub.ut + m / 1440 <= end; m++) { const tt = r.gurub.AddDays(m / 1440); if (C.at(tt, loc).moon.alt <= o) return { above, behind: tt }; }
+    return { above, behind: null };
+  }
+  function obstHtml(r) {
+    const x = obstInfo(r); if (!x) return '';
+    const txt = x.above <= 0 ? t.obstBehind : x.behind ? t.obstAbove(degf(x.above, 1), hhmm(x.behind)) : t.obstAboveAll(degf(x.above, 1));
+    return `<p class="st-row"><b>${esc(t.obstRow)} (${degf(+st.obst, 1)})</b><span>${esc(txt)}</span></p>`;
+  }
   // Fark (ay güneşten sonra): ay gurûbda ufkun altındaysa eksi sayı yazılmaz
   function lagTxt(r) {
     if (!r || r.lagMin == null) return r && !r.moonUp ? t.lagBeforeNone : t.none;
