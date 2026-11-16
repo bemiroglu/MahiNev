@@ -116,6 +116,6 @@ Un único archivo HTML que funciona sin conexión. Las referencias remiten a *En
 
 ## Bosanski
 
-> **Mâh-ı Nev** je **terenski vodič** koji onome ko želi posmatrati hilal novog kamerijskog mjeseca pokazuje **gdje, kada, u kojem pravcu i pod kojim uslovima** da gleda, i koji **pomaže da se osmatranje zabilježi**. On **ne** objavljuje početak nijednog kamerijskog mjeseca, ne donosi vjerski propis i ne sastavlja zvanični takvim.
+> **Mâh-ı Nev** je **terenski vodič** koji onome ko želi posmatrati hilal novog kamerijskog mjeseca pokazuje **gdje, kada, u kojem pravcu i pod kojim uslovima** da gleda, i koji **pomaže da se osmatranje zabilježi**. On **ne** objavljuje početak nijednog kamerijskog mjeseca, ne donosi vjerski propis i ne sastavlja zvanični kalendar.
 
 Jedna HTML datoteka, radi bez interneta. Navodi upućuju na *Endless Bliss* (englesko izdanje Tam İlmihâla). Bosanski tekstovi su automatski prevedeni (umjetna inteligencija) i provjereni povratnim prijevodom; greške su moguće, mjerodavan je turski tekst. [Otvori na internetu](https://bemiroglu.github.io/MahiNev/) · [Preuzmi](https://github.com/bemiroglu/MahiNev/releases/latest) · SHA-256 provjera: „Provjeri datoteku“ u podnožju programa.
