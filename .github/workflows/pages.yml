@@ -20,7 +20,7 @@ jobs:
       # sürüm notundaki ve dist/SHA256SUMS.txt'deki özetle aynı kalır.
       - run: |
           V=$(grep -o "HR_VERSION = '[^']*'" dist/mahinev.html | tail -1 | cut -d"'" -f2)
-          mkdir -p site && cp dist/mahinev.html site/index.html && cp dist/mahinev.html "site/mahinev-v$V.html"
+          mkdir -p site && cp dist/mahinev.html site/index.html && cp dist/mahinev.html site/mahinev.html && cp dist/mahinev.html "site/mahinev-v$V.html"
           cp LICENSE site/LICENSE.txt && cp dist/SHA256SUMS.txt site/SHA256SUMS.txt
           (cd site && sha256sum -c SHA256SUMS.txt)
       - uses: actions/configure-pages@v5
