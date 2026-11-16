@@ -1,0 +1,54 @@
+T.obstLbl	Batı ufkunda engel (°, isteğe bağlı)
+T.obstNote	Bir tepe veya bina batı ufkunu kapatıyorsa yüksekliğini derece olarak girin (kol boyunda bir yumruk ≈ 10°). Hesap ve Tam İlmihâl sınıfı değişmez; program yalnızca ayrıca hilâlin engelin üstünde kalıp kalmadığını belirtir. Boş veya 0: kullanılmaz.
+T.obstRow	Ufukta engel
+T.obstAbove	Güneş batarken hilâl engelin ${d} üstündedir; ${tm} sularında arkasına geçer.
+T.obstAboveAll	Güneş batarken hilâl engelin ${d} üstündedir; batana kadar orada kalır.
+T.obstBehind	Güneş batarken hilâl engelin arkasındadır; bu yerden görülemez. Batı ufku açık bir yer seçin.
+T.obstNow	engelin ${d} üstünde
+T.obstHidden	engelin arkasında
+T.wxAt	Alınan tahmin: ${s}; gökyüzüne yerinde kendiniz bakın, tahmin gözlemin yerini tutmaz.
+T.shTitle	Paylaş
+T.shIntro	Ne paylaşacağınızı seçin. Gizlenen öğeler yalnızca paylaşılan metinden çıkarılır; bu cihazdaki kayıt değişmez.
+T.shName	Adım
+T.shContact	İletişim bilgilerim
+T.shLoc	Tam konum (yoksa yaklaşık 10 km'ye yuvarlanır)
+T.shFile	Kaydın dosyasını (JSON) ekle: her şeyi içerir, alıcı kaydı doğrulayabilir
+T.shNote	Paylaşılan bir kayıt şahitlik değildir ve hilâlin görüldüğünü ispat etmez. Telefonda paylaşma menüsü yoksa metin panoya kopyalanır.
+T.shHidden	Paylaşılan metinde gizlendi: ${s}. SHA-256 parmak izi asıl kayda aittir.
+T.shCopied	Paylaşma menüsü yok; metin panoya kopyalandı.
+T.optDemo	Alıştırma modu (egzersiz): hazır senaryolar; kayıtlar gerçek kayıtlardan ayrı
+T.demoTag	ALIŞTIRMA MODU
+T.demoNote	Kayıtlar ayrı tutulur; gerçek kayıtlara karışmaz.
+T.demoPick	Bir senaryo seçin…
+T.demoExit	Alıştırmadan çık
+T.demoOn	Alıştırma modu açıldı. Bir senaryo seçin; bu modda oluşturulan kayıtlar ve tutanaklar «ALIŞTIRMA» olarak işaretlenir ve gerçek kayıtlarınıza karışmaz.
+T.demoSc[0]	Kolay gözlem: Londra, 16.6.2026 (görünür, uzun pencere)
+T.demoSc[1]	Kısa pencere: İstanbul, 10.12.2026 (mümkün, 11 dk)
+T.demoSc[2]	Hilâl henüz doğmamış: İstanbul, 9.12.2026 (Ay Güneş'ten önce batar)
+T.demoSc[3]	Kesin red: İstanbul, 7.4.2016 (beynûnet 4°, Receb 1437)
+T.demoSc[4]	Zilhicce: Mekke, 7.5.2027 (Işık usulü)
+T.demoSc[5]	Kutup bölgesi: Tromsø, 10.12.2026 (Güneş doğmaz)
+T.phNoExif	Fotoğrafta çekim saati ve yön (EXIF) yok.
+T.phTzAssumed	(fotoğrafta saat farkı yok; seçilen saat dilimi varsayıldı)
+T.phTaken	Çekim: ${s} (kayıtla aynı saat) / (kayıt saatinden ${…} dk sonra/önce)
+T.phDir	fotoğraf makinesinin yönü: ${a}° (${r})
+T.phMag	manyetik kuzeye göre
+T.phTrue	gerçek kuzeye göre
+T.shaTitle	Dosya doğrulama (SHA-256)
+T.shaShort	Dosyayı doğrula
+T.shaIntro	İndirdiğiniz program dosyasının yayımlanan dosyayla aynı olduğunu doğrulayabilirsiniz. Dosyayı aşağıda seçin; program SHA-256 parmak izini hesaplar. Bu parmak izini GitHub'daki sürüm notlarında belirtilenle karşılaştırın; aynıysa dosya değiştirilmemiştir. Hesap bu cihazda yapılır; dosya hiçbir yere gönderilmez.
+T.shaPick	Program dosyası (.html)
+T.shaExp	Yayımlanan parmak izi (isteğe bağlı; yapıştırın, program karşılaştırır)
+T.shaOk	Aynı: dosya yayımlanan dosyayla aynı.
+T.shaBad	Farklı: bu dosya yayımlanan dosyadan farklı. Programı yalnızca yayım adresinden indirin.
+T.shaCompare	Bu parmak izini sürüm notlarındakiyle karşılaştırın.
+T.shaFail	Parmak izi hesaplanamadı.
+T.shaLink	Sürüm notları ve yayımlanan parmak izleri (GitHub)
+T.shaLocal	Programın yerel bütünlük denetimi
+T.shaLocalOk	uyuyor
+T.shaLocalBad	uymuyor: dosya değiştirilmiş olabilir
+T.shaCmd	Bir bilgisayarda bir komutla da hesaplanabilir:
+T.cpTrustCal	Güneşe göre ayarlandı
+T.cpTrustAcc	ayarlanmamış · ±${a}°
+T.cpTrustRaw	ayarlanmamış: Güneşe göre ayarlayın
+T.cpTrustNote	Telefon pusulası manyetik kuzeyi ölçer; gerçek kuzeyle farkı (manyetik sapma) yere göre birkaç dereceye ulaşabilir. Yakındaki demir, araçlar, hoparlörler ve elektrikli aletler onu bozar. En güvenilir yol Güneşe veya batış noktasına nişan alıp «Güneşe göre ayarla» veya «Batış noktasına göre ayarla»yı kullanmaktır. Güvenilir pusula yoksa program yönü bir sayıyla (semt) ve ufuk çiziminde gösterir.
