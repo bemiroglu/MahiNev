@@ -3,64 +3,403 @@
   "$id": "hilal-ruyet-kaydi/1",
   "title": "Hilâl rü'yet kaydı (sürüm 1)",
   "type": "object",
-  "required": ["schema", "id", "created", "app", "observer", "place", "observation", "hash"],
+  "required": [
+    "schema",
+    "id",
+    "created",
+    "app",
+    "observer",
+    "place",
+    "observation",
+    "hash"
+  ],
   "properties": {
-    "schema": { "const": "hilal-ruyet-kaydi/1" },
-    "id": { "type": "string", "description": "UUID" },
-    "created": { "type": "string", "format": "date-time" },
-    "app": { "type": "object", "properties": { "name": { "type": "string" }, "version": { "type": "string" } } },
-    "observer": { "type": "object", "properties": { "name": { "type": "string" }, "contact": { "type": "string" } } },
-    "place": {
-      "type": "object", "required": ["lat", "lon", "tz"],
+    "schema": {
+      "const": "hilal-ruyet-kaydi/1"
+    },
+    "id": {
+      "type": "string",
+      "description": "UUID"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "app": {
+      "type": "object",
       "properties": {
-        "name": { "type": "string" }, "lat": { "type": "number" }, "lon": { "type": "number" },
-        "elev": { "type": "number", "description": "zemin rakımı, m" }, "hObs": { "type": "number", "description": "gözlemcinin zeminden yüksekliği, m" },
-        "tz": { "type": "string", "description": "IANA saat dilimi" },
-        "site": { "enum": ["open", "high", "city"], "description": "şehir dışı açık arazi / yüksek yer / şehir içi" }
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "observer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        }
+      }
+    },
+    "place": {
+      "type": "object",
+      "required": [
+        "lat",
+        "lon",
+        "tz"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "elev": {
+          "type": "number",
+          "description": "zemin rakımı, m"
+        },
+        "hObs": {
+          "type": "number",
+          "description": "gözlemcinin zeminden yüksekliği, m"
+        },
+        "tz": {
+          "type": "string",
+          "description": "IANA saat dilimi"
+        },
+        "site": {
+          "enum": [
+            "open",
+            "high",
+            "city"
+          ],
+          "description": "şehir dışı açık arazi / yüksek yer / şehir içi"
+        }
       }
     },
     "observation": {
-      "type": "object", "required": ["at", "evening", "result"],
+      "type": "object",
+      "required": [
+        "at",
+        "evening",
+        "result"
+      ],
       "properties": {
-        "at": { "type": "string", "format": "date-time", "description": "UTC" },
-        "evening": { "type": "string", "format": "date", "description": "kaydın ait olduğu akşam (yerel tarih)" },
-        "result": { "enum": ["naked", "aidedNaked", "aided", "photo", "doubt", "not", "noObs"], "description": "doubt = şüpheli gözlem, noObs = gözlem yapılamadı" },
-        "firstSeen": { "type": ["string", "null"], "description": "yerel saat HH:MM" },
-        "lastSeen": { "type": ["string", "null"] },
-        "sky": { "enum": ["clear", "partly", "cloud", "haze"] },
-        "companions": { "type": "integer", "minimum": 0 },
-        "seers": { "type": "integer", "minimum": 0 },
-        "note": { "type": "string" }
+        "at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC"
+        },
+        "evening": {
+          "type": "string",
+          "format": "date",
+          "description": "kaydın ait olduğu akşam (yerel tarih)"
+        },
+        "result": {
+          "enum": [
+            "naked",
+            "aidedNaked",
+            "aided",
+            "photo",
+            "doubt",
+            "not",
+            "noObs"
+          ],
+          "description": "doubt = şüpheli gözlem, noObs = gözlem yapılamadı"
+        },
+        "firstSeen": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "yerel saat HH:MM"
+        },
+        "lastSeen": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sky": {
+          "enum": [
+            "clear",
+            "partly",
+            "cloud",
+            "haze"
+          ]
+        },
+        "companions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "computed": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "description": "Programın hesapladığı karşılaştırma verileri (hüküm değildir)",
       "properties": {
-        "ictima": { "type": ["string", "null"] }, "gurub": { "type": ["string", "null"] }, "seriGurub": { "type": ["string", "null"] },
-        "moonset": { "type": ["string", "null"] }, "windowEnd": { "type": ["string", "null"] },
-        "beynunet": { "type": "number" }, "moonAltGurub": { "type": "number" }, "lagMin": { "type": ["number", "null"] }, "ageH": { "type": ["number", "null"] },
-        "cls": { "enum": ["notBorn", "below8", "below5", "possible", "visible", "midMonth"] }, "kadihan": { "type": ["string", "null"] },
-        "atObs": { "type": "object" }, "evaluation": { "type": "string" }, "evalClass": { "type": "string" }
+        "ictima": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gurub": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "seriGurub": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "moonset": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "windowEnd": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "beynunet": {
+          "type": "number"
+        },
+        "moonAltGurub": {
+          "type": "number"
+        },
+        "lagMin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ageH": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cls": {
+          "enum": [
+            "notBorn",
+            "below8",
+            "below5",
+            "possible",
+            "visible",
+            "midMonth"
+          ]
+        },
+        "kadihan": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "atObs": {
+          "type": "object"
+        },
+        "evaluation": {
+          "type": "string"
+        },
+        "evalClass": {
+          "type": "string"
+        }
       }
     },
-    "photo": { "type": ["object", "null"], "properties": { "sha256": { "type": "string" }, "name": { "type": "string" }, "thumb": { "type": ["string", "null"] } } },
-    "signer": { "type": "object", "properties": { "pub": { "type": "object", "description": "ECDSA P-256 açık anahtar (JWK: kty, crv, x, y)" }, "fp": { "type": "string", "description": "SHA-256(kanonik JWK) ilk 16 onaltılık" } } },
-    "hash": { "type": "string", "description": "SHA-256(kanonik JSON; hash, sig ve notices hariç), onaltılık" },
-    "sig": { "type": "object", "properties": { "alg": { "const": "ECDSA-P256-SHA256" }, "value": { "type": "string", "description": "base64; imzalanan veri: hash metninin UTF-8 baytları; biçim IEEE P1363 (r||s)" } } },
+    "photo": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "sha256": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "thumb": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "exif": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Fotoğrafın EXIF bilgisi (yalnız okunur): çekim zamanı ve kamera yönü",
+          "properties": {
+            "taken": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "DateTimeOriginal, EXIF biçimi YYYY:MM:DD hh:mm:ss"
+            },
+            "offset": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "OffsetTimeOriginal, ör. +03:00"
+            },
+            "dir": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "GPSImgDirection (°)"
+            },
+            "dirRef": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "T gerçek kuzey, M manyetik kuzey"
+            }
+          }
+        }
+      }
+    },
+    "signer": {
+      "type": "object",
+      "properties": {
+        "pub": {
+          "type": "object",
+          "description": "ECDSA P-256 açık anahtar (JWK: kty, crv, x, y)"
+        },
+        "fp": {
+          "type": "string",
+          "description": "SHA-256(kanonik JWK) ilk 16 onaltılık"
+        }
+      }
+    },
+    "hash": {
+      "type": "string",
+      "description": "SHA-256(kanonik JSON; hash, sig ve notices hariç), onaltılık"
+    },
+    "sig": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "ECDSA-P256-SHA256"
+        },
+        "value": {
+          "type": "string",
+          "description": "base64; imzalanan veri: hash metninin UTF-8 baytları; biçim IEEE P1363 (r||s)"
+        }
+      }
+    },
     "notices": {
       "type": "array",
       "description": "Bildirim ekleri (hilal-bildirim/1): kayıt kime, ne zaman bildirildi. Kaydın özetine katılmaz; her ek kendi özetini (hash ve sig hariç) ve imzasını taşır, recordHash ile kayda bağlanır.",
       "items": {
         "type": "object",
-        "required": ["schema", "id", "record", "recordHash", "to", "at"],
+        "required": [
+          "schema",
+          "id",
+          "record",
+          "recordHash",
+          "to",
+          "at"
+        ],
         "properties": {
-          "schema": { "const": "hilal-bildirim/1" }, "id": { "type": "string" }, "created": { "type": "string", "format": "date-time" },
-          "record": { "type": "string", "description": "Bağlı olduğu kaydın id'si" }, "recordHash": { "type": "string", "description": "Bağlı olduğu kaydın SHA-256 özeti" },
-          "to": { "type": "object", "properties": { "kind": { "enum": ["authority", "committee", "person", "network", "other"] }, "name": { "type": "string" } } },
-          "at": { "type": "string", "format": "date-time", "description": "Bildirim anı (UTC)" },
-          "channel": { "enum": ["inPerson", "phone", "message", "paper", "network", "other"] }, "ref": { "type": "string" }, "note": { "type": "string" },
-          "app": { "type": "object" }, "signer": { "type": "object" }, "hash": { "type": "string" }, "sig": { "type": "object" }
+          "schema": {
+            "const": "hilal-bildirim/1"
+          },
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "record": {
+            "type": "string",
+            "description": "Bağlı olduğu kaydın id'si"
+          },
+          "recordHash": {
+            "type": "string",
+            "description": "Bağlı olduğu kaydın SHA-256 özeti"
+          },
+          "to": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "authority",
+                  "committee",
+                  "person",
+                  "network",
+                  "other"
+                ]
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Bildirim anı (UTC)"
+          },
+          "channel": {
+            "enum": [
+              "inPerson",
+              "phone",
+              "message",
+              "paper",
+              "network",
+              "other"
+            ]
+          },
+          "ref": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "app": {
+            "type": "object"
+          },
+          "signer": {
+            "type": "object"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "sig": {
+            "type": "object"
+          }
         }
       }
     }

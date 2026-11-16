@@ -232,6 +232,8 @@ footer { color: var(--muted); font-size: .8rem; margin-top: 24px; }
 .safety { background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 8px 12px; border-radius: 6px; font-size: .86rem; margin: 0 0 14px; }
 .safety::before { content: "⚠ "; }
 .safety { position: relative; padding-right: 34px; }
+.demobar { background: repeating-linear-gradient(135deg, var(--warn-bg), var(--warn-bg) 12px, transparent 12px, transparent 24px), var(--warn-bg); color: var(--ink); border-bottom: 2px dashed var(--warn); padding: 6px 12px; font-size: .88rem; display: flex; gap: 8px 12px; flex-wrap: wrap; align-items: center; }
+.demobar select { max-width: 100%; }
 .safety .x { position: absolute; top: 4px; right: 6px; border: 0; background: none; font-size: 1.2rem; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 6px; }
 #view-saha .safety { margin: 8px 0 0; font-size: .82rem; }
 .safety .short { display: none; }
@@ -503,6 +505,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
       <div class="seg" role="group" aria-label="Dil / Language" id="langSeg"><button id="langTr" type="button" data-lang="tr">TR</button><button id="langEn" type="button" data-lang="en">EN</button></div>
     </div>
   </header>
+  <div class="demobar" id="demoBar" role="status" hidden></div>
   <div class="stick">
   <nav class="tabs" aria-label="Sekmeler">
     <a href="#plan" id="tabPlan"></a><a href="#harita" id="tabMap"></a><a href="#saha" id="tabField"></a><a href="#rehber" id="tabGuide"></a><a href="#dogrulama" id="tabTests"></a>
@@ -646,7 +649,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
         <div class="field"><label for="recContact" id="lRecContact"></label><input id="recContact" type="text"></div>
         <div class="field"><label for="recWith" id="lRecWith"></label><input id="recWith" type="number" min="0" step="1" value="0"></div>
         <div class="field"><label for="recSeers" id="lRecSeers"></label><input id="recSeers" type="number" min="0" step="1" value="0"></div>
-        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"><p class="cap" id="recPhotoKeep"></p></div>
+        <div class="field"><label for="recPhoto" id="lRecPhoto"></label><input id="recPhoto" type="file" accept="image/*"><p class="cap" id="recPhotoInfo" hidden></p><p class="cap" id="recPhotoKeep"></p></div>
       </div>
       <div class="field"><label for="recNote" id="lRecNote"></label><textarea id="recNote" rows="2"></textarea></div>
       <div class="btns recbtns"><button class="btn primary" type="button" id="recSave"></button></div>
@@ -681,6 +684,7 @@ body.lvl-basic #view-plan .stack > * { order: 3; } body.lvl-basic #view-plan .st
         <label class="chk"><input type="checkbox" id="optExplain"><span id="lOptExplain"></span></label>
         <div class="field"><label for="detailLvl" id="lDetail"></label><select id="detailLvl"></select></div>
         <label class="chk"><input type="checkbox" id="optSafety"><span id="lOptSafety"></span></label>
+        <label class="chk"><input type="checkbox" id="optDemo"><span id="lOptDemo"></span></label>
         <p class="cap" id="explainNote"></p>
       </div>
       <div class="net">

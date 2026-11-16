@@ -72,13 +72,15 @@
   const mapCityName = c => st.lang === 'tr' ? c[0] : ((MAPCITY[st.lang] || [])[G.HRMap.CITIES.indexOf(c)] || c[1]);
   let t = I.T[st.lang];
   let R = null, LOC = null, DAY = null;
-  let records = load('hr-records') || [];
+  // Deneme (eğitim) kipi: kayıtlar ayrı depoda tutulur, gerçek kayıtlara karışmaz
+  const recKey = () => st.demo ? 'hr-records-demo' : 'hr-records';
+  let records = load(recKey()) || [];
   const REC_WARN = 150; // sınır yok; bu sayıdan sonra yedek alma hatırlatılır
 
   function load(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function save() { try { const o = Object.assign({}, st); delete o.tmin; delete o.anchor; delete o.live; delete o.frozen; delete o.locAuto; delete o.safetyOff; localStorage.setItem('hr-v05', JSON.stringify(o)); } catch (e) { /* depolama yok */ } }
   // kayıt saklama başarısı denetlenir; başarısızlık sessiz geçilmez
-  function storeRecs(list) { try { localStorage.setItem('hr-records', JSON.stringify(list)); return true; } catch (e) { return false; } }
+  function storeRecs(list) { try { localStorage.setItem(recKey(), JSON.stringify(list)); return true; } catch (e) { return false; } }
   function saveRec() { const ok = storeRecs(records); if (!ok && typeof toast === 'function') toast(t.recStoreFail, 8000); return ok; }
   function todayYmd(tz) { try { return new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); } catch (e) { return new Date().toISOString().slice(0, 10); } }
   const locale = () => LG.get(st.lang).locale;
@@ -125,6 +127,7 @@
     $('hMonth').innerHTML = esc(t.month) + ' ' + q('enerken'); set('miniHow', t.miniHow);
     set('hExtra', t.extra); set('extraNote', t.extraNote); set('hTests', t.testsTitle); set('testsIntro', t.testsIntro); $('footer').innerHTML = noticeHtml(); paintTamper();
     $('aboutOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('aboutCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
+    $('shaOpen').onclick = () => { location.hash = '#rehber'; setTimeout(() => { const a = $('shaCard'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80); };
     $('hMap').innerHTML = esc(t.mapTitle) + ' ' + q('kuresel'); set('lMDate', t.mapEvening); set('lMLayer', t.mapLayer); set('lMRes', t.mapRes); set('lMValue', t.mapValue); set('lMView', t.mapView); set('lMOpts', t.mapOpts); set('mPng', '⤓ ' + t.mapPng); $('mPng').title = t.mapPngTip; MAP_CHK.forEach(([id, k]) => set('lM' + id.slice(1), t[k])); set('lMBorders', t.mapBorders); set('lM18', t.map18);
     set('lMMode', t.mapMode); set('lMLand', t.landOnly); set('lMTime', t.mapTime); set('mNow', t.nowBtn);
     $('mMode').innerHTML = [['evening', t.mmEvening], ['instant', t.mmInstant]].map(([v, l]) => `<option value="${v}"${st.mapMode === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
@@ -159,7 +162,7 @@
     // göz güvenliği, gizlilik, kayıt araçları
     $('safety').innerHTML = `<span class="long">${esc(t.safety)}</span><span class="short">${esc(t.safetyMobile)}</span><button type="button" class="x" id="safetyX" aria-label="${esc(t.safetyHide)}" title="${esc(t.safetyHide)}">×</button>`;
     $('safetyX').onclick = () => { st.safetyOff = true; save(); $('optSafety').checked = false; paintSafety(); toast(t.safetyHidden, 6000); };
-    set('lOptSafety', t.optSafety); $('optSafety').checked = !st.safetyOff; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
+    set('lOptSafety', t.optSafety); set('lOptDemo', t.optDemo); paintDemo(); $('optSafety').checked = !st.safetyOff; set('privacyNote', t.privacyNote); set('recPhotoKeep', t.recPhotoKeep); set('recBackupNote', t.recBackupNote);
     set('fCompassNote', t.compassNote); set('mPrev', t.mPrev); set('mNext', t.mNext); set('mList', t.mList); set('upList', t.mList); set('hRn', t.rnTitle); set('rnClose', t.close); $('rnIntro').textContent = t.rnIntro; set('rnPrev', t.rnPrev); set('rnNext', t.rnNext); set('rnNow', t.rnNow); set('hNt', t.ntTitle); $('ntIntro').textContent = t.ntIntro; $('ntNet').textContent = t.ntNetNote; set('lNtKind', t.ntToKind); set('lNtName', t.ntToName); set('lNtAt', t.ntAt); set('lNtCh', t.ntChannel); set('lNtRef', t.ntRef); set('lNtNote', t.ntNote); set('ntSave', t.ntSave); set('ntCancel', t.ntCancel);
     $('ntKind').innerHTML = Object.entries(t.ntToKinds).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); $('ntCh').innerHTML = Object.entries(t.ntChannels).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); set('cCalReset', t.cpCalReset); $('cHelp').textContent = t.cpCalHelp;
     set('recBackup', '⬇ ' + t.recBackup); set('recImport', '⬆ ' + t.recImport); set('recPhotoCheck', '⌕ ' + t.recPhotoCheck);
@@ -206,7 +209,8 @@
       if (!h) { h = document.createElement('p'); h.className = 'hint'; const anchor = id === 'fBig' ? el : (el.closest('.cardhead') || el); anchor.insertAdjacentElement(id === 'fBig' ? 'beforebegin' : 'afterend', h); }
       h.textContent = 'ⓘ ' + t.hints[k];
     });
-    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(t.accTitle)}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
+    $('guideBody').innerHTML = `<section class="card about" id="aboutCard"><h2>${esc(t.aboutTitle)}</h2>${aboutHtml()}</section>` + shaCardHtml() + G.HRGuide.render(st.lang, t, st.detail === 'long' ? 'long' : 'more') + `<section class="card"><h2>${esc(t.accTitle)}</h2><p>${esc(t.precisionNote)}</p><p class="small">${esc(t.traceEngine)}: Astronomy Engine 2.1.19 · ${esc(t.traceRules)}: ${esc(G.HR_RULES)} · Yallop (1997) · Odeh (2004)</p><p>${esc(t.safety)}</p><p>${esc(t.privacyNote)}</p></section>`;
+    if ($('shaFile')) { $('shaFile').onchange = shaRun; $('shaExp').oninput = shaRun; }
     $('checkBody').innerHTML = G.HRGuide.planHtml(st.lang);
     applyTheme();
   }
@@ -246,6 +250,28 @@
     st.tz = $('tz').value; st.date = $('date').value || st.date; return true;
   }
   // Tarih değişimi: canlı mod kapanır; saat bir olaya bağlıysa yeni günde aynı olaya bağlanır
+  // ---- Deneme (eğitim) kipi: hazır senaryolar; kayıtlar ayrı; çıkınca gerçek yer, tarih ve kayıtlar geri gelir ----
+  const DEMO_SC = [['Europe/London', 51.5074, -0.1278, 11, '2026-06-16'], ['Europe/Istanbul', 41.0082, 28.9784, 40, '2026-12-10'], ['Europe/Istanbul', 41.0082, 28.9784, 40, '2026-12-09'],
+    ['Europe/Istanbul', 41.0082, 28.9784, 40, '2016-04-07'], ['Asia/Riyadh', 21.4225, 39.8262, 277, '2027-05-07'], ['Europe/Oslo', 69.65, 18.96, 10, '2026-12-10']];
+  const DEMO_KEYS = ['city', 'lat', 'lon', 'elev', 'hObs', 'hMax', 'tz', 'date', 'obst', 'autoLoc'];
+  function setDemo(on) {
+    if (!!st.demo === !!on) { paintDemo(); return; }
+    if (on) { st.demoSave = Object.fromEntries(DEMO_KEYS.map(k => [k, st[k]])); st.demo = true; st.autoLoc = false; }
+    else { const s = st.demoSave || {}; st.demo = false; for (const k of DEMO_KEYS) if (k in s) st[k] = s[k]; st.demoSave = null; }
+    records = load(recKey()) || []; save(); fillStatic(); setDate(st.date); renderRecords(true); paintDemo();
+    if (on) toast(t.demoOn, 7000);
+  }
+  function demoScenario(i) {
+    const c = DEMO_SC[i]; if (!c) return;
+    Object.assign(st, { city: 'custom', tz: c[0], lat: c[1], lon: c[2], elev: c[3], hObs: 0, hMax: 0, obst: 0, autoLoc: false });
+    save(); fillStatic(); setDate(c[4]);
+  }
+  function paintDemo() {
+    const b = $('demoBar'); if (!b) return; b.hidden = !st.demo; $('optDemo').checked = !!st.demo; if (!st.demo) { b.innerHTML = ''; return; }
+    b.innerHTML = `<b>${esc(t.demoTag)}</b><span>${esc(t.demoNote)}</span><select id="demoSc" aria-label="${esc(t.demoPick)}"><option value="">${esc(t.demoPick)}</option>${t.demoSc.map((x, i) => `<option value="${i}">${esc(x)}</option>`).join('')}</select><button class="btn" type="button" id="demoExit">${esc(t.demoExit)}</button>`;
+    $('demoSc').onchange = e => { if (e.target.value !== '') demoScenario(+e.target.value); };
+    $('demoExit').onclick = () => setDemo(false);
+  }
   function setDate(ymd, opt = {}) {
     if (!opt.noHist) remember();
     st.date = ymd; $('date').value = ymd; $('mDate').value = ymd;
@@ -366,7 +392,7 @@
     $('fNight').onclick = () => { st.theme = st.theme === 'night' ? 'auto' : 'night'; save(); fillStatic(); repaintAll(); };
     $('fWake').onclick = toggleWake; $('fCompass').onclick = toggleCompass; $('mPrev').onclick = () => goNight(st.nightKind, -1, true); $('mNext').onclick = () => goNight(st.nightKind, 1, true); $('mList').onclick = () => openNights(); $('upList').onclick = () => openNights(); $('rnClose').onclick = () => closeDlg('rnDlg'); $('rnPrev').onclick = () => { rnFrom = addDays(rnFrom, -354); paintNights(); }; $('rnNext').onclick = () => { rnFrom = addDays(rnFrom, 354); paintNights(); }; $('rnNow').onclick = () => { rnFrom = addDays(todayYmd(st.tz), -32); paintNights(); }; $('ntSave').onclick = saveNotice; $('ntCancel').onclick = () => { try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); } }; $('cCal').onclick = calibrateCompass; $('cCalReset').onclick = () => { st.cpOff = null; st.cpOffAt = 0; save(); paintCompass(true); };
     $('recSave').onclick = addRecord;
-    $('recAt').addEventListener('input', showRecEvening);
+    $('recAt').addEventListener('input', showRecEvening); $('recAt').addEventListener('input', showPhotoInfo); $('recPhoto').addEventListener('change', showPhotoInfo);
     window.addEventListener('hashchange', route);
     $('mbNow').onclick = goNow; $('mbPrint').onclick = openPrint;
     $('mbPlay').onclick = goNow; $('mbFreeze').onclick = freezeNow;
@@ -394,6 +420,7 @@
     $('gokBox').addEventListener('toggle', () => { if (gokSync) return; st[gokKind()] = $('gokBox').open; save(); if ($('gokBox').open) renderGok(selT()); });
     $('layoutSel').onchange = e => { st.layout = e.target.value; st.fold = foldDefault(); save(); setupFold(); paintFoldSums(); renderTime(); };
     $('detailLvl').onchange = e => { st.detail = e.target.value; save(); fillStatic(); };
+    $('optDemo').onchange = e => setDemo(e.target.checked);
     $('optSafety').onchange = e => { st.safetyOff = !e.target.checked; save(); paintSafety(); };
     $('optFonts').onchange = e => { st.webFonts = e.target.checked; save(); applyFonts(); paintNet(); };
     $('openSM').onclick = () => openSM(selT()); $('fSM').onclick = () => openSM(A.MakeTime(new Date()));
@@ -1558,7 +1585,12 @@
     const below = tg.key === 'gurub' && tg.p.sun.alt <= -0.8 ? t.cpBelow + ' ' : '';
     const stat = CP.status === 'wait' ? t.cpWait : CP.status === 'none' ? t.cpNone + (location.protocol === 'file:' ? ' ' + t.cpNoneFile : '') : CP.status === 'denied' ? t.cpDenied
       : (CP.mode === 'up' ? t.cpUp : t.cpFlat) + (CP.acc != null && (CP.acc < 0 || CP.acc > 15) ? ' ' + t.cpAcc(Math.round(Math.abs(CP.acc))) : '');
-    $('cStat').textContent = below + stat;
+    // Güvenilirlik: Güneşe göre ayarlandıysa güvenilir; değilse manyetik kuzeye göredir (sapma, demir, araç etkisi olabilir)
+    const live = heading != null && !['wait', 'none', 'denied'].includes(CP.status);
+    const trust = !live ? '' : off != null ? `<span class="pill p-ok" title="${esc(t.cpTrustNote)}">✓ ${esc(t.cpTrustCal)}</span>`
+      : CP.acc != null && CP.acc >= 0 && CP.acc <= 15 ? `<span class="pill p-info" title="${esc(t.cpTrustNote)}">${esc(t.cpTrustAcc(Math.round(CP.acc)))}</span>`
+      : `<span class="pill p-warn" title="${esc(t.cpTrustNote)}">⚠ ${esc(t.cpTrustRaw)}</span>`;
+    $('cStat').innerHTML = esc(below + stat) + (trust ? ' ' + trust : '');
     const sunVis = tg.p.sun.alt > -0.8;
     $('cCal').textContent = sunVis ? t.cpCal : t.cpCalGurub; $('cCal').disabled = heading == null || (!sunVis && tg.gz == null);
     $('cCalReset').hidden = off == null;
@@ -1628,6 +1660,44 @@
     parts.push(t.evOk);
     return { txt: parts.join(' '), cls: ['aided', 'photo', 'doubt'].includes(result) || p.moon.alt < 5 ? 'p-warn' : 'p-ok', ymd: e.ymd, e };
   }
+  // Fotoğrafın EXIF bilgisi (JPEG): çekim zamanı (DateTimeOriginal, varsa OffsetTimeOriginal) ve kamera yönü (GPSImgDirection).
+  // Yalnız okunur; fotoğraf dosyası değiştirilmez. Bilgi kayda "photo.exif" olarak eklenir ve kayıt zamanıyla karşılaştırılır.
+  function exifOf(buf) {
+    try {
+      const v = new DataView(buf); if (v.getUint16(0) !== 0xFFD8) return null;
+      let p = 2;
+      while (p + 4 < v.byteLength) {
+        const mk = v.getUint16(p), len = v.getUint16(p + 2);
+        if (mk === 0xFFE1 && v.getUint32(p + 4) === 0x45786966) {   // "Exif"
+          const T = p + 10, le = v.getUint16(T) === 0x4949, u16 = o => v.getUint16(T + o, le), u32 = o => v.getUint32(T + o, le);
+          const str = (o, n) => { let s = ''; for (let i = 0; i < n; i++) { const c = v.getUint8(T + o + i); if (!c) break; s += String.fromCharCode(c); } return s; };
+          const ifd = o => { const n = u16(o), m = {}; for (let i = 0; i < n; i++) { const e = o + 2 + i * 12; m[u16(e)] = { type: u16(e + 2), cnt: u32(e + 4), off: e + 8 }; } return m; };
+          const val = (x) => { if (!x) return null; if (x.type === 2) return str(x.cnt > 4 ? u32(x.off) : x.off, x.cnt); if (x.type === 5) { const o = u32(x.off); return u32(o) / (u32(o + 4) || 1); } return null; };
+          const I0 = ifd(u32(4)), ex = I0[0x8769] ? ifd(u32(I0[0x8769].off)) : {}, gp = I0[0x8825] ? ifd(u32(I0[0x8825].off)) : {};
+          const taken = val(ex[0x9003]) || val(I0[0x0132]), off = val(ex[0x9011]), dir = val(gp[0x0011]), ref = val(gp[0x0010]);
+          if (!taken && dir == null) return null;
+          return { taken: taken || null, offset: off || null, dir: dir != null && isFinite(dir) ? Math.round(dir * 10) / 10 : null, dirRef: ref || null };
+        }
+        if ((mk & 0xFF00) !== 0xFF00 || mk === 0xFFDA) break; p += 2 + len;
+      }
+    } catch (e) { /* EXIF okunamadı */ }
+    return null;
+  }
+  // EXIF zamanı → UTC ms: kayıtta saat farkı varsa o, yoksa seçili saat dilimi varsayılır
+  function exifUT(x) {
+    const m = x && x.taken && x.taken.match(/^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})/); if (!m) return null;
+    const ymd = `${m[1]}-${m[2]}-${m[3]}`, min = +m[4] * 60 + +m[5] + +m[6] / 60, o = x.offset && x.offset.match(/^([+-])(\d{2}):(\d{2})$/);
+    return o ? Date.UTC(+m[1], +m[2] - 1, +m[3]) + min * 60000 - (o[1] === '-' ? -1 : 1) * (+o[2] * 60 + +o[3]) * 60000 : C.localToUT(ymd, min, st.tz);
+  }
+  async function showPhotoInfo() {
+    const el = $('recPhotoInfo'), f = $('recPhoto').files && $('recPhoto').files[0]; el.hidden = true; if (!f) return;
+    let x = null; try { x = exifOf(await f.slice(0, 256 * 1024).arrayBuffer()); } catch (e) { x = null; }
+    if (!x) { el.textContent = t.phNoExif; el.hidden = false; return; }
+    const ut = exifUT(x), parts = [];
+    if (ut != null) { const d = Math.round((ut - recTime().date.getTime()) / 60000); parts.push(t.phTaken(fmtTime(A.MakeTime(new Date(ut))) + (x.offset ? '' : ' ' + t.phTzAssumed), d)); }
+    if (x.dir != null) parts.push(t.phDir(num(x.dir, 0), x.dirRef === 'M' ? t.phMag : x.dirRef === 'T' ? t.phTrue : ''));
+    el.textContent = parts.join(' · '); el.hidden = false;
+  }
   async function photoOf(file) {
     if (!file) return null;
     try {
@@ -1635,7 +1705,8 @@
       const bmp = await createImageBitmap(new Blob([buf]));
       const k = Math.min(1, 520 / Math.max(bmp.width, bmp.height)), cv = document.createElement('canvas');
       cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k); cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
-      return { sha256: h, name: file.name, thumb: cv.toDataURL('image/jpeg', 0.72) };
+      const ex = exifOf(buf.slice(0, 256 * 1024));
+      return Object.assign({ sha256: h, name: file.name, thumb: cv.toDataURL('image/jpeg', 0.72) }, ex ? { exif: ex } : {});
     } catch (e) { return null; }
   }
   const isoT = at => at ? at.date.toISOString() : null;
@@ -1719,6 +1790,28 @@
     if (!saveRec()) { x.notices = prev; $('ntMsg').textContent = t.recStoreFail; return; }
     try { $('ntDlg').close(); } catch (e) { $('ntDlg').removeAttribute('open'); }
     toast(t.ntSaved); renderRecords(true);
+  }
+  // Paylaşma: paylaşmadan önce ad, iletişim, tam konum ve kayıt dosyası ayrı ayrı seçilir. Gizlenen bilgi yalnız paylaşılan
+  // metinden çıkar; cihazdaki kayıt değişmez. Kayıt dosyası (JSON) bütün alanlarıyla gönderilir (doğrulanabilmesi için).
+  function openShare(x) {
+    if (!x || !x.schema) return;
+    const ck = (id, on, lbl) => `<label class="chk"><input type="checkbox" id="${id}"${on ? ' checked' : ''}><span>${esc(lbl)}</span></label>`;
+    $('dlgBody').innerHTML = `<h3>${esc(t.shTitle)}</h3><p class="small">${esc(t.shIntro)}</p>` + ck('shName', !!x.observer.name, t.shName) + ck('shContact', false, t.shContact) + ck('shLoc', false, t.shLoc) + ck('shFile', false, t.shFile) +
+      `<p class="cap">${esc(t.shNote)}</p><div class="btns"><button class="btn primary" type="button" id="shGo">↗ ${esc(t.shTitle)}</button></div>`;
+    const d = $('dlg'); try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
+    $('shGo').onclick = async () => {
+      const red = JSON.parse(JSON.stringify(x)), hide = [];
+      if (!$('shName').checked && red.observer.name) { red.observer.name = ''; hide.push(t.shName); }
+      if (!$('shContact').checked && red.observer.contact) { red.observer.contact = ''; hide.push(t.shContact); }
+      if (!$('shLoc').checked) { red.place.lat = Math.round(red.place.lat * 10) / 10; red.place.lon = Math.round(red.place.lon * 10) / 10; red.place.name = red.place.name || ''; hide.push(t.shLoc); }
+      let txt = recText(red); if (hide.length) txt += '\n' + t.shHidden(hide.join(', '));
+      const data = { title: t.tutTitle, text: txt };
+      if ($('shFile').checked) {
+        try { const f = new File([JSON.stringify(x, null, 2)], recBase(x, 'record') + '.json', { type: 'application/json' }); if (navigator.canShare && navigator.canShare({ files: [f] })) data.files = [f]; } catch (e) { /* dosya paylaşılamaz */ }
+      }
+      if (navigator.share) { try { await navigator.share(data); try { d.close(); } catch (e) { /* */ } return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+      try { await navigator.clipboard.writeText(txt); toast(t.shCopied, 7000); } catch (e) { toast(t.recCopyFail || t.shCopied); }
+    };
   }
   function recText(x) {
     const o = x.observation, c = x.computed, pl = x.place;
@@ -1891,7 +1984,7 @@
       return `<tr><td class="n">${esc(new Intl.DateTimeFormat(locale(), { timeZone: x.place.tz, dateStyle: 'medium', timeStyle: 'short' }).format(new Date(o.at)))}<br><span class="small">${esc(t.recEvening(fmtCivil(civil(o.evening), true)))}</span></td>
         <td><span class="pill ${x.computed ? x.computed.evalClass : (o.result === 'not' ? 'p-info' : 'p-warn')}">${esc(t.recRes[o.result])}</span>${x.observer.name ? `<br><span class="small">${esc(x.observer.name)}</span>` : ''}</td>
         <td>${esc(x.computed ? x.computed.evaluation : '')}${o.note ? `<br><span class="small">${esc(o.note)}</span>` : ''}<br><span class="hash">${esc((x.hash || '').slice(0, 16))}…${x.signer ? ' · ' + esc(x.signer.fp) : ''}</span> <span data-ver="${i}"></span>${(x.notices || []).map((n, j) => `<span class="small ntl">✉ ${esc(noticeLine(n, x))} <span data-ntv="${i}:${j}"></span></span>`).join('')}${x.observer.name ? '' : `<br><span class="small">${esc(t.recAnon)}</span>`}</td>
-        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-nt="${i}">✉ ${esc(t.ntBtn)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
+        <td><div class="btns"><button class="btn" type="button" data-tut="${i}">${esc(t.recPrint)}</button><button class="btn" type="button" data-tutjpg="${i}">${esc(t.jpgShort)}</button><button class="btn" type="button" data-nt="${i}">✉ ${esc(t.ntBtn)}</button><button class="btn" type="button" data-json="${i}">${esc(t.recJson)}</button><button class="btn" type="button" data-copy="${i}">${esc(t.recCopy)}</button><button class="btn" type="button" data-share="${i}">↗ ${esc(t.shTitle)}</button><button class="btn" type="button" data-del="${i}">${esc(t.del)}</button></div></td></tr>`;
     }).join('')}</tbody></table>`;
     const L = $('recList');
     L.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { records.splice(+b.dataset.del, 1); saveRec(); renderRecords(true); });
@@ -1900,6 +1993,7 @@
     L.querySelectorAll('[data-nt]').forEach(b => b.onclick = () => openNotice(+b.dataset.nt));
     L.querySelectorAll('[data-tutjpg]').forEach(b => b.onclick = () => exportJpg(['tut'], records[+b.dataset.tutjpg]));
     L.querySelectorAll('[data-json]').forEach(b => b.onclick = () => { const x = records[+b.dataset.json]; saveFile(recBase(x, 'record') + '.json', JSON.stringify(x, null, 2), 'application/json'); });
+    L.querySelectorAll('[data-share]').forEach(b => b.onclick = () => openShare(records[+b.dataset.share]));
     L.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => { const txt = recText(records[+b.dataset.copy]); try { await navigator.clipboard.writeText(txt); toast(t.recCopied); } catch (e) { $('recEval').innerHTML = `<textarea rows="8" style="width:100%">${esc(txt)}</textarea>`; } });
   }
 
@@ -2059,7 +2153,7 @@
     const key = [st.lat.toFixed(2), st.lon.toFixed(2), Math.round(az / 10)].join('|');
     if (force || WX.key !== key || !WX.data) {
       WX.key = key; WX.loading = true; WX.err = null; msg(t.wxLoading);
-      try { WX.data = await ON.weather(st.lat, st.lon, az); } catch (e) { WX.data = null; WX.err = e; }
+      try { WX.data = await ON.weather(st.lat, st.lon, az); WX.at = new Date(); } catch (e) { WX.data = null; WX.err = e; }
       WX.loading = false;
       if (WX.key !== key) return;
     }
@@ -2085,7 +2179,7 @@
     h += `<tr><th colspan="5" style="text-align:left">${esc(t.wxWest(Math.round(R.moonAz || R.sunAz)))}</th></tr>` + wxRow(westG ? fmtH(westG.t) : '–', westG);
     h += '</tbody></table></div>';
     if (aq && aq.aerosol_optical_depth != null) h += `<p class="small" style="margin:6px 0 0">${esc(t.wxAod)}: ${num(aq.aerosol_optical_depth, 2)}${aq.dust != null ? ` · ${esc(t.dustLbl)} ${num(aq.dust, 0)} µg/m³` : ''}</p>`;
-    h += `<p class="cap">${esc(t.wxFiqh)}</p><p class="cap">${esc(t.wxSrc)}</p>`;
+    h += `<p class="cap">${esc(t.wxFiqh)}</p><p class="cap">${WX.at ? esc(t.wxAt(new Intl.DateTimeFormat(locale(), { timeZone: st.tz, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(WX.at))) + ' · ' : ''}${esc(t.wxSrc)}</p>`;
     $('wxBody').innerHTML = h; renderBar();
   }
   function wxMini(r) {
@@ -2151,12 +2245,31 @@
     if (!r || r.lagMin == null) return r && !r.moonUp ? t.lagBeforeNone : t.none;
     return r.lagMin > 0 ? hm(r.lagMin) : t.lagBefore(hm(-r.lagMin));
   }
+  // ---- Dosyanın doğrulanması: SHA-256 (yayımlanan özetle karşılaştırma; hesap cihazda yapılır, dosya gönderilmez) ----
+  const RELEASES = HOME.replace(/\/$/, '') + '/releases';
+  function shaCardHtml() {
+    return `<section class="card" id="shaCard"><h2>${esc(t.shaTitle)}</h2><p>${esc(t.shaIntro)}</p>
+      <div class="field"><label for="shaFile">${esc(t.shaPick)}</label><input id="shaFile" type="file" accept=".html,text/html"></div>
+      <div class="field"><label for="shaExp">${esc(t.shaExp)}</label><input id="shaExp" type="text" autocomplete="off" spellcheck="false" placeholder="SHA-256"></div>
+      <p id="shaOut" class="small" role="status"></p>
+      <p class="small">${extLink(RELEASES, t.shaLink)} · ${esc(t.shaLocal)}: <b>${esc(OFFICIAL === true ? t.shaLocalOk : OFFICIAL === false ? t.shaLocalBad : t.none)}</b></p>
+      <p class="cap">${esc(t.shaCmd)} <code>sha256sum mahinev.html</code> · Windows: <code>certutil -hashfile mahinev.html SHA256</code> · macOS: <code>shasum -a 256 mahinev.html</code></p></section>`;
+  }
+  async function shaRun() {
+    const f = $('shaFile').files && $('shaFile').files[0], out = $('shaOut'); if (!f) { out.textContent = ''; return; }
+    out.textContent = t.upLoading;
+    let h = null; try { h = await G.HRSig.sha256(await f.arrayBuffer()); } catch (e) { h = null; }
+    if (!h) { out.textContent = t.shaFail; return; }
+    const exp = ($('shaExp').value || '').trim().toLowerCase().replace(/[^0-9a-f]/g, '');
+    const cmp = exp.length === 64 ? (exp === h ? `<span class="pill p-ok">✓ ${esc(t.shaOk)}</span>` : `<span class="pill p-bad">✗ ${esc(t.shaBad)}</span>`) : `<span class="small">${esc(t.shaCompare)}</span>`;
+    out.innerHTML = `${esc(f.name)} · SHA-256:<br><span class="hash">${h}</span><br>${cmp}`;
+  }
   function aboutHtml() {
     return `<p>${esc(t.aboutText)}</p><p>${bookLinksHtml()}</p><p class="edn">${esc(t.editionNote)}</p>` + (t.mtNote ? `<p class="small">${esc(t.mtNote)}</p>` : '');
   }
   function noticeHtml() {
     const n = NOTICE || {};
-    return `<span class="src">${extLink(bookOf().page, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
+    return `<span class="src">${extLink(bookOf().page, t.srcLine)} · <button type="button" class="linkbtn" id="aboutOpen">${esc(t.aboutTitle)}</button> · <button type="button" class="linkbtn" id="shaOpen">${esc(t.shaShort)}</button></span><br>${esc(t.appFull)} v${G.HR_VERSION}${n.c ? ' · ' + esc(n.c) : ''}${n.l ? ' · ' + extLink(n.lu, n.l) : ''} · ${extLink(HOME, bare(HOME))}` +
       (OFFICIAL === false ? ` · <strong>${esc(t.tamperShort)}</strong>` : '') + `<br><span class="small">${esc(t.licThird)}: ${esc(t.footer)}</span>` + (t.mtNote ? `<br><span class="small">${esc(t.mtNote)}</span>` : '');
   }
   function licHtml() {
@@ -2186,7 +2299,7 @@
   function pgHead(title, sub) {
     return `<header class="ph"><div><h1>${esc(title)}</h1><p>${sub}</p></div><div class="phr">${esc(t.appTitle)}<br>v${G.HR_VERSION}</div></header>`;
   }
-  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}<span class="edn"> · ${esc(t.pageEdition)}</span></span></footer>`; }
+  function pgFoot(extra) { const n = NOTICE || {}; return `<footer class="pf"><span>${st.demo ? `<b>${esc(t.demoTag)}</b> · ` : ''}${esc(t.printFooter)}</span><span>${extra ? esc(extra) + ' · ' : ''}${esc(t.printGen)}: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC · ${esc(t.appTitle)} v${G.HR_VERSION} (${esc(G.HR_RULES)}) · ${esc(n.c || '')} · ${esc(bare(HOME))}${OFFICIAL === false ? ' · ' + esc(t.tamperShort).toUpperCase() : ''}<span class="edn"> · ${esc(t.pageEdition)}</span></span></footer>`; }
   const locLine = () => `<strong>${esc(placeName())}</strong> · ${num(st.lat, 4)}°, ${num(st.lon, 4)}° · ${num(st.elev, 0)} m · ${esc(st.tz)}`;
   function pagePlan() {
     const r = R; if (!r) return '';
@@ -2355,7 +2468,7 @@
   const hhmmTz = (d, tz) => { try { return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d).replace(':', ''); } catch (e) { return ''; } };
   function fileBase(kind, o = {}) {
     const ymd = o.ymd || st.date, tm = o.hhmm != null ? o.hhmm : '', pl = o.place != null ? o.place : placeSlug(curPlaceName(), st.lat, st.lon);
-    return ['MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.en)[kind] || kind, o.suffix].filter(Boolean).join('_');
+    return [st.demo ? 'DEMO' : null, 'MahiNev', ymd, tm, pl, (KIND_SLUG[st.lang] || KIND_SLUG.en)[kind] || kind, o.suffix].filter(Boolean).join('_');
   }
   // Kayda ait dosya adı: gözlemin akşamı, yerel saati ve yeri
   function recBase(x, kind) {
