@@ -13,7 +13,7 @@
 ![İnternetsiz](https://img.shields.io/badge/internetsiz-%C3%A7al%C4%B1%C5%9F%C4%B1r-2e7d4f)
 ![Diller](https://img.shields.io/badge/TR%20%C2%B7%20EN%20%C2%B7%20FR%20%C2%B7%20ES%20%C2%B7%20BS-3d5a80)
 
-**[▶ Çevrimiçi aç](https://bemiroglu.github.io/MahiNev/)** · **[⬇ İndir (v0.15.0)](https://github.com/bemiroglu/MahiNev/releases/latest)** · **[🔒 SHA-256](#dogrulama)** · **[📖 Tam İlmihâl](https://www.hakikatkitabevi.net/book.php?bookCode=001)**
+**[▶ Çevrimiçi aç](https://bemiroglu.github.io/MahiNev/)** · **[⬇ İndir (v0.15.0)](https://bemiroglu.github.io/MahiNev/mahinev-v0.15.0.html)** · **[🔒 SHA-256](#dogrulama)** · **[📖 Tam İlmihâl](https://www.hakikatkitabevi.net/book.php?bookCode=001)**
 
 [Türkçe](#turkce) · [English](#english) · [Français](#francais) · [Español](#espanol) · [Bosanski](#bosanski)
 
@@ -94,7 +94,7 @@ python3 tests/ui_tarama.py              # uçtan uca arayüz taraması (beş dil
 - **The measures of Tam İlmihâl** (English edition: *[Endless Bliss](https://www.hakikatkitabevi.net/book.php?bookCode=025)*): elongation below 8° rejected, 8°–18° possible, 18° and above visible; two possibilities for day 1 of the month.
 - **World map, field screen, sealed sighting record and A4 report, sharing with privacy choices, practice mode.**
 
-A single HTML file: nothing to install, works offline once opened. [Open online](https://bemiroglu.github.io/MahiNev/) · [Download](https://github.com/bemiroglu/MahiNev/releases/latest) · **Verify the file:** use "Verify the file" in the program's footer, or `sha256sum mahinev.html`, and compare with the digest above and in the [release notes](https://github.com/bemiroglu/MahiNev/releases). Licence: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+A single HTML file: nothing to install, works offline once opened. [Open online](https://bemiroglu.github.io/MahiNev/) · [Download](https://bemiroglu.github.io/MahiNev/mahinev-v0.15.0.html) · **Verify the file:** use "Verify the file" in the program's footer, or `sha256sum mahinev.html`, and compare with the digest above and in the [release notes](https://github.com/bemiroglu/MahiNev/releases). Licence: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 <a id="francais"></a>
 
@@ -102,7 +102,7 @@ A single HTML file: nothing to install, works offline once opened. [Open online]
 
 > **Mâh-ı Nev** est un **guide de terrain** qui indique à celui qui veut observer le croissant du nouveau mois lunaire **où, quand, dans quelle direction et dans quelles conditions** regarder, et qui **aide à consigner l’observation**. Il **n’annonce pas** le début d’un mois lunaire, n’établit pas de jugement religieux et ne constitue pas un calendrier officiel.
 
-Fichier HTML unique, fonctionne hors ligne. Les références renvoient à *Endless Bliss* (édition anglaise de Tam İlmihâl). Les textes français ont été traduits automatiquement (intelligence artificielle) et vérifiés par retraduction ; des erreurs restent possibles, le texte turc fait foi. [Ouvrir en ligne](https://bemiroglu.github.io/MahiNev/) · [Télécharger](https://github.com/bemiroglu/MahiNev/releases/latest) · vérification SHA-256 : « Vérifier le fichier » dans le pied de page du programme.
+Fichier HTML unique, fonctionne hors ligne. Les références renvoient à *Endless Bliss* (édition anglaise de Tam İlmihâl). Les textes français ont été traduits automatiquement (intelligence artificielle) et vérifiés par retraduction ; des erreurs restent possibles, le texte turc fait foi. [Ouvrir en ligne](https://bemiroglu.github.io/MahiNev/) · [Télécharger](https://bemiroglu.github.io/MahiNev/mahinev-v0.15.0.html) · vérification SHA-256 : « Vérifier le fichier » dans le pied de page du programme.
 
 <a id="espanol"></a>
 
@@ -110,7 +110,7 @@ Fichier HTML unique, fonctionne hors ligne. Les références renvoient à *Endle
 
 > **Mâh-ı Nev** es una **guía de campo** que indica a quien desea observar el creciente del nuevo mes lunar **dónde, cuándo, en qué dirección y en qué condiciones** mirar, y que **ayuda a registrar la observación**. **No** anuncia el comienzo de ningún mes lunar, no establece dictámenes religiosos ni elabora un calendario oficial.
 
-Un único archivo HTML que funciona sin conexión. Las referencias remiten a *Endless Bliss* (edición inglesa de Tam İlmihâl). Los textos en español se tradujeron automáticamente (inteligencia artificial) y se revisaron mediante retrotraducción; puede haber errores, prevalece el texto turco. [Abrir en línea](https://bemiroglu.github.io/MahiNev/) · [Descargar](https://github.com/bemiroglu/MahiNev/releases/latest) · verificación SHA-256: «Verificar el archivo» en el pie de página del programa.
+Un único archivo HTML que funciona sin conexión. Las referencias remiten a *Endless Bliss* (edición inglesa de Tam İlmihâl). Los textos en español se tradujeron automáticamente (inteligencia artificial) y se revisaron mediante retrotraducción; puede haber errores, prevalece el texto turco. [Abrir en línea](https://bemiroglu.github.io/MahiNev/) · [Descargar](https://bemiroglu.github.io/MahiNev/mahinev-v0.15.0.html) · verificación SHA-256: «Verificar el archivo» en el pie de página del programa.
 
 <a id="bosanski"></a>
 
@@ -118,4 +118,4 @@ Un único archivo HTML que funciona sin conexión. Las referencias remiten a *En
 
 > **Mâh-ı Nev** je **terenski vodič** koji onome ko želi posmatrati hilal novog kamerijskog mjeseca pokazuje **gdje, kada, u kojem pravcu i pod kojim uslovima** da gleda, i koji **pomaže da se osmatranje zabilježi**. On **ne** objavljuje početak nijednog kamerijskog mjeseca, ne donosi vjerski propis i ne sastavlja zvanični kalendar.
 
-Jedna HTML datoteka, radi bez interneta. Navodi upućuju na *Endless Bliss* (englesko izdanje Tam İlmihâla). Bosanski tekstovi su automatski prevedeni (umjetna inteligencija) i provjereni povratnim prijevodom; greške su moguće, mjerodavan je turski tekst. [Otvori na internetu](https://bemiroglu.github.io/MahiNev/) · [Preuzmi](https://github.com/bemiroglu/MahiNev/releases/latest) · SHA-256 provjera: „Provjeri datoteku“ u podnožju programa.
+Jedna HTML datoteka, radi bez interneta. Navodi upućuju na *Endless Bliss* (englesko izdanje Tam İlmihâla). Bosanski tekstovi su automatski prevedeni (umjetna inteligencija) i provjereni povratnim prijevodom; greške su moguće, mjerodavan je turski tekst. [Otvori na internetu](https://bemiroglu.github.io/MahiNev/) · [Preuzmi](https://bemiroglu.github.io/MahiNev/mahinev-v0.15.0.html) · SHA-256 provjera: „Provjeri datoteku“ u podnožju programa.
