@@ -2252,7 +2252,7 @@
       <div class="field"><label for="shaFile">${esc(t.shaPick)}</label><input id="shaFile" type="file" accept=".html,text/html"></div>
       <div class="field"><label for="shaExp">${esc(t.shaExp)}</label><input id="shaExp" type="text" autocomplete="off" spellcheck="false" placeholder="SHA-256"></div>
       <p id="shaOut" class="small" role="status"></p>
-      <p class="small">${extLink(RELEASES, t.shaLink)} · ${esc(t.shaLocal)}: <b>${esc(OFFICIAL === true ? t.shaLocalOk : OFFICIAL === false ? t.shaLocalBad : t.none)}</b></p>
+      <p class="small">${extLink(RELEASES, t.shaLink)} · ${extLink(((NOTICE && NOTICE.p) || 'https://bemiroglu.github.io/MahiNev/').replace(/\/?$/, '/') + 'SHA256SUMS.txt', 'SHA256SUMS.txt')} · ${esc(t.shaLocal)}: <b>${esc(OFFICIAL === true ? t.shaLocalOk : OFFICIAL === false ? t.shaLocalBad : t.none)}</b></p>
       <p class="cap">${esc(t.shaCmd)} <code>sha256sum mahinev.html</code> · Windows: <code>certutil -hashfile mahinev.html SHA256</code> · macOS: <code>shasum -a 256 mahinev.html</code></p></section>`;
   }
   async function shaRun() {

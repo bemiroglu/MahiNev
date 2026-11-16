@@ -108,6 +108,10 @@ for old in (R / 'dist').glob('hilal-ruyet*.html'):
     old.unlink()
 (R / 'dist' / 'mahinev.html').write_text(out, encoding='utf-8')
 (R / 'dist' / f'mahinev-v{ver}.html').write_text(out, encoding='utf-8')
-print(f'v{ver}: {len(out.encode()):,} bayt · özet {digest}')
+# Yayımlanan dosyanın SHA-256 özeti (sürüm notunda ve programdaki "Dosyayı doğrula" aracında karşılaştırılır)
+import hashlib
+_h = hashlib.sha256(out.encode('utf-8')).hexdigest()
+(R / 'dist' / 'SHA256SUMS.txt').write_text(f'{_h}  mahinev.html\n{_h}  mahinev-v{ver}.html\n', encoding='utf-8')
+print(f'v{ver}: {len(out.encode()):,} bayt · özet {digest} · SHA-256 {_h}')
 for code, (r, z, b) in pack_sizes.items():
     print(f'  dil paketi {code}: {r:,} bayt metin → {z:,} sıkıştırılmış → {b:,} base64')

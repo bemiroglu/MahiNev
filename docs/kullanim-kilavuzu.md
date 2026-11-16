@@ -299,3 +299,13 @@ Tarih önde olduğu için dosyalar klasörde sıralanır. Yazdır penceresinde P
 - kâğıttaki kodun bu kayda ait olup olmadığını.
 
 Ayrıntı: [kayit-semasi.md](kayit-semasi.md).
+
+## 0.15 ile gelenler
+
+- **Batı ufku engeli (isteğe bağlı):** Konum kartındaki "Batı ufku engeli (°)" alanına batıdaki dağ veya binanın yüksekliğini derece olarak yazın (kol uzatılmış bir yumruk ≈ 10°). Plan, hilâlin gurûbda engelin kaç derece üstünde olduğunu ve hangi saatte engelin arkasına indiğini; Saha, o anki durumu yazar. Tam İlmihâl'in sınıfı ve 5° penceresi değişmez. Boş bırakırsanız kullanılmaz.
+- **Pusula rozeti:** Pusula durum satırındaki rozet, pusulanın Güneşe (veya gurûb noktasına) göre ayarlanıp ayarlanmadığını gösterir. Ayarlanmamış telefon pusulası manyetik kuzeyi ölçer ve demir, araç, elektrikli cihazlardan etkilenir; en güvenilir yol "Güneşle ayarla" düğmesidir.
+- **Paylaş:** Kayıt listesindeki "↗ Paylaş" düğmesi, adınızın, iletişim bilginizin, tam konumun ve kayıt dosyasının paylaşılıp paylaşılmayacağını sorar. Gizlediğiniz bilgi yalnız paylaşılan metinden çıkar; cihazdaki kayıt değişmez.
+- **Deneme (eğitim) kipi:** Ayarlar → "Deneme (eğitim) kipi". Üstte çizgili bir bant çıkar; senaryo seçerek programı gerçek kayıt oluşturmadan öğrenebilirsiniz. Bu kipteki kayıtlar ayrı tutulur; tutanak ve dosya adları DENEME / DEMO diye işaretlenir. "Deneme kipinden çık" ile gerçek yeriniz, tarihiniz ve kayıtlarınız geri gelir.
+- **Fotoğrafın çekim zamanı ve yönü:** Kayda fotoğraf eklediğinizde program fotoğraftaki EXIF bilgisinden çekim zamanını ve varsa kamera yönünü okur, kayıt zamanıyla karşılaştırır ve kayda ekler.
+- **Dosyayı doğrula (SHA-256):** Alt bilgideki "Dosyayı doğrula" bağlantısı Rehber'deki doğrulama kartını açar. İndirdiğiniz program dosyasını seçin; program SHA-256 özetini cihazınızda hesaplar. Yayımlanan özeti (GitHub sürüm notu veya SHA256SUMS.txt) yapıştırırsanız ikisini karşılaştırır.
+- **Kayıt içe aktarma:** Biçimi hatalı kayıtlar alınmaz ve listelenir; aynı kimlikte içeriği farklı kayıt "kayıt çatışması" olarak gösterilir ve birleştirilmez.

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <!--
-  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.14.1-deneme.1
+  Mâh-ı Nev — Hilâl Rasad Yardımcısı v0.15.0
   © 2026 Bilal Emiroglu · Lisans / Licence: CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
   Kaynak / Source: Tam İlmihâl Se’âdet-i Ebediyye (Hakîkat Kitâbevi). Bu program bir fıkıh kaynağı değildir; Tam İlmihâl’e uymayan her bilgi geçersizdir.
   Yayın adresi / Published at: https://github.com/bemiroglu/MahiNev
@@ -12,11 +12,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b111b">
-<meta name="description" content="Mâh-ı Nev: Tam İlmihâl Se’âdet-i Ebediyye esaslı hilâl rasad yardımcısı. Tek dosya, çevrimdışı çalışır. Takvim değildir; hesâbî imkânı ve kesin reddi gösterir.">
-<meta property="og:title" content="Mâh-ı Nev — Hilâl Rasad Yardımcısı">
-<meta property="og:description" content="Tam İlmihâl esaslı hilâl rasad yardımcısı: rasad gecesi, arama penceresi, gökyüzü haritası, rü’yet kaydı ve tutanak.">
+<meta name="description" content="Mâh-ı Nev: yeni kamerî ayın hilâlini gözlemlemek isteyene nerede, ne zaman, hangi yönde ve hangi şartlarda bakacağını gösteren, gözlemin kaydına yardım eden saha rehberi (Tam İlmihâl Se’âdet-i Ebediyye esaslı). Tek dosya, internetsiz; Türkçe, English, Français, Español, Bosanski. Ay başı ilan etmez, takvim değildir.">
+<meta name="keywords" content="hilal gözlemi, rü'yet-i hilal, hilâl rasadı, kamerî ay başı, Ramazan hilali, Tam İlmihâl, crescent moon sighting, new crescent visibility, Ramadan moon, observation du croissant, avistamiento del creciente, viđenje hilala">
+<link rel="canonical" href="https://bemiroglu.github.io/MahiNev/">
+<meta property="og:title" content="Mâh-ı Nev — Hilâl Rasad Yardımcısı · Crescent Sighting Assistant">
+<meta property="og:description" content="Hilâli nerede, ne zaman, hangi yönde ve hangi şartlarda arayacağınızı gösteren, gözlem kaydına yardım eden saha rehberi. Tek dosya, internetsiz, beş dil. Takvim değildir; ay başı ilan etmez.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bemiroglu.github.io/MahiNev/">
+<meta property="og:locale" content="tr_TR"><meta property="og:locale:alternate" content="en_GB"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="bs_BA">
 <title>Mâh-ı Nev — Hilâl Rasad Yardımcısı</title>
 <style>
 /* Plan: alacakaranlık gökyüzü. Masada açık/koyu tema, sahada kırmızı gece teması (karanlığa alışmış gözü korur).
@@ -2992,7 +2995,7 @@ window.HR_CANON_EN = [
 /* Metinler: 0.14 (harita: Tam İlmihâl ölçü çizgileri, üç gece, işaretler, ağ, şehirler, PNG; hilâl verileri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.14.1-deneme.1';
+  G.HR_VERSION = '0.15.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     mapOpts: 'Görünüm', mapBook: 'Tam İlmihâl ölçü çizgileri (8°, 18°, 5°)', mapFirst: 'İlk mümkün / görülebilir yer', mapGrat: 'Enlem-boylam ağı',
@@ -7140,7 +7143,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
     const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\u0000');
     return others + '\u0000' + css + '\u0000' + cur.textContent;
   })();
-  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRDff4a6f1cc3d60656';
+  const Q4 = '=AGtVqe5N8ZEr1Qmz6Sm2STNae4ReL+t5GLtLwPSA7s2pJUc1l0tFmUAbUBZSmgKomfbNqJMFCLbXt4RCh', DIG = 'HRD3549e5c85f42adc6';
   function fnv2(s) {
     let h1 = 0x811c9dc5, h2 = 0x050c5d1f;
     for (let i = 0; i < s.length; i++) { const u = s.charCodeAt(i); h1 = Math.imul(h1 ^ u, 0x01000193); h2 = Math.imul(h2 ^ (u + 0x3f), 0x01000193); }
@@ -9374,7 +9377,7 @@ G.HR_RELIEF = 'data:image/webp;base64,UklGRghIAABXRUJQVlA4IPxHAADQdQGdASqEA14BPt
       <div class="field"><label for="shaFile">${esc(t.shaPick)}</label><input id="shaFile" type="file" accept=".html,text/html"></div>
       <div class="field"><label for="shaExp">${esc(t.shaExp)}</label><input id="shaExp" type="text" autocomplete="off" spellcheck="false" placeholder="SHA-256"></div>
       <p id="shaOut" class="small" role="status"></p>
-      <p class="small">${extLink(RELEASES, t.shaLink)} · ${esc(t.shaLocal)}: <b>${esc(OFFICIAL === true ? t.shaLocalOk : OFFICIAL === false ? t.shaLocalBad : t.none)}</b></p>
+      <p class="small">${extLink(RELEASES, t.shaLink)} · ${extLink(((NOTICE && NOTICE.p) || 'https://bemiroglu.github.io/MahiNev/').replace(/\/?$/, '/') + 'SHA256SUMS.txt', 'SHA256SUMS.txt')} · ${esc(t.shaLocal)}: <b>${esc(OFFICIAL === true ? t.shaLocalOk : OFFICIAL === false ? t.shaLocalBad : t.none)}</b></p>
       <p class="cap">${esc(t.shaCmd)} <code>sha256sum mahinev.html</code> · Windows: <code>certutil -hashfile mahinev.html SHA256</code> · macOS: <code>shasum -a 256 mahinev.html</code></p></section>`;
   }
   async function shaRun() {

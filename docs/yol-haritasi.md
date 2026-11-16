@@ -47,6 +47,11 @@ Dosya boyutunu ancak açıkça istenince artıran, seçimlik eklentiler.
 
 ## Değerlendirilecek fikirler
 
+- **Önceki rasatların karşılaştırılması:** Aynı yerde farklı aylarda yapılmış kayıtların, hesaplanan değerleriyle (beynûnet, irtifâ, pencere) yan yana gösterilmesi.
+- **Ufuk profili (çok yönlü):** 0.15'teki tek değerli batı ufku engeli yeterli görülmezse, azimut aralıklarına göre engel girişi. Amatör kullanıcıyı yormaması için yalnız ileri düzeyde.
+- **Gemi kipi ile ufuk profili:** Deniz ufku, göz yüksekliği ve engel birlikte.
+- Saha'da ayrı "rasad kartı" görünümü değerlendirildi; kullanıcının zamanda ileri-geri gidebilmesi önemli olduğundan yapılmadı.
+
 - **Koordinattan saat dilimi:** Elle girilen koordinatın resmî saat dilimini çevrimdışı bulmak, dilim sınırları verisi gerektirir (birkaç yüz kilobayt). Şimdilik fark tûlden hesaplanıyor; kullanıcı listeden veya "UTC farkı" kutusundan düzeltiyor.
 - **Safari'de JPG çıktısı:** Safari ve iOS'ta ayrıca denenmeli.
 - **Hilâl gözlem bildirim ve paylaşma ağı:** Gözlemcilerin kayıtlarını ve imzalı bildirim eklerini (`hilal-bildirim/1`) bir heyete veya ağa iletmesi, heyetin bunları toplu doğrulaması. Kayıt ve ek biçimi hazırdır ([kayit-semasi.md](kayit-semasi.md)).

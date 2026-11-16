@@ -1,7 +1,15 @@
 # Sürümler
 
-## 0.14.1 — geliştirmede
+## 0.15.0 — 16 Kasım 2026
 
+- **İsteğe bağlı batı ufku engeli:** Konum kartında batı ufkundaki dağ veya binanın yüksekliği (°) yazılabilir. Plan, hilâlin engelin kaç derece üstünde kaldığını ve ne zaman engelin arkasına indiğini; Saha, şu anki durumu kısa bir satırla söyler. Tam İlmihâl'in sınıfı ve 5° penceresi değişmez. Boş bırakılınca hiçbir şey değişmez.
+- **Pusula güvenilirliği:** Pusula durum satırında küçük bir rozet: "Güneşe göre ayarlı", "ayarsız · ±…°" veya "ayarsız: Güneşe göre ayarlayın"; üzerine gelince manyetik sapma, demir ve araç etkisi ile ayarlama yolu açıklanır.
+- **Paylaşma:** Kayıt listesindeki "↗ Paylaş" düğmesi önce ad, iletişim, tam konum ve kayıt dosyasının paylaşılıp paylaşılmayacağını sorar; telefonun paylaşma menüsünü açar, yoksa metni panoya kopyalar. Gizlenen bilgi yalnız paylaşılan metinden çıkar.
+- **Deneme (eğitim) kipi:** Ayarlar'dan açılır. Altı hazır senaryo (kolay gözlem, kısa pencere, hilâl doğmamış, kesin red, Zilhicce, kutup bölgesi). Bu kipteki kayıtlar ayrı tutulur, tutanaklar ve dosya adları "DENEME / DEMO" diye işaretlenir; kipten çıkınca gerçek yer, tarih ve kayıtlar geri gelir.
+- **Fotoğrafın EXIF bilgisi:** Kayda eklenen fotoğrafın çekim zamanı ve kamera yönü (varsa) okunur, kayıt zamanıyla karşılaştırılarak gösterilir ve kayda eklenir.
+- **Hava tahmininin zamanı:** Tahminin alındığı saat yazılır; tahminin gözlemin yerine geçmediği hatırlatılır.
+- **Dosyanın doğrulanması (SHA-256):** Rehber'de ve alt bilgideki "Dosyayı doğrula" bağlantısında: indirilen program dosyasının SHA-256 özeti cihazda hesaplanır, yapıştırılan yayımlanmış özetle karşılaştırılır. Yayımlanan özetler GitHub sürüm notlarındadır.
+- **Bağımsız astronomik testler:** Doğrulama sekmesine Astropy (ERFA) ile hesaplanmış sabit değerlerle karşılaştırmalar eklendi: 6 ictimâ anı (en büyük fark 0,7 dk), Güneş ve Ay'ın konumu ve beynûnet (≤ 0,003°), standart gün batımı (≤ 2 sn); Tam İlmihâl eşiklerinin (8°, 18°, 5°) iki yanı; yaz saati geçişleri ve tarih çizgisi. Toplam 70 test.
 - **Kayıtların içe aktarılması denetlenir:** Her kayıt alanları, türleri, tarihleri, enlem-boylam sınırları ve sonuç türleriyle denetlenir; biçimi hatalı kayıt depoya alınmaz ve hangi alanların hatalı olduğu bir pencerede listelenir. Aynı kimlikte içeriği farklı kayıt birleştirilmez, "kayıt çatışması" olarak gösterilir. Dosya en çok 25 MB, 5.000 kayıt. Cihazda bozuk bir kayıt varsa liste çökmez, kayıt "bozuk" diye gösterilir.
 - **Kayıt rozetleri:** "özet doğrulandı · ECDSA", "özet doğrulandı · imzasız", "imza geçersiz", "özet eşleşmiyor". Doğrulama sonucunun altında: doğrulama yalnız kaydın değiştirilmediğini gösterir; hilâlin görüldüğünü veya gözlemcinin kimliğini doğrulamaz.
 - **Göz güvenliği uyarısı:** Saha'da Güneş ufkun üstündeyken hilâlin sınıfından bağımsız her zaman görünür (gizlenemez). Plan'daki uyarı her akşam görünür; gizlenirse yalnız o oturum için gizlenir.

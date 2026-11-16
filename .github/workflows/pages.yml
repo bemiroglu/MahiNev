@@ -16,7 +16,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
-      - run: python3 build.py && mkdir -p site && cp dist/mahinev.html site/index.html && cp dist/mahinev-v*.html site/ && cp LICENSE site/LICENSE.txt
+      # Depodaki dist/mahinev.html olduğu gibi yayımlanır (yeniden derlenmez): yayımlanan dosyanın SHA-256 özeti
+      # sürüm notundaki ve dist/SHA256SUMS.txt'deki özetle aynı kalır.
+      - run: |
+          V=$(grep -o "HR_VERSION = '[^']*'" dist/mahinev.html | tail -1 | cut -d"'" -f2)
+          mkdir -p site && cp dist/mahinev.html site/index.html && cp dist/mahinev.html "site/mahinev-v$V.html"
+          cp LICENSE site/LICENSE.txt && cp dist/SHA256SUMS.txt site/SHA256SUMS.txt
+          (cd site && sha256sum -c SHA256SUMS.txt)
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with: { path: site }

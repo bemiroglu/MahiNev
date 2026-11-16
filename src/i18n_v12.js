@@ -1,7 +1,7 @@
 /* Metinler: 0.14 (harita: Tam İlmihâl ölçü çizgileri, üç gece, işaretler, ağ, şehirler, PNG; hilâl verileri) */
 (function (G) {
   'use strict';
-  G.HR_VERSION = '0.14.1-deneme.1';
+  G.HR_VERSION = '0.15.0';
   const T = G.HRI18N.T;
   Object.assign(T.tr, {
     mapOpts: 'Görünüm', mapBook: 'Tam İlmihâl ölçü çizgileri (8°, 18°, 5°)', mapFirst: 'İlk mümkün / görülebilir yer', mapGrat: 'Enlem-boylam ağı',
