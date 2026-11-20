@@ -57,3 +57,20 @@ Dosya boyutunu ancak açıkça istenince artıran, seçimlik eklentiler.
 - **Hilâl gözlem bildirim ve paylaşma ağı:** Gözlemcilerin kayıtlarını ve imzalı bildirim eklerini (`hilal-bildirim/1`) bir heyete veya ağa iletmesi, heyetin bunları toplu doğrulaması. Kayıt ve ek biçimi hazırdır ([kayit-semasi.md](kayit-semasi.md)).
 - **Pusula:** Android ve iOS telefonlarda sahada denenmeli; gemi kipindeki deviasyon girişiyle birleştirilebilir.
 - **Gök cisimleri aracı:** Görünürlük tahmini için kullanıcının seçebileceği gökyüzü karanlığı (şehir, kasaba, kır); seçili cismin ufuk ve gökyüzü haritası çiziminde işaretlenmesi.
+
+- ## Sonradan düşünülenler
+
+- **Daha önce değerlendirerek tartıştığımız rasat kartını ana ekrana ekleyelim. Bu basitleştirilmiş, kullanımı kolaylaştırılmış, sadece planlı rasada odaklı ve bunun araçlarını kapsayan, hızlı ve güvenli mobil  telefon / tablet rasadını Pratik hale getiren bu kartı görsel olarak en mükmmel şekilde tasarlayarak önce tartışalım. 
+
+- **Eklenen / değiştirilen program fonksiyonlarının görsel, dilsel, yapısal ve grafik tüm özellikleri de devralması esastır.
+
+- **Gök cisimleri (seçili an · ek bilgi)” kartı altında gösterilen detaylı gök cisimleri bilgilerinin “Batı ufku: hilâli nerede aramalı” kartı içine veya altına alınması daha iyi mi olur? Çünkü “Batı ufku: hilâli nerede aramalı” içerisindeki görsel, bu çok kapsamlı listedeki gök cisimlerini canlı olarak göksel mevkileri ile gösteriyor. Bununla birlikte, “Batı ufku: hilâli nerede aramalı” görseli içindeki rüyete odakli yakınlaşıtılmış/ büyütülmüş pencere gökcisimleri ile çatışmamalı.gökcisimleri ile ilgili bilgilerin liste ve görsel arasında senkronize şekilde planlanması da hoş olurdu. Ancak, bu kartlar arasındaki taşıma işlemi konusunun programın asli fonksiyonu olan rüyet ile ilgili konuları örtmemesi, kullanıcının kafasını karıştıracak bir dizayna dönüşmemesi, sayfayı daha karmaşık hale getirmemesi gerekiyor. 
+
+- **Hazır mevki listesine, kullanılan dile göre nüfüs yoğunluğu yüksek,müslümanların kalabalık yaşadığı bazı şehirleri de eklememiz hoş olurdu, fakat liste uzadıkça hedef şehrin adını listede bulmak kullanıcı için zorlaşacak, mevcut bir liste olması iyi, ama yönetilebilmesi çok kolay olayabilir, bunu nasıl çözebiliriz, onu da bilemiyorum. 
+
+- **Bazı sayfalarda PNG bazı sayfalarda JPG kaydetme seçenekler bulunuyor.  Resim olarak kaydetme seçimi olan sayfalarda her iki formatta da kayıt yapabilme desteklenmeli.
+
+- **Harita sekmesinde, “Dünya rü’yet imkânı haritası” kartında, oklarla daha önce seçilmiş takvim günleri arasında ileri ve geri ilerlenebiliyorsa da, bir takvim günü girişi imkanının eklenmesi kolay ve doğru olabilir mi? Tekrar söyleyeyim ki, şimdi butonunun çok faydalı olduğunu düşünüyorum. ANcak içinde bulunulan tarih/ saatten farklı bir zaman için çalışılırken, şimdi tuşuna basılması faydalı bir iş yapsa da, değiştrilen önceki tarihe dönülemiyor.. Burada kullanıcının yeniden tarih seçerek rasat planladığı güne geri dönmesi çok güç. 
+
+- **IŞIK USULÜ hesap sonucunu ve tanıtımını, gösterilebileeği uygun yerlerde göstermekten çekinmeyelim.  
+
